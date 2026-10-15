@@ -1,67 +1,36 @@
-← Project dashboard
-Education & Family Impact Calculator
-Explore the potential effects of unreliable school-day bus service. Adjustable assumptions are scenarios, not measured incidents.
-Methodology: Waiting after school does not automatically mean lost instructional time. Only count missed classroom minutes when a disruption actually prevents school attendance or timely arrival. Parent car trips and work impacts are modeled separately.
-Students & bus service
-Students affected per incident
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Education &amp; Family Impact | Baltimore Transit Accountability</title>
+<link href="./baltimore-theme.css" rel="stylesheet"/></head><body><nav aria-label="Main navigation" class="site-nav"><a class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark"></span>BALTIMORE TRANSIT<br/>ACCOUNTABILITY</a><div class="nav-links"><a href="./index.html">Home</a><a href="./education-impact.html">Education &amp; Family Impact</a></div></nav><header class="hero calculator-hero"><div class="hero-inner"><div class="eyebrow">Baltimore students &amp; working families</div><h1>Education &amp; Family Impact Calculator</h1><div class="gold-line"></div><p>Explore how unreliable bus service affects classroom time, household travel, and working parents. Scenario estimates are not verified incidents.</p></div></header><main class="calculator-content">
+<nav><a href="index.html">← Project dashboard</a></nav>
 
 
-Average extra waiting / travel delay (minutes)
-
-
-Instructional minutes actually missed per student
-
-
-Default is 0 for after-school failures. Set above zero only for missed classes.
-Comparable incidents in reporting period
-
-
-Parent transport & employment
-Share of affected students requiring a parent car pickup (%)
-
-
-Assumption, not observed car count. A pickup is not necessarily a separate car.
-Students picked up per parent vehicle
-
-
-Additional vehicle miles per pickup (round trip)
-
-
-Parent work hours affected per pickup
-
-
-Illustrative hourly value of parent time ($)
-
-
-Calculated scenario totals
-Additional student waiting / travel hours
-—
-Instructional hours missed
-—
-Estimated parent vehicle pickups
-—
-Additional vehicle miles
-—
-Parent work hours affected
-—
-Illustrative parent time value
-—
-Vehicle pickups are estimated using student pickup share divided by average students per car. Rounded figures are for display only. Parent work hours and time value are not verified wage losses or additional state expenditures.
-Method and export
-Metric
-Formula
-Student delay hours
-Students × delay minutes × incidents ÷ 60
-Instructional hours
-Students × missed classroom minutes × incidents ÷ 60
-Vehicle pickups
-Students × pickup share × incidents ÷ students per vehicle
-Vehicle miles
-Vehicle pickups × incremental round-trip miles
-Parent work hours
-Vehicle pickups × work hours affected per pickup
-For actual evidence, replace assumptions with dated, corroborated trip-level observations and deidentified rider reports. Do not add student delay hours to instructional hours as though they were independent people-hours; they can overlap.
-Download scenario JSON
-Reset assumptions
-Local-only calculator: no information is uploaded, transmitted, or stored. No student identities or precise child travel routines should be published. Project methodology.
-
+<div class="warning"><strong>Methodology:</strong> Waiting after school does not automatically mean lost instructional time. Only count missed classroom minutes when a disruption actually prevents school attendance or timely arrival. Parent car trips and work impacts are modeled separately.</div>
+<div class="layout"><section class="panel"><h2>Students &amp; bus service</h2>
+<div class="field"><label for="children">Students affected per incident</label><div class="control"><input id="children" max="250" min="0" step="1" type="range" value="25"/><input aria-label="Students affected numeric value" data-pair="children" max="100000" min="0" type="number" value="25"/></div></div>
+<div class="field"><label for="delay">Average extra waiting / travel delay (minutes)</label><div class="control"><input id="delay" max="180" min="0" step="5" type="range" value="45"/><input aria-label="Delay numeric value" data-pair="delay" max="1440" min="0" type="number" value="45"/></div></div>
+<div class="field"><label for="instruction">Instructional minutes actually missed per student</label><div class="control"><input id="instruction" max="180" min="0" step="5" type="range" value="0"/><input aria-label="Instructional minutes numeric value" data-pair="instruction" max="1440" min="0" type="number" value="0"/></div><div class="help">Default is 0 for after-school failures. Set above zero only for missed classes.</div></div>
+<div class="field"><label for="events">Comparable incidents in reporting period</label><div class="control"><input id="events" max="100" min="1" step="1" type="range" value="4"/><input aria-label="Incident count numeric value" data-pair="events" max="10000" min="1" type="number" value="4"/></div></div>
+</section><section class="panel"><h2>Parent transport &amp; employment</h2>
+<div class="field"><label for="share">Share of affected students requiring a parent car pickup (%)</label><div class="control"><input id="share" max="100" min="0" step="5" type="range" value="20"/><input aria-label="Pickup share numeric value" data-pair="share" max="100" min="0" type="number" value="20"/></div><div class="help">Assumption, not observed car count. A pickup is not necessarily a separate car.</div></div>
+<div class="field"><label for="occupancy">Students picked up per parent vehicle</label><div class="control"><input id="occupancy" max="8" min="1" step="1" type="range" value="1"/><input aria-label="Students per car numeric value" data-pair="occupancy" max="50" min="1" type="number" value="1"/></div></div>
+<div class="field"><label for="miles">Additional vehicle miles per pickup (round trip)</label><div class="control"><input id="miles" max="40" min="0" step="1" type="range" value="8"/><input aria-label="Additional miles numeric value" data-pair="miles" max="500" min="0" type="number" value="8"/></div></div>
+<div class="field"><label for="work">Parent work hours affected per pickup</label><div class="control"><input id="work" max="8" min="0" step="0.5" type="range" value="1.5"/><input aria-label="Work hours numeric value" data-pair="work" max="24" min="0" step="0.25" type="number" value="1.5"/></div></div>
+<div class="field"><label for="rate">Illustrative hourly value of parent time ($)</label><div class="control"><input id="rate" max="100" min="0" step="5" type="range" value="30"/><input aria-label="Hourly time value numeric value" data-pair="rate" max="1000" min="0" type="number" value="30"/></div></div>
+</section></div>
+<section class="panel"><h2>Calculated scenario totals</h2><div aria-live="polite" class="statgrid">
+<div class="stat"><small>Additional student waiting / travel hours</small><b id="waitHours">—</b></div>
+<div class="stat"><small>Instructional hours missed</small><b id="schoolHours">—</b></div>
+<div class="stat"><small>Estimated parent vehicle pickups</small><b id="pickups">—</b></div>
+<div class="stat"><small>Additional vehicle miles</small><b id="vehicleMiles">—</b></div>
+<div class="stat"><small>Parent work hours affected</small><b id="workHours">—</b></div>
+<div class="stat"><small>Illustrative parent time value</small><b id="timeValue">—</b></div>
+</div><p class="help">Vehicle pickups are estimated using student pickup share divided by average students per car. Rounded figures are for display only. Parent work hours and time value are not verified wage losses or additional state expenditures.</p></section>
+<section class="panel"><h2>Method and export</h2><table><tbody><tr><th>Metric</th><th>Formula</th></tr><tr><td>Student delay hours</td><td>Students × delay minutes × incidents ÷ 60</td></tr><tr><td>Instructional hours</td><td>Students × missed classroom minutes × incidents ÷ 60</td></tr><tr><td>Vehicle pickups</td><td>Students × pickup share × incidents ÷ students per vehicle</td></tr><tr><td>Vehicle miles</td><td>Vehicle pickups × incremental round-trip miles</td></tr><tr><td>Parent work hours</td><td>Vehicle pickups × work hours affected per pickup</td></tr></tbody></table>
+<p>For actual evidence, replace assumptions with dated, corroborated trip-level observations and deidentified rider reports. Do not add student delay hours to instructional hours as though they were independent people-hours; they can overlap.</p>
+<div class="actions"><button id="export">Download scenario JSON</button><button class="secondary" id="reset">Reset assumptions</button></div></section>
+<footer>Local-only calculator: no information is uploaded, transmitted, or stored. No student identities or precise child travel routines should be published. <a href="../docs/METHODOLOGY.md">Project methodology</a>.</footer>
+<script>
+(()=>{'use strict';const ids=['children','delay','instruction','events','share','occupancy','miles','work','rate'];const defaults={children:25,delay:45,instruction:0,events:4,share:20,occupancy:1,miles:8,work:1.5,rate:30};const $=id=>document.getElementById(id);const fmt=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:1}).format(n);const currency=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);function read(){return Object.fromEntries(ids.map(id=>[id,Math.max(0,Number($(`n_${id}`)?.value ?? document.querySelector(`[data-pair="${id}"]`).value)||0)]))}function calc(){const p=read();p.share=Math.min(100,p.share);p.occupancy=Math.max(1,p.occupancy);const studentDelayHours=p.children*p.delay*p.events/60;const instructionalHours=p.children*p.instruction*p.events/60;const vehiclePickups=p.children*(p.share/100)*p.events/p.occupancy;const vehicleMiles=vehiclePickups*p.miles;const workHours=vehiclePickups*p.work;const timeValue=workHours*p.rate;const results={studentDelayHours,instructionalHours,vehiclePickups,vehicleMiles,workHours,timeValue};for(const [id,key] of Object.entries({waitHours:'studentDelayHours',schoolHours:'instructionalHours',pickups:'vehiclePickups',vehicleMiles:'vehicleMiles',workHours:'workHours',timeValue:'timeValue'}))$(id).textContent=id==='timeValue'?currency(results[key]):fmt(results[key]);return {assumptions:p,results,classification:'hypothetical scenario; not observed or verified',generated_at:new Date().toISOString()}}ids.forEach(id=>{const range=$(id),num=document.querySelector(`[data-pair="${id}"]`);const sync=(from,to)=>{let v=Number(from.value);if(!Number.isFinite(v)||v<Number(to.min||0))v=Number(to.min||0);if(from===num){v=Math.min(Number(num.max),v);range.value=String(Math.min(Number(range.max),v))}else num.value=String(v);calc()};range.addEventListener('input',()=>sync(range,num));num.addEventListener('input',()=>sync(num,range))});$('reset').addEventListener('click',()=>{ids.forEach(id=>{const r=$(id),n=document.querySelector(`[data-pair="${id}"]`);r.value=defaults[id];n.value=defaults[id]});calc()});$('export').addEventListener('click',()=>{const payload=JSON.stringify(calc(),null,2);const url=URL.createObjectURL(new Blob([payload],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='transit-education-impact-scenario.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});calc()})();
+</script></main></body></html>
