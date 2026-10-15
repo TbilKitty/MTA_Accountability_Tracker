@@ -1,0 +1,10 @@
+{
+  "agency_timezone": "America/New_York",
+  "gtfs_url": "https://feeds.mta.maryland.gov/gtfs/local-bus",
+  "alerts_url": "https://feeds.mta.maryland.gov/alerts.pb",
+  "significant_delay_minutes": 30,
+  "on_time_late_minutes": 7,
+  "on_time_early_minutes": 2,
+  "agency_key": "mta-maryland",
+  "publication_mode": "disabled"
+}
