@@ -1,1 +1,67 @@
+← Project dashboard
+Education & Family Impact Calculator
+Explore the potential effects of unreliable school-day bus service. Adjustable assumptions are scenarios, not measured incidents.
+Methodology: Waiting after school does not automatically mean lost instructional time. Only count missed classroom minutes when a disruption actually prevents school attendance or timely arrival. Parent car trips and work impacts are modeled separately.
+Students & bus service
+Students affected per incident
+
+
+Average extra waiting / travel delay (minutes)
+
+
+Instructional minutes actually missed per student
+
+
+Default is 0 for after-school failures. Set above zero only for missed classes.
+Comparable incidents in reporting period
+
+
+Parent transport & employment
+Share of affected students requiring a parent car pickup (%)
+
+
+Assumption, not observed car count. A pickup is not necessarily a separate car.
+Students picked up per parent vehicle
+
+
+Additional vehicle miles per pickup (round trip)
+
+
+Parent work hours affected per pickup
+
+
+Illustrative hourly value of parent time ($)
+
+
+Calculated scenario totals
+Additional student waiting / travel hours
+—
+Instructional hours missed
+—
+Estimated parent vehicle pickups
+—
+Additional vehicle miles
+—
+Parent work hours affected
+—
+Illustrative parent time value
+—
+Vehicle pickups are estimated using student pickup share divided by average students per car. Rounded figures are for display only. Parent work hours and time value are not verified wage losses or additional state expenditures.
+Method and export
+Metric
+Formula
+Student delay hours
+Students × delay minutes × incidents ÷ 60
+Instructional hours
+Students × missed classroom minutes × incidents ÷ 60
+Vehicle pickups
+Students × pickup share × incidents ÷ students per vehicle
+Vehicle miles
+Vehicle pickups × incremental round-trip miles
+Parent work hours
+Vehicle pickups × work hours affected per pickup
+For actual evidence, replace assumptions with dated, corroborated trip-level observations and deidentified rider reports. Do not add student delay hours to instructional hours as though they were independent people-hours; they can overlap.
+Download scenario JSON
+Reset assumptions
+Local-only calculator: no information is uploaded, transmitted, or stored. No student identities or precise child travel routines should be published. Project methodology.
 
