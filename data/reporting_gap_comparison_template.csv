@@ -1,0 +1,1 @@
+incident_id,service_date,route_id,stop_id,scheduled_time_local,independent_verification_status,agency_complaint_match,complaint_data_coverage,operational_record_match,matching_method,notes_private
