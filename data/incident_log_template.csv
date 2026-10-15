@@ -1,0 +1,1 @@
+incident_id,service_date,trip_id,route_id,stop_id,scheduled_time_local,observed_time_local,delay_minutes,status,confidence,source_snapshot_sha256,source_retrieved_utc,reviewed_by,reviewed_at_utc,correction_of
