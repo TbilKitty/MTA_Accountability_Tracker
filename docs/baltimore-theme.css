@@ -16,3 +16,26 @@ body{background:linear-gradient(180deg,#fff8eb,#fdfbf7 65%,#f7f3ed)}
 .calculator-hero:before{display:none}.calculator-hero .hero-inner{padding:85px 24px}.calculator-hero h1{max-width:630px;font-size:clamp(2.3rem,4.7vw,4.2rem)}.calculator-hero p{max-width:530px}.site-footer{background:#092644;color:#e8eaf0;padding:25px max(20px,calc((100vw - 1160px)/2));font-size:.88rem}.site-footer a{color:#ffe0a0}
 @media(max-width:850px){.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:450px}.hero-inner{padding:65px 24px 85px}.calculator-hero{background-position:55% center}.civic-ribbon{flex-direction:column;align-items:flex-start}}
 @media(max-width:540px){.feature-grid{grid-template-columns:1fr;margin-top:-30px}.hero{background:linear-gradient(90deg,rgba(255,242,222,.92),rgba(255,242,222,.72)),linear-gradient(180deg,#ed9b8b,#f5aa66,#0e4160)}.hero:before{opacity:.4}.calculator-hero{background:linear-gradient(90deg,rgba(255,249,237,.96),rgba(255,249,237,.68)),url('./baltimore-student-rowhouses.png') center/cover no-repeat}.calculator-hero .hero-inner{padding:60px 24px}.nav-links{gap:12px}}
+
+/* October refresh: vibrant Baltimore sunset and accessible text contrast. */
+body{background:linear-gradient(180deg,#fff6e7 0%,#fffdfa 55%,#eaf4f7 100%)}
+.site-nav{background:#082b4b;border-bottom:4px solid #ffc44e}
+.hero:not(.calculator-hero){min-height:565px;background:linear-gradient(110deg,#fff1dc 0%,#ffd5b2 46%,#f5a48c 100%)}
+.hero:not(.calculator-hero)::before{opacity:1;mix-blend-mode:normal;background-position:center 52%;filter:saturate(1.2) contrast(1.05)}
+.hero:not(.calculator-hero)::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,248,235,.94) 0%,rgba(255,246,231,.83) 34%,rgba(255,244,225,.25) 64%,transparent 100%);pointer-events:none}
+.hero:not(.calculator-hero) .hero-inner{z-index:2}
+.hero:not(.calculator-hero) .hero-inner>h1{color:#062846;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.hero:not(.calculator-hero) .hero-inner>p:not(.photo-credit){color:#102c43;font-weight:600}
+.hero:not(.calculator-hero) .eyebrow{color:#87351d}
+.hero:not(.calculator-hero) .photo-credit{color:#243f54;font-weight:700;font-size:.8rem}
+.feature{background:#fffefa;border:1px solid #ead9c5}.feature:nth-child(2){background:#fff7e5}.feature:nth-child(3){background:#f0f8fb}.feature:nth-child(4){background:#fff2ed}
+.cta{background:#ffc54b;color:#092644}.cta.secondary{background:#fffefb;color:#092644}
+/* Student photo is an actual visible element, not a background image that can be cropped away. */
+.calculator-hero{background:linear-gradient(115deg,#fff7e9,#ffe4c7);min-height:540px;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46%);align-items:stretch;gap:0;overflow:hidden}
+.calculator-hero .hero-inner{width:100%;padding:65px clamp(20px,5vw,80px);margin:0;align-self:center}
+.calculator-hero h1{color:#092644}.calculator-hero p{color:#19384f;font-weight:600}
+.student-hero-photo{position:relative;margin:0;min-height:540px;overflow:hidden;background:#f3c48b}
+.student-hero-photo img{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:36% center}
+.student-hero-photo figcaption{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:8px;background:rgba(9,38,68,.83);color:white;font-size:.75rem}
+@media(max-width:850px){.calculator-hero{grid-template-columns:minmax(0,1fr) minmax(220px,42%)}.calculator-hero .hero-inner{padding:35px 24px}.student-hero-photo{min-height:470px}}
+@media(max-width:620px){.hero:not(.calculator-hero)::after{background:linear-gradient(90deg,rgba(255,249,238,.92),rgba(255,247,233,.72))}.calculator-hero{display:flex;flex-direction:column}.calculator-hero .hero-inner{padding:38px 22px}.student-hero-photo{height:340px;min-height:340px}.student-hero-photo img{object-position:center 52%}}
