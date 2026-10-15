@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+.env
+*.db
+*.sqlite
+/data/raw/*
+!/data/raw/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/data/private/
+*.log
+
+# Never commit sensitive child-level data
+data/child_safety_case_links_RESTRICTED.csv
+data/child_exposure_reports.csv
