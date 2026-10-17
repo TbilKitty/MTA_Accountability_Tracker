@@ -39,3 +39,26 @@ body{background:linear-gradient(180deg,#fff6e7 0%,#fffdfa 55%,#eaf4f7 100%)}
 .student-hero-photo figcaption{position:absolute;right:12px;bottom:12px;padding:5px 10px;border-radius:8px;background:rgba(9,38,68,.83);color:white;font-size:.75rem}
 @media(max-width:850px){.calculator-hero{grid-template-columns:minmax(0,1fr) minmax(220px,42%)}.calculator-hero .hero-inner{padding:35px 24px}.student-hero-photo{min-height:470px}}
 @media(max-width:620px){.hero:not(.calculator-hero)::after{background:linear-gradient(90deg,rgba(255,249,238,.92),rgba(255,247,233,.72))}.calculator-hero{display:flex;flex-direction:column}.calculator-hero .hero-inner{padding:38px 22px}.student-hero-photo{height:340px;min-height:340px}.student-hero-photo img{object-position:center 52%}}
+
+/* Research page additions */
+.research-hero{position:relative;overflow:hidden;padding:84px max(6vw,22px) 75px;background:linear-gradient(105deg,#fff8e9 0%,#ffe2b8 56%,#f6b9a3 100%);color:#112e46}
+.research-hero.water{background:linear-gradient(105deg,#eef8fc 0%,#b9dfeb 58%,#ffd9b2 100%)}
+.research-hero.brick{background:linear-gradient(105deg,#fff9e9 0%,#f6d6c5 56%,#f1b2a1 100%)}
+.research-hero .inner{max-width:1120px;margin:auto;position:relative;z-index:1}
+.research-hero h1{font-family:'Libre Baskerville',Georgia,serif;font-size:clamp(2.2rem,5vw,4.4rem);line-height:1.15;color:#102b44;max-width:860px;margin:16px 0 20px}
+.research-hero p{max-width:760px;font-size:1.18rem;font-weight:550;color:#183b53}
+.research-hero .eyebrow{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#8b3c29}
+.research-layout{max-width:1170px;margin:0 auto;padding:40px 22px 90px;display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:30px;align-items:start}
+.research-content{min-width:0}.research-content .intro{font-size:1.15rem;line-height:1.8;color:#29455c}
+.research-section{background:#fffefa;border:1px solid #eadcc8;border-radius:20px;padding:clamp(22px,3.5vw,42px);margin:0 0 22px;box-shadow:0 9px 26px rgba(28,47,64,.05)}
+.research-section h2{font-family:'Libre Baskerville',Georgia,serif;font-size:clamp(1.35rem,2.4vw,1.8rem);line-height:1.35;color:#133651;margin-top:0}
+.research-section h3{color:#9b4430}.research-section p,.research-section li{line-height:1.8;color:#273f53}.research-section li{margin-bottom:9px}
+.research-section a{overflow-wrap:anywhere}.research-section code{overflow-wrap:anywhere}
+.research-side{background:#123651;color:#fff;border-radius:20px;padding:25px;position:sticky;top:20px}
+.research-side h2{color:#ffd078;font-size:1.15rem;margin-top:0}.research-side p{color:#e4eff6}.research-side a{color:#fff3c9;display:block;padding:8px 0}
+.research-callout{padding:23px;border-left:5px solid #efb326;background:#fff4d9;border-radius:0 14px 14px 0;margin-bottom:25px;color:#213d51}
+.research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:25px 0}.research-tile{background:white;border:1px solid #e9d6bb;border-radius:16px;padding:22px}.research-tile strong{display:block;color:#123651;font-size:1.12rem}.research-tile p{margin-bottom:0}
+.research-student{width:100%;max-height:370px;object-fit:cover;object-position:center 47%;border-radius:18px;display:block;margin:22px 0}.research-credit{font-size:.82rem;color:#556c7a}
+.research-bottom{max-width:1130px;margin:0 auto 55px;padding:0 22px}.research-bottom a{display:inline-block;margin:5px 12px 5px 0;padding:12px 18px;background:#123651;color:white;border-radius:10px;text-decoration:none;font-weight:700}
+.research-footer{background:#102b44;color:#f6f1e8;padding:32px 22px;text-align:center}.research-footer a{color:#ffcf77}
+@media(max-width:800px){.research-layout{grid-template-columns:1fr}.research-side{position:static}.research-grid{grid-template-columns:1fr}.research-hero{padding-top:58px}}
