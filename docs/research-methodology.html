@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research &amp; Methodology | Baltimore Transit Accountability</title><meta name="description" content="Transparent definitions, preservation procedures, and data limitations make public accountability credible."><link rel="stylesheet" href="./baltimore-theme.css"></head><body><nav aria-label="Main navigation" class="site-nav"><a class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark"></span>Baltimore Transit Accountability<br><small>Reliable Transit. Stronger Baltimore.</small></a><div class="nav-links"><a href="./index.html">Home</a><a href="./service-accountability.html">Service</a><a href="./research-methodology.html">Research</a><a href="./community-impact.html">Community</a><a href="./child-safety.html">Child Safety</a><a href="./education-impact.html">Education Calculator</a></div></nav><header class="research-hero "><div class="inner"><div class="eyebrow">Baltimore, Maryland · Independent public-interest research</div><h1>Evidence before conclusions.</h1><p>Transparent definitions, preservation procedures, and data limitations make public accountability credible.</p></div></header><main class="research-layout"><article class="research-content"><div class="research-callout"><strong>Research status:</strong> This project is developing its collection and verification methods. No reliability rate should be represented as validated until the underlying analysis is complete.</div><section class="research-section"><h2>Methodology and definitions</h2><h2>Units</h2>
+<p>Use a unique observation key <code>(service_date, trip_id, stop_id, scheduled_time)</code>; include direction, route, and source feed version. Account for GTFS times beyond 24:00 and the America/New_York timezone, DST transitions, service calendars, and exceptions. Do not conflate vehicle observations with passenger boardings.</p>
+<h2>Thresholds</h2>
+<ul>
+<li>Official MTA local-bus OTP benchmark: generally -2 to +7 minutes at scheduled timepoints (check current definition).</li>
+<li>Project significant-delay threshold: &gt;30 minutes. This is an analytical threshold, not a legal standard.</li>
+<li><code>confirmed_cancellation</code>: explicit provider trip cancellation or independently authenticated operational record.</li>
+<li><code>suspected_no_show</code>: rider report or inference requiring verification; never infer solely from missing GPS, predictions, or alerts.</li>
+<li><code>confirmed_pass_by</code>: corroborated passenger/stop evidence; vehicle GPS alone cannot prove boarding denial.</li>
+<li><code>data_unavailable</code>: feed outage, stale timestamps, failed API request, unmatched trip or vehicle; not a service failure.</li>
+</ul>
+<h2>Economic impacts</h2>
+<p>Report separately: (1) observed passenger-delay minutes where supported; (2) modeled time value, using explicit assumptions and sensitivity intervals; (3) self-reported work hours; (4) corroborated lost earnings; (5) accrued leave value; (6) additional actual expenditures; (7) employer incremental costs if documented. Never add overlapping valuations or assume all riders are employed. Avoid extrapolating from a convenience sample to all MTA riders without representative sampling.</p>
+<h2>Quality controls</h2>
+<p>Keep feed snapshot timestamps, checksums, original timezone, query parameters, provider response codes, schema versions, matched trip/stop IDs, observer identity in private records only, and any corrections. Track denominator: scheduled trips, successfully observed trips, and coverage hours. Publish methodology and confidence classification with every statistic.</p>
+</section>
+<section class="research-section"><h2>Evidence and preservation protocol</h2><ol>
+<li>Archive unmodified source bytes, source URL, UTC retrieval time, SHA-256, HTTP status, and collection software version.</li>
+<li>Keep originals immutable; append corrected interpretations as new records, never rewrite raw evidence.</li>
+<li>Maintain a chain-of-custody log of collection, access, export, and transformations. Secure backups with restricted access.</li>
+<li>Keep rider reports private. Obtain informed consent and avoid publishing minors' names, school, precise stops, contact information, and regular travel times.</li>
+<li>Retain original screenshots and messages with timestamps and context; distinguish recollection from contemporaneous observation.</li>
+<li>Preserve failed requests and missing data as data gaps, not bus failures.</li>
+<li>Document corroboration and conflicting evidence; provide an error correction mechanism.</li>
+<li>Before using records in litigation, consult Maryland counsel about admissibility, authentication, discovery, preservation duties, potential public records requests, and statutes of limitations. The dataset alone does not establish legal duty, breach, causation, or damages.</li>
+</ol>
+</section>
+<section class="research-section"><h2>Data dictionary</h2><h2>Rider report columns</h2>
+<ul>
+<li>report_id: random non-identifying unique ID</li>
+<li>incident_date: local YYYY-MM-DD</li>
+<li>route_id, stop_id: GTFS IDs; keep exact stop private for minor-related reports</li>
+<li>scheduled_time_local, observed_time_local: HH:MM or blank</li>
+<li>incident_type: late / no_show_reported / pass_by_reported / canceled_reported</li>
+<li>verification_status: unverified / corroborated / disputed</li>
+<li>work_hours_missed: nonnegative decimal</li>
+<li>documented_wages_lost_usd: dollars, actual wage loss only</li>
+<li>paid_leave_hours_used: hours, not automatically fiscal expenditure</li>
+<li>extra_transport_cost_usd: dollars</li>
+<li>school_minutes_missed: minutes</li>
+<li>evidence_reference: private file ID, not public URL</li>
+<li>notes_private: restricted narrative; no public export</li>
+</ul>
+<p>Do not place minors' names, addresses, or phone numbers in CSV fields.</p>
+</section>
+</article><aside class="research-side"><h2>Explore the project</h2><p>Research, lived experience, and transparent methods—without unsupported claims.</p><a href="./service-accountability.html">Service Accountability</a><a href="./community-impact.html">Community Impact</a><a href="./child-safety.html">Child Safety</a><a href="./education-impact.html">Education Calculator</a><p>Source protocols are preserved in the repository's Markdown documents.</p></aside></main><div class="research-bottom"><a href="./index.html">← Back to the homepage</a><a href="./education-impact.html">Explore the education calculator →</a></div><footer class="research-footer">Baltimore Transit Accountability · Independent research, not an official MTA service. <a href="./index.html">Home</a></footer></body></html>
