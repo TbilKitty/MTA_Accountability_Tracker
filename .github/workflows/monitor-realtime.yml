@@ -1,0 +1,42 @@
+name: Monitor MTA real-time service
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: mta-realtime-monitor
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install GTFS-Realtime protobuf decoder
+        run: pip install 'gtfs-realtime-bindings>=1.0,<2.0' 'protobuf>=4,<7'
+      - name: Collect and summarize predictions
+        env:
+          SWIFTLY_API_KEY: ${{ secrets.SWIFTLY_API_KEY }}
+        run: python scripts/monitor_realtime.py
+      - name: Archive raw snapshots as private-to-repository workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiftly-raw-${{ github.run_id }}
+          path: realtime-raw/*.pb
+          retention-days: 30
+      - name: Commit published aggregate evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/data/realtime-status.json docs/data/predictions-*.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update MTA prediction observations'
+            git push
+          fi
