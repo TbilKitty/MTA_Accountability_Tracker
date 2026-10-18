@@ -1,0 +1,15 @@
+{
+  "last_success_utc": "2026-10-18T17:06:20+00:00",
+  "agency": "mta-maryland",
+  "feed_timestamp_utc": "2026-10-18T17:06:20+00:00",
+  "trip_updates_entities": 1512,
+  "vehicle_positions_entities": 294,
+  "sampled_prediction_count_this_run": 0,
+  "prediction_samples_last_7_days": 0,
+  "predicted_over_5_min_samples_last_7_days": 0,
+  "predicted_over_15_min_samples_last_7_days": 0,
+  "verified_late_arrivals": null,
+  "verified_missed_trips": null,
+  "methodology": "Forecast delay samples; the same trip/stop may appear in multiple polls. Counts are observations, not unique late buses. No-show detection is not enabled.",
+  "latest_prediction_samples": []
+}
