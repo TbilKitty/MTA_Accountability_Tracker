@@ -4,6 +4,7 @@ const el=id=>document.getElementById(id),cfg=()=>window.MTA_SUPABASE_PUBLIC||{};
 let tab='routes',routeData=[],stopData=[],loadedDays=null;
 const n=v=>Number(v)||0,fmt=v=>n(v).toLocaleString('en-US'),pct=(a,b)=>b?100*a/b:0;
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const routeLabel=id=>window.mtaRouteLabel?window.mtaRouteLabel(id):'Route '+id;
 const state=(s,error=false)=>{el('ex-state').textContent=s;el('ex-state').classList.toggle('error',error)};
 async function rpc(name,days){
  const c=cfg(),url=String(c.url||'').replace(/\/+$/,''),key=String(c.publishableKey||'');
@@ -20,13 +21,13 @@ function render(){
  if(tab==='missed'){state('Verification system not yet established.');el('ex-results').innerHTML='<div class="explorer-empty"><h3>No verified missed-service counts yet</h3><p>A missing prediction does not prove a bus failed to arrive. A defensible no-show investigation must compare scheduled service with vehicle evidence and, where available, dispatch records or corroborated rider reports.</p><p>Until those checks exist, this section will not rank routes or stops by no-shows.</p></div>';return}
  const q=el('ex-search').value.trim().toLowerCase(),sort=el('ex-sort').value;
  let arr=tab==='routes'?aggregateRoutes(routeData):aggregateStops(stopData);
- arr=arr.filter(a=>(a.id+' '+(a.route||'')).toLowerCase().includes(q));
+ arr=arr.filter(a=>(a.id+' '+(a.route||'')+' '+routeLabel(tab==='routes'?a.id:a.route)).toLowerCase().includes(q));
  const score=a=>sort==='count'?a.five:sort==='severe'?pct(a.fifteen,a.total):pct(a.five,a.total);
  arr.sort((a,b)=>score(b)-score(a)||b.total-a.total);
  const title=tab==='routes'?'Routes with the highest predicted-delay rates':'Stops with the highest predicted-delay rates';
  const sample=arr.slice(0,30),max=Math.max(1,...sample.map(score));
  const metric=a=>sort==='count'?fmt(a.five):pct(sort==='severe'?a.fifteen:a.five,a.total).toFixed(1)+'%';
- el('ex-results').innerHTML='<h3>'+title+'</h3>'+(!sample.length?'<p class="explorer-empty">No matching observations for this selection.</p>':sample.map(a=>`<div class="explorer-rank"><div><strong>${tab==='routes'?'Route ':'Stop '}${escape(a.id)}</strong><small>${tab==='stops'?'Route '+escape(a.route)+' · ':''}${fmt(a.total)} observations · ${fmt(a.days)} day(s)</small></div><div class="explorer-meter" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*score(a)/max))}%"></span></div><div class="ex-number">${metric(a)}</div></div>`).join(''));
+ el('ex-results').innerHTML='<h3>'+title+'</h3>'+(!sample.length?'<p class="explorer-empty">No matching observations for this selection.</p>':sample.map(a=>`<div class="explorer-rank"><div><strong>${tab==='routes'?escape(routeLabel(a.id)):'Stop '+escape(a.id)}</strong><small>${tab==='stops'?escape(routeLabel(a.route))+' · ':''}${fmt(a.total)} observations · ${fmt(a.days)} day(s)</small></div><div class="explorer-meter" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*score(a)/max))}%"></span></div><div class="ex-number">${metric(a)}</div></div>`).join(''));
  const limit=tab==='routes'?10000:1000;
  const raw=tab==='routes'?routeData:stopData;
  state('Loaded '+fmt(raw.length)+' summary rows from Supabase'+(raw.length>=limit?' (API row limit reached; rankings may be incomplete)':''));
