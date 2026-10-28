@@ -5,6 +5,7 @@
   const state = $('db-state');
   const fmt = n => Number(n || 0).toLocaleString('en-US');
   const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const routeLabel=id=>window.mtaRouteLabel?window.mtaRouteLabel(id):'Route '+id;
   const dt = s => s ? new Date(s).toLocaleString('en-US',{timeZone:'America/New_York',dateStyle:'short',timeStyle:'short'}) : '—';
   let rows = [];
   function status(msg, bad=false) { state.textContent=msg; state.classList.toggle('error',bad); }
@@ -45,7 +46,7 @@
       $('db-routes').textContent=fmt(s.routes);
       $('db-five').textContent=fmt(s.five_plus);
       $('db-fifteen').textContent=fmt(s.fifteen_plus);
-      $('db-body').innerHTML=rows.length ? rows.map(r=>'<tr><td>'+esc(dt(r.observed_at_utc))+'</td><td>'+esc(r.route_id)+'</td><td>'+esc(r.trip_id)+'</td><td>'+esc(r.stop_id)+'</td><td>'+esc(r.predicted_delay_seconds===null?'Unknown':(Number(r.predicted_delay_seconds)/60).toFixed(1)+' min')+'</td><td>'+esc(r.evidence_status)+'</td></tr>').join('') : '<tr><td colspan="6">No observations for these filters.</td></tr>';
+      $('db-body').innerHTML=rows.length ? rows.map(r=>'<tr><td>'+esc(dt(r.observed_at_utc))+'</td><td>'+esc(routeLabel(r.route_id))+'</td><td>'+esc(r.trip_id)+'</td><td>'+esc(r.stop_id)+'</td><td>'+esc(r.predicted_delay_seconds===null?'Unknown':(Number(r.predicted_delay_seconds)/60).toFixed(1)+' min')+'</td><td>'+esc(r.evidence_status)+'</td></tr>').join('') : '<tr><td colspan="6">No observations for these filters.</td></tr>';
       status('Connected to Supabase. Historical summary and recent records loaded.');
     } catch(e) {status('Unable to load Supabase history: '+e.message,true);}
     finally {$('db-refresh').disabled=false;}
