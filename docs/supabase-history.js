@@ -29,7 +29,10 @@
         headers:{'apikey':key,'Content-Type':'application/json'},
         body:JSON.stringify({p_days:Number($('db-days').value),p_route:$('db-route').value.trim()||null})
       });
-      if(!res.ok) throw new Error('Supabase returned HTTP '+res.status+'; verify the public RPC and publishable key');
+      if (!res.ok) {
+        const details = await res.text();
+        throw new Error(`Supabase HTTP ${res.status}: ${details.slice(0, 1000)}`);
+      }
       const result=await res.json();
       rows=Array.isArray(result.records)?result.records:[];
       const s=result.summary||{};
