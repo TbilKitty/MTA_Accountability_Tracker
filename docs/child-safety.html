@@ -1,37 +1,80 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Child Safety &amp; Students | Baltimore Transit Accountability</title><meta name="description" content="Protecting young riders means understanding delays and exposure without overstating what the evidence proves."><link rel="stylesheet" href="./baltimore-theme.css"></head><body><nav aria-label="Main navigation" class="site-nav"><a class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark"></span>Baltimore Transit Accountability<br><small>Reliable Transit. Stronger Baltimore.</small></a><div class="nav-links"><a href="./index.html">Home</a><a href="./service-accountability.html">Service</a><a href="./research-methodology.html">Research</a><a href="./community-impact.html">Community</a><a href="./child-safety.html">Child Safety</a><a href="./education-impact.html">Education Calculator</a></div></nav><header class="research-hero brick"><div class="inner"><div class="eyebrow">Baltimore, Maryland · Independent public-interest research</div><h1>A safe trip to school matters.</h1><p>Protecting young riders means understanding delays and exposure without overstating what the evidence proves.</p></div></header><main class="research-layout"><article class="research-content"><img class="research-student" src="./baltimore-student-rowhouses.png" alt="Illustration of a Baltimore student in a yellow uniform shirt and khaki skirt walking beside brick rowhouses"/><p class="research-credit">Illustration created for this project; not a photograph of an actual student.</p><section class="research-section"><h2>Child safety and transit exposure research protocol</h2><h2>Research question</h2>
-<p>Does unreliable scheduled bus service increase the time minors spend waiting or traveling by an unplanned route, and are any independently documented victimization incidents causally associated with particular transit disruptions?</p>
-<h2>Evidence tiers</h2>
-<ol>
-<li><strong>Observed transit disruption:</strong> timestamped official GTFS/GTFS-RT snapshots or corroborated stop-level observations. Missing GPS is not proof of no-show.</li>
-<li><strong>Reported child exposure:</strong> voluntary, confidential guardian report of additional wait or walking time; distinguish reported from independently corroborated.</li>
-<li><strong>Official victimization data:</strong> published agency statistics or deidentified incidents, retaining exact reporting definition, reporting period, geography and source version.</li>
-<li><strong>Case-specific causal finding:</strong> only after documented evidence of the route/stop, scheduled service failure, victim circumstances, temporal relationship, and plausible counterfactual; legal review required.</li>
-</ol>
-<h2>Critical distinctions</h2>
-<ul>
-<li>Missing-child reports are not equivalent to stranger abductions; trafficking is not equivalent to kidnapping. Runaways and repeated reports can appear in missing-person data.</li>
-<li>A crime occurring near a bus stop does not establish that the victim was waiting for a bus, was a child, or that MTA caused the incident.</li>
-<li>Public datasets may lack victim age, incident time, trip purpose, or precise location; leave unknowns blank. Never impute.</li>
-<li>Do not publish minors' names, precise routines, school-to-home trajectories, exact stop-level child incident details, or personally identifying narratives.</li>
-<li>Public charts should aggregate to broad geography and time bins and suppress small counts (suggested &lt;5). Restricted case data must be encrypted, access-controlled, and separately stored.</li>
-<li>No automated public allegation of kidnapping, trafficking, or preventability based on a time/location match.</li>
-</ul>
-<h2>Analytical design</h2>
-<p>Calculate excess waiting minutes from verified stop-level observations. Compare time windows (e.g. 6–9 AM, 2–6 PM), service days, routes, and neighborhood areas. Report denominators: scheduled trips, observed trips, reported children affected, and missing-data rates. For victimization, analyze separate offense categories, source-specific age criteria, counts and rates; use multi-year trends and sensitivity analyses. Correlation cannot demonstrate causation. A counterfactual claim requires individual case evidence and examination of other causes.</p>
-<h2>Public records research</h2>
-<p>Request deidentified Baltimore City child missing-person/abduction incidents by incident date, hour, general geography, age band, offense classification, and case disposition; ask explicitly whether circumstances involved waiting at transit stops or walking from school. Expect suppression or denial of protected juvenile records. Request school-transportation complaints, MTA missed-trip reports, and stop pass-by complaints separately. Preserve agency response, request text, and any disclosure limitations.</p>
-<h2>Sources to evaluate</h2>
-<ul>
-<li>Baltimore Police open data (NIBRS Group A crime data, from 2022; changed reporting standards 2025): https://www.baltimorepolice.org/crime-stats/open-data</li>
-<li>Maryland State Police Missing Children Clearinghouse statutory reporting: https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&amp;section=9-403</li>
-<li>Maryland Department of Human Services child sex trafficking reports: https://msa.maryland.gov/msa/mdmanual/18dhr/html/dhrr.html</li>
-<li>Governor's Office of Crime Prevention and Policy publications: https://gocpp.maryland.gov/reports-and-publications/</li>
-<li>National Center for Missing &amp; Exploited Children research: https://us.missingkids.org/ourwork/ncmecdata</li>
-</ul>
-<p>No source currently establishes a citywide count of children kidnapped <em>while walking home because a bus failed to arrive</em>. Treat this as an unanswered research question, not a measured statistic.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10223e">
+<title>Getting Baltimore Students to School | Baltimore Transit Accountability</title>
+<meta name="description" content="How reliable public transit supports attendance, classroom learning, and opportunity for Baltimore students.">
+<link rel="stylesheet" href="./baltimore-theme.css">
+<style>
+.student-hero{background:linear-gradient(90deg,rgba(250,247,240,.97) 0%,rgba(250,247,240,.91) 43%,rgba(250,247,240,.30) 100%),url('./baltimore-student-rowhouses.png') center 44%/cover no-repeat;min-height:420px;border-bottom:5px solid var(--gold)}
+.student-hero .hero-inner{padding:80px 24px}
+.student-hero h1{max-width:690px}
+.student-hero p{max-width:600px}
+.story-lead{font-size:1.16rem;line-height:1.85}
+.story-steps{counter-reset:journey;display:grid;gap:18px}
+.story-step{background:white;border:1px solid var(--line);border-radius:14px;padding:25px 28px;box-shadow:0 4px 18px #10223e08;border-left:6px solid var(--gold)}
+.story-step h2{margin:0 0 12px}
+.story-step .step-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--brick)}
+.story-step p{margin-bottom:0}
+.key-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.key-grid article{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
+.key-grid h3{color:var(--navy);margin:0 0 8px}
+.student-quote{border-left:5px solid var(--gold);background:#fff8e9;border-radius:8px;padding:24px;font-size:1.1rem}
+.student-quote p{margin:0}
+.link-row{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:750px){.student-hero{min-height:380px;background:linear-gradient(90deg,rgba(250,247,240,.96),rgba(250,247,240,.76)),url('./baltimore-student-rowhouses.png') center/cover no-repeat}.student-hero .hero-inner{padding:56px 20px}.key-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Main navigation">
+<a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span>BALTIMORE TRANSIT<br>ACCOUNTABILITY</a>
+<div class="nav-links"><a href="./index.html">Home</a><a href="./data-dashboard.html">Data Dashboard</a><a href="./education-impact.html">Education Impact Calculator</a><a href="./child-safety.html" aria-current="page">Students &amp; School</a></div>
+</nav>
+<header class="hero student-hero">
+<div class="hero-inner">
+<div class="eyebrow">Students &amp; Education · Baltimore, Maryland</div>
+<h1>Getting Baltimore Students to School</h1>
+<div class="gold-line"></div>
+<p><strong>A dependable ride is part of a dependable education.</strong> When a student relies on public transit, getting to class begins long before the first bell.</p>
+<div class="actions"><a class="cta" href="#journey">Follow the school-day journey</a><a class="cta secondary" href="./education-impact.html">Explore the education impact</a></div>
+</div>
+</header>
+<main class="wrap">
+<section class="panel">
+<div class="eyebrow">The school day starts at the bus stop</div>
+<h2>Every school day begins with a journey</h2>
+<p class="story-lead">Imagine a Baltimore student leaving home with a backpack, a class schedule, and enough time—on paper—to reach school before the first bell. The route is familiar. The stop is familiar. What the student cannot control is whether the scheduled bus arrives when expected.</p>
+<p>This is an <strong>illustrative narrative</strong>, not a documented account of a particular student or incident. It shows why bus reliability matters to educational access.</p>
 </section>
-<section class="research-section"><h2>Child safety datasets</h2><p><code>child_exposure_reports_template.csv</code>: voluntary reports of added wait/walk time, without names, school names, exact home addresses, or exact locations. <code>guardian_verified</code> refers to confirmation of the reporting guardian, <strong>not</strong> independent confirmation of a bus failure.</p>
-<p><code>child_safety_official_stats_template.csv</code>: one row per official aggregate statistic, preserving source, age definition, offense category, geography, period, count, denominator and caveats. Do not add counts across incompatible sources or definitions.</p>
-<p><code>child_safety_case_links_RESTRICTED_template.csv</code>: confidential research linkage register. Do not publish or commit completed case-level rows to GitHub, even a private repository. Store encrypted offline or in approved restricted storage. <code>causal_evidence_status</code> must default to <code>not_established</code>.</p>
+<div id="journey" class="story-steps">
+<article class="story-step"><div class="step-label">Chapter 01 · Before the first bell</div><h2>Getting to the bus stop</h2><p>The student plans around a published schedule. A dependable bus allows enough time to travel, reach the school building, and prepare for class. When service is unpredictable, students may have to leave home earlier or build extra waiting time into their morning.</p></article>
+<article class="story-step"><div class="step-label">Chapter 02 · When the bus is late</div><h2>Waiting instead of learning</h2><p>A late bus can turn a carefully planned commute into a late arrival. If a student misses classroom instruction, the loss may include the opening lesson, an assignment, or a scheduled assessment. <strong>Waiting time and missed instructional time are different measures</strong>; the project tracks them separately.</p></article>
+<article class="story-step"><div class="step-label">Chapter 03 · When a connection is missed</div><h2>One delay can affect the whole trip</h2><p>For students whose journeys require a transfer, an initial delay may cause a missed connection and a much longer commute. A reliable transportation system should be evaluated from the student's perspective: can they reach school consistently, not merely whether a vehicle operated somewhere along the route?</p></article>
+<article class="story-step"><div class="step-label">Chapter 04 · The household ripple effect</div><h2>Families fill the transportation gap</h2><p>When a bus does not arrive as expected, a parent or caregiver may have to rearrange work, provide a ride, pay for alternative transportation, or coordinate another solution. These impacts should be measured carefully rather than assumed for every incident.</p></article>
+<article class="story-step"><div class="step-label">Chapter 05 · A better way to measure service</div><h2>Make the school commute visible in the data</h2><p>Accountability requires looking at service during school travel hours, particularly missed scheduled trips, significant delays, missed connections, and recurring problems along student-used routes. A rider complaint can help document a problem, but complaint totals alone cannot establish the full extent of unreliable service.</p></article>
+</div>
+<section class="panel" style="margin-top:22px">
+<div class="eyebrow">What matters for education</div><h2>Three outcomes worth measuring</h2>
+<div class="key-grid">
+<article><h3>Attendance</h3><p>Whether transportation problems contribute to late arrivals or missed school days.</p></article>
+<article><h3>Instructional time</h3><p>Minutes of class actually missed, rather than assuming every minute spent waiting is lost classroom time.</p></article>
+<article><h3>Reliability by route</h3><p>Whether scheduled school-hour trips operate consistently enough for students to plan around them.</p></article>
+</div>
 </section>
-</article><aside class="research-side"><h2>Explore the project</h2><p>Research, lived experience, and transparent methods—without unsupported claims.</p><a href="./service-accountability.html">Service Accountability</a><a href="./research-methodology.html">Research & Methods</a><a href="./community-impact.html">Community Impact</a><a href="./education-impact.html">Education Calculator</a><p>Source protocols are preserved in the repository's Markdown documents.</p></aside></main><div class="research-bottom"><a href="./index.html">← Back to the homepage</a><a href="./education-impact.html">Explore the education calculator →</a></div><footer class="research-footer">Baltimore Transit Accountability · Independent research, not an official MTA service. <a href="./index.html">Home</a></footer></body></html>
+<section class="panel">
+<div class="eyebrow">Evidence before conclusions</div><h2>How this project will document the problem</h2>
+<p>Our tracker combines published schedules, available real-time transit observations, service alerts, and carefully classified rider reports. A missing GPS observation is <strong>not</strong> automatically a missed bus. An unverified report is not presented as a confirmed failure. We will distinguish the date, route, stop, scheduled time, observed evidence, and confidence level for each finding.</p>
+<p>Where student travel patterns are studied, analysis should use aggregated or anonymized information rather than identifying individual children or publishing their routines.</p>
+<div class="notice"><strong>Research limitation:</strong> This page describes plausible educational effects and proposed measurements. It does not claim that a particular number of Baltimore students missed class because of MTA service without supporting records.</div>
+</section>
+<section class="panel">
+<h2>From the bus stop to the classroom</h2>
+<div class="student-quote"><p>Reliable transportation is not separate from educational opportunity. For a student who depends on a bus, it is one of the conditions that makes regular attendance possible.</p></div>
+<p>Explore how disruptions can affect school attendance, family time, and household costs, or review the service evidence as the monitoring dataset develops.</p>
+<div class="link-row"><a class="cta" href="./education-impact.html">Education impact calculator</a><a class="cta secondary" href="./data-dashboard.html">View transit data</a></div>
+</section>
+</main>
+<footer class="foot"><strong>Baltimore Transit Accountability</strong><p>Independent public-interest research on reliable transit and educational access.</p><small>Illustrative narrative; no individual student is identified. Evidence classifications and data limitations apply.</small></footer>
+</body></html>
