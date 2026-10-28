@@ -2,6 +2,6 @@
 // Find the project base URL in Supabase > Project Settings > Data API.
 // Find the publishable key in Supabase > Project Settings > API Keys.
 window.MTA_SUPABASE_PUBLIC = {
-  url: 'PASTE_PROJECT_BASE_URL_HERE',
-  publishableKey: 'PASTE_PUBLISHABLE_OR_LEGACY_ANON_KEY_HERE'
+  url: 'https://slbwcppgcziroznannrb.supabase.co',
+  publishableKey: 'sb_publishable_C9DuzBna1-yjwfxsp_A0sg_w18oI4H5'
 };
