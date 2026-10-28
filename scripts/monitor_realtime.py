@@ -116,7 +116,11 @@ def upload_to_supabase(samples):
                 break
             except urllib.error.HTTPError as exc:
                 if attempt == 2 or exc.code not in (429, 500, 502, 503, 504):
-                    raise RuntimeError('Supabase upload failed (HTTP ' + str(exc.code) + ')') from None
+                    details = exc.read().decode("utf-8", errors="replace")
+                    raise RuntimeError(
+                        f"Supabase upload failed (HTTP {exc.code}): "
+                        f"{details[:1000]}"
+                    ) from None
                 time.sleep(2 ** attempt)
             except urllib.error.URLError:
                 if attempt == 2:
