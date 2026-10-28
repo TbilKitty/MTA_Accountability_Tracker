@@ -1,7 +1,7 @@
 """Sample Swiftly GTFS-RT feeds; publish *prediction observations*, not proven arrivals.
 Run in GitHub Actions with SWIFTLY_API_KEY. No secrets are logged or committed.
 """
-import csv, io, json, os, sys, urllib.request, urllib.error, zipfile
+import csv, io, json, os, sys, urllib.request, urllib.error, zipfile, hashlib, time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -42,7 +42,59 @@ def get_schedule():
         # stop_times may be large; only use rows for sampled trip IDs after realtime fetch.
         return trips,routes
 
+def upload_to_supabase(samples):
+    """Upsert forecast observations via Supabase REST, using server-only credentials."""
+    url = os.environ.get('SUPABASE_URL', '').strip().rstrip('/')
+    key = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '').strip()
+    if not url or not key:
+        raise RuntimeError('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY GitHub Actions secret')
+    if not url.startswith('https://') or '/' in url[len('https://'):]:
+        raise ValueError('SUPABASE_URL must be the HTTPS project base URL')
+    rows = []
+    for sample in samples:
+        canonical = json.dumps(sample, sort_keys=True, separators=(',', ':'))
+        rows.append({
+            'observed_at': sample['sampled_at_utc'],
+            'route_id': sample.get('route_id'),
+            'trip_id': sample.get('trip_id'),
+            'stop_id': sample.get('stop_id'),
+            'delay_seconds': sample.get('predicted_delay_seconds'),
+            'observation_type': 'prediction',
+            'evidence_status': 'forecast',
+            'source': 'swiftly_gtfs_rt',
+            'raw_record': sample,
+            'record_hash': hashlib.sha256(canonical.encode('utf-8')).hexdigest(),
+        })
+    endpoint = url + '/rest/v1/mta_observations?on_conflict=record_hash'
+    for offset in range(0, len(rows), 250):
+        batch = rows[offset:offset + 250]
+        payload = json.dumps(batch, separators=(',', ':')).encode('utf-8')
+        for attempt in range(3):
+            req = urllib.request.Request(endpoint, data=payload, method='POST', headers={
+                'apikey': key,
+                'Authorization': 'Bearer ' + key,
+                'Content-Type': 'application/json',
+                'Prefer': 'resolution=ignore-duplicates,return=minimal',
+                'User-Agent': 'BaltimoreTransitAccountability/1.0',
+            })
+            try:
+                with urllib.request.urlopen(req, timeout=60) as response:
+                    if response.status not in (200, 201, 204):
+                        raise RuntimeError('Supabase unexpected HTTP status ' + str(response.status))
+                break
+            except urllib.error.HTTPError as exc:
+                if attempt == 2 or exc.code not in (429, 500, 502, 503, 504):
+                    raise RuntimeError('Supabase upload failed (HTTP ' + str(exc.code) + ')') from None
+                time.sleep(2 ** attempt)
+            except urllib.error.URLError:
+                if attempt == 2:
+                    raise RuntimeError('Supabase upload failed (network error)') from None
+                time.sleep(2 ** attempt)
+    print(f'Supabase upload completed: {len(rows)} forecast observations submitted (duplicates ignored)')
+
 def main():
+    if DATA.exists() and not DATA.is_dir():
+        raise RuntimeError("docs/data exists as a FILE; delete that file in GitHub before running the collector")
     DATA.mkdir(parents=True,exist_ok=True); RAW.mkdir(parents=True,exist_ok=True)
     now=datetime.now(timezone.utc)
     stamp=now.strftime('%Y%m%dT%H%M%SZ')
@@ -80,6 +132,8 @@ def main():
                 'predicted_time_utc':datetime.fromtimestamp(ev.time,timezone.utc).isoformat() if ev.HasField('time') else None,
                 'vehicle_seen_in_same_snapshot':tid in vehicle_trip_ids,
                 'classification':'prediction_only_not_confirmed_arrival'})
+    # Persist first: an upload failure must not be reported as a successful collection.
+    upload_to_supabase(samples)
     # Daily per-sample summaries avoid publishing vehicle location histories or identifiers.
     date=now.strftime('%Y-%m-%d'); daily=DATA/f'predictions-{date}.json'
     previous=[]
