@@ -102,13 +102,17 @@ def upload_to_supabase(samples):
         batch = rows[offset:offset + 250]
         payload = json.dumps(batch, separators=(',', ':')).encode('utf-8')
         for attempt in range(3):
+
             req = urllib.request.Request(endpoint, data=payload, method='POST', headers={
                 'apikey': key,
                 'Authorization': 'Bearer ' + key,
                 'Content-Type': 'application/json',
+                'Content-Profile': 'public',
+                'Accept-Profile': 'public',
                 'Prefer': 'resolution=ignore-duplicates,return=minimal',
                 'User-Agent': 'BaltimoreTransitAccountability/1.0',
             })
+
             try:
                 with urllib.request.urlopen(req, timeout=60) as response:
                     if response.status not in (200, 201, 204):
