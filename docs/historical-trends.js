@@ -4,6 +4,7 @@
   const cfg=window.MTA_SUPABASE_PUBLIC||{};
   const fmt=n=>Number(n||0).toLocaleString('en-US');
   const pct=(n,d)=>d?((100*n/d).toFixed(1)+'%'):'—';
+  const routeLabel=id=>window.mtaRouteLabel?window.mtaRouteLabel(id):'Route '+id;
   const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let data=[],filtered=[];
   const state=(msg,error=false)=>{const el=$('trend-state');el.textContent=msg;el.classList.toggle('error',error);};
@@ -47,7 +48,7 @@
     const days=[...byDay.values()].filter(d=>d.total>0).sort((a,b)=>a.date.localeCompare(b.date));
     $('trend-chart').innerHTML=svgLine(days);
     const routes=[...byRoute.values()].sort((a,b)=>(b.five/b.total)-(a.five/a.total));
-    $('trend-routes-body').innerHTML=routes.length?routes.map(r=>`<tr><td>${safe(r.route)}</td><td>${fmt(r.total)}</td><td>${pct(r.five,r.total)} (${fmt(r.five)})</td><td>${pct(r.fifteen,r.total)} (${fmt(r.fifteen)})</td><td>${fmt(r.hours)}</td></tr>`).join(''):'<tr><td colspan="5">No observations for these filters.</td></tr>';
+    $('trend-routes-body').innerHTML=routes.length?routes.map(r=>`<tr><td>${safe(routeLabel(r.route))}</td><td>${fmt(r.total)}</td><td>${pct(r.five,r.total)} (${fmt(r.five)})</td><td>${pct(r.fifteen,r.total)} (${fmt(r.fifteen)})</td><td>${fmt(r.hours)}</td></tr>`).join(''):'<tr><td colspan="5">No observations for these filters.</td></tr>';
     $('trend-coverage-note').textContent=`${days.length} date(s) with observations in this selection. ${fmt(filtered.length)} route-hour summary rows. Blank dates are not treated as on-time service. Last loaded: ${new Date().toLocaleString('en-US',{timeZone:'America/New_York'})} Eastern.`;
   }
   async function load(){
