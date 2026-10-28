@@ -26,7 +26,12 @@
     try {
       const res=await fetch(url+'/rest/v1/rpc/mta_public_dashboard',{
         method:'POST',
-        headers:{'apikey':key,'Content-Type':'application/json'},
+        headers:{
+          'apikey':key,
+          'Content-Type':'application/json',
+          'Content-Profile':'public',
+          'Accept-Profile':'public'
+        },
         body:JSON.stringify({p_days:Number($('db-days').value),p_route:$('db-route').value.trim()||null})
       });
       if (!res.ok) {
