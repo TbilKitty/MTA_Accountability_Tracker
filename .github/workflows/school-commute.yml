@@ -1,0 +1,72 @@
+name: School commute service watch
+
+# Watches every MTA local bus route through the morning and afternoon school
+# commute (windows in config/settings.json). Each run polls real-time bus
+# positions every 30 seconds for the whole window, then commits aggregate
+# results to docs/data/school-commute/ and timepoint records to
+# data/school-commute-raw/.
+
+on:
+  workflow_dispatch:
+    inputs:
+      window:
+        description: 'am or pm (auto picks by time of day)'
+        required: false
+        default: 'auto'
+      summarize_only:
+        description: 'Only rebuild summary.json from saved data'
+        type: boolean
+        default: false
+  schedule:
+    # Scheduled runs can be delayed or dropped by GitHub, so each window has a
+    # backup trigger. The script exits at once if the window is already saved.
+    - cron: '45 5 * * 1-5'
+      timezone: 'America/New_York'
+    - cron: '15 6 * * 1-5'
+      timezone: 'America/New_York'
+    - cron: '45 13 * * 1-5'
+      timezone: 'America/New_York'
+    - cron: '15 14 * * 1-5'
+      timezone: 'America/New_York'
+
+permissions:
+  contents: write
+
+concurrency:
+  # One run per half-day; a backup trigger waits, then exits if data exists.
+  group: school-commute-${{ github.event.schedule && (contains(github.event.schedule, ' 5 ') || contains(github.event.schedule, ' 6 ')) && 'am' || github.event.schedule && 'pm' || inputs.window }}
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install GTFS-Realtime decoder
+        run: pip install 'gtfs-realtime-bindings>=1.0,<2.0' 'protobuf>=4,<7'
+      - name: Watch the commute window
+        env:
+          SWIFTLY_API_KEY: ${{ secrets.SWIFTLY_API_KEY }}
+        run: |
+          if [ "${{ inputs.summarize_only }}" = "true" ]; then
+            python scripts/school_commute_watch.py --summarize-only
+          else
+            python scripts/school_commute_watch.py --window "${{ inputs.window || 'auto' }}"
+          fi
+      - name: Commit results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/data/school-commute data/school-commute-raw
+          if git diff --cached --quiet; then echo "Nothing new to commit"; exit 0; fi
+          git commit -m "School commute watch: $(date +%F) results"
+          # You may have pushed edits while this ran for hours; rebase and retry.
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 10
+          done
+          echo "::error::Could not push results after 3 attempts"; exit 1
