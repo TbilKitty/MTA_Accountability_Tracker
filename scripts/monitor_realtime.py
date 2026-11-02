@@ -132,6 +132,66 @@ def upload_to_supabase(samples):
                 time.sleep(2 ** attempt)
     print(f'Supabase upload completed: {len(rows)} forecast observations submitted (duplicates ignored)')
 
+LATE_SECONDS=300; EARLY_SECONDS=-120; MAX_DAILY_RECORDS=120000
+CLASSIFICATION='prediction_only_not_confirmed_arrival'
+
+def _delay(x):
+    v=x.get('predicted_delay_seconds')
+    return v if isinstance(v,(int,float)) and not isinstance(v,bool) else None
+
+def _notable(v):
+    return v is not None and (v>=LATE_SECONDS or v<=EARLY_SECONDS)
+
+def load_daily(path):
+    """Read a daily file in either the old (every poll) or compact (one row per trip/stop/event) format."""
+    out={'totals':{'samples':0,'over_5_min':0,'over_15_min':0},'records':{}}
+    if not path.exists():
+        return {**out,'samples':[]}
+    try:
+        d=json.loads(path.read_text())
+    except (ValueError,TypeError):
+        return {**out,'samples':[]}
+    if d.get('format')==2:
+        out['totals']={**out['totals'],**d.get('totals',{})}
+        for x in d.get('samples',[]):
+            out['records'][(x.get('trip_id'),x.get('stop_id'),x.get('event_type'))]=x
+    else:
+        merge_samples(out,d.get('samples',[]))
+    out['samples']=list(out['records'].values())
+    return out
+
+def merge_samples(day,samples):
+    t=day['totals']; recs=day['records']
+    for x in samples:
+        v=_delay(x)
+        t['samples']+=1
+        if v is not None and v>=300: t['over_5_min']+=1
+        if v is not None and v>=900: t['over_15_min']+=1
+        key=(x.get('trip_id'),x.get('stop_id'),x.get('event_type'))
+        prev=recs.get(key)
+        if prev is None and not _notable(v):
+            continue
+        row={k:x.get(k) for k in ('sampled_at_utc','trip_id','route_id','route_name','stop_id','event_type','predicted_delay_seconds','delay_method','predicted_time_utc','vehicle_seen_in_same_snapshot')}
+        if prev:
+            row['first_sampled_at_utc']=prev.get('first_sampled_at_utc') or prev.get('sampled_at_utc')
+            row['polls']=prev.get('polls',1)+1
+            pmax=_delay({'predicted_delay_seconds':prev.get('max_delay_seconds',prev.get('predicted_delay_seconds'))})
+            row['max_delay_seconds']=max([d for d in (pmax,v) if d is not None],default=None)
+        else:
+            row['first_sampled_at_utc']=x.get('sampled_at_utc'); row['polls']=1; row['max_delay_seconds']=v
+        recs[key]=row
+    day['samples']=list(recs.values())
+
+def write_daily(path,date,day):
+    rows=day['samples']
+    if len(rows)>MAX_DAILY_RECORDS:  # safety cap: keep the largest delays/early departures
+        rows=sorted(rows,key=lambda x:abs(_delay({'predicted_delay_seconds':x.get('max_delay_seconds')}) or 0),reverse=True)[:MAX_DAILY_RECORDS]
+    obj={'format':2,'date_utc':date,'source':'Swiftly GTFS-RT trip updates for mta-maryland',
+         'meaning':'Forecast observations, not verified arrivals or no-shows. One row per trip, stop and event per day: the latest forecast, how many 15-minute polls saw it, and the largest predicted delay. Only forecasts at least 5 minutes late or 2 minutes early are listed; totals count every poll. The complete record of every poll is kept in the project database.',
+         'classification':CLASSIFICATION,'thresholds':{'late_seconds':LATE_SECONDS,'early_seconds':EARLY_SECONDS},
+         'totals':day['totals'],'samples':sorted(rows,key=lambda x:str(x.get('sampled_at_utc','')))}
+    path.write_text(json.dumps(obj,separators=(',',':'))+'\n')
+
 def main():
     if DATA.exists() and not DATA.is_dir():
         raise RuntimeError("docs/data exists as a FILE; delete that file in GitHub before running the collector")
@@ -213,32 +273,29 @@ def main():
     print('Feed diagnostics: ' + json.dumps(diagnostics, sort_keys=True))
     # Persist first: an upload failure must not be reported as a successful collection.
     upload_to_supabase(samples)
-    # Daily per-sample summaries avoid publishing vehicle location histories or identifiers.
+    # Daily public files: one row per trip/stop/event per day (latest forecast, plus how many polls saw it
+    # and the worst delay), limited to notable forecasts. Every raw sample is already stored in Supabase,
+    # and exact daily totals are kept so the 7-day counts stay accurate. This keeps each file well under
+    # GitHub's 100 MB limit and small enough for the dashboard to load on a phone.
     date=now.strftime('%Y-%m-%d'); daily=DATA/f'predictions-{date}.json'
-    previous=[]
-    if daily.exists():
-        try: previous=json.loads(daily.read_text()).get('samples',[])
-        except (ValueError,TypeError): previous=[]
-    previous.extend(samples)
-    # bound public daily file; sample at most one prediction per trip/stop per run
-    obj={'date_utc':date,'source':'Swiftly GTFS-RT trip updates for mta-maryland',
-         'meaning':'Forecast observations; delay may be null when no reliable schedule match exists. Not verified arrivals or no-shows.',
-         'samples':previous}
-    daily.write_text(json.dumps(obj,separators=(',',':'))+'\n')
-    history=[]
+    current=load_daily(daily)
+    merge_samples(current, samples)
+    write_daily(daily, date, current)
+    history_totals={'samples':0,'over_5_min':0,'over_15_min':0}; published_days=[]
     for f in sorted(DATA.glob('predictions-????-??-??.json'))[-7:]:
-        try:
-            d=json.loads(f.read_text()); history.extend(d.get('samples',[]))
-        except (ValueError,TypeError): pass
+        d=current if f==daily else load_daily(f)
+        for k in history_totals: history_totals[k]+=d['totals'].get(k,0)
+        published_days.append({'date_utc':f.stem.replace('predictions-',''),'records':len(d['samples']),'bytes':f.stat().st_size})
     latest={'last_success_utc':now.isoformat(timespec='seconds'), 'agency':AGENCY,
       'feed_timestamp_utc':datetime.fromtimestamp(updates.header.timestamp,timezone.utc).isoformat() if updates.header.HasField('timestamp') else None,
       'trip_updates_entities':sum(e.HasField('trip_update') for e in updates.entity),
       'vehicle_positions_entities':sum(e.HasField('vehicle') for e in positions.entity),
       'sampled_prediction_count_this_run':len(samples),
       'samples_without_computable_delay_this_run':sum(x['predicted_delay_seconds'] is None for x in samples),
-      'prediction_samples_last_7_days':len(history),
-      'predicted_over_5_min_samples_last_7_days':sum(isinstance(x.get('predicted_delay_seconds'), (int, float)) and x['predicted_delay_seconds']>=300 for x in history),
-      'predicted_over_15_min_samples_last_7_days':sum(isinstance(x.get('predicted_delay_seconds'), (int, float)) and x['predicted_delay_seconds']>=900 for x in history),
+      'prediction_samples_last_7_days':history_totals['samples'],
+      'predicted_over_5_min_samples_last_7_days':history_totals['over_5_min'],
+      'predicted_over_15_min_samples_last_7_days':history_totals['over_15_min'],
+      'published_days':published_days,
       'verified_late_arrivals':None,'verified_missed_trips':None,
       'methodology':'Forecast observations; delays may be explicit, derived from GTFS stop_times and start_date, or unknown. Same trip/stop may recur across polls. No-show detection is not enabled.',
       'latest_prediction_samples':sorted(samples,key=lambda x: x['predicted_delay_seconds'] if x['predicted_delay_seconds'] is not None else -999999,reverse=True)[:60]}
