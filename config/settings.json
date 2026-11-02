@@ -65,6 +65,15 @@
       "2027-01-15",
       "2027-03-25",
       "2027-06-11"
-    ]
+    ],
+    "arrival_only_windows": [
+      "2026-10-30-am",
+      "2026-11-02-am"
+    ],
+    "_arrival_only_note": "Windows recorded before 2026-11-02 measured arrival, not departure, at timepoints; their 'early' counts are excluded because a bus that arrives early may depart on time.",
+    "drive_past_min_mph": 15,
+    "drive_past_max_gap_seconds": 60,
+    "stop_cost_seconds": 20,
+    "max_cruise_mph": 34
   }
 }
