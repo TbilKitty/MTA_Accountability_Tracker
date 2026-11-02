@@ -39,6 +39,20 @@ MAX_INTERP_SECONDS = int(SC.get('max_interpolation_seconds', 180))
 EARLY_S = int(CONFIG.get('on_time_early_minutes', 2)) * 60
 LATE_S = int(CONFIG.get('on_time_late_minutes', 7)) * 60
 SEVERE_S = int(SC.get('severe_late_minutes', 15)) * 60
+# A bus that averages at least this speed across the poll interval spanning a stop
+# cannot have stopped there to open its doors (15 mph = 6.7 m/s).
+DRIVE_PAST_MPS = float(SC.get('drive_past_min_mph', 15)) * 0.44704
+DRIVE_PAST_MAX_GAP = int(SC.get('drive_past_max_gap_seconds', 60))
+# A real stop costs at least this many seconds (slow down, doors, pull out). Over a longer
+# gap a bus could stop briefly and still average 15 mph, so the bar rises with the gap,
+# assuming a top cruising speed between stops.
+STOP_COST_S = float(SC.get('stop_cost_seconds', 20))
+MAX_CRUISE_MPS = float(SC.get('max_cruise_mph', 34)) * 0.44704
+
+
+def drive_past_threshold(gap):
+    """Lowest average speed over `gap` seconds that rules out a stop."""
+    return max(DRIVE_PAST_MPS, MAX_CRUISE_MPS * (gap - STOP_COST_S) / gap)
 NO_SCHOOL = set(SC.get('no_school_dates', []))
 GTFS_URL = CONFIG.get('gtfs_url', 'https://feeds.mta.maryland.gov/gtfs/local-bus')
 RT_BASE = 'https://api.goswift.ly/real-time/' + CONFIG.get('agency_key', 'mta-maryland')
@@ -46,9 +60,12 @@ UA = 'BaltimoreTransitAccountability/1.0'
 PUBLIC = ROOT / 'docs' / 'data' / 'school-commute'
 RAW = ROOT / 'data' / 'school-commute-raw'
 
+STOP_FIELDS = ['service_date', 'window', 'stop_id', 'route_id', 'route_name', 'visits',
+               'stopped', 'drove_past', 'unclear', 'median_dwell_seconds']
 RAW_FIELDS = ['service_date', 'window', 'route_id', 'route_name', 'trip_id', 'direction_id',
               'stop_id', 'stop_sequence', 'timepoint', 'scheduled_local', 'actual_local',
-              'delay_seconds', 'outcome', 'time_method', 'uncertainty_seconds']
+              'delay_seconds', 'outcome', 'time_method', 'uncertainty_seconds',
+              'arrival_delay_seconds', 'stop_behavior', 'dwell_seconds']
 
 
 # ---------------------------------------------------------------- utilities
@@ -147,45 +164,103 @@ def load_schedule(gtfs_zip_bytes, day, win_start_s, win_end_s):
 
 # ------------------------------------------------------- real-time tracking
 class TripTracker:
-    """Turns a stream of vehicle positions into per-stop passage times."""
+    """Turns a stream of vehicle positions into per-stop times and stop behavior.
+
+    For every stop a bus passes it records arrival, departure and whether it
+    stopped:
+      * stopped     - the feed reported the bus stopped at that stop
+      * drove_past  - between two position reports that bracket the stop, the
+                      bus averaged >= 15 mph and was never reported stopped
+                      there; a bus that pulled in and opened its doors cannot
+                      average that over the interval
+      * unclear     - anything else (slow traffic, long gaps, no positions)
+    On-time status uses DEPARTURE from a timepoint (as MTA does); arrival is
+    kept separately so "arrived early and left without waiting" can be counted.
+    """
 
     def __init__(self, trip):
         self.trip = trip
-        self.reached = {}          # stop index -> (epoch seconds, method, uncertainty)
+        self.reached = {}          # stop index -> (arrival epoch, method, uncertainty)
+        self.departed = {}         # stop index -> (departure epoch, method, uncertainty)
+        self.behavior = {}         # stop index -> 'stopped' | 'drove_past' | 'unclear'
+        self.at_stop = None        # [index, last epoch seen stopped there]
         self.last_idx = None       # highest stop index known reached
-        self.last_t = None
+        self.last_t = None         # latest observation time (bus not yet past last_idx + 1)
+        self.last_pos = None       # (lat, lon) at last_t
         self.seen = False
         self.canceled = False
         self.skipped = set()       # stop indexes the feed marked SKIPPED
 
-    def observe(self, idx, stopped_at, t):
-        """idx: index of the vehicle's current/next stop. stopped_at: at that stop now."""
+    def _left_stop(self, t):
+        """The bus was last seen stopped at at_stop and is now past it: record departure."""
+        if self.at_stop and self.at_stop[0] not in self.departed:
+            i, seen_t = self.at_stop
+            self.departed[i] = (round((seen_t + t) / 2), 'left_stop', t - seen_t)
+        self.at_stop = None
+
+    def _passed_without_report(self, t, pos):
+        """Classify stops passed between the last observation and this one without a stop report."""
+        if self.last_pos is None or pos is None or self.last_t is None:
+            return 'unclear'
+        gap = t - self.last_t
+        if gap <= 0 or gap > DRIVE_PAST_MAX_GAP:
+            return 'unclear'
+        speed = haversine_m(self.last_pos[0], self.last_pos[1], pos[0], pos[1]) / gap
+        return 'drove_past' if speed >= drive_past_threshold(gap) else 'unclear'
+
+    def observe(self, idx, stopped_at, t, pos=None):
+        """idx: index of the vehicle's current/next stop. stopped_at: at that stop now. pos: (lat, lon)."""
         self.seen = True
         upto = idx if stopped_at else idx - 1
         if self.last_idx is None and upto < 0:
             # Approaching the first stop: a baseline, so the first passage gets a tight time.
-            self.last_idx, self.last_t = -1, t
+            self.last_idx, self.last_t, self.last_pos = -1, t, pos
             return
         if self.last_idx is None:
             # First sighting: earlier stops were passed at an unknown time.
             if stopped_at:
                 self.reached[idx] = (t, 'stopped_at', 0)
-            self.last_idx, self.last_t = upto, t
+                self.behavior[idx] = 'stopped'
+                self.at_stop = [idx, t]
+            self.last_idx, self.last_t, self.last_pos = upto, t, pos
             return
         if upto < self.last_idx:
             return  # GPS jitter backwards; ignore
         if upto == self.last_idx:
-            # Still hasn't passed the next stop as of t: tighten the bound.
-            self.last_t = max(self.last_t, t)
+            # No new stop reached. Either still dwelling, or just pulled away.
+            if stopped_at and self.at_stop and self.at_stop[0] == idx:
+                self.at_stop[1] = t
+            elif not stopped_at:
+                self._left_stop(t)
+            if t >= self.last_t:
+                self.last_t, self.last_pos = t, pos or self.last_pos
             return
+        self._left_stop(t)
+        unreported = self._passed_without_report(t, pos)
         span = t - self.last_t
         steps = upto - self.last_idx + (0 if stopped_at else 1)
         for k, i in enumerate(range(self.last_idx + 1, upto + 1), start=1):
             if stopped_at and i == upto:
-                self.reached[i] = (t, 'stopped_at', 0)
+                # It pulled in sometime since the last report; the midpoint is the best estimate.
+                arrived = round(self.last_t + span * (k - 0.5) / steps) if span <= DRIVE_PAST_MAX_GAP else t
+                self.reached[i] = (arrived, 'stopped_at', t - arrived)
+                self.behavior[i] = 'stopped'
+                self.at_stop = [i, t]
             else:
                 self.reached[i] = (round(self.last_t + span * k / steps), 'interpolated', span)
-        self.last_idx, self.last_t = upto, t
+                self.behavior[i] = unreported
+        self.last_idx, self.last_t, self.last_pos = upto, t, pos or self.last_pos
+
+    def time_at(self, i):
+        """Departure if seen, else arrival (last stop of a trip, or never seen leaving)."""
+        if i in self.departed:
+            return self.departed[i]
+        return self.reached.get(i)
+
+    def dwell(self, i):
+        if i in self.departed and i in self.reached and self.behavior.get(i) == 'stopped':
+            return max(0, self.departed[i][0] - self.reached[i][0])
+        return None
 
 
 def vehicle_stop_index(v, trip, stops_ll, after_idx):
@@ -246,7 +321,8 @@ class Watcher:
             if loc is None:
                 tracker.seen = True
                 continue
-            tracker.observe(loc[0], loc[1], v.timestamp or header_t)
+            pos = (v.position.latitude, v.position.longitude) if v.HasField('position') else None
+            tracker.observe(loc[0], loc[1], v.timestamp or header_t, pos)
         if with_trip_updates:
             try:
                 tu = rt.FeedMessage()
@@ -279,6 +355,36 @@ class Watcher:
         after = [t for t in self.polls_ok if t >= epoch]
         return bool(before and after and epoch - before[-1] <= GAP_SECONDS and after[0] - epoch <= GAP_SECONDS)
 
+    def stop_behavior_totals(self, win_start_s, win_end_s):
+        """Per stop and route: how often buses stopped vs drove past, for every stop in the window."""
+        midnight = datetime.combine(self.day, datetime.min.time(), TZ).timestamp()
+        totals = {}
+        for tr in self.trackers.values():
+            trip = tr.trip
+            for i, s in enumerate(trip['stops']):
+                b = tr.behavior.get(i)
+                if not b or i not in tr.reached:
+                    continue
+                t = tr.reached[i][0]
+                if not (midnight + win_start_s <= t <= midnight + win_end_s + GRACE_MIN * 60):
+                    continue
+                key = (s['stop_id'], trip['route_id'])
+                row = totals.setdefault(key, {'service_date': self.day.isoformat(), 'window': self.window,
+                                              'stop_id': s['stop_id'], 'route_id': trip['route_id'],
+                                              'route_name': trip['route_name'], 'visits': 0, 'stopped': 0,
+                                              'drove_past': 0, 'unclear': 0, 'dwell_samples': []})
+                row['visits'] += 1
+                row[b] += 1
+                d = tr.dwell(i)
+                if d is not None:
+                    row['dwell_samples'].append(d)
+        out = []
+        for row in totals.values():
+            ds = row.pop('dwell_samples')
+            row['median_dwell_seconds'] = round(statistics.median(ds)) if ds else ''
+            out.append(row)
+        return out
+
     def results(self, win_start_s, win_end_s):
         """One row per scheduled stop event in the window (timepoints, or all timed stops)."""
         midnight = datetime.combine(self.day, datetime.min.time(), TZ).timestamp()
@@ -296,7 +402,8 @@ class Watcher:
                        'route_id': trip['route_id'], 'route_name': trip['route_name'], 'trip_id': tid,
                        'direction_id': trip['direction_id'], 'stop_id': s['stop_id'], 'stop_sequence': s['seq'],
                        'timepoint': int(s['timepoint']), 'scheduled_local': local_clock(self.day, s['sched']),
-                       'actual_local': '', 'delay_seconds': '', 'time_method': '', 'uncertainty_seconds': ''}
+                       'actual_local': '', 'delay_seconds': '', 'time_method': '', 'uncertainty_seconds': '',
+                       'arrival_delay_seconds': '', 'stop_behavior': tr.behavior.get(i, ''), 'dwell_seconds': ''}
                 if not self.covered(sched_epoch):
                     row['outcome'] = 'not_monitored'
                 elif tr.canceled and not tr.seen:
@@ -305,9 +412,14 @@ class Watcher:
                     row['outcome'] = 'skipped'
                 elif not tr.seen:
                     row['outcome'] = 'no_realtime_record'
-                elif i in tr.reached:
-                    t, method, unc = tr.reached[i]
+                elif tr.time_at(i) is not None:
+                    t, method, unc = tr.time_at(i)
                     delay = round(t - sched_epoch)
+                    if i in tr.reached and i < len(trip['stops']) - 1:
+                        # Final stop is drop-off only, so "left without waiting" does not apply there.
+                        row['arrival_delay_seconds'] = round(tr.reached[i][0] - sched_epoch)
+                    d = tr.dwell(i)
+                    row['dwell_seconds'] = '' if d is None else d
                     row.update(actual_local=datetime.fromtimestamp(t, TZ).strftime('%Y-%m-%d %H:%M:%S'),
                                delay_seconds=delay, time_method=method, uncertainty_seconds=unc)
                     if unc > MAX_INTERP_SECONDS:
@@ -389,10 +501,39 @@ def read_raw(path):
         return list(csv.DictReader(f))
 
 
+def behavior_summary(rows):
+    visits = sum(int(r['visits']) for r in rows)
+    stopped = sum(int(r['stopped']) for r in rows)
+    drove = sum(int(r['drove_past']) for r in rows)
+    unclear = sum(int(r['unclear']) for r in rows)
+    dwells = [int(r['median_dwell_seconds']) for r in rows if str(r.get('median_dwell_seconds', '')).strip()]
+    return {'stop_visits_observed': visits, 'stopped': stopped, 'drove_past': drove, 'unclear': unclear,
+            'pct_stopped': pct(stopped, visits), 'pct_drove_past': pct(drove, visits), 'pct_unclear': pct(unclear, visits),
+            'typical_dwell_seconds': round(statistics.median(dwells)) if dwells else None}
+
+
+def early_arrival_summary(events):
+    """Of buses that reached a timepoint 2+ min early, how many left early anyway (did not wait)."""
+    early = waited = left = 0
+    for e in events:
+        a, d = str(e.get('arrival_delay_seconds', '')).strip(), str(e.get('delay_seconds', '')).strip()
+        if not a or not d or e.get('outcome') in ('observed_imprecise',):
+            continue
+        if int(a) < -EARLY_S:
+            early += 1
+            if int(d) < -EARLY_S:
+                left += 1
+            else:
+                waited += 1
+    return {'arrived_2plus_min_early': early, 'left_without_waiting': left, 'waited_until_scheduled_time': waited,
+            'pct_left_without_waiting': pct(left, early)}
+
+
 def write_summary():
     """Recompute the public cumulative summary from every archived window."""
-    days, all_events = [], []
-    for path in sorted(RAW.glob('*.csv.gz')):
+    days, all_events, all_behavior = [], [], []
+    departure_windows = 0
+    for path in sorted(p for p in RAW.glob('*.csv.gz') if not p.name.endswith('-stops.csv.gz')):
         events = read_raw(path)
         if not events:
             continue
@@ -400,9 +541,24 @@ def write_summary():
         meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
         if not meta.get('school_day', True):
             continue
+        tag = path.name.replace('.csv.gz', '')
+        if tag in SC.get('arrival_only_windows', []):
+            # Recorded before departures were measured: an early ARRIVAL may have left on time,
+            # so "early" is unknown there. Lateness, cancellations and missing trips still count.
+            for e in events:
+                if e['outcome'] == 'early':
+                    e['outcome'] = 'observed_imprecise'
+        if tag in SC.get('excluded_windows', []):
+            continue
+        if tag not in SC.get('arrival_only_windows', []):
+            departure_windows += 1
         all_events.extend(events)
+        stops_path = RAW / f'{tag}-stops.csv.gz'
+        window_behavior = read_raw(stops_path) if stops_path.exists() else []
+        all_behavior.extend(window_behavior)
         days.append({'service_date': events[0]['service_date'], 'window': events[0]['window'],
-                     'coverage': meta.get('coverage', {}), **trip_counts(events), **summarize_events(events)})
+                     'coverage': meta.get('coverage', {}), **trip_counts(events), **summarize_events(events),
+                     **({'pct_drove_past': behavior_summary(window_behavior)['pct_drove_past']} if window_behavior else {})})
     by_route = defaultdict(list)
     by_stop = defaultdict(list)
     for e in all_events:
@@ -410,6 +566,14 @@ def write_summary():
         by_stop[e['stop_id']].append(e)
     routes = [{'route_id': rid, 'route_name': name, **trip_counts(ev), **summarize_events(ev)}
               for (rid, name), ev in by_route.items()]
+    beh_route, beh_stop = defaultdict(list), defaultdict(list)
+    for r in all_behavior:
+        beh_route[r['route_id']].append(r)
+        beh_stop[r['stop_id']].append(r)
+    for r in routes:
+        b = behavior_summary(beh_route.get(r['route_id'], []))
+        r['pct_drove_past'] = b['pct_drove_past']
+        r['stop_visits_observed'] = b['stop_visits_observed']
     routes.sort(key=lambda r: (r['pct_failed_15min_or_missing'] or 0), reverse=True)
     stop_ll = {}
     names_path = PUBLIC / 'stops.json'
@@ -424,6 +588,15 @@ def write_summary():
         stops.append({'stop_id': sid, 'stop_name': info.get('name', ''), 'lat': info.get('lat'), 'lon': info.get('lon'),
                       'routes': sorted({e['route_name'] for e in ev}), **s})
     stops.sort(key=lambda r: (r['pct_failed_15min_or_missing'] or 0), reverse=True)
+    driven_past = []
+    for sid, rows in beh_stop.items():
+        b = behavior_summary(rows)
+        if b['stop_visits_observed'] < 20:
+            continue  # too few bus visits to judge one stop
+        info = stop_ll.get(sid, {})
+        driven_past.append({'stop_id': sid, 'stop_name': info.get('name', ''), 'lat': info.get('lat'), 'lon': info.get('lon'),
+                            'routes': sorted({r['route_name'] for r in rows}), **b})
+    driven_past.sort(key=lambda r: (r['pct_drove_past'] or 0, r['drove_past']), reverse=True)
     summary = {
         'generated_utc': datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'definitions': {
@@ -434,14 +607,26 @@ def write_summary():
                                   'but a bus with failed tracking equipment looks the same',
             'pct_failed_15min_or_missing': 'scheduled stop visits that were 15+ min late, canceled, or had no record, '
                                            'out of all monitored visits with an outcome',
+            'drove_past': f'between two position reports that bracket the stop (normally about 30 seconds apart), the bus averaged at least '
+                          f'{SC.get("drive_past_min_mph", 15)} mph (more when reports are farther apart) and MTA\'s feed never '
+                          'reported it stopped there. A bus that slows, opens its doors and pulls out cannot average that speed '
+                          'over the interval, so this is a conservative count',
+            'stopped': "MTA's feed reported the bus stopped at that stop",
+            'left_without_waiting': 'reached a timepoint 2+ minutes before its scheduled time and left 2+ minutes early '
+                                    'instead of waiting for the scheduled departure',
             'windows_local_time': WINDOWS,
         },
         'school_windows_counted': len(days),
+        'windows_measuring_early_departures': departure_windows,
         'overall': {**trip_counts(all_events), **summarize_events(all_events)},
         'by_window_type': {w: summarize_events([e for e in all_events if e['window'] == w]) for w in WINDOWS},
         'days': days,
         'routes': routes,
         'stops_worst_100': stops[:100],
+        'stop_behavior': behavior_summary(all_behavior),
+        'stop_behavior_by_window_type': {w: behavior_summary([r for r in all_behavior if r['window'] == w]) for w in WINDOWS},
+        'early_arrivals': early_arrival_summary(all_events),
+        'stops_most_driven_past_100': driven_past[:100],
     }
     PUBLIC.mkdir(parents=True, exist_ok=True)
     (PUBLIC / 'summary.json').write_text(json.dumps(summary, indent=1) + '\n')
@@ -517,6 +702,11 @@ def main(argv=None, fetch_static=None, fetch_rt=None, clock=time.time, sleep=tim
         w = csv.DictWriter(f, fieldnames=RAW_FIELDS)
         w.writeheader()
         w.writerows(events)
+    behavior = watcher.stop_behavior_totals(win_start_s, win_end_s)
+    with gzip.open(RAW / f'{tag}-stops.csv.gz', 'wt', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=STOP_FIELDS)
+        w.writeheader()
+        w.writerows(behavior)
     coverage = {
         'collection_started_local': datetime.fromtimestamp(started, TZ).isoformat(timespec='seconds'),
         'window_start_local': WINDOWS[window][0], 'window_end_local': WINDOWS[window][1],
