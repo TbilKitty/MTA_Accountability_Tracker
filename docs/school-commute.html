@@ -33,7 +33,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 <main class="sc-wrap">
   <p class="sc-kicker">School commute report · every MTA local bus route</p>
   <h1 style="font-size:clamp(1.9rem,4vw,3rem);margin:8px 0 12px">Are Baltimore's buses getting students to school?</h1>
-  <p class="sc-lede">On every school day, this project records where every MTA local bus is, every 30 seconds, through the morning and afternoon school commutes. It then compares what each bus actually did with the published schedule. No student is tracked; results are reported by route and stop.</p>
+  <p class="sc-lede">On every school day, this project records where every MTA local bus is, every 30 seconds, through the morning and afternoon school commutes. It then compares what each bus actually did with the published schedule, including whether it stopped. No student is tracked; results are reported by route and stop.</p>
   <div class="sc-status" id="status">Loading results…</div>
 
   <section id="headline" hidden>
@@ -56,6 +56,12 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <div class="sc-table-wrap"><table class="sc" id="stops"></table></div>
   </section>
 
+  <section class="sc-section" id="pass-section" hidden>
+    <h2>Stops where buses most often drove past without stopping</h2>
+    <p class="sc-note">Every stop on every route during school commutes, not only timepoints. Stops with at least 20 bus visits recorded.</p>
+    <div class="sc-table-wrap"><table class="sc" id="passes"></table></div>
+  </section>
+
   <section class="sc-section" id="days-section" hidden>
     <h2>Day by day</h2>
     <div class="sc-table-wrap"><table class="sc" id="days"></table></div>
@@ -66,7 +72,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <dl class="sc-defs" id="defs">
       <dt>What counts as on time</dt><dd>MTA's own standard: from 2 minutes early to 7 minutes late, measured at scheduled timepoints.</dd>
     </dl>
-    <p class="sc-note"><strong>What this data can and cannot show.</strong> Arrival times come from MTA's own real-time feed, recorded every 30 seconds, so a single time can be off by up to about 30 seconds. Times less certain than 3 minutes are left out of the on-time figures. A trip with no real-time record is very likely a missed trip, but a bus with broken tracking equipment would look the same, so the two are reported separately from trips MTA itself marked canceled. Periods when the feed was down are marked "not monitored" and excluded. GPS cannot show whether a bus passed a waiting student without stopping; pass-ups need rider reports. Only school days on the Baltimore City Public Schools calendar are counted, and afternoon results skip early-dismissal days.</p>
+    <p class="sc-note"><strong>What this data can and cannot show.</strong> Arrival times come from MTA's own real-time feed, recorded every 30 seconds, so a single time can be off by up to about 30 seconds. On-time status is judged when a bus leaves a timepoint, as MTA does, so a bus that pulls in early and waits is not counted as early. (The October 30 and November 2 morning windows recorded only arrivals, so early departures are not counted for those two windows.) Times less certain than 3 minutes are left out of the on-time figures. A trip with no real-time record is very likely a missed trip, but a bus with broken tracking equipment would look the same, so the two are reported separately from trips MTA itself marked canceled. Periods when the feed was down are marked "not monitored" and excluded. <strong>Drive-pasts:</strong> a bus is counted as driving past a stop only when its speed across the stop rules out a stop, so slow drive-pasts in traffic are left out and the real number is likely higher. A bus may skip a stop when no one is waiting or has requested it, and the tracker cannot see riders, so a drive-past is not by itself proof that a student was left behind. Rider reports of being passed up supply that. Only school days on the Baltimore City Public Schools calendar are counted, and afternoon results skip early-dismissal days.</p>
     <p class="sc-note">Download: <a href="./data/school-commute/summary.json">summary.json</a> (all figures on this page) · <a href="https://github.com/tbilkitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">per-trip timepoint records</a> (one file per commute window).</p>
   </section>
 </main>
@@ -123,11 +129,24 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       $('cards').append(
         card(fmtPct(o.pct_on_time), 'of measured stop visits were on time', false, `Morning ${fmtPct(am.pct_on_time)} · Afternoon ${fmtPct(pm.pct_on_time)}`),
         card(fmtPct(o.pct_late_over_15_min), 'were 15+ minutes late', true, `Morning ${fmtPct(am.pct_late_over_15_min)} · Afternoon ${fmtPct(pm.pct_late_over_15_min)}`),
-        card(fmtPct(o.pct_early), 'left 2+ minutes early', true, 'An early bus can leave a student who arrived on time'),
-        card(fmtN(o.trips_canceled_by_mta), 'scheduled trips MTA marked canceled', true, `of ${fmtN(o.scheduled_trips)} scheduled during school commutes`),
+        (s.windows_measuring_early_departures ? card(fmtPct(o.pct_early), 'left 2+ minutes early', true, 'An early bus can leave a student who arrived on time')
+          : card('—', 'left 2+ minutes early', false, 'Early departures are measured from November 4 on')),
+        card(fmtN(o.trips_canceled_by_mta), 'scheduled trips MTA marked canceled', true, `of ${fmtN(o.scheduled_trips - o.trips_not_monitored)} scheduled trips monitored`),
         card(fmtN(o.trips_no_realtime_record), 'scheduled trips never appeared in MTA\'s real-time feed', true, 'Likely missed; see limits below'),
         card(fmtPct(o.pct_failed_15min_or_missing), 'of scheduled stop visits were 15+ min late, canceled or missing', true)
       );
+      const sb = s.stop_behavior || {}, ea = s.early_arrivals || {};
+      if (sb.stop_visits_observed) {
+        const sam = (s.stop_behavior_by_window_type || {}).am || {}, spm = (s.stop_behavior_by_window_type || {}).pm || {};
+        $('cards').append(card(fmtPct(sb.pct_drove_past), 'of bus visits to a stop: the bus drove past without stopping', true,
+          `${fmtN(sb.drove_past)} of ${fmtN(sb.stop_visits_observed)} visits · Morning ${fmtPct(sam.pct_drove_past)} · Afternoon ${fmtPct(spm.pct_drove_past)}`));
+      } else {
+        $('cards').append(card('—', 'of bus visits to a stop: the bus drove past without stopping', false, 'Measured from November 4 on'));
+      }
+      if (ea.arrived_2plus_min_early) {
+        $('cards').append(card(fmtPct(ea.pct_left_without_waiting), 'of buses that reached a timepoint early left without waiting', true,
+          `${fmtN(ea.left_without_waiting)} of ${fmtN(ea.arrived_2plus_min_early)} early arrivals left 2+ min ahead of schedule`));
+      }
       $('basis').textContent = `Based on ${fmtN(o.measured_stop_events)} measured timepoint visits by ${fmtN(o.trips_operated)} bus trips, plus ${fmtN(o.canceled_by_mta + o.no_realtime_record)} visits by trips that were canceled or never appeared. Median lateness: ${o.median_delay_min ?? '—'} min.`;
       $('headline').hidden = false;
 
@@ -144,6 +163,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         {key: 'trips_canceled_by_mta', label: 'Canceled', fmt: fmtN},
         {key: 'trips_no_realtime_record', label: 'No record', fmt: fmtN},
         {key: 'pct_failed_15min_or_missing', label: 'Late 15+ / canceled / missing', bar: true},
+        {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct},
         {key: 'measured_stop_events', label: 'Visits measured', fmt: fmtN}];
       const rerender = table($('routes'), routeCols, () => {
         const q = $('route-q').value.trim().toLowerCase(), min = Number($('route-min').value);
@@ -162,6 +182,17 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         $('stops-section').hidden = false;
       }
 
+      if ((s.stops_most_driven_past_100 || []).length) {
+        table($('passes'), [
+          {key: 'stop_name', label: 'Stop', wrap: true, fmt: (v, r) => v || r.stop_id},
+          {key: 'routes', label: 'Routes', wrap: true, fmt: v => v.join(', ')},
+          {key: 'pct_drove_past', label: 'Drove past', bar: true},
+          {key: 'drove_past', label: 'Times', fmt: fmtN},
+          {key: 'stop_visits_observed', label: 'Bus visits', fmt: fmtN},
+          {key: 'typical_dwell_seconds', label: 'Typical stop length', fmt: v => v == null ? '—' : v + ' sec'}], () => s.stops_most_driven_past_100.slice(0, 25));
+        $('pass-section').hidden = false;
+      }
+
       table($('days'), [
         {key: 'service_date', label: 'Date'},
         {key: 'window', label: 'Commute', fmt: v => v === 'am' ? 'Morning' : 'Afternoon'},
@@ -170,6 +201,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         {key: 'pct_late_over_15_min', label: '15+ min late', fmt: fmtPct},
         {key: 'trips_canceled_by_mta', label: 'Canceled', fmt: fmtN},
         {key: 'trips_no_realtime_record', label: 'No record', fmt: fmtN},
+        {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct},
         {key: 'trips_not_monitored', label: 'Not monitored (feed down)', fmt: fmtN}], () => s.days.slice().reverse());
       $('days-section').hidden = false;
     })
