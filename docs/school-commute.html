@@ -13,6 +13,13 @@
 .sc-card .num.bad{color:var(--brick)}
 .sc-card .lbl{font-size:.88rem;color:#3f5167;margin-top:6px}
 .sc-split{font-size:.82rem;color:#5b6b7d;margin-top:6px}
+.sc-feature{grid-column:1/-1;display:grid;grid-template-columns:minmax(200px,auto) 1fr;gap:6px 28px;align-items:center;background:var(--navy);color:#fff;border:0;border-radius:12px;padding:22px 26px}
+.sc-feature .num{font:700 3.2rem/1 'Libre Baskerville',Georgia,serif;color:var(--gold)}
+.sc-feature .lbl{font-size:1.05rem;color:#fff;margin:0;font-weight:600}
+.sc-feature .sc-split{color:#d5dce6;font-size:.86rem}
+.sc-feature ul{margin:8px 0 0;padding-left:18px;font-size:.86rem;color:#e7ecf2}
+.sc-feature .compare{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.18);padding-top:10px;margin-top:6px;font-size:.88rem;color:#d5dce6}
+@media(max-width:640px){.sc-feature{grid-template-columns:1fr}}
 .sc-section{margin:38px 0 0}
 .sc-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fffefa}
 table.sc{border-collapse:collapse;width:100%;font-size:.9rem}
@@ -126,8 +133,28 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       $('status').textContent = `${n} school-commute window${n === 1 ? '' : 's'} recorded. Last updated ${new Date(s.generated_utc).toLocaleString('en-US', {timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'})} (Baltimore time).` +
         (n < 20 ? ' Early results: figures will settle as more school days are recorded.' : '');
       const am = s.by_window_type.am || {}, pm = s.by_window_type.pm || {};
+      const fs = s.full_service || {};
+      if (fs.stop_visits_judged) {
+        const f = el('div', undefined, 'sc-card sc-feature');
+        const left = el('div'); left.append(el('div', fmtPct(fs.pct_full_service), 'num'));
+        const right = el('div');
+        right.append(el('p', 'of scheduled stops got full service: the bus came, it was on time, and it stopped', 'lbl'),
+          el('div', `${fmtN(fs.full_service)} of ${fmtN(fs.stop_visits_judged)} scheduled timepoint visits. At most ${fmtPct(fs.pct_full_service_upper_bound)} if every on-time bus whose stop was unclear did stop.`, 'sc-split'));
+        const ul = el('ul');
+        [[fs.failed_canceled_or_missing, 'trip canceled or never appeared'],
+         [fs.failed_late_over_7_min, 'bus came 7+ minutes late'],
+         [fs.failed_left_early, 'bus left 2+ minutes early'],
+         [fs.failed_on_time_but_drove_past, 'bus was on time but drove past without stopping'],
+         [fs.failed_skipped_by_mta, 'MTA flagged the stop as skipped']]
+          .forEach(([v, t]) => ul.append(el('li', `${fmtN(v)}: ${t}`)));
+        right.append(el('div', 'Why the rest fell short:', 'sc-split'), ul);
+        f.append(left, right);
+        const n = s.windows_measuring_full_service || 0;
+        f.append(el('div', `The usual on-time rate counts only buses that showed up. Over the same ${n === 1 ? 'commute window' : n + ' commute windows'} it was ${fmtPct(s.pct_on_time_full_service_windows)}; this figure also counts the buses that never came, came late, left early, or drove past. Only windows that recorded whether buses stopped are included (afternoons from November 2); mornings are added as they are recorded.`, 'compare'));
+        $('cards').append(f);
+      }
       $('cards').append(
-        card(fmtPct(o.pct_on_time), 'of measured stop visits were on time', false, `Morning ${fmtPct(am.pct_on_time)} · Afternoon ${fmtPct(pm.pct_on_time)}`),
+        card(fmtPct(o.pct_on_time), 'of buses that showed up were on time (canceled and missing trips not counted)', false, `Morning ${fmtPct(am.pct_on_time)} · Afternoon ${fmtPct(pm.pct_on_time)}`),
         card(fmtPct(o.pct_late_over_15_min), 'were 15+ minutes late', true, `Morning ${fmtPct(am.pct_late_over_15_min)} · Afternoon ${fmtPct(pm.pct_late_over_15_min)}`),
         (s.windows_measuring_early_departures ? card(fmtPct(o.pct_early), 'left 2+ minutes early', true, 'An early bus can leave a student who arrived on time')
           : card('—', 'left 2+ minutes early', false, 'Early departures are measured from November 4 on')),
@@ -163,6 +190,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         {key: 'trips_canceled_by_mta', label: 'Canceled', fmt: fmtN},
         {key: 'trips_no_realtime_record', label: 'No record', fmt: fmtN},
         {key: 'pct_failed_15min_or_missing', label: 'Late 15+ / canceled / missing', bar: true},
+        {key: 'pct_full_service', label: 'Full service', fmt: fmtPct},
         {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct},
         {key: 'measured_stop_events', label: 'Visits measured', fmt: fmtN}];
       const rerender = table($('routes'), routeCols, () => {
@@ -202,6 +230,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         {key: 'trips_canceled_by_mta', label: 'Canceled', fmt: fmtN},
         {key: 'trips_no_realtime_record', label: 'No record', fmt: fmtN},
         {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct},
+        {key: 'pct_full_service', label: 'Full service', fmt: fmtPct},
         {key: 'trips_not_monitored', label: 'Not monitored (feed down)', fmt: fmtN}], () => s.days.slice().reverse());
       $('days-section').hidden = false;
     })

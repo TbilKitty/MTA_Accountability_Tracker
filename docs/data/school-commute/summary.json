@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-02T22:50:25+00:00",
+ "generated_utc": "2026-11-03T18:17:49+00:00",
  "definitions": {
   "on_time": "2 min early to 7 min late at a scheduled timepoint (MTA definition)",
   "late_over_15_min": "arrived more than 15 minutes after the scheduled time",
@@ -8,6 +8,7 @@
   "pct_failed_15min_or_missing": "scheduled stop visits that were 15+ min late, canceled, or had no record, out of all monitored visits with an outcome",
   "drove_past": "between two position reports that bracket the stop (normally about 30 seconds apart), the bus averaged at least 15 mph (more when reports are farther apart) and MTA's feed never reported it stopped there. A bus that slows, opens its doors and pulls out cannot average that speed over the interval, so this is a conservative count",
   "stopped": "MTA's feed reported the bus stopped at that stop",
+  "full_service": "a scheduled timepoint visit where the trip ran, the bus was on time, and it stopped. Counted against it: trips canceled or never seen, stops MTA flagged as skipped, buses that left 2+ min early or came 7+ min late, and on-time buses that drove past. On-time visits whose stop behavior was unclear are left out; including them as stops gives the upper bound",
   "left_without_waiting": "reached a timepoint 2+ minutes before its scheduled time and left 2+ minutes early instead of waiting for the scheduled departure",
   "windows_local_time": {
    "am": [
@@ -191,7 +192,8 @@
    "pct_late_over_15_min": 8.2,
    "pct_failed_15min_or_missing": 31.0,
    "median_delay_min": 3.1,
-   "pct_drove_past": 26.0
+   "pct_drove_past": 26.0,
+   "pct_full_service": 37.1
   }
  ],
  "routes": [
@@ -220,7 +222,9 @@
    "pct_failed_15min_or_missing": 48.7,
    "median_delay_min": 4.0,
    "pct_drove_past": 17.5,
-   "stop_visits_observed": 802
+   "stop_visits_observed": 802,
+   "pct_full_service": 31.2,
+   "full_service_visits_judged": 93
   },
   {
    "route_id": "11645",
@@ -247,7 +251,9 @@
    "pct_failed_15min_or_missing": 44.7,
    "median_delay_min": 4.4,
    "pct_drove_past": 32.4,
-   "stop_visits_observed": 247
+   "stop_visits_observed": 247,
+   "pct_full_service": 28.8,
+   "full_service_visits_judged": 59
   },
   {
    "route_id": "11743",
@@ -274,7 +280,9 @@
    "pct_failed_15min_or_missing": 44.5,
    "median_delay_min": 5.7,
    "pct_drove_past": 20.4,
-   "stop_visits_observed": 1673
+   "stop_visits_observed": 1673,
+   "pct_full_service": 27.1,
+   "full_service_visits_judged": 306
   },
   {
    "route_id": "11735",
@@ -301,7 +309,9 @@
    "pct_failed_15min_or_missing": 43.9,
    "median_delay_min": 3.9,
    "pct_drove_past": 23.9,
-   "stop_visits_observed": 964
+   "stop_visits_observed": 964,
+   "pct_full_service": 32.6,
+   "full_service_visits_judged": 135
   },
   {
    "route_id": "11734",
@@ -328,7 +338,9 @@
    "pct_failed_15min_or_missing": 43.0,
    "median_delay_min": 4.3,
    "pct_drove_past": 21.2,
-   "stop_visits_observed": 1219
+   "stop_visits_observed": 1219,
+   "pct_full_service": 23.2,
+   "full_service_visits_judged": 181
   },
   {
    "route_id": "11736",
@@ -355,7 +367,9 @@
    "pct_failed_15min_or_missing": 42.8,
    "median_delay_min": 6.0,
    "pct_drove_past": 15.1,
-   "stop_visits_observed": 1129
+   "stop_visits_observed": 1129,
+   "pct_full_service": 20.1,
+   "full_service_visits_judged": 164
   },
   {
    "route_id": "11667",
@@ -382,7 +396,9 @@
    "pct_failed_15min_or_missing": 39.5,
    "median_delay_min": 3.3,
    "pct_drove_past": 47.8,
-   "stop_visits_observed": 272
+   "stop_visits_observed": 272,
+   "pct_full_service": 21.3,
+   "full_service_visits_judged": 75
   },
   {
    "route_id": "11651",
@@ -409,7 +425,9 @@
    "pct_failed_15min_or_missing": 38.5,
    "median_delay_min": 1.6,
    "pct_drove_past": 13.2,
-   "stop_visits_observed": 68
+   "stop_visits_observed": 68,
+   "pct_full_service": 100.0,
+   "full_service_visits_judged": 6
   },
   {
    "route_id": "11640",
@@ -436,7 +454,9 @@
    "pct_failed_15min_or_missing": 37.6,
    "median_delay_min": 3.6,
    "pct_drove_past": 18.4,
-   "stop_visits_observed": 1159
+   "stop_visits_observed": 1159,
+   "pct_full_service": 30.9,
+   "full_service_visits_judged": 265
   },
   {
    "route_id": "11739",
@@ -463,7 +483,9 @@
    "pct_failed_15min_or_missing": 37.4,
    "median_delay_min": 3.1,
    "pct_drove_past": 18.1,
-   "stop_visits_observed": 1565
+   "stop_visits_observed": 1565,
+   "pct_full_service": 30.3,
+   "full_service_visits_judged": 195
   },
   {
    "route_id": "11745",
@@ -490,7 +512,9 @@
    "pct_failed_15min_or_missing": 36.9,
    "median_delay_min": 1.2,
    "pct_drove_past": 25.0,
-   "stop_visits_observed": 1054
+   "stop_visits_observed": 1054,
+   "pct_full_service": 45.7,
+   "full_service_visits_judged": 162
   },
   {
    "route_id": "11741",
@@ -517,7 +541,9 @@
    "pct_failed_15min_or_missing": 36.8,
    "median_delay_min": 4.1,
    "pct_drove_past": 17.1,
-   "stop_visits_observed": 1037
+   "stop_visits_observed": 1037,
+   "pct_full_service": 37.8,
+   "full_service_visits_judged": 156
   },
   {
    "route_id": "11737",
@@ -544,7 +570,9 @@
    "pct_failed_15min_or_missing": 36.4,
    "median_delay_min": 2.1,
    "pct_drove_past": 21.0,
-   "stop_visits_observed": 1027
+   "stop_visits_observed": 1027,
+   "pct_full_service": 31.8,
+   "full_service_visits_judged": 179
   },
   {
    "route_id": "11646",
@@ -571,7 +599,9 @@
    "pct_failed_15min_or_missing": 35.5,
    "median_delay_min": 3.0,
    "pct_drove_past": 38.8,
-   "stop_visits_observed": 634
+   "stop_visits_observed": 634,
+   "pct_full_service": 50.0,
+   "full_service_visits_judged": 86
   },
   {
    "route_id": "11671",
@@ -598,7 +628,9 @@
    "pct_failed_15min_or_missing": 34.7,
    "median_delay_min": 1.7,
    "pct_drove_past": 33.6,
-   "stop_visits_observed": 271
+   "stop_visits_observed": 271,
+   "pct_full_service": 47.1,
+   "full_service_visits_judged": 34
   },
   {
    "route_id": "11639",
@@ -625,7 +657,9 @@
    "pct_failed_15min_or_missing": 34.4,
    "median_delay_min": 2.6,
    "pct_drove_past": 22.3,
-   "stop_visits_observed": 1606
+   "stop_visits_observed": 1606,
+   "pct_full_service": 37.5,
+   "full_service_visits_judged": 275
   },
   {
    "route_id": "11665",
@@ -652,7 +686,9 @@
    "pct_failed_15min_or_missing": 33.1,
    "median_delay_min": 1.6,
    "pct_drove_past": 49.2,
-   "stop_visits_observed": 425
+   "stop_visits_observed": 425,
+   "pct_full_service": 25.4,
+   "full_service_visits_judged": 63
   },
   {
    "route_id": "11738",
@@ -679,7 +715,9 @@
    "pct_failed_15min_or_missing": 32.8,
    "median_delay_min": 5.3,
    "pct_drove_past": 22.8,
-   "stop_visits_observed": 1110
+   "stop_visits_observed": 1110,
+   "pct_full_service": 25.4,
+   "full_service_visits_judged": 205
   },
   {
    "route_id": "17178",
@@ -706,7 +744,9 @@
    "pct_failed_15min_or_missing": 32.7,
    "median_delay_min": 3.1,
    "pct_drove_past": 23.1,
-   "stop_visits_observed": 572
+   "stop_visits_observed": 572,
+   "pct_full_service": 37.6,
+   "full_service_visits_judged": 109
   },
   {
    "route_id": "15552",
@@ -733,7 +773,9 @@
    "pct_failed_15min_or_missing": 32.6,
    "median_delay_min": 2.4,
    "pct_drove_past": 43.2,
-   "stop_visits_observed": 236
+   "stop_visits_observed": 236,
+   "pct_full_service": 29.8,
+   "full_service_visits_judged": 57
   },
   {
    "route_id": "11650",
@@ -760,7 +802,9 @@
    "pct_failed_15min_or_missing": 31.5,
    "median_delay_min": 3.0,
    "pct_drove_past": 30.7,
-   "stop_visits_observed": 287
+   "stop_visits_observed": 287,
+   "pct_full_service": 13.5,
+   "full_service_visits_judged": 74
   },
   {
    "route_id": "11742",
@@ -787,7 +831,9 @@
    "pct_failed_15min_or_missing": 31.4,
    "median_delay_min": 1.7,
    "pct_drove_past": 21.5,
-   "stop_visits_observed": 1396
+   "stop_visits_observed": 1396,
+   "pct_full_service": 55.3,
+   "full_service_visits_judged": 161
   },
   {
    "route_id": "11670",
@@ -814,7 +860,9 @@
    "pct_failed_15min_or_missing": 31.3,
    "median_delay_min": 3.4,
    "pct_drove_past": 13.1,
-   "stop_visits_observed": 926
+   "stop_visits_observed": 926,
+   "pct_full_service": 45.5,
+   "full_service_visits_judged": 132
   },
   {
    "route_id": "11664",
@@ -841,7 +889,9 @@
    "pct_failed_15min_or_missing": 31.0,
    "median_delay_min": 3.9,
    "pct_drove_past": 31.9,
-   "stop_visits_observed": 499
+   "stop_visits_observed": 499,
+   "pct_full_service": 59.5,
+   "full_service_visits_judged": 74
   },
   {
    "route_id": "11684",
@@ -868,7 +918,9 @@
    "pct_failed_15min_or_missing": 31.0,
    "median_delay_min": 1.9,
    "pct_drove_past": 18.3,
-   "stop_visits_observed": 115
+   "stop_visits_observed": 115,
+   "pct_full_service": 38.5,
+   "full_service_visits_judged": 26
   },
   {
    "route_id": "11744",
@@ -895,7 +947,9 @@
    "pct_failed_15min_or_missing": 30.7,
    "median_delay_min": 1.5,
    "pct_drove_past": 20.6,
-   "stop_visits_observed": 1600
+   "stop_visits_observed": 1600,
+   "pct_full_service": 44.4,
+   "full_service_visits_judged": 187
   },
   {
    "route_id": "11673",
@@ -922,7 +976,9 @@
    "pct_failed_15min_or_missing": 30.3,
    "median_delay_min": 2.9,
    "pct_drove_past": 31.4,
-   "stop_visits_observed": 573
+   "stop_visits_observed": 573,
+   "pct_full_service": 29.9,
+   "full_service_visits_judged": 77
   },
   {
    "route_id": "11643",
@@ -949,7 +1005,9 @@
    "pct_failed_15min_or_missing": 30.0,
    "median_delay_min": 2.8,
    "pct_drove_past": 27.7,
-   "stop_visits_observed": 1102
+   "stop_visits_observed": 1102,
+   "pct_full_service": 37.4,
+   "full_service_visits_judged": 203
   },
   {
    "route_id": "11644",
@@ -976,7 +1034,9 @@
    "pct_failed_15min_or_missing": 29.6,
    "median_delay_min": 3.7,
    "pct_drove_past": 36.7,
-   "stop_visits_observed": 550
+   "stop_visits_observed": 550,
+   "pct_full_service": 44.6,
+   "full_service_visits_judged": 65
   },
   {
    "route_id": "11740",
@@ -1003,7 +1063,9 @@
    "pct_failed_15min_or_missing": 29.3,
    "median_delay_min": 4.2,
    "pct_drove_past": 28.9,
-   "stop_visits_observed": 2297
+   "stop_visits_observed": 2297,
+   "pct_full_service": 33.7,
+   "full_service_visits_judged": 205
   },
   {
    "route_id": "11654",
@@ -1030,7 +1092,9 @@
    "pct_failed_15min_or_missing": 28.0,
    "median_delay_min": 3.6,
    "pct_drove_past": 30.2,
-   "stop_visits_observed": 1333
+   "stop_visits_observed": 1333,
+   "pct_full_service": 36.2,
+   "full_service_visits_judged": 127
   },
   {
    "route_id": "11690",
@@ -1057,7 +1121,9 @@
    "pct_failed_15min_or_missing": 28.0,
    "median_delay_min": 4.0,
    "pct_drove_past": 15.4,
-   "stop_visits_observed": 201
+   "stop_visits_observed": 201,
+   "pct_full_service": 20.5,
+   "full_service_visits_judged": 44
   },
   {
    "route_id": "11656",
@@ -1084,7 +1150,9 @@
    "pct_failed_15min_or_missing": 27.8,
    "median_delay_min": 4.5,
    "pct_drove_past": 33.0,
-   "stop_visits_observed": 461
+   "stop_visits_observed": 461,
+   "pct_full_service": 26.8,
+   "full_service_visits_judged": 41
   },
   {
    "route_id": "11672",
@@ -1111,7 +1179,9 @@
    "pct_failed_15min_or_missing": 27.4,
    "median_delay_min": 4.9,
    "pct_drove_past": 34.8,
-   "stop_visits_observed": 379
+   "stop_visits_observed": 379,
+   "pct_full_service": 15.5,
+   "full_service_visits_judged": 58
   },
   {
    "route_id": "11653",
@@ -1138,7 +1208,9 @@
    "pct_failed_15min_or_missing": 26.9,
    "median_delay_min": 2.9,
    "pct_drove_past": 20.0,
-   "stop_visits_observed": 1552
+   "stop_visits_observed": 1552,
+   "pct_full_service": 47.3,
+   "full_service_visits_judged": 243
   },
   {
    "route_id": "14498",
@@ -1165,7 +1237,9 @@
    "pct_failed_15min_or_missing": 26.1,
    "median_delay_min": 2.6,
    "pct_drove_past": 36.7,
-   "stop_visits_observed": 368
+   "stop_visits_observed": 368,
+   "pct_full_service": 33.3,
+   "full_service_visits_judged": 78
   },
   {
    "route_id": "11641",
@@ -1192,7 +1266,9 @@
    "pct_failed_15min_or_missing": 25.8,
    "median_delay_min": 3.0,
    "pct_drove_past": 23.9,
-   "stop_visits_observed": 991
+   "stop_visits_observed": 991,
+   "pct_full_service": 39.4,
+   "full_service_visits_judged": 175
   },
   {
    "route_id": "11679",
@@ -1219,7 +1295,9 @@
    "pct_failed_15min_or_missing": 24.7,
    "median_delay_min": 2.6,
    "pct_drove_past": 43.3,
-   "stop_visits_observed": 586
+   "stop_visits_observed": 586,
+   "pct_full_service": 62.9,
+   "full_service_visits_judged": 35
   },
   {
    "route_id": "11676",
@@ -1246,7 +1324,9 @@
    "pct_failed_15min_or_missing": 24.4,
    "median_delay_min": 7.3,
    "pct_drove_past": 36.4,
-   "stop_visits_observed": 420
+   "stop_visits_observed": 420,
+   "pct_full_service": 27.0,
+   "full_service_visits_judged": 37
   },
   {
    "route_id": "11669",
@@ -1273,7 +1353,9 @@
    "pct_failed_15min_or_missing": 24.2,
    "median_delay_min": 2.2,
    "pct_drove_past": 22.8,
-   "stop_visits_observed": 232
+   "stop_visits_observed": 232,
+   "pct_full_service": 23.9,
+   "full_service_visits_judged": 46
   },
   {
    "route_id": "11687",
@@ -1300,7 +1382,9 @@
    "pct_failed_15min_or_missing": 24.0,
    "median_delay_min": 1.9,
    "pct_drove_past": 17.1,
-   "stop_visits_observed": 41
+   "stop_visits_observed": 41,
+   "pct_full_service": 5.9,
+   "full_service_visits_judged": 17
   },
   {
    "route_id": "11681",
@@ -1327,7 +1411,9 @@
    "pct_failed_15min_or_missing": 23.8,
    "median_delay_min": 4.1,
    "pct_drove_past": 19.8,
-   "stop_visits_observed": 333
+   "stop_visits_observed": 333,
+   "pct_full_service": 26.3,
+   "full_service_visits_judged": 38
   },
   {
    "route_id": "11647",
@@ -1354,7 +1440,9 @@
    "pct_failed_15min_or_missing": 23.5,
    "median_delay_min": 4.4,
    "pct_drove_past": 34.5,
-   "stop_visits_observed": 669
+   "stop_visits_observed": 669,
+   "pct_full_service": 48.4,
+   "full_service_visits_judged": 64
   },
   {
    "route_id": "11688",
@@ -1381,7 +1469,9 @@
    "pct_failed_15min_or_missing": 21.7,
    "median_delay_min": 2.1,
    "pct_drove_past": 26.3,
-   "stop_visits_observed": 156
+   "stop_visits_observed": 156,
+   "pct_full_service": 50.0,
+   "full_service_visits_judged": 28
   },
   {
    "route_id": "11689",
@@ -1408,7 +1498,9 @@
    "pct_failed_15min_or_missing": 21.7,
    "median_delay_min": 5.8,
    "pct_drove_past": 7.1,
-   "stop_visits_observed": 14
+   "stop_visits_observed": 14,
+   "pct_full_service": 20.0,
+   "full_service_visits_judged": 5
   },
   {
    "route_id": "11659",
@@ -1435,7 +1527,9 @@
    "pct_failed_15min_or_missing": 21.1,
    "median_delay_min": 4.9,
    "pct_drove_past": 22.4,
-   "stop_visits_observed": 500
+   "stop_visits_observed": 500,
+   "pct_full_service": 41.8,
+   "full_service_visits_judged": 67
   },
   {
    "route_id": "11648",
@@ -1462,7 +1556,9 @@
    "pct_failed_15min_or_missing": 20.9,
    "median_delay_min": 1.8,
    "pct_drove_past": 30.9,
-   "stop_visits_observed": 553
+   "stop_visits_observed": 553,
+   "pct_full_service": 40.3,
+   "full_service_visits_judged": 62
   },
   {
    "route_id": "11652",
@@ -1489,7 +1585,9 @@
    "pct_failed_15min_or_missing": 20.4,
    "median_delay_min": 5.0,
    "pct_drove_past": 27.8,
-   "stop_visits_observed": 1232
+   "stop_visits_observed": 1232,
+   "pct_full_service": 33.8,
+   "full_service_visits_judged": 151
   },
   {
    "route_id": "11675",
@@ -1516,7 +1614,9 @@
    "pct_failed_15min_or_missing": 20.0,
    "median_delay_min": 3.2,
    "pct_drove_past": 20.9,
-   "stop_visits_observed": 282
+   "stop_visits_observed": 282,
+   "pct_full_service": 61.9,
+   "full_service_visits_judged": 42
   },
   {
    "route_id": "11677",
@@ -1543,7 +1643,9 @@
    "pct_failed_15min_or_missing": 19.9,
    "median_delay_min": 1.6,
    "pct_drove_past": 21.1,
-   "stop_visits_observed": 1153
+   "stop_visits_observed": 1153,
+   "pct_full_service": 45.1,
+   "full_service_visits_judged": 133
   },
   {
    "route_id": "11678",
@@ -1570,7 +1672,9 @@
    "pct_failed_15min_or_missing": 18.8,
    "median_delay_min": 4.2,
    "pct_drove_past": 47.1,
-   "stop_visits_observed": 227
+   "stop_visits_observed": 227,
+   "pct_full_service": 13.2,
+   "full_service_visits_judged": 38
   },
   {
    "route_id": "11680",
@@ -1597,7 +1701,9 @@
    "pct_failed_15min_or_missing": 17.4,
    "median_delay_min": 3.1,
    "pct_drove_past": 23.3,
-   "stop_visits_observed": 734
+   "stop_visits_observed": 734,
+   "pct_full_service": 39.7,
+   "full_service_visits_judged": 68
   },
   {
    "route_id": "11642",
@@ -1624,7 +1730,9 @@
    "pct_failed_15min_or_missing": 13.9,
    "median_delay_min": 2.4,
    "pct_drove_past": 24.7,
-   "stop_visits_observed": 988
+   "stop_visits_observed": 988,
+   "pct_full_service": 36.9,
+   "full_service_visits_judged": 130
   },
   {
    "route_id": "11686",
@@ -1651,7 +1759,9 @@
    "pct_failed_15min_or_missing": 13.9,
    "median_delay_min": 3.8,
    "pct_drove_past": 20.4,
-   "stop_visits_observed": 98
+   "stop_visits_observed": 98,
+   "pct_full_service": 57.1,
+   "full_service_visits_judged": 14
   },
   {
    "route_id": "11662",
@@ -1678,7 +1788,9 @@
    "pct_failed_15min_or_missing": 13.5,
    "median_delay_min": 5.1,
    "pct_drove_past": 49.7,
-   "stop_visits_observed": 577
+   "stop_visits_observed": 577,
+   "pct_full_service": 40.9,
+   "full_service_visits_judged": 44
   },
   {
    "route_id": "11658",
@@ -1705,7 +1817,9 @@
    "pct_failed_15min_or_missing": 13.2,
    "median_delay_min": 3.9,
    "pct_drove_past": 30.5,
-   "stop_visits_observed": 555
+   "stop_visits_observed": 555,
+   "pct_full_service": 27.4,
+   "full_service_visits_judged": 62
   },
   {
    "route_id": "11663",
@@ -1732,7 +1846,9 @@
    "pct_failed_15min_or_missing": 13.2,
    "median_delay_min": 0.5,
    "pct_drove_past": 21.4,
-   "stop_visits_observed": 468
+   "stop_visits_observed": 468,
+   "pct_full_service": 74.3,
+   "full_service_visits_judged": 35
   },
   {
    "route_id": "11657",
@@ -1759,7 +1875,9 @@
    "pct_failed_15min_or_missing": 12.4,
    "median_delay_min": 1.5,
    "pct_drove_past": 38.4,
-   "stop_visits_observed": 889
+   "stop_visits_observed": 889,
+   "pct_full_service": 67.6,
+   "full_service_visits_judged": 74
   },
   {
    "route_id": "11674",
@@ -1786,7 +1904,9 @@
    "pct_failed_15min_or_missing": 11.9,
    "median_delay_min": 4.1,
    "pct_drove_past": 30.4,
-   "stop_visits_observed": 1253
+   "stop_visits_observed": 1253,
+   "pct_full_service": 47.7,
+   "full_service_visits_judged": 128
   },
   {
    "route_id": "11666",
@@ -1813,7 +1933,9 @@
    "pct_failed_15min_or_missing": 11.4,
    "median_delay_min": 1.5,
    "pct_drove_past": 29.4,
-   "stop_visits_observed": 889
+   "stop_visits_observed": 889,
+   "pct_full_service": 43.6,
+   "full_service_visits_judged": 101
   },
   {
    "route_id": "11660",
@@ -1840,7 +1962,9 @@
    "pct_failed_15min_or_missing": 10.5,
    "median_delay_min": 1.2,
    "pct_drove_past": 38.4,
-   "stop_visits_observed": 276
+   "stop_visits_observed": 276,
+   "pct_full_service": 50.0,
+   "full_service_visits_judged": 40
   },
   {
    "route_id": "11691",
@@ -1867,7 +1991,9 @@
    "pct_failed_15min_or_missing": 6.2,
    "median_delay_min": 6.1,
    "pct_drove_past": 10.8,
-   "stop_visits_observed": 37
+   "stop_visits_observed": 37,
+   "pct_full_service": 83.3,
+   "full_service_visits_judged": 6
   },
   {
    "route_id": "11661",
@@ -1894,7 +2020,9 @@
    "pct_failed_15min_or_missing": 3.4,
    "median_delay_min": 2.9,
    "pct_drove_past": 40.8,
-   "stop_visits_observed": 390
+   "stop_visits_observed": 390,
+   "pct_full_service": 52.5,
+   "full_service_visits_judged": 40
   },
   {
    "route_id": "11655",
@@ -1921,7 +2049,9 @@
    "pct_failed_15min_or_missing": 2.9,
    "median_delay_min": 1.6,
    "pct_drove_past": 31.1,
-   "stop_visits_observed": 219
+   "stop_visits_observed": 219,
+   "pct_full_service": 74.3,
+   "full_service_visits_judged": 35
   },
   {
    "route_id": "11638",
@@ -1948,7 +2078,9 @@
    "pct_failed_15min_or_missing": 1.3,
    "median_delay_min": 3.1,
    "pct_drove_past": 19.5,
-   "stop_visits_observed": 606
+   "stop_visits_observed": 606,
+   "pct_full_service": 54.3,
+   "full_service_visits_judged": 46
   },
   {
    "route_id": "11649",
@@ -1975,7 +2107,9 @@
    "pct_failed_15min_or_missing": 0.0,
    "median_delay_min": 14.1,
    "pct_drove_past": 40.1,
-   "stop_visits_observed": 197
+   "stop_visits_observed": 197,
+   "pct_full_service": 0.0,
+   "full_service_visits_judged": 2
   }
  ],
  "stops_worst_100": [
@@ -4581,6 +4715,46 @@
   "waited_until_scheduled_time": 832,
   "pct_left_without_waiting": 33.4
  },
+ "full_service": {
+  "stop_visits_judged": 6363,
+  "full_service": 2358,
+  "failed_canceled_or_missing": 1656,
+  "failed_skipped_by_mta": 67,
+  "failed_left_early": 417,
+  "failed_late_over_7_min": 1482,
+  "failed_on_time_but_drove_past": 383,
+  "undetermined_on_time_stop_unclear": 384,
+  "pct_full_service": 37.1,
+  "pct_full_service_upper_bound": 40.6
+ },
+ "full_service_by_window_type": {
+  "am": {
+   "stop_visits_judged": 0,
+   "full_service": 0,
+   "failed_canceled_or_missing": 0,
+   "failed_skipped_by_mta": 0,
+   "failed_left_early": 0,
+   "failed_late_over_7_min": 0,
+   "failed_on_time_but_drove_past": 0,
+   "undetermined_on_time_stop_unclear": 0,
+   "pct_full_service": null,
+   "pct_full_service_upper_bound": null
+  },
+  "pm": {
+   "stop_visits_judged": 6363,
+   "full_service": 2358,
+   "failed_canceled_or_missing": 1656,
+   "failed_skipped_by_mta": 67,
+   "failed_left_early": 417,
+   "failed_late_over_7_min": 1482,
+   "failed_on_time_but_drove_past": 383,
+   "undetermined_on_time_stop_unclear": 384,
+   "pct_full_service": 37.1,
+   "pct_full_service_upper_bound": 40.6
+  }
+ },
+ "windows_measuring_full_service": 1,
+ "pct_on_time_full_service_windows": 62.2,
  "stops_most_driven_past_100": [
   {
    "stop_id": "5176",

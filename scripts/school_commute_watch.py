@@ -529,9 +529,43 @@ def early_arrival_summary(events):
             'pct_left_without_waiting': pct(left, early)}
 
 
+FULL_SERVICE_FAILS = ('early', 'late', 'severely_late', 'canceled', 'no_realtime_record', 'skipped')
+
+
+def full_service_summary(events):
+    """Of scheduled timepoint visits, how many got full service: the trip ran, the bus was on time,
+    AND it stopped. Only meaningful for windows that recorded stop behavior.
+
+    Failed: canceled, no record, MTA-flagged skip, early, late (7+ min), or on time but drove past.
+    Undetermined: on time but stop behavior unclear; kept out of the main figure, used for the upper bound.
+    Left out entirely, as in the on-time figure: not monitored, imprecise times, and stops not yet reached.
+    """
+    c = defaultdict(int)
+    for e in events:
+        o, b = e['outcome'], e.get('stop_behavior', '')
+        if o == 'on_time':
+            c['full_service' if b == 'stopped' else 'on_time_drove_past' if b == 'drove_past' else 'undetermined'] += 1
+        elif o in FULL_SERVICE_FAILS:
+            c[o] += 1
+    judged = c['full_service'] + c['on_time_drove_past'] + sum(c[k] for k in FULL_SERVICE_FAILS)
+    return {
+        'stop_visits_judged': judged,
+        'full_service': c['full_service'],
+        'failed_canceled_or_missing': c['canceled'] + c['no_realtime_record'],
+        'failed_skipped_by_mta': c['skipped'],
+        'failed_left_early': c['early'],
+        'failed_late_over_7_min': c['late'] + c['severely_late'],
+        'failed_on_time_but_drove_past': c['on_time_drove_past'],
+        'undetermined_on_time_stop_unclear': c['undetermined'],
+        'pct_full_service': pct(c['full_service'], judged),
+        # If every unclear on-time visit was in fact a stop:
+        'pct_full_service_upper_bound': pct(c['full_service'] + c['undetermined'], judged + c['undetermined']),
+    }
+
+
 def write_summary():
     """Recompute the public cumulative summary from every archived window."""
-    days, all_events, all_behavior = [], [], []
+    days, all_events, all_behavior, fs_events = [], [], [], []
     departure_windows = 0
     for path in sorted(p for p in RAW.glob('*.csv.gz') if not p.name.endswith('-stops.csv.gz')):
         events = read_raw(path)
@@ -556,9 +590,13 @@ def write_summary():
         stops_path = RAW / f'{tag}-stops.csv.gz'
         window_behavior = read_raw(stops_path) if stops_path.exists() else []
         all_behavior.extend(window_behavior)
+        has_behavior = any(str(e.get('stop_behavior', '')).strip() for e in events)
+        if has_behavior:
+            fs_events.extend(events)
         days.append({'service_date': events[0]['service_date'], 'window': events[0]['window'],
                      'coverage': meta.get('coverage', {}), **trip_counts(events), **summarize_events(events),
-                     **({'pct_drove_past': behavior_summary(window_behavior)['pct_drove_past']} if window_behavior else {})})
+                     **({'pct_drove_past': behavior_summary(window_behavior)['pct_drove_past']} if window_behavior else {}),
+                     **({'pct_full_service': full_service_summary(events)['pct_full_service']} if has_behavior else {})})
     by_route = defaultdict(list)
     by_stop = defaultdict(list)
     for e in all_events:
@@ -570,10 +608,16 @@ def write_summary():
     for r in all_behavior:
         beh_route[r['route_id']].append(r)
         beh_stop[r['stop_id']].append(r)
+    fs_route = defaultdict(list)
+    for e in fs_events:
+        fs_route[e['route_id']].append(e)
     for r in routes:
         b = behavior_summary(beh_route.get(r['route_id'], []))
         r['pct_drove_past'] = b['pct_drove_past']
         r['stop_visits_observed'] = b['stop_visits_observed']
+        f = full_service_summary(fs_route.get(r['route_id'], []))
+        r['pct_full_service'] = f['pct_full_service']
+        r['full_service_visits_judged'] = f['stop_visits_judged']
     routes.sort(key=lambda r: (r['pct_failed_15min_or_missing'] or 0), reverse=True)
     stop_ll = {}
     names_path = PUBLIC / 'stops.json'
@@ -612,6 +656,10 @@ def write_summary():
                           'reported it stopped there. A bus that slows, opens its doors and pulls out cannot average that speed '
                           'over the interval, so this is a conservative count',
             'stopped': "MTA's feed reported the bus stopped at that stop",
+            'full_service': 'a scheduled timepoint visit where the trip ran, the bus was on time, and it stopped. '
+                            'Counted against it: trips canceled or never seen, stops MTA flagged as skipped, buses that left '
+                            '2+ min early or came 7+ min late, and on-time buses that drove past. On-time visits whose stop '
+                            'behavior was unclear are left out; including them as stops gives the upper bound',
             'left_without_waiting': 'reached a timepoint 2+ minutes before its scheduled time and left 2+ minutes early '
                                     'instead of waiting for the scheduled departure',
             'windows_local_time': WINDOWS,
@@ -626,6 +674,11 @@ def write_summary():
         'stop_behavior': behavior_summary(all_behavior),
         'stop_behavior_by_window_type': {w: behavior_summary([r for r in all_behavior if r['window'] == w]) for w in WINDOWS},
         'early_arrivals': early_arrival_summary(all_events),
+        'full_service': full_service_summary(fs_events),
+        'full_service_by_window_type': {w: full_service_summary([e for e in fs_events if e['window'] == w]) for w in WINDOWS},
+        'windows_measuring_full_service': len({(e['service_date'], e['window']) for e in fs_events}),
+        # The usual on-time rate over the same windows, for a like-for-like comparison.
+        'pct_on_time_full_service_windows': summarize_events(fs_events)['pct_on_time'] if fs_events else None,
         'stops_most_driven_past_100': driven_past[:100],
     }
     PUBLIC.mkdir(parents=True, exist_ok=True)
