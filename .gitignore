@@ -13,3 +13,7 @@ __pycache__/
 # Never commit sensitive child-level data
 data/child_safety_case_links_RESTRICTED.csv
 data/child_exposure_reports.csv
+
+# Raw feed files; archived to Google Drive and GitHub artifacts, not committed
+feed-archive/
+realtime-raw/

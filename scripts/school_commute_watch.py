@@ -20,7 +20,7 @@ Usage:
   python scripts/school_commute_watch.py --window auto|am|pm [--date YYYY-MM-DD]
   python scripts/school_commute_watch.py --summarize-only
 """
-import argparse, csv, gzip, io, json, math, os, statistics, sys, time, urllib.error, urllib.request, zipfile
+import argparse, csv, gzip, hashlib, io, json, math, os, shutil, statistics, sys, tarfile, time, urllib.error, urllib.request, zipfile
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone, date as date_cls
 from pathlib import Path
@@ -59,6 +59,9 @@ RT_BASE = 'https://api.goswift.ly/real-time/' + CONFIG.get('agency_key', 'mta-ma
 UA = 'BaltimoreTransitAccountability/1.0'
 PUBLIC = ROOT / 'docs' / 'data' / 'school-commute'
 RAW = ROOT / 'data' / 'school-commute-raw'
+# Every raw feed file downloaded during a window, kept for the Google Drive archive
+# (bundled to feed-archive/<tag>.tar.gz with a SHA-256 manifest; not committed).
+FEED_ARCHIVE = ROOT / 'feed-archive'
 
 STOP_FIELDS = ['service_date', 'window', 'stop_id', 'route_id', 'route_name', 'visits',
                'stopped', 'drove_past', 'unclear', 'median_dwell_seconds']
@@ -687,6 +690,47 @@ def write_summary():
 
 
 # ---------------------------------------------------------------------- main
+class FeedRecorder:
+    """Saves each raw file exactly as received, with its capture time and SHA-256."""
+
+    def __init__(self, tag, clock):
+        self.tag, self.clock = tag, clock
+        self.dir = FEED_ARCHIVE / tag
+        if self.dir.exists():
+            shutil.rmtree(self.dir)
+        self.dir.mkdir(parents=True)
+        self.rows = []
+
+    def save(self, name, payload):
+        now = self.clock()
+        stamp = datetime.fromtimestamp(now, timezone.utc).strftime('%Y%m%dT%H%M%S.%f')[:-3] + 'Z'
+        fname = f'{len(self.rows) + 1:05d}_{stamp}_{name}'  # sequence number keeps names unique
+        (self.dir / fname).write_bytes(payload)
+        self.rows.append({'file': fname, 'captured_utc': datetime.fromtimestamp(now, timezone.utc)
+                          .isoformat(timespec='milliseconds').replace('+00:00', 'Z'),
+                          'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()})
+        return payload
+
+    def wrap(self, fetch, name_for):
+        return lambda *a: self.save(name_for(*a), fetch(*a))
+
+    def bundle(self):
+        """Write <tag>.tar.gz and <tag>.manifest.csv; return the bundle's fingerprint."""
+        manifest = FEED_ARCHIVE / f'{self.tag}.manifest.csv'
+        with open(manifest, 'w', newline='') as f:
+            w = csv.DictWriter(f, fieldnames=['file', 'captured_utc', 'bytes', 'sha256'])
+            w.writeheader()
+            w.writerows(self.rows)
+        shutil.copy(manifest, self.dir / 'manifest.csv')
+        bundle = FEED_ARCHIVE / f'{self.tag}.tar.gz'
+        with tarfile.open(bundle, 'w:gz') as t:
+            t.add(self.dir, arcname=self.tag)
+        shutil.rmtree(self.dir)
+        return {'bundle': bundle.name, 'files': len(self.rows),
+                'sha256': hashlib.sha256(bundle.read_bytes()).hexdigest(),
+                'bytes': bundle.stat().st_size}
+
+
 def pick_window(arg, now_local):
     if arg in WINDOWS:
         return arg
@@ -726,6 +770,9 @@ def main(argv=None, fetch_static=None, fetch_rt=None, clock=time.time, sleep=tim
             sys.exit('SWIFTLY_API_KEY GitHub Actions secret is missing')
         fetch_rt = lambda feed: http_get(f'{RT_BASE}/{feed}', {'Authorization': key}, timeout=30)
     fetch_static = fetch_static or (lambda: http_get(GTFS_URL, timeout=120))
+    recorder = FeedRecorder(tag, clock)
+    fetch_rt = recorder.wrap(fetch_rt, lambda feed: f'{feed}.pb')
+    fetch_static = recorder.wrap(fetch_static, lambda: 'gtfs-static-schedule.zip')
 
     win_start_s, win_end_s = (hhmm_seconds(x) for x in WINDOWS[window])
     midnight = datetime.combine(day, datetime.min.time(), TZ).timestamp()
@@ -766,7 +813,10 @@ def main(argv=None, fetch_static=None, fetch_rt=None, clock=time.time, sleep=tim
         'polls_attempted': n, 'polls_succeeded': len(watcher.polls_ok),
         'feed_errors': len(watcher.errors), 'first_errors': watcher.errors[:5],
         'distinct_vehicles_seen': len(watcher.vehicles_seen),
-        'vehicles_on_unscheduled_trip_ids': len(watcher.vehicles_unmatched)}
+        'vehicles_on_unscheduled_trip_ids': len(watcher.vehicles_unmatched),
+        # Fingerprint of the raw-data bundle archived to Google Drive. Committing it here
+        # lets git history prove when the bundle existed and that it hasn't changed.
+        'raw_archive': recorder.bundle()}
     day_summary = {'service_date': day.isoformat(), 'window': window, 'school_day': school_day,
                    'coverage': coverage, **trip_counts(events), **summarize_events(events)}
     (PUBLIC / f'{tag}.json').write_text(json.dumps(day_summary, indent=1) + '\n')

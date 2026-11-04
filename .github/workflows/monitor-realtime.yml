@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: swiftly-raw-${{ github.run_id }}
-          path: realtime-raw/*.pb
+          path: realtime-raw/
           retention-days: 30
       - name: Commit published aggregate evidence
         run: |
@@ -46,3 +46,12 @@ jobs:
             sleep 10
           done
           echo "::error::Could not push after 3 attempts"; exit 1
+      - name: Archive raw snapshots to Google Drive
+        if: ${{ !cancelled() && hashFiles('realtime-raw/*.pb') != '' }}
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          # Fingerprint list for this run, saved next to the files (chain of custody).
+          stamp=$(date -u +%Y%m%dT%H%M%SZ)
+          (cd realtime-raw && sha256sum *.pb > "${stamp}_sha256.txt")
+          bash scripts/drive_archive.sh "realtime/$(date -u +%Y/%m/%d)" realtime-raw/*

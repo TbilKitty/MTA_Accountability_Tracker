@@ -4,7 +4,9 @@ name: School commute service watch
 # commute (windows in config/settings.json). Each run polls real-time bus
 # positions every 30 seconds for the whole window, then commits aggregate
 # results to docs/data/school-commute/ and timepoint records to
-# data/school-commute-raw/.
+# data/school-commute-raw/. Every raw MTA feed file it downloaded is bundled with
+# a SHA-256 fingerprint list and saved to Google Drive (MTA Tracker Archive/),
+# with a 90-day backup copy kept in GitHub. Setup: SETUP_GOOGLE_DRIVE_ARCHIVE.md.
 
 on:
   workflow_dispatch:
@@ -15,6 +17,10 @@ on:
         default: 'auto'
       summarize_only:
         description: 'Only rebuild summary.json from saved data'
+        type: boolean
+        default: false
+      test_drive:
+        description: 'Only test the Google Drive connection (uploads a small test file)'
         type: boolean
         default: false
   schedule:
@@ -43,12 +49,20 @@ jobs:
     timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
+      - name: Test the Google Drive connection
+        if: inputs.test_drive
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: bash scripts/drive_archive.sh test
       - uses: actions/setup-python@v5
+        if: ${{ !inputs.test_drive }}
         with:
           python-version: '3.12'
       - name: Install GTFS-Realtime decoder
+        if: ${{ !inputs.test_drive }}
         run: pip install 'gtfs-realtime-bindings>=1.0,<2.0' 'protobuf>=4,<7'
       - name: Watch the commute window
+        if: ${{ !inputs.test_drive }}
         env:
           SWIFTLY_API_KEY: ${{ secrets.SWIFTLY_API_KEY }}
         run: |
@@ -58,6 +72,7 @@ jobs:
             python scripts/school_commute_watch.py --window "${{ inputs.window || 'auto' }}"
           fi
       - name: Commit results
+        if: ${{ !inputs.test_drive }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -70,3 +85,20 @@ jobs:
             sleep 10
           done
           echo "::error::Could not push results after 3 attempts"; exit 1
+      - name: Keep a 90-day backup of the raw files in GitHub
+        if: ${{ !cancelled() && !inputs.test_drive && hashFiles('feed-archive/*.tar.gz') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-feed-archive-${{ github.run_id }}
+          path: feed-archive/
+          retention-days: 90
+          compression-level: 0
+      - name: Archive raw MTA files to Google Drive
+        if: ${{ !cancelled() && !inputs.test_drive && hashFiles('feed-archive/*.tar.gz') != '' }}
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          for b in feed-archive/*.tar.gz; do
+            tag=$(basename "$b" .tar.gz)            # e.g. 2026-11-05-am
+            bash scripts/drive_archive.sh "${tag:0:4}/${tag:5:2}" "$b" "feed-archive/$tag.manifest.csv"
+          done
