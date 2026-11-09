@@ -1,7 +1,6 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id);
-  const cfg=window.MTA_SUPABASE_PUBLIC||{};
   const fmt=n=>Number(n||0).toLocaleString('en-US');
   const pct=(n,d)=>d?((100*n/d).toFixed(1)+'%'):'—';
   const routeLabel=id=>window.mtaRouteLabel?window.mtaRouteLabel(id):'Route '+id;
@@ -52,25 +51,22 @@
     $('trend-coverage-note').textContent=`${days.length} date(s) with observations in this selection. ${fmt(filtered.length)} route-hour summary rows. Blank dates are not treated as on-time service. Last loaded: ${new Date().toLocaleString('en-US',{timeZone:'America/New_York'})} Eastern.`;
   }
   async function load(){
-    const url=String(cfg.url||'').trim().replace(/\/+$/,'');
-    const key=String(cfg.publishableKey||'').trim();
-    if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)||!key||key.includes('PASTE_')){
-      state('Supabase public configuration missing. Existing dashboard remains available.',true);return;
-    }
     state('Loading hourly summaries…');
     $('trend-refresh').disabled=true;
     try{
-      const response=await fetch(url+'/rest/v1/rpc/mta_public_hourly_trends',{
-        method:'POST',
-        headers:{'apikey':key,'Content-Type':'application/json','Content-Profile':'public','Accept-Profile':'public'},
-        body:JSON.stringify({p_days:Number($('trend-days').value),p_route:$('trend-route').value.trim()||null})
-      });
-      if(!response.ok)throw new Error('HTTP '+response.status+': '+(await response.text()).slice(0,500));
+      const response=await fetch('./data/hourly-totals.json',{cache:'no-store'});
+      if(!response.ok)throw new Error('HTTP '+response.status);
       const payload=await response.json();
-      if(!Array.isArray(payload))throw new Error('Unexpected response shape');
-      data=payload;
+      if(!Array.isArray(payload.rows))throw new Error('Unexpected file shape');
+      const days=Number($('trend-days').value)||7;
+      const today=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+      const start=new Date(today+'T12:00:00Z');start.setUTCDate(start.getUTCDate()-(days-1));
+      const first=start.toISOString().slice(0,10);
+      const q=$('trend-route').value.trim().toLowerCase();
+      data=payload.rows.filter(r=>r[0]>=first&&(!q||String(r[2]).toLowerCase()===q||String(routeLabel(r[2])).toLowerCase().includes(q)))
+        .map(r=>({service_date:r[0],service_hour:r[1],route_id:r[2],observation_count:r[3],predictions_5min_late:r[4],predictions_15min_late:r[5]}));
       render();
-      state('Connected to Supabase hourly summaries. Charts updated.');
+      state('Hourly summaries loaded. Charts updated.');
     }catch(e){state('Unable to load trends: '+e.message,true);}
     finally{$('trend-refresh').disabled=false;}
   }

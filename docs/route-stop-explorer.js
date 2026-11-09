@@ -22,16 +22,16 @@ function render(){
  const q=el('ex-search').value.trim().toLowerCase(),sort=el('ex-sort').value;
  let arr=tab==='routes'?aggregateRoutes(routeData):aggregateStops(stopData);
  arr=arr.filter(a=>(a.id+' '+(a.route||'')+' '+routeLabel(tab==='routes'?a.id:a.route)).toLowerCase().includes(q));
- const score=a=>sort==='count'?a.five:sort==='severe'?pct(a.fifteen,a.total):pct(a.five,a.total);
- arr.sort((a,b)=>score(b)-score(a)||b.total-a.total);
- const title=tab==='routes'?'Routes with the highest predicted-delay rates':'Stops with the highest predicted-delay rates';
+ const score=a=>sort==='severe'?a.fifteen:a.five;
+ arr.sort((a,b)=>score(b)-score(a)||b.five-a.five);
+ const title=tab==='routes'?'Routes with the most predicted delays':'Stops with the most predicted delays';
  const sample=arr.slice(0,30),max=Math.max(1,...sample.map(score));
- const metric=a=>sort==='count'?fmt(a.five):pct(sort==='severe'?a.fifteen:a.five,a.total).toFixed(1)+'%';
- el('ex-results').innerHTML='<h3>'+title+'</h3>'+(!sample.length?'<p class="explorer-empty">No matching observations for this selection.</p>':sample.map(a=>`<div class="explorer-rank"><div><strong>${tab==='routes'?escape(routeLabel(a.id)):'Stop '+escape(a.id)}</strong><small>${tab==='stops'?escape(routeLabel(a.route))+' · ':''}${fmt(a.total)} observations · ${fmt(a.days)} day(s)</small></div><div class="explorer-meter" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*score(a)/max))}%"></span></div><div class="ex-number">${metric(a)}</div></div>`).join(''));
+ const metric=a=>fmt(score(a));
+ el('ex-results').innerHTML='<h3>'+title+'</h3>'+(!sample.length?'<p class="explorer-empty">No matching observations for this selection.</p>':sample.map(a=>`<div class="explorer-rank"><div><strong>${tab==='routes'?escape(routeLabel(a.id)):'Stop '+escape(a.id)}</strong><small>${tab==='stops'?escape(routeLabel(a.route))+' · ':''}${fmt(a.total)} notable forecasts · ${fmt(a.days)} day(s)</small></div><div class="explorer-meter" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*score(a)/max))}%"></span></div><div class="ex-number">${metric(a)}</div></div>`).join(''));
  const limit=tab==='routes'?10000:1000;
  const raw=tab==='routes'?routeData:stopData;
  state('Loaded '+fmt(raw.length)+' summary rows from Supabase'+(raw.length>=limit?' (API row limit reached; rankings may be incomplete)':''));
- el('ex-disclosure').textContent='Showing up to 30 matches, ranked by '+el('ex-sort').selectedOptions[0].text+'. Percentages are based on prediction observations, not distinct late buses. Data covers only dates and hours with observations. '+(tab==='stops'?'Stop IDs may need a GTFS stop-name lookup to display street names. ':'')+(raw.length>=limit?'The API response reached its row cap; rankings are incomplete.':'');
+ el('ex-disclosure').textContent='Showing up to 30 matches, ranked by '+el('ex-sort').selectedOptions[0].text+'. Counts are prediction observations, not distinct late buses. Rates are not shown: the database keeps only notable forecasts, so it has no on-time denominator. Data covers only dates and hours with observations. '+(tab==='stops'?'Stop IDs may need a GTFS stop-name lookup to display street names. ':'')+(raw.length>=limit?'The API response reached its row cap; rankings are incomplete.':'');
 }
 async function load(){const days=Number(el('ex-days').value);state('Loading route and stop summaries…');try{const [r,s]=await Promise.all([rpc('mta_public_hourly_trends',days),rpc('mta_public_stop_rankings',days)]);routeData=r;stopData=s;loadedDays=days;render()}catch(e){state('Unable to load rankings: '+e.message,true);el('ex-results').innerHTML='<p class="explorer-empty">Existing historical records are still available below.</p>'}}
 for(const name of ['routes','stops','missed'])el('ex-'+name).addEventListener('click',()=>{tab=name;render()});

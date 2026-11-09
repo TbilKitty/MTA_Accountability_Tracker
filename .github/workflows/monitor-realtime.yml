@@ -33,11 +33,24 @@ jobs:
           name: swiftly-raw-${{ github.run_id }}
           path: realtime-raw/
           retention-days: 30
+      - name: Move daily files older than 7 days from the website to Google Drive
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          # GitHub Pages sites are capped at 1 GB, so the site keeps only the latest 7 daily files.
+          # A file is removed only after Google Drive confirms an identical copy.
+          old=$(ls docs/data/predictions-????-??-??.json | sort | head -n -7)
+          [ -z "$old" ] && { echo "Nothing to move"; exit 0; }
+          if [ -z "${RCLONE_CONF:-}" ]; then echo "::warning::RCLONE_CONF not set; keeping old daily files on the site"; exit 0; fi
+          for f in $old; do
+            if bash scripts/drive_archive.sh published-daily "$f"; then git rm -q "$f"; else echo "::warning::Could not archive $f; kept on site"; fi
+          done
       - name: Commit published aggregate evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add docs/data/realtime-status.json docs/data/predictions-*.json
+          if [ -f docs/data/hourly-totals.json ]; then git add docs/data/hourly-totals.json; fi
           if git diff --cached --quiet; then echo "Nothing new to commit"; exit 0; fi
           git commit -m 'Update MTA prediction observations'
           # The school-commute tracker also saves to this repo; if it saved first, re-sync and retry.
