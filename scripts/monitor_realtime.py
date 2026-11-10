@@ -93,70 +93,6 @@ def scheduled_timestamp(service_date, clock, tz=ZoneInfo('America/New_York')):
         return None
 
 
-def upload_to_supabase(samples):
-    """Upsert forecast observations via Supabase REST, using server-only credentials."""
-    url = os.environ.get('SUPABASE_URL', '').strip().rstrip('/')
-    key = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '').strip()
-    if not url or not key:
-        raise RuntimeError('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY GitHub Actions secret')
-    if not url.startswith('https://') or '/' in url[len('https://'):]:
-        raise ValueError('SUPABASE_URL must be the HTTPS project base URL')
-    # The free database (500 MB) cannot hold every poll: about 12,000 forecasts every 15 minutes.
-    # Store only notable forecasts (5+ min late or 2+ min early); the full raw feed is archived
-    # to Google Drive every run, and exact all-forecast totals stay in the published daily files.
-    rows = []
-    for sample in samples:
-        if not _notable(_delay(sample)):
-            continue
-        canonical = json.dumps(sample, sort_keys=True, separators=(',', ':'))
-        rows.append({
-            'observed_at': sample['sampled_at_utc'],
-            'route_id': sample.get('route_id'),
-            'trip_id': sample.get('trip_id'),
-            'stop_id': sample.get('stop_id'),
-            'delay_seconds': sample.get('predicted_delay_seconds'),
-            'observation_type': 'prediction',
-            'evidence_status': 'forecast',
-            'source': 'swiftly_gtfs_rt',
-            # Only the fields not already stored in their own columns (the old full copy doubled each row).
-            'raw_record': {k: sample.get(k) for k in ('event_type', 'delay_method', 'predicted_time_utc',
-                                                    'vehicle_seen_in_same_snapshot')},
-            'record_hash': hashlib.sha256(canonical.encode('utf-8')).hexdigest(),
-        })
-    endpoint = url + '/rest/v1/mta_observations?on_conflict=record_hash'
-    for offset in range(0, len(rows), 250):
-        batch = rows[offset:offset + 250]
-        payload = json.dumps(batch, separators=(',', ':')).encode('utf-8')
-        for attempt in range(3):
-
-            req = urllib.request.Request(endpoint, data=payload, method='POST', headers={
-                'apikey': key,
-                'Authorization': 'Bearer ' + key,
-                'Content-Type': 'application/json',
-                'Content-Profile': 'public',
-                'Accept-Profile': 'public',
-                'Prefer': 'resolution=ignore-duplicates,return=minimal',
-                'User-Agent': 'BaltimoreTransitAccountability/1.0',
-            })
-
-            try:
-                with urllib.request.urlopen(req, timeout=60) as response:
-                    if response.status not in (200, 201, 204):
-                        raise RuntimeError('Supabase unexpected HTTP status ' + str(response.status))
-                break
-            except urllib.error.HTTPError as exc:
-                if attempt == 2 or exc.code not in (429, 500, 502, 503, 504):
-                    details = exc.read().decode("utf-8", errors="replace")
-                    raise RuntimeError(
-                        f"Supabase upload failed (HTTP {exc.code}): "
-                        f"{details[:1000]}"
-                    ) from None
-                time.sleep(2 ** attempt)
-            except urllib.error.URLError:
-                if attempt == 2:
-                    raise RuntimeError('Supabase upload failed (network error)') from None
-                time.sleep(2 ** attempt)
-    print(f'Supabase upload completed: {len(rows)} notable forecast observations submitted (duplicates ignored)')
 
 
 # Hourly all-forecast totals per route (Eastern date and hour): the denominators for the trend chart.
@@ -171,26 +107,6 @@ def load_hourly():
         return {(r[0], r[1], r[2]): r[3:6] for r in d.get('rows', [])}
     except (FileNotFoundError, ValueError, TypeError):
         return None
-
-def seed_hourly_from_supabase(route_ids):
-    """One time, before cleanup deletes anything: copy the database's existing hourly summaries."""
-    url = os.environ.get('SUPABASE_URL', '').strip().rstrip('/')
-    key = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '').strip()
-    out = {}
-    for rid in sorted(route_ids):
-        req = urllib.request.Request(url + '/rest/v1/rpc/mta_public_hourly_trends', method='POST',
-            data=json.dumps({'p_days': 60, 'p_route': rid}).encode(), headers={
-                'apikey': key, 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json',
-                'Content-Profile': 'public', 'Accept-Profile': 'public', 'User-Agent': 'BaltimoreTransitAccountability/1.0'})
-        with urllib.request.urlopen(req, timeout=90) as r:
-            for x in json.loads(r.read() or b'[]'):
-                if str(x.get('route_id')) != str(rid):
-                    continue
-                k = (str(x['service_date'])[:10], int(x['service_hour']), str(x['route_id']))
-                out[k] = [int(x.get('observation_count') or 0), int(x.get('predictions_5min_late') or 0),
-                          int(x.get('predictions_15min_late') or 0)]
-    print(f'Copied {len(out)} hourly route summaries from Supabase into {HOURLY.name}', flush=True)
-    return out
 
 def update_hourly(hourly, samples, now):
     for x in samples:
@@ -209,53 +125,49 @@ def update_hourly(hourly, samples, now):
 LATE_SECONDS=300; EARLY_SECONDS=-120; MAX_DAILY_RECORDS=120000
 
 
-SUPABASE_RETENTION_DAYS = 5   # what fits in the free 500 MB plan; older rows live in Google Drive
-PRUNE_TIME_BUDGET_SECONDS = 240
-NOTABLE_ONLY_SINCE = datetime(2026, 11, 9, 21, tzinfo=timezone.utc)  # earlier rows include ordinary forecasts
-
-def _supabase_request(method, path, key):
-    req = urllib.request.Request(path, method=method, headers={
-        'apikey': key, 'Authorization': 'Bearer ' + key,
-        'Content-Profile': 'public', 'Accept-Profile': 'public',
-        'Prefer': 'return=minimal', 'User-Agent': 'BaltimoreTransitAccountability/1.0'})
-    try:
-        with urllib.request.urlopen(req, timeout=90) as response:
-            return response.read()
-    except urllib.error.HTTPError as exc:
-        details = exc.read().decode('utf-8', errors='replace')
-        raise RuntimeError(f'Supabase {method} failed (HTTP {exc.code}): {details[:500]}') from None
-
-def prune_supabase(now):
-    """Keep the database inside the free plan: delete rows older than the retention window, and
-    (one-time cleanup) rows from before this change that were not notable. Works in small time
-    slices so a large backlog is cleared over several runs without hitting time limits."""
-    url = os.environ.get('SUPABASE_URL', '').strip().rstrip('/')
-    key = os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '').strip()
-    if not url or not key:
-        raise RuntimeError('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY GitHub Actions secret')
-    table = url + '/rest/v1/mta_observations'
-    oldest = json.loads(_supabase_request('GET', table + '?select=observed_at&order=observed_at.asc&limit=1', key) or b'[]')
-    if not oldest:
-        return
-    start = datetime.fromisoformat(oldest[0]['observed_at'].replace('Z', '+00:00'))
-    cutoff = now - timedelta(days=SUPABASE_RETENTION_DAYS)
-    began = time.monotonic(); deleted_windows = 0
-    def window_delete(a, b, extra=''):
-        q = (f'?observed_at=gte.{urllib.parse.quote(a.isoformat())}'
-             f'&observed_at=lt.{urllib.parse.quote(b.isoformat())}{extra}')
-        _supabase_request('DELETE', table + q, key)
-    # Expired rows, oldest first, one hour at a time.
-    t = start.replace(minute=0, second=0, microsecond=0)
-    while t < cutoff and time.monotonic() - began < PRUNE_TIME_BUDGET_SECONDS:
-        window_delete(t, min(t + timedelta(hours=1), cutoff)); t += timedelta(hours=1); deleted_windows += 1
-    # Rows inside the window saved before the notable-only change (delay unknown or ordinary).
-    t = max(start, cutoff).replace(minute=0, second=0, microsecond=0)
-    ordinary = f'&or=(delay_seconds.is.null,and(delay_seconds.gt.{EARLY_SECONDS},delay_seconds.lt.{LATE_SECONDS}))'
-    while t < min(now, NOTABLE_ONLY_SINCE) and time.monotonic() - began < PRUNE_TIME_BUDGET_SECONDS:
-        window_delete(t, t + timedelta(hours=1), ordinary); t += timedelta(hours=1); deleted_windows += 1
-    print(f'Supabase cleanup: {deleted_windows} hourly windows processed in {time.monotonic() - began:.0f}s '
-          f'(oldest row was {start.isoformat()}; keeping {SUPABASE_RETENTION_DAYS} days)', flush=True)
 CLASSIFICATION='prediction_only_not_confirmed_arrival'
+
+EXPLORER = DATA / 'explorer-summary.json'
+EXPLORER_PERIODS = (1, 7)        # days offered on the website (the site keeps 7 daily files)
+EXPLORER_MAX_STOPS = 1000
+EXPLORER_RECENT_RECORDS = 500
+
+def write_explorer_summary(now, today, today_path):
+    """Small file for the website (replaces the old database queries): stop rankings and the most
+    recent notable forecasts, computed from the daily files already published in docs/data."""
+    files = sorted(DATA.glob('predictions-????-??-??.json'))[-max(EXPLORER_PERIODS):]
+    days = [(f.stem.replace('predictions-', ''), today if f == today_path else load_daily(f)) for f in files]
+    stops = {}
+    for p in EXPLORER_PERIODS:
+        acc = {}
+        for date, d in days[-p:]:
+            for x in d['samples']:
+                v = _delay({'predicted_delay_seconds': x.get('max_delay_seconds', x.get('predicted_delay_seconds'))})
+                if v is None or v < LATE_SECONDS:
+                    continue
+                k = (str(x.get('stop_id')), str(x.get('route_id')))
+                a = acc.setdefault(k, [0, 0, 0, set()])
+                a[0] += int(x.get('polls') or 1); a[1] += 1; a[2] += int(v >= 900); a[3].add(date)
+        ranked = sorted(acc.items(), key=lambda kv: (kv[1][1], kv[1][2]), reverse=True)[:EXPLORER_MAX_STOPS]
+        stops[str(p)] = [[k[0], k[1], a[0], a[1], a[2], len(a[3])] for k, a in ranked]
+    recent = []
+    for date, d in reversed(days):
+        recent += d['samples']
+        if len(recent) >= EXPLORER_RECENT_RECORDS * 4:
+            break
+    recent = sorted(recent, key=lambda x: str(x.get('sampled_at_utc', '')), reverse=True)[:EXPLORER_RECENT_RECORDS]
+    EXPLORER.write_text(json.dumps({
+        'format': 1, 'generated_utc': now.isoformat(timespec='seconds'),
+        'meaning': 'Forecast observations, not verified arrivals. Built from the published daily files. '
+                   'stops: per period in days, trip/stop forecasts whose largest predicted delay was 5+ minutes late. '
+                   'recent: the most recent notable forecasts (5+ min late or 2+ min early).',
+        'dates': [d for d, _ in days],
+        'stop_columns': ['stop_id', 'route_id', 'polls', 'late_5_min_records', 'late_15_min_records', 'days'],
+        'stops': stops,
+        'recent_columns': ['sampled_at_utc', 'route_id', 'trip_id', 'stop_id', 'predicted_delay_seconds', 'max_delay_seconds', 'polls'],
+        'recent': [[x.get(c) for c in ('sampled_at_utc', 'route_id', 'trip_id', 'stop_id', 'predicted_delay_seconds',
+                                       'max_delay_seconds', 'polls')] for x in recent],
+    }, separators=(',', ':')) + '\n')
 
 def _delay(x):
     v=x.get('predicted_delay_seconds')
@@ -427,26 +339,9 @@ def main():
                 'vehicle_seen_in_same_snapshot': tid in vehicle_trip_ids,
                 'classification': 'prediction_only_not_confirmed_arrival'})
     print('Feed diagnostics: ' + json.dumps(diagnostics, sort_keys=True))
-    # Archive to Supabase. If it fails (database full or briefly unavailable), keep going so the
-    # public files still update, but flag it loudly in the run and in realtime-status.json.
-    supabase_ok = True
-    hourly = load_hourly()
-    if hourly is None:
-        try:
-            hourly = seed_hourly_from_supabase(routes.keys())
-        except Exception as exc:
-            print(f'::warning title=Could not copy hourly history from Supabase::{str(exc)[:500]}', flush=True)
-    if hourly is not None:  # never delete database rows until their hourly history is saved
-        try:
-            prune_supabase(now)  # before uploading, so new rows have room
-        except Exception as exc:
-            print(f'::warning title=Supabase cleanup failed::{str(exc)[:500]}', flush=True)
-        update_hourly(hourly, samples, now)
-    try:
-        upload_to_supabase(samples)
-    except Exception as exc:
-        supabase_ok = False
-        print(f'::warning title=Supabase upload failed::{str(exc)[:500]}', flush=True)
+    # All-forecast hourly totals per route (the trend chart's denominators) live in GitHub.
+    hourly = load_hourly() or {}
+    update_hourly(hourly, samples, now)
     # Daily public files: one row per trip/stop/event per day (latest forecast, plus how many polls saw it
     # and the worst delay), limited to notable forecasts. Every raw feed file is archived to Google Drive,
     # and exact daily totals are kept so the 7-day counts stay accurate. This keeps each file well under
@@ -460,8 +355,8 @@ def main():
         d=current if f==daily else load_daily(f)
         for k in history_totals: history_totals[k]+=d['totals'].get(k,0)
         published_days.append({'date_utc':f.stem.replace('predictions-',''),'records':len(d['samples']),'bytes':f.stat().st_size})
+    write_explorer_summary(now, current, daily)
     latest={'last_success_utc':now.isoformat(timespec='seconds'), 'agency':AGENCY,
-      'supabase_archive_ok_this_run': supabase_ok,
       'feed_timestamp_utc':datetime.fromtimestamp(updates.header.timestamp,timezone.utc).isoformat() if updates.header.HasField('timestamp') else None,
       'trip_updates_entities':sum(e.HasField('trip_update') for e in updates.entity),
       'vehicle_positions_entities':sum(e.HasField('vehicle') for e in positions.entity),

@@ -24,8 +24,6 @@ jobs:
       - name: Collect and summarize predictions
         env:
           SWIFTLY_API_KEY: ${{ secrets.SWIFTLY_API_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: python scripts/monitor_realtime.py
       - name: Archive raw snapshots as private-to-repository workflow artifacts
         uses: actions/upload-artifact@v4
@@ -49,7 +47,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/data/realtime-status.json docs/data/predictions-*.json
+          git add docs/data/realtime-status.json docs/data/predictions-*.json docs/data/explorer-summary.json
           if [ -f docs/data/hourly-totals.json ]; then git add docs/data/hourly-totals.json; fi
           if git diff --cached --quiet; then echo "Nothing new to commit"; exit 0; fi
           git commit -m 'Update MTA prediction observations'

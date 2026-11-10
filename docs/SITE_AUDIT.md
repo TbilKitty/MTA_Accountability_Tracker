@@ -23,8 +23,7 @@
 Upload the `docs/*.html` files and `docs/dashboard.js` to their corresponding GitHub paths, preserving other existing files. The full ZIP also contains your current scripts and data for completeness.
 
 ## Important limitations
-- The repository contains public Supabase publishable configuration. It was preserved unchanged; do not place service-role or secret keys in `docs`.
 - This revision was checked against the uploaded repository, not deployed or browser-tested on the live GitHub Pages site.
 - Static route totals cannot be restored without a route-summary data file.
-- The 7-day GitHub snapshots and Supabase history have different scopes; they are labeled separately.
-- This revision does not alter GitHub Actions, the Supabase database, or the collection algorithm.
+- This revision does not alter GitHub Actions or the collection algorithm.
+- Update (Nov 2026): Supabase was removed. The site now reads only files published in `docs/data`; raw feeds are archived to Google Drive.
