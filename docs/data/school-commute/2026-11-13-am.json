@@ -1,0 +1,49 @@
+{
+ "service_date": "2026-11-13",
+ "window": "am",
+ "school_day": true,
+ "coverage": {
+  "collection_started_local": "2026-11-13T05:10:27-05:00",
+  "window_start_local": "06:00",
+  "window_end_local": "09:30",
+  "polls_attempted": 560,
+  "polls_succeeded": 559,
+  "feed_errors": 1,
+  "first_errors": [
+   {
+    "at": 1794577017.3132021,
+    "feed": "vehicle-positions",
+    "error": "HTTP Error 502: Bad Gateway"
+   }
+  ],
+  "distinct_vehicles_seen": 573,
+  "vehicles_on_unscheduled_trip_ids": 249,
+  "raw_archive": {
+   "bundle": "2026-11-13-am.tar.gz",
+   "files": 700,
+   "sha256": "4386507a84f4ab41e103ce4310e41c3a59138ab6c11945ca3ab0c7ce7fd20ae8",
+   "bytes": 35262216
+  }
+ },
+ "scheduled_trips": 1515,
+ "trips_operated": 1354,
+ "trips_canceled_by_mta": 156,
+ "trips_no_realtime_record": 5,
+ "trips_not_monitored": 0,
+ "scheduled_stop_events": 8446,
+ "monitored_stop_events": 8446,
+ "measured_stop_events": 6123,
+ "on_time": 4791,
+ "early": 496,
+ "late_7_to_15_min": 682,
+ "late_over_15_min": 154,
+ "canceled_by_mta": 905,
+ "no_realtime_record": 22,
+ "skipped_stops": 77,
+ "pct_on_time": 78.2,
+ "pct_early": 8.1,
+ "pct_late_over_7_min": 13.7,
+ "pct_late_over_15_min": 2.5,
+ "pct_failed_15min_or_missing": 15.3,
+ "median_delay_min": 1.6
+}
