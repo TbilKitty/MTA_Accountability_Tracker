@@ -1,0 +1,43 @@
+{
+ "service_date": "2026-11-19",
+ "window": "am",
+ "school_day": true,
+ "coverage": {
+  "collection_started_local": "2026-11-19T05:10:25-05:00",
+  "window_start_local": "06:00",
+  "window_end_local": "09:30",
+  "polls_attempted": 560,
+  "polls_succeeded": 560,
+  "feed_errors": 0,
+  "first_errors": [],
+  "distinct_vehicles_seen": 582,
+  "vehicles_on_unscheduled_trip_ids": 239,
+  "raw_archive": {
+   "bundle": "2026-11-19-am.tar.gz",
+   "files": 701,
+   "sha256": "c944e7c551e1a0f016dc740c01f20325f28728421ffc042bb918374a55c1d0f5",
+   "bytes": 34745975
+  }
+ },
+ "scheduled_trips": 1515,
+ "trips_operated": 1289,
+ "trips_canceled_by_mta": 221,
+ "trips_no_realtime_record": 5,
+ "trips_not_monitored": 0,
+ "scheduled_stop_events": 8446,
+ "monitored_stop_events": 8446,
+ "measured_stop_events": 5778,
+ "on_time": 4235,
+ "early": 425,
+ "late_7_to_15_min": 923,
+ "late_over_15_min": 195,
+ "canceled_by_mta": 1299,
+ "no_realtime_record": 24,
+ "skipped_stops": 93,
+ "pct_on_time": 73.3,
+ "pct_early": 7.4,
+ "pct_late_over_7_min": 19.3,
+ "pct_late_over_15_min": 3.4,
+ "pct_failed_15min_or_missing": 21.4,
+ "median_delay_min": 2.1
+}
