@@ -32,6 +32,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .sc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.sc-defs dd{margin:2px 0 8px 0;color:#34465c}
 .sc-note{font-size:.88rem;color:#4a5a6c}
 .sc-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 10px;font-size:.9rem}
+.sc-more{display:block;margin:10px auto 0;padding:7px 16px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.sc-more:hover{background:#f3efe4}
 .sc-filter input,.sc-filter select{padding:6px 8px;border:1px solid #c9ccd0;border-radius:6px;font:inherit}
 </style></head>
 <body>
@@ -105,8 +107,14 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     return c;
   }
 
+  // Long lists show the first PREVIEW rows; a button below the table reveals the rest.
+  const PREVIEW = 8;
   function table(target, cols, rows){
-    let sortKey = null, asc = false;
+    let sortKey = null, asc = false, expanded = false;
+    const more = el('button', undefined, 'sc-more');
+    more.type = 'button';
+    more.addEventListener('click', () => { expanded = !expanded; render(); });
+    target.closest('.sc-table-wrap').after(more);
     function render(){
       target.textContent = '';
       const thead = el('thead'), tr = el('tr');
@@ -121,6 +129,11 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       const data = rows();
       if (sortKey) data.sort((a, b) => { const x = a[sortKey], y = b[sortKey];
         const r = (x ?? -Infinity) > (y ?? -Infinity) ? 1 : (x ?? -Infinity) < (y ?? -Infinity) ? -1 : 0; return asc ? r : -r; });
+      const total = data.length;
+      more.hidden = total <= PREVIEW;
+      more.textContent = expanded ? 'Show fewer' : `Show all ${total} rows ▾`;
+      more.setAttribute('aria-expanded', String(expanded));
+      if (!expanded) data.splice(PREVIEW);
       data.forEach(r => { const row = el('tr'); cols.forEach(c => { const td = el('td', undefined, c.wrap ? 'wrap' : '');
         if (c.bar) { const v = r[c.key]; if (v !== null && v !== undefined) { const b = el('span', undefined, 'bar'); b.style.width = Math.max(2, v) + 'px'; td.append(b); } td.append(document.createTextNode(fmtPct(v))); }
         else td.textContent = c.fmt ? c.fmt(r[c.key], r) : (r[c.key] ?? '—');
