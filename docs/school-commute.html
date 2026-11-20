@@ -34,6 +34,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .sc-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 10px;font-size:.9rem}
 .sc-more{display:block;margin:10px auto 0;padding:7px 16px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
 .sc-more:hover{background:#f3efe4}
+.sc-more[hidden]{display:none}
 .sc-filter input,.sc-filter select{padding:6px 8px;border:1px solid #c9ccd0;border-radius:6px;font:inherit}
 </style></head>
 <body>
@@ -65,11 +66,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <div class="sc-table-wrap"><table class="sc" id="routes"></table></div>
   </section>
 
-  <section class="sc-section" id="stops-section" hidden>
-    <h2>Stops with the most failed school-commute service</h2>
-    <p class="sc-note">Timepoint stops with at least 10 measured or missing visits. Systemwide figures only; no individual rider is identified.</p>
-    <div class="sc-table-wrap"><table class="sc" id="stops"></table></div>
-  </section>
 
   <section class="sc-section" id="pass-section" hidden>
     <h2>Stops where buses most often drove past without stopping</h2>
@@ -77,10 +73,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <div class="sc-table-wrap"><table class="sc" id="passes"></table></div>
   </section>
 
-  <section class="sc-section" id="days-section" hidden>
-    <h2>Day by day</h2>
-    <div class="sc-table-wrap"><table class="sc" id="days"></table></div>
-  </section>
 
   <section class="sc-section">
     <h2>Definitions and limits</h2>
@@ -219,15 +211,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       $('route-q').addEventListener('input', rerender); $('route-min').addEventListener('change', rerender);
       $('routes-section').hidden = false;
 
-      if (s.stops_worst_100.length) {
-        table($('stops'), [
-          {key: 'stop_name', label: 'Stop', wrap: true, fmt: (v, r) => v || r.stop_id},
-          {key: 'routes', label: 'Routes', wrap: true, fmt: v => v.join(', ')},
-          {key: 'pct_failed_15min_or_missing', label: 'Late 15+ / canceled / missing', bar: true},
-          {key: 'pct_on_time', label: 'On time', fmt: fmtPct},
-          {key: 'measured_stop_events', label: 'Visits measured', fmt: fmtN}], () => s.stops_worst_100.slice(0, 25));
-        $('stops-section').hidden = false;
-      }
 
       if ((s.stops_most_driven_past_100 || []).length) {
         table($('passes'), [
@@ -240,18 +223,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         $('pass-section').hidden = false;
       }
 
-      table($('days'), [
-        {key: 'service_date', label: 'Date'},
-        {key: 'window', label: 'Commute', fmt: v => v === 'am' ? 'Morning' : 'Afternoon'},
-        {key: 'scheduled_trips', label: 'Trips scheduled', fmt: fmtN},
-        {key: 'pct_on_time', label: 'On time', fmt: fmtPct},
-        {key: 'pct_late_over_15_min', label: '15+ min late', fmt: fmtPct},
-        {key: 'trips_canceled_by_mta', label: 'Canceled', fmt: fmtN},
-        {key: 'trips_no_realtime_record', label: 'No record', fmt: fmtN},
-        {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct},
-        {key: 'pct_full_service', label: 'Full service', fmt: fmtPct},
-        {key: 'trips_not_monitored', label: 'Not monitored (feed down)', fmt: fmtN}], () => s.days.slice().reverse());
-      $('days-section').hidden = false;
     })
     .catch(() => { $('status').textContent = 'No school-commute results yet. Collection runs automatically on school-day mornings (6:00–9:30) and afternoons (2:00–5:30); results appear here after the first window finishes.'; });
 })();
