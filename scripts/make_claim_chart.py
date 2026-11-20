@@ -55,20 +55,55 @@ WINDOWS = {
 }
 
 
-def load_known(window):
-    """All rows for one window whose outcome is known, with a half-hour label."""
+def load_all(window):
+    """Every scheduled arrival in one window (any outcome), with a half-hour label."""
     w = WINDOWS[window]
     # The pattern skips the per-stop summaries (*-am-stops.csv.gz).
     files = sorted(RAW.glob(w["pattern"]))
     if not files:
         return None
     df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
-    known = df[df["outcome"].isin(ORDER)].copy()
     # Round each scheduled time down to its half hour: 7:42 becomes 7:30.
-    half = pd.to_datetime(known["scheduled_local"]).dt.floor("30min")
-    known["half_hour"] = half.dt.strftime("%I:%M").str.lstrip("0")
-    known["_sort"] = half.dt.hour * 60 + half.dt.minute
-    return known[known["half_hour"] != w["drop"]]
+    half = pd.to_datetime(df["scheduled_local"]).dt.floor("30min")
+    df["half_hour"] = half.dt.strftime("%I:%M").str.lstrip("0")
+    df["_sort"] = half.dt.hour * 60 + half.dt.minute
+    return df[df["half_hour"] != w["drop"]].copy()
+
+
+def load_known(rows):
+    """Only the rows whose outcome is known (the five chart outcomes)."""
+    return None if rows is None else rows[rows["outcome"].isin(ORDER)].copy()
+
+
+# The strict count: start from every scheduled arrival the tracker was watching
+# and take away everything that was not a confirmed on-time bus. Whatever is
+# left is the only service that gets credit. (Rows with outcome "not_monitored"
+# fall in moments the tracker itself was down, so they are left out entirely.)
+FUNNEL = [
+    ("canceled", "Canceled by MTA", ["canceled"]),
+    ("missing", "Never showed up in MTA's live data", ["no_realtime_record"]),
+    ("skipped", "Stop skipped (flagged by MTA)", ["skipped"]),
+    ("late", "Late by more than 7 minutes", ["late", "severely_late"]),
+    ("early", "Left more than 2 minutes early", ["early"]),
+    ("unverified", "Couldn't confirm the time (GPS gap or fuzzy estimate)",
+     ["trip_seen_stop_not_reached", "trip_seen_stop_unobserved", "observed_imprecise"]),
+]
+
+
+def funnel(rows):
+    """Scheduled arrivals minus each kind of failure, leaving confirmed on time."""
+    watched = rows[rows["outcome"] != "not_monitored"]
+    total = len(watched)
+    pct = lambda n: round(n / total * 100, 1) if total else None
+    steps = []
+    for key, label, outcomes in FUNNEL:
+        n = int(watched["outcome"].isin(outcomes).sum())
+        steps.append({"key": key, "label": label, "count": n, "pct": pct(n)})
+    on_time = int((watched["outcome"] == "on_time").sum())
+    # Every monitored row lands in exactly one bucket, so the steps add up.
+    assert total - sum(s["count"] for s in steps) == on_time, "funnel does not add up"
+    return {"scheduled": total, "steps": steps, "on_time": on_time,
+            "pct_on_time": pct(on_time), "display_on_time": f"{on_time / total * 100:.0f}%"}
 
 
 def by_half_hour(known):
@@ -171,11 +206,13 @@ def summarize(known, by_time, pct_failed, noun):
 
 
 def main(out):
-    am = load_known("am")
+    am_all = load_all("am")
+    am = load_known(am_all)
     if am is None:
         raise SystemExit(f"No morning files in {RAW}")
     am_time, am_failed = draw(am, "am", out)
     stats = summarize(am, am_time, am_failed, "mornings")
+    stats["funnel"] = funnel(am_all)
 
     # Morning extras: the hour before school (8:00 and 8:30 blocks) and 6:00.
     peak = [t for t in ("8:00", "8:30") if t in am_time.index]
@@ -186,11 +223,13 @@ def main(out):
     if "6:00" in am_time.index:
         stats["display"]["on_time_6"] = f"{am_time.loc['6:00', 'on_time']:.0f}%"
 
-    pm = load_known("pm")
+    pm_all = load_all("pm")
+    pm = load_known(pm_all)
     stats["afternoon"] = None
     if pm is not None and len(pm):
         pm_time, pm_failed = draw(pm, "pm", out.with_name(AFTERNOON_NAME))
         stats["afternoon"] = summarize(pm, pm_time, pm_failed, "afternoons")
+        stats["afternoon"]["funnel"] = funnel(pm_all)
 
     # Overall: both commutes together, on one timeline with AM/PM labels.
     if pm is not None and len(pm):
@@ -198,6 +237,7 @@ def main(out):
                           pm.assign(half_hour=pm["half_hour"] + " PM")], ignore_index=True)
         all_time, all_failed = draw(both, "all", out.with_name(OVERALL_NAME))
         stats["overall"] = summarize(both, all_time, all_failed, "days")
+        stats["overall"]["funnel"] = funnel(pd.concat([am_all, pm_all], ignore_index=True))
 
     # School days with any data, morning or afternoon.
     dates = set(am["service_date"]) | (set(pm["service_date"]) if pm is not None else set())

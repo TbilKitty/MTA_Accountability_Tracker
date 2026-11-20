@@ -57,6 +57,50 @@
     "on_time_8_to_9": "54%",
     "on_time_6": "75%"
   },
+  "funnel": {
+    "scheduled": 109839,
+    "steps": [
+      {
+        "key": "canceled",
+        "label": "Canceled by MTA",
+        "count": 11619,
+        "pct": 10.6
+      },
+      {
+        "key": "missing",
+        "label": "Never showed up in MTA's live data",
+        "count": 928,
+        "pct": 0.8
+      },
+      {
+        "key": "skipped",
+        "label": "Stop skipped (flagged by MTA)",
+        "count": 1136,
+        "pct": 1.0
+      },
+      {
+        "key": "late",
+        "label": "Late by more than 7 minutes",
+        "count": 15630,
+        "pct": 14.2
+      },
+      {
+        "key": "early",
+        "label": "Left more than 2 minutes early",
+        "count": 5999,
+        "pct": 5.5
+      },
+      {
+        "key": "unverified",
+        "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
+        "count": 18329,
+        "pct": 16.7
+      }
+    ],
+    "on_time": 56198,
+    "pct_on_time": 51.2,
+    "display_on_time": "51%"
+  },
   "pct_on_time_8_to_9": 54.0,
   "afternoon": {
     "breakdown": {
@@ -114,6 +158,50 @@
     "display": {
       "canceled_or_late": "49%",
       "on_time": "45%"
+    },
+    "funnel": {
+      "scheduled": 106054,
+      "steps": [
+        {
+          "key": "canceled",
+          "label": "Canceled by MTA",
+          "count": 20342,
+          "pct": 19.2
+        },
+        {
+          "key": "missing",
+          "label": "Never showed up in MTA's live data",
+          "count": 1179,
+          "pct": 1.1
+        },
+        {
+          "key": "skipped",
+          "label": "Stop skipped (flagged by MTA)",
+          "count": 1185,
+          "pct": 1.1
+        },
+        {
+          "key": "late",
+          "label": "Late by more than 7 minutes",
+          "count": 21489,
+          "pct": 20.3
+        },
+        {
+          "key": "early",
+          "label": "Left more than 2 minutes early",
+          "count": 4994,
+          "pct": 4.7
+        },
+        {
+          "key": "unverified",
+          "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
+          "count": 18428,
+          "pct": 17.4
+        }
+      ],
+      "on_time": 38437,
+      "pct_on_time": 36.2,
+      "display_on_time": "36%"
     }
   },
   "overall": {
@@ -179,6 +267,50 @@
     "display": {
       "canceled_or_late": "40%",
       "on_time": "54%"
+    },
+    "funnel": {
+      "scheduled": 215893,
+      "steps": [
+        {
+          "key": "canceled",
+          "label": "Canceled by MTA",
+          "count": 31961,
+          "pct": 14.8
+        },
+        {
+          "key": "missing",
+          "label": "Never showed up in MTA's live data",
+          "count": 2107,
+          "pct": 1.0
+        },
+        {
+          "key": "skipped",
+          "label": "Stop skipped (flagged by MTA)",
+          "count": 2321,
+          "pct": 1.1
+        },
+        {
+          "key": "late",
+          "label": "Late by more than 7 minutes",
+          "count": 37119,
+          "pct": 17.2
+        },
+        {
+          "key": "early",
+          "label": "Left more than 2 minutes early",
+          "count": 10993,
+          "pct": 5.1
+        },
+        {
+          "key": "unverified",
+          "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
+          "count": 36757,
+          "pct": 17.0
+        }
+      ],
+      "on_time": 94635,
+      "pct_on_time": 43.8,
+      "display_on_time": "44%"
     }
   },
   "school_days": 14

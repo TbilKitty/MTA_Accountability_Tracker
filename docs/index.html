@@ -47,6 +47,15 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-break .sw{flex:none;width:12px;height:12px;border-radius:3px;transform:translateY(1px)}
 .pc-break .p{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;min-width:3ch}
 .pc-break .c{display:block;font-size:.82rem;color:#5a6a7c}
+.pc-funnel{margin:16px 0 0;border-top:1px solid var(--line);padding-top:12px}
+.pc-funnel h4{margin:0 0 6px;color:var(--navy);font-size:.98rem}
+.pc-funnel table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+.pc-funnel td{padding:5px 8px;border-bottom:1px solid var(--line)}
+.pc-funnel td.n,.pc-funnel td.pct{text-align:right;white-space:nowrap}
+.pc-funnel tr.start td{font-weight:700;color:var(--navy)}
+.pc-funnel tr.minus td:first-child{color:#8a2f2f}
+.pc-funnel tr.end td{font-weight:700;color:var(--navy);border-top:2px solid var(--navy);border-bottom:none}
+.pc-funnel p{font-size:.86rem;color:#4a5a6c;margin:8px 0 0;line-height:1.55}
 .pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
 .pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
 </style></head>
@@ -83,6 +92,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <h3>How arrivals with a known outcome turned out</h3>
         <div class="strip" aria-hidden="true"></div>
         <ul><li>Loading…</li></ul>
+        <div class="pc-funnel"></div>
       </div>
       <p>The charts show outcomes by scheduled arrival time. The chart and headline calculations include recorded arrivals and cancellations flagged by MTA.</p>
       <figure class="pc-figure">
@@ -102,6 +112,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <h3>How morning arrivals with a known outcome turned out</h3>
         <div class="strip" aria-hidden="true"></div>
         <ul><li>Loading…</li></ul>
+        <div class="pc-funnel"></div>
       </div>
       <p>The on-time share fell from <span data-stat="on_time_6">75%</span> in the 6:00 a.m. half-hour to <span data-stat="on_time_8_to_9">54%</span> between 8:00 and 9:00 a.m.</p>
       <figure class="pc-figure">
@@ -121,6 +132,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <h3>How afternoon arrivals with a known outcome turned out</h3>
         <div class="strip" aria-hidden="true"></div>
         <ul><li>Loading…</li></ul>
+        <div class="pc-funnel"></div>
       </div>
       <p>Among afternoon arrivals with a known outcome, <span data-stat="pm_on_time">46%</span> were on time.</p>
       <figure class="pc-figure">
@@ -174,7 +186,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <dt>Early</dt><dd>The bus left a timepoint more than 2 minutes ahead of schedule. A student who arrived on time could miss it.</dd>
       <dt>Late / very late</dt><dd>Late means more than 7 minutes and up to 15 minutes after the scheduled time. Very late means more than 15 minutes after the scheduled time.</dd>
       <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
-      <dt>No record</dt><dd>A scheduled trip with no real-time record. This can reflect a missed trip or a tracking gap. It contributes to the route disruption rate and is excluded from the chart and headline calculations.</dd>
+      <dt>Couldn't confirm</dt><dd>The bus trip was running but the tracker could not pin down when it reached the stop (a GPS gap, the trip stopped reporting, or an estimate fuzzier than 2 minutes). The strict count gives these no credit; the chart leaves them out.</dd>
+      <dt>No record</dt><dd>A scheduled trip with no real-time record. This can reflect a missed trip or a tracking gap. It counts against the bus in the strict count and the route disruption rate, and is left out of the charts and headline percentages.</dd>
       <dt>Drove past</dt><dd>The tracker infers a drive-past from vehicle positions and speed near the stop when the feed shows no stop. Some visits, including slow passes, are classified as unclear.</dd>
     </dl>
 
@@ -221,6 +234,25 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     });
   }
 
+  // The strict count: every scheduled arrival, minus each way a bus failed,
+  // leaving only the confirmed on-time buses. Numbers from make_claim_chart.py.
+  function drawFunnel(key, f){
+    const box = document.querySelector(`[data-breakdown="${key}"] .pc-funnel`);
+    if (!box) return;
+    if (!f) { box.hidden = true; return; }
+    box.textContent = '';
+    box.append(el('h4', 'The strict count: no credit for buses we could not confirm'));
+    const t = el('table'), row = (cls, a, n, pct) => {
+      const tr = el('tr', undefined, cls);
+      tr.append(el('td', a), el('td', fmtN(n), 'n'), el('td', pct, 'pct')); t.append(tr);
+    };
+    row('start', 'Scheduled arrivals the tracker was watching', f.scheduled, '100%');
+    f.steps.forEach(st => row('minus', '− ' + st.label, st.count, fmtPct(st.pct)));
+    row('end', '= Confirmed on time', f.on_time, f.display_on_time);
+    box.append(t);
+    box.append(el('p', `How this is calculated: start with every scheduled bus arrival, subtract each one that was canceled, never showed up, skipped the stop, came more than 7 minutes late, left more than 2 minutes early, or whose time we could not confirm. What is left is the share we can prove was on time: ${f.display_on_time} of everything scheduled. The colored bar above counts only arrivals with a known outcome, so its on-time number is higher.`));
+  }
+
   // 1. Claim and afternoon numbers: written by scripts/make_claim_chart.py from
   // the same data as the chart. The numbers in the HTML are a fallback.
   fetch('./data/school-commute/project_c_claim.json', {cache: 'no-store'})
@@ -243,7 +275,10 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         setStat('all_range', `Data: ${all.school_days} school days, ${all.first_date} to ${all.last_date}.`);
       }
       // Outcome breakdown for each view: a 100% strip plus one line per outcome.
-      [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => drawBreakdown(key, v && v.breakdown));
+      [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => {
+        drawBreakdown(key, v && v.breakdown);
+        drawFunnel(key, v && v.funnel);
+      });
       if (pm) {
         setStat('pm_canceled_or_late', pm.display.canceled_or_late);
         setStat('pm_on_time', pm.display.on_time);
