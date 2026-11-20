@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Can Baltimore students count on MTA buses to get them to and from school? | Project C</title>
+<title>How reliable are MTA buses during Baltimore school commutes? | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
 <style>
+.hero.pc-hero:not(.calculator-hero){min-height:0}
+.pc-hero .hero-inner{padding-block:clamp(2.75rem,6vw,5rem)}
+.pc-hero .hero-inner h1{font-size:clamp(2.25rem,5.2vw,4.4rem);max-width:21ch}
 .pc-wrap{width:min(1000px,100%);margin:0 auto;padding:30px 20px 60px}
 .pc-section{margin:0 0 40px}
 .pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
 .pc-section h3{color:var(--navy);margin:26px 0 6px;font-size:1.15rem}
 .pc-section p,.pc-section li{line-height:1.7;color:#243b52}
-.pc-kicker{font-weight:800;text-transform:uppercase;letter-spacing:.13em;font-size:.74rem;color:var(--brick);margin:0 0 4px}
 .pc-claim{font-size:1.2rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 18px}
 .pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:6px 0 18px}
 .pc-stat{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
@@ -41,20 +43,19 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 </style></head>
 <body>
 
-<header class="hero"><div class="hero-inner">
-  <div class="eyebrow">Project C · Baltimore, Maryland</div>
-  <h1>Can Baltimore students count on MTA buses to get them to and from school?</h1>
+<header class="hero pc-hero"><div class="hero-inner">
+  <div class="eyebrow">Project C · Data Science for Lawyers</div>
+  <h1>How reliable are MTA buses during Baltimore school commutes?</h1>
   <div class="gold-line"></div>
-  <p>Many Baltimore students ride MTA local buses to and from school. I tracked every one of those buses, every school morning and afternoon, to find out whether students can count on them.</p>
+  <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data to see how often buses arrived on time during Baltimore’s morning and afternoon school commute windows.</p>
 </div></header>
 
 <main class="pc-wrap">
 
   <!-- 1. THE CLAIM (both rides) -->
   <section class="pc-section" id="claim">
-    <p class="pc-kicker">The claim</p>
-    <h2>No.</h2>
-    <p class="pc-claim">Over <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">30%</span> of morning buses and <span data-stat="pm_canceled_or_late">48%</span> of afternoon buses were canceled or more than 7 minutes late. Even in the hour before school starts, only <span data-stat="on_time_8_to_9">54%</span> arrived on time.</p>
+    <h2>Delays and cancellations were more common in the afternoon</h2>
+    <p class="pc-claim">Across <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">30%</span> of morning arrivals with a known outcome and <span data-stat="pm_canceled_or_late">48%</span> of afternoon arrivals with a known outcome were canceled or more than 7 minutes late. From 8:00 to 9:00 a.m., <span data-stat="on_time_8_to_9">54%</span> of morning arrivals with a known outcome were on time.</p>
     <!-- Clickable view switcher: Overall / Morning commute / Afternoon commute. -->
     <div class="pc-tabs" role="tablist" aria-label="Choose which commute to show">
       <button type="button" role="tab" id="tab-all" aria-controls="view-all" aria-selected="true">Overall</button>
@@ -64,109 +65,104 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 
     <div class="pc-view" role="tabpanel" id="view-all" aria-labelledby="tab-all">
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">39%</div><div class="lbl">of all scheduled school-commute bus arrivals, morning and afternoon, were canceled or 7+ minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">39%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_on_time">55%</div><div class="lbl">were on time</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="school_days">14</span> school days</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
       </div>
-      <p>Across the whole school day, on-time service is best early in the morning and worst on the ride home. Use the buttons above to look at each commute on its own.</p>
+      <p>The charts show outcomes by scheduled arrival time. The chart and headline calculations include recorded arrivals and cancellations flagged by MTA.</p>
       <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_overall.png" alt="Stacked bar chart of MTA bus arrivals by half hour across the school day, 6:00 to 9:00 AM and 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. The on-time share falls from 75% at 6:00 AM to about half before school, and stays below half for most of the afternoon."/>
-        <figcaption>Each bar is one half hour. The dashed line separates the ride to school from the ride home. Green is on time; every other color is a bus a student could not count on. <span data-stat="all_range"></span></figcaption>
+        <img src="./data/school-commute/project_c_overall.png" alt="Morning and afternoon bus arrival outcomes by scheduled half-hour"/>
+        <figcaption>Each bar represents 30 minutes. The dashed line separates the morning and afternoon windows. Green shows the on-time share. <span data-stat="all_range"></span></figcaption>
       </figure>
     </div>
 
     <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled <strong>morning</strong> bus arrivals were canceled or 7+ minutes late</div></div>
-        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the hour before many schools start</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals over <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
+        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window used for school start times</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
       </div>
-      <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all.</p>
+      <p>The on-time share fell from <span data-stat="on_time_6">75%</span> in the 6:00 a.m. half-hour to <span data-stat="on_time_8_to_9">54%</span> between 8:00 and 9:00 a.m.</p>
       <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_claim.png" alt="Stacked bar chart of morning MTA bus arrivals by half hour from 6:00 to 9:00 AM, showing the share on time, early, late, very late and canceled. The on-time share falls from about three quarters at 6:00 to about half between 8:00 and 9:00."/>
+        <img src="./data/school-commute/project_c_claim.png" alt="Morning bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar is one half hour of the morning commute. <span data-stat="am_range"></span></figcaption>
       </figure>
     </div>
 
     <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled <strong>afternoon</strong> bus arrivals were canceled or 7+ minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">were on time</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals over <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
       </div>
-      <p>The ride home is less reliable than the ride to school. Only <span data-stat="pm_on_time">46%</span> of afternoon buses were on time, and canceled trips make up a large share of the rest.</p>
+      <p>Among afternoon arrivals with a known outcome, <span data-stat="pm_on_time">46%</span> were on time.</p>
       <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_afternoon.png" alt="Stacked bar chart of afternoon MTA bus arrivals by half hour from 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. Fewer than half of afternoon buses were on time in most half hours."/>
+        <img src="./data/school-commute/project_c_afternoon.png" alt="Afternoon bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar is one half hour of the afternoon commute. <span data-stat="pm_range"></span></figcaption>
       </figure>
     </div>
-    <p class="pc-note">All three charts and every number on this page update automatically after each school day.</p>
+    <p class="pc-note">The charts and headline figures refresh as new commute data is processed.</p>
   </section>
 
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
   <section class="pc-section" id="bigger-picture">
-    <p class="pc-kicker">The bigger picture for students</p>
-    <h2>The worst routes, and buses that don't stop</h2>
-    <p>The same data, broken down by route and by stop, shows where the problems are.</p>
+    <h2>Reliability by route and stop</h2>
 
     <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of bus visits to a stop during school commutes, the bus drove past without stopping (see the note under the stops table)</div></div>
+      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of observed stop visits were classified as drive-pasts</div></div>
     </div>
 
-    <h3>Routes that fail students most</h3>
-    <p class="pc-note">Morning and afternoon school commutes combined. Sorted by the share of scheduled stop visits that were 15+ minutes late, canceled, or never appeared. Routes with at least 20 stop visits. Click a column to sort.</p>
+    <h3>Routes ranked by disruption rate</h3>
+    <p class="pc-note">The default ranking uses the share of scheduled stop visits that were more than 15 minutes late, canceled, or had no real-time record. The table includes routes with at least 20 measured, canceled, or unrecorded stop visits. The on-time rate uses measured arrivals only.</p>
     <div class="sc-filter"><label>Find a route <input id="route-q" placeholder="e.g. CityLink Blue, 22"/></label></div>
     <div class="sc-table-wrap"><table class="sc" id="routes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
 
-    <h3>Stops where buses most often drove past without stopping</h3>
-    <p class="pc-note">Every stop on every route during school commutes, with at least 20 bus visits recorded. A bus may skip a stop when no one is waiting, and the tracker cannot see riders, so a drive-past is not proof that a student was left behind.</p>
+    <h3>Stops with the highest drive-past rates</h3>
+    <p class="pc-note">The table shows up to 25 stops with the highest drive-past rates among stops with at least 20 observed visits. A bus may pass a stop when nobody is waiting. The tracker cannot tell whether anyone was waiting to board.</p>
     <div class="sc-table-wrap"><table class="sc" id="passes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
     <p class="pc-note" id="report-updated"></p>
   </section>
 
   <!-- 3. WHY IT MATTERS -->
   <section class="pc-section" id="why">
-    <p class="pc-kicker">Why it matters</p>
-    <h2>A late bus means a late student, and a long wait home</h2>
-    <p>For a student who rides the bus to school, the bus is the only way to get there on time. When a bus is canceled or more than 7 minutes late in the last hour before the bell, that student either arrives late or has to leave much earlier just in case. A student who can't count on the next bus can miss the start of first period. The problem is worst exactly when students need the bus most, right before school starts. On the ride home, a canceled or late bus means a longer wait at the stop after school, and a later arrival home.</p>
+    <h2>What unreliable service means for students</h2>
+    <p>For students who rely on MTA buses, a delay or cancellation can mean missing the start of class or waiting longer after dismissal. The tracker measures bus service. It cannot measure how often students arrived late or how long they waited.</p>
   </section>
 
   <!-- 4. DATA, COLAB AND LIMITS -->
   <section class="pc-section" id="data">
-    <p class="pc-kicker">Data and methods</p>
-    <h2>Where the data comes from</h2>
-    <p>I collected this data myself. It is original, messy data from the MTA's live bus feed, not a pre-made dataset.</p>
+    <h2>Data and methods</h2>
     <ul>
-      <li>The MTA publishes its bus schedule (GTFS) and a live feed of where every bus is (GTFS-Realtime). Both are listed on the <a href="https://www.mta.maryland.gov/developer-resources">MTA Developer Resources</a> page.</li>
-      <li>On every school day, during the morning (6:00 to 9:30 AM) and afternoon (2:00 to 5:30 PM) commutes, an automated tracker checks the live feed every 30 seconds and compares each bus with its schedule.</li>
-      <li>Each commute window is saved as one file. All of the raw files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
+      <li>The MTA publishes its bus schedule (GTFS) and a real-time feed with vehicle locations and trip updates (GTFS-Realtime). Both are listed on the <a href="https://www.mta.maryland.gov/developer-resources">MTA Developer Resources</a> page.</li>
+      <li>During monitored school commute windows, the tracker polls the real-time feed about every 30 seconds. The morning window runs from 6:00 to 9:30 a.m. and the afternoon window from 2:00 to 5:30 p.m., Baltimore time.</li>
+      <li>The tracker saves arrival records for each monitored commute window. The data files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
     </ul>
     <h3>The analysis</h3>
-    <p>The full analysis is in a commented Google Colab notebook. It loads the commute files, cleans them, calculates the claim's numbers, and draws the charts.</p>
-    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link">Open the Colab notebook →</a></p>
+    <p>The full analysis is in a commented Google Colab notebook. It loads the commute files, cleans them, calculates the headline results, and generates the charts.</p>
+    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link">Open the Colab notebook</a></p>
 
     <h3>Definitions</h3>
     <dl class="pc-defs">
       <dt>On time</dt><dd>The MTA's own standard: no more than 2 minutes early and no more than 7 minutes late, measured at scheduled timepoint stops.</dd>
-      <dt>Late / very late</dt><dd>7 to 15 minutes late / more than 15 minutes late.</dd>
+      <dt>Late / very late</dt><dd>Late means more than 7 minutes and up to 15 minutes after the scheduled time. Very late means more than 15 minutes after the scheduled time.</dd>
       <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
-      <dt>No record</dt><dd>A scheduled trip that never appeared in the live feed. Very likely a missed trip, but a bus with broken tracking would look the same, so it is counted separately from canceled trips (and is not counted in the claim).</dd>
-      <dt>Drove past</dt><dd>The bus's speed as it crossed the stop rules out a stop. Slow drive-pasts in traffic are left out, so the real number is likely higher.</dd>
+      <dt>No record</dt><dd>A scheduled trip with no real-time record. This can reflect a missed trip or a tracking gap. It contributes to the route disruption rate and is excluded from the chart and headline calculations.</dd>
+      <dt>Drove past</dt><dd>The tracker infers a drive-past from vehicle positions and speed near the stop when the feed shows no stop. Some visits, including slow passes, are classified as unclear.</dd>
     </dl>
 
     <h3>Limitations</h3>
     <ul>
-      <li>Each data point is one scheduled bus arrival at a stop, not one student. The data cannot show how many students were on each bus.</li>
-      <li>Only trips the MTA itself marked canceled are counted as canceled in the claim. The real number of missing buses could be higher.</li>
-      <li>"Typical bell times" (8:00 to 9:00 AM) is approximate. Baltimore City schools start at different times.</li>
-      <li>The afternoon window (2:00 to 5:30 PM) also includes riders who are not students.</li>
-      <li>Arrival times come from the MTA's live feed, recorded every 30 seconds, so a single time can be off by up to about 30 seconds.</li>
+      <li>The arrival analysis counts scheduled stop arrivals. A single trip can contribute multiple arrivals.</li>
+      <li>The number of monitored mornings and afternoons can differ. Each chart shows the dates covered.</li>
+      <li>The 8:00 to 9:00 a.m. interval is a reference window. Actual start times vary by school.</li>
+      <li>The tracker covers general MTA bus service during school commute hours. It does not identify student riders or individual journeys.</li>
+      <li>Arrival times are estimates from periodic feed reports. Their precision depends on the time between usable updates.</li>
       <li>The results cover the school days collected so far, not a full school year.</li>
     </ul>
   </section>
 
 </main>
-<footer class="foot"><strong>Project C</strong><p>Independent research project; not an official MTA service. Source: MDOT MTA GTFS schedule and real-time feeds.</p></footer>
+<footer class="foot"><strong>Project C</strong><p>Independent course project using MDOT MTA schedule and real-time feeds.</p></footer>
 <footer class="site-footer">Harbor photograph: <a href="https://commons.wikimedia.org/wiki/File:Baltimore-inner-harbor-sunset-2017-panorama.jpg">Veggies, “Baltimore Inner Harbor at sunset” (2017)</a>, used with attribution.</footer>
 
 <script>
@@ -277,7 +273,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         {key: 'route_name', label: 'Route'},
         {key: 'scheduled_trips', label: 'Trips scheduled', fmt: fmtN},
         {key: 'pct_on_time', label: 'On time', fmt: fmtPct},
-        {key: 'pct_failed_15min_or_missing', label: 'Late 15+ / canceled / missing', bar: true},
+        {key: 'pct_failed_15min_or_missing', label: 'Over 15 min late / canceled / no record', bar: true},
         {key: 'trips_canceled_by_mta', label: 'Canceled trips', fmt: fmtN},
         {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct}],
         () => {
