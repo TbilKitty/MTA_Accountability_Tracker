@@ -1,0 +1,23 @@
+{
+  "school_mornings": 14,
+  "first_date": "2026-10-30",
+  "last_date": "2026-11-20",
+  "scheduled_arrivals": 89446,
+  "pct_on_time": 62.8,
+  "pct_canceled_or_late": 30.5,
+  "pct_on_time_8_to_9": 54.0,
+  "pct_on_time_by_half_hour": {
+    "6:00": 75.0,
+    "6:30": 72.1,
+    "7:00": 67.8,
+    "7:30": 60.1,
+    "8:00": 54.4,
+    "8:30": 53.6,
+    "9:00": 57.7
+  },
+  "display": {
+    "canceled_or_late": "30%",
+    "on_time_8_to_9": "54%",
+    "on_time_6": "75%"
+  }
+}
