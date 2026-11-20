@@ -38,6 +38,15 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .sc-filter input{padding:6px 8px;border:1px solid #c9ccd0;border-radius:6px;font:inherit}
 .sc-more{display:block;margin:10px auto 0;padding:7px 16px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
 .sc-more:hover{background:#f3efe4}.sc-more[hidden]{display:none}
+.pc-break{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px}
+.pc-break h3{margin:0 0 10px;font-size:1.05rem;color:var(--navy)}
+.pc-break .strip{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:0 0 12px}
+.pc-break .strip span{display:block;height:100%}
+.pc-break ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 16px}
+.pc-break li{display:flex;gap:8px;align-items:baseline;line-height:1.35}
+.pc-break .sw{flex:none;width:12px;height:12px;border-radius:3px;transform:translateY(1px)}
+.pc-break .p{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;min-width:3ch}
+.pc-break .c{display:block;font-size:.82rem;color:#5a6a7c}
 .pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
 .pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
 </style></head>
@@ -69,6 +78,12 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="all_on_time">55%</div><div class="lbl">were on time</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
       </div>
+      <!-- How every arrival turned out; filled in from project_c_claim.json -->
+      <div class="pc-break" data-breakdown="all">
+        <h3>How arrivals with a known outcome turned out</h3>
+        <div class="strip" aria-hidden="true"></div>
+        <ul><li>Loading…</li></ul>
+      </div>
       <p>The charts show outcomes by scheduled arrival time. The chart and headline calculations include recorded arrivals and cancellations flagged by MTA.</p>
       <figure class="pc-figure">
         <img src="./data/school-commute/project_c_overall.png" alt="Morning and afternoon bus arrival outcomes by scheduled half-hour"/>
@@ -82,6 +97,12 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window used for school start times</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
       </div>
+      <!-- How every morning arrival turned out; filled in from project_c_claim.json -->
+      <div class="pc-break" data-breakdown="am">
+        <h3>How morning arrivals with a known outcome turned out</h3>
+        <div class="strip" aria-hidden="true"></div>
+        <ul><li>Loading…</li></ul>
+      </div>
       <p>The on-time share fell from <span data-stat="on_time_6">75%</span> in the 6:00 a.m. half-hour to <span data-stat="on_time_8_to_9">54%</span> between 8:00 and 9:00 a.m.</p>
       <figure class="pc-figure">
         <img src="./data/school-commute/project_c_claim.png" alt="Morning bus arrival outcomes by scheduled half-hour"/>
@@ -94,6 +115,12 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">were on time</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
+      </div>
+      <!-- How every afternoon arrival turned out; filled in from project_c_claim.json -->
+      <div class="pc-break" data-breakdown="pm">
+        <h3>How afternoon arrivals with a known outcome turned out</h3>
+        <div class="strip" aria-hidden="true"></div>
+        <ul><li>Loading…</li></ul>
       </div>
       <p>Among afternoon arrivals with a known outcome, <span data-stat="pm_on_time">46%</span> were on time.</p>
       <figure class="pc-figure">
@@ -144,6 +171,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <h3>Definitions</h3>
     <dl class="pc-defs">
       <dt>On time</dt><dd>The MTA's own standard: no more than 2 minutes early and no more than 7 minutes late, measured at scheduled timepoint stops.</dd>
+      <dt>Early</dt><dd>The bus left a timepoint more than 2 minutes ahead of schedule. A student who arrived on time could miss it.</dd>
       <dt>Late / very late</dt><dd>Late means more than 7 minutes and up to 15 minutes after the scheduled time. Very late means more than 15 minutes after the scheduled time.</dd>
       <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
       <dt>No record</dt><dd>A scheduled trip with no real-time record. This can reflect a missed trip or a tracking gap. It contributes to the route disruption rate and is excluded from the chart and headline calculations.</dd>
@@ -173,6 +201,26 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   const fmtN = v => v == null ? '—' : Number(v).toLocaleString('en-US');
   const setStat = (key, v) => { if (v == null) return; document.querySelectorAll(`[data-stat="${key}"]`).forEach(e => { e.textContent = v; }); };
 
+  // Draws one outcome breakdown (on time, early, late, very late, canceled).
+  // Labels, colors and percents come from make_claim_chart.py, so they match the chart.
+  const NOTES = {early: 'left 2+ min ahead of schedule', on_time: '2 min early to 7 min late',
+                 late: 'more than 7, up to 15 min late', severely_late: 'more than 15 min late',
+                 canceled: 'trip canceled by MTA'};
+  function drawBreakdown(key, b){
+    const box = document.querySelector(`[data-breakdown="${key}"]`);
+    if (!box) return;
+    if (!b) { box.hidden = true; return; }
+    const strip = box.querySelector('.strip'), ul = box.querySelector('ul');
+    strip.textContent = ''; ul.textContent = '';
+    Object.entries(b).forEach(([k, o]) => {
+      const seg = el('span'); seg.style.width = o.pct + '%'; seg.style.background = o.color; strip.append(seg);
+      const li = el('li'), sw = el('span', undefined, 'sw'); sw.style.background = o.color;
+      const txt = el('span'); txt.append(el('span', o.display, 'p'), document.createTextNode(' ' + o.label));
+      txt.append(el('span', `${NOTES[k] || ''} · ${fmtN(o.count)} arrivals`, 'c'));
+      li.append(sw, txt); ul.append(li);
+    });
+  }
+
   // 1. Claim and afternoon numbers: written by scripts/make_claim_chart.py from
   // the same data as the chart. The numbers in the HTML are a fallback.
   fetch('./data/school-commute/project_c_claim.json', {cache: 'no-store'})
@@ -194,6 +242,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         setStat('all_arrivals', fmtN(all.scheduled_arrivals));
         setStat('all_range', `Data: ${all.school_days} school days, ${all.first_date} to ${all.last_date}.`);
       }
+      // Outcome breakdown for each view: a 100% strip plus one line per outcome.
+      [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => drawBreakdown(key, v && v.breakdown));
       if (pm) {
         setStat('pm_canceled_or_late', pm.display.canceled_or_late);
         setStat('pm_on_time', pm.display.on_time);

@@ -140,9 +140,24 @@ def draw(known, window, out):
     return by_time, pct_failed
 
 
+def breakdown(known):
+    """How every arrival turned out: count and percent for each outcome.
+
+    Same five outcomes and order as the chart legend, so the page's breakdown
+    and the stacked bars always agree. The percents add up to 100 (before
+    rounding), and late + very late + canceled = the "canceled or 7+ minutes
+    late" headline.
+    """
+    counts = known["outcome"].value_counts().reindex(ORDER, fill_value=0)
+    pct = counts / counts.sum() * 100
+    return {o: {"label": LABELS[o], "color": COLORS[o], "count": int(counts[o]),
+                "pct": round(float(pct[o]), 1), "display": f"{pct[o]:.0f}%"} for o in ORDER}
+
+
 def summarize(known, by_time, pct_failed, noun):
     pct_on_time = (known["outcome"] == "on_time").mean() * 100
     return {
+        "breakdown": breakdown(known),
         f"school_{noun}": int(known["service_date"].nunique()),
         "first_date": str(known.service_date.min()),
         "last_date": str(known.service_date.max()),
