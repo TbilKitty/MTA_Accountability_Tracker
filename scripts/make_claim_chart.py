@@ -4,11 +4,14 @@ Same logic as the Project C Colab notebook (project_c_analysis.ipynb):
 read data/school-commute-raw/*-am.csv.gz, keep rows with a known outcome,
 group by half hour of scheduled arrival (6:00 to 9:00 blocks), and draw one
 stacked bar per half hour. The school-commute workflow runs this after each
-collection, so the GitHub Pages site always shows the latest chart.
+collection, so the GitHub Pages site always shows the latest chart. It also
+writes the headline numbers to project_c_claim.json next to the image, which
+the home page reads so its text matches the chart.
 
 Usage: python scripts/make_claim_chart.py [--out PATH]
 """
 import argparse
+import json
 from pathlib import Path
 
 import matplotlib
@@ -87,6 +90,26 @@ def draw(known, out):
     out.parent.mkdir(parents=True, exist_ok=True)
     # Fixed metadata so the PNG only changes when the data does.
     fig.savefig(out, dpi=200, bbox_inches="tight", metadata={"Software": None})
+    # Headline numbers for the home page, from the same data as the chart.
+    peak = [t for t in ("8:00", "8:30") if t in by_time.index]
+    stats = {
+        "school_mornings": int(days),
+        "first_date": str(known.service_date.min()),
+        "last_date": str(known.service_date.max()),
+        "scheduled_arrivals": int(len(known)),
+        "pct_on_time": round(float((known["outcome"] == "on_time").mean() * 100), 1),
+        "pct_canceled_or_late": round(float(pct_failed), 1),
+        "pct_on_time_8_to_9": round(float(by_time.loc[peak, "on_time"].mean()), 1) if peak else None,
+        "pct_on_time_by_half_hour": {t: round(float(v), 1) for t, v in by_time["on_time"].items()},
+    }
+    # Pre-formatted the same way as the chart labels, so the page and the
+    # chart always show the same rounded numbers.
+    stats["display"] = {
+        "canceled_or_late": f"{pct_failed:.0f}%",
+        "on_time_8_to_9": f"{by_time.loc[peak, 'on_time'].mean():.0f}%" if peak else None,
+        "on_time_6": f"{by_time.loc['6:00', 'on_time']:.0f}%" if "6:00" in by_time.index else None,
+    }
+    out.with_suffix(".json").write_text(json.dumps(stats, indent=2) + "\n")
     print(f"Saved {out} ({days} mornings, {len(known):,} arrivals, {pct_failed:.0f}% failed)")
 
 
