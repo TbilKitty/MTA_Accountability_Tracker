@@ -19,5 +19,15 @@
     "canceled_or_late": "30%",
     "on_time_8_to_9": "54%",
     "on_time_6": "75%"
+  },
+  "afternoon": {
+    "school_afternoons": 12,
+    "scheduled_arrivals": 79166,
+    "pct_on_time": 46.0,
+    "pct_canceled_or_late": 47.9,
+    "display": {
+      "canceled_or_late": "48%",
+      "on_time": "46%"
+    }
   }
 }

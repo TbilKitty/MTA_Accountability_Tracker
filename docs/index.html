@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Are Baltimore's buses getting students to school on time? | Baltimore Transit Accountability</title>
+<title>Are Baltimore's buses getting students to school on time? | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
 <style>
-.nav-links{flex-wrap:wrap;row-gap:8px}.nav-links a[aria-current="page"]{text-decoration:underline;text-underline-offset:5px}
-.pc-wrap{width:min(960px,100%);margin:0 auto;padding:30px 20px 60px}
-.pc-section{margin:0 0 36px}
+.pc-wrap{width:min(1000px,100%);margin:0 auto;padding:30px 20px 60px}
+.pc-section{margin:0 0 40px}
 .pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
+.pc-section h3{color:var(--navy);margin:26px 0 6px;font-size:1.15rem}
 .pc-section p,.pc-section li{line-height:1.7;color:#243b52}
+.pc-kicker{font-weight:800;text-transform:uppercase;letter-spacing:.13em;font-size:.74rem;color:var(--brick);margin:0 0 4px}
 .pc-claim{font-size:1.2rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 18px}
-.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:6px 0 0}
+.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:6px 0 18px}
 .pc-stat{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .pc-stat .num{font:700 2.3rem/1.1 'Libre Baskerville',Georgia,serif;color:var(--brick)}
 .pc-stat .num.neutral{color:var(--navy)}
@@ -19,9 +20,21 @@
 .pc-figure figcaption{font-size:.88rem;color:#4a5a6c;margin-top:8px}
 .pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
 .pc-note{font-size:.9rem;color:#4a5a6c}
+.sc-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fffefa}
+table.sc{border-collapse:collapse;width:100%;font-size:.9rem}
+table.sc th,table.sc td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.sc th{background:#f3efe4;color:var(--navy);cursor:pointer;user-select:none}
+table.sc th[aria-sort]::after{content:' ▾'}table.sc th[aria-sort=ascending]::after{content:' ▴'}
+table.sc td.wrap{white-space:normal;min-width:220px}
+.bar{display:inline-block;height:9px;border-radius:3px;background:var(--brick);vertical-align:middle;margin-right:6px}
+.sc-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 10px;font-size:.9rem}
+.sc-filter input{padding:6px 8px;border:1px solid #c9ccd0;border-radius:6px;font:inherit}
+.sc-more{display:block;margin:10px auto 0;padding:7px 16px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.sc-more:hover{background:#f3efe4}.sc-more[hidden]{display:none}
+.pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
+.pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
 </style></head>
 <body>
-<nav aria-label="Main navigation" class="site-nav"><a class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark"></span>Baltimore Transit Accountability<br/><small>Reliable Transit. Stronger Baltimore.</small></a><div class="nav-links"><a aria-current="page" href="./index.html">Home</a><a href="./school-commute.html">School Commute Report</a></div></nav>
 
 <header class="hero"><div class="hero-inner">
   <div class="eyebrow">Project C · Baltimore, Maryland</div>
@@ -32,79 +45,192 @@
 
 <main class="pc-wrap">
 
+  <!-- 1. THE CLAIM (mornings only) -->
   <section class="pc-section" id="claim">
-    <h2>The claim</h2>
-    <p class="pc-claim">No, not reliably. About <span data-stat="canceled_or_late">30%</span> of morning bus arrivals were canceled or more than 7 minutes late, and it gets worse right before school starts.</p>
+    <p class="pc-kicker">The claim</p>
+    <h2>No, not reliably, and it's worst right before the bell</h2>
+    <p class="pc-claim">About <span data-stat="canceled_or_late">30%</span> of morning bus arrivals, roughly 1 in 3, were canceled or more than 7 minutes late. Between 8:00 and 9:00 AM, when many schools start, only <span data-stat="on_time_8_to_9">54%</span> of buses were on time.</p>
     <div class="pc-stats">
       <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled morning bus arrivals were canceled or 7+ minutes late</div></div>
-      <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">of buses were on time between 8:00 and 9:00 AM, when many schools start</div></div>
+      <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">of buses were on time between 8:00 and 9:00 AM</div></div>
       <div class="pc-stat"><div class="num neutral" data-stat="arrivals">89,446</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="mornings">14</span> school mornings</div></div>
     </div>
-  </section>
-
-  <section class="pc-section" id="evidence">
-    <h2>The evidence</h2>
-    <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all. That is the window when a late bus means a late student.</p>
+    <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all.</p>
     <figure class="pc-figure">
       <img src="./data/school-commute/project_c_claim.png" alt="Stacked bar chart of morning MTA bus arrivals by half hour from 6:00 to 9:00 AM, showing the share on time, early, late, very late and canceled. The on-time share falls from about three quarters at 6:00 to about half between 8:00 and 9:00."/>
-      <figcaption>Each bar is one half hour of the morning commute. Green is on time; every other color is a bus a student could not count on. The chart and the numbers on this page update automatically after each school morning. <span data-stat="range"></span></figcaption>
+      <figcaption>Each bar is one half hour of the morning commute. Green is on time; every other color is a bus a student could not count on. This chart and the numbers on this page update automatically after each school day. <span data-stat="range"></span></figcaption>
     </figure>
-    <p class="pc-note">Route-by-route results are in the <a href="./school-commute.html">School Commute Report</a>.</p>
   </section>
 
+  <!-- 2. THE BIGGER PICTURE (supporting context) -->
+  <section class="pc-section" id="bigger-picture">
+    <p class="pc-kicker">The bigger picture for students</p>
+    <h2>The ride home, the worst routes, and buses that don't stop</h2>
+    <p>The claim above is about getting to school. The same tracker also watches the afternoon ride home and every route and stop, which shows where the problems are.</p>
+
+    <h3>The afternoon ride home</h3>
+    <div class="pc-stats">
+      <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled afternoon bus arrivals (2:00 to 5:30 PM) were canceled or 7+ minutes late</div></div>
+      <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">of afternoon arrivals were on time, over <span data-stat="pm_days">12</span> school afternoons</div></div>
+      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of bus visits to a stop, the bus drove past without stopping (see the note under the stops table)</div></div>
+    </div>
+
+    <h3>Routes that fail students most</h3>
+    <p class="pc-note">Morning and afternoon school commutes combined. Sorted by the share of scheduled stop visits that were 15+ minutes late, canceled, or never appeared. Routes with at least 20 stop visits. Click a column to sort.</p>
+    <div class="sc-filter"><label>Find a route <input id="route-q" placeholder="e.g. CityLink Blue, 22"/></label></div>
+    <div class="sc-table-wrap"><table class="sc" id="routes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
+
+    <h3>Stops where buses most often drove past without stopping</h3>
+    <p class="pc-note">Every stop on every route during school commutes, with at least 20 bus visits recorded. A bus may skip a stop when no one is waiting, and the tracker cannot see riders, so a drive-past is not proof that a student was left behind.</p>
+    <div class="sc-table-wrap"><table class="sc" id="passes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
+    <p class="pc-note" id="report-updated"></p>
+  </section>
+
+  <!-- 3. WHY IT MATTERS -->
+  <section class="pc-section" id="why">
+    <p class="pc-kicker">Why it matters</p>
+    <h2>A late bus means a late student</h2>
+    <p>For a student who rides the bus to school, the bus is the only way to get there on time. When a bus is canceled or more than 7 minutes late in the last hour before the bell, that student either arrives late or has to leave much earlier just in case. A student who can't count on the next bus can miss the start of first period. The problem is worst exactly when students need the bus most, right before school starts.</p>
+  </section>
+
+  <!-- 4. DATA, COLAB AND LIMITS -->
   <section class="pc-section" id="data">
+    <p class="pc-kicker">Data and methods</p>
     <h2>Where the data comes from</h2>
     <p>I collected this data myself. It is original, messy data from the MTA's live bus feed, not a pre-made dataset.</p>
     <ul>
-      <li>On every school day from 6:00 to 9:30 AM, an automated tracker checks the MTA's real-time feed every 30 seconds to see where every local bus is.</li>
-      <li>It compares each bus with the MTA's published schedule (GTFS) at its timepoint stops.</li>
-      <li>A bus counts as <strong>on time</strong> by the MTA's own standard: no more than 2 minutes early and no more than 7 minutes late. <strong>Canceled</strong> means the MTA's own feed marked the trip canceled.</li>
-      <li>Each morning is saved as one file. All of the raw files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
+      <li>The MTA publishes its bus schedule (GTFS) and a live feed of where every bus is (GTFS-Realtime). Both are listed on the <a href="https://www.mta.maryland.gov/developer-resources">MTA Developer Resources</a> page.</li>
+      <li>On every school day, during the morning (6:00 to 9:30 AM) and afternoon (2:00 to 5:30 PM) commutes, an automated tracker checks the live feed every 30 seconds and compares each bus with its schedule.</li>
+      <li>Each commute window is saved as one file. All of the raw files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
     </ul>
-  </section>
-
-  <section class="pc-section" id="analysis">
-    <h2>The analysis</h2>
-    <p>The full analysis is in a commented Google Colab notebook. It loads the morning files straight from GitHub, cleans them, calculates every number on this page, and draws the chart.</p>
+    <h3>The analysis</h3>
+    <p>The full analysis of the morning claim is in a commented Google Colab notebook. It loads the morning files, cleans them, calculates the claim's numbers, and draws the chart.</p>
     <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link">Open the Colab notebook →</a></p>
-  </section>
 
-  <section class="pc-section" id="limits">
-    <h2>Limitations</h2>
+    <h3>Definitions</h3>
+    <dl class="pc-defs">
+      <dt>On time</dt><dd>The MTA's own standard: no more than 2 minutes early and no more than 7 minutes late, measured at scheduled timepoint stops.</dd>
+      <dt>Late / very late</dt><dd>7 to 15 minutes late / more than 15 minutes late.</dd>
+      <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
+      <dt>No record</dt><dd>A scheduled trip that never appeared in the live feed. Very likely a missed trip, but a bus with broken tracking would look the same, so it is counted separately from canceled trips (and is not counted in the morning claim).</dd>
+      <dt>Drove past</dt><dd>The bus's speed as it crossed the stop rules out a stop. Slow drive-pasts in traffic are left out, so the real number is likely higher.</dd>
+    </dl>
+
+    <h3>Limitations</h3>
     <ul>
-      <li>Each data point is one scheduled bus arrival at a timepoint stop, not one student. The data cannot show how many students were on each bus.</li>
-      <li>Only trips the MTA itself marked canceled are counted as canceled. A bus with broken tracking looks the same as one that never ran, so those are left out and the real number of missing buses could be higher.</li>
+      <li>Each data point is one scheduled bus arrival at a stop, not one student. The data cannot show how many students were on each bus.</li>
+      <li>Only trips the MTA itself marked canceled are counted as canceled in the claim. The real number of missing buses could be higher.</li>
       <li>"Typical bell times" (8:00 to 9:00 AM) is approximate. Baltimore City schools start at different times.</li>
-      <li>The results cover the school mornings collected so far, not a full school year.</li>
+      <li>The afternoon window (2:00 to 5:30 PM) also includes riders who are not students.</li>
+      <li>Arrival times come from the MTA's live feed, recorded every 30 seconds, so a single time can be off by up to about 30 seconds.</li>
+      <li>The results cover the school days collected so far, not a full school year.</li>
     </ul>
   </section>
-
-
 
 </main>
-<footer class="foot"><strong>Baltimore Transit Accountability</strong><p>Independent research project; not an official MTA service. Source: MDOT MTA GTFS schedule and real-time feeds.</p></footer>
+<footer class="foot"><strong>Project C</strong><p>Independent research project; not an official MTA service. Source: MDOT MTA GTFS schedule and real-time feeds.</p></footer>
 <footer class="site-footer">Harbor photograph: <a href="https://commons.wikimedia.org/wiki/File:Baltimore-inner-harbor-sunset-2017-panorama.jpg">Veggies, “Baltimore Inner Harbor at sunset” (2017)</a>, used with attribution.</footer>
 
 <script>
-// Fill in the headline numbers from the same data as the chart. The numbers
-// written in the page above are a fallback if this file can't be loaded.
-fetch('./data/school-commute/project_c_claim.json', {cache: 'no-store'})
-  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-  .then(d => {
-    const shown = d.display || {};  // rounded exactly like the chart labels
-    const values = {
-      canceled_or_late: shown.canceled_or_late,
-      on_time_8_to_9: shown.on_time_8_to_9,
-      on_time_6: shown.on_time_6,
-      arrivals: Number(d.scheduled_arrivals).toLocaleString('en-US'),
-      mornings: String(d.school_mornings),
-      range: `Data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`
-    };
-    document.querySelectorAll('[data-stat]').forEach(e => {
-      const v = values[e.dataset.stat];
-      if (v != null) e.textContent = v;
-    });
-  })
-  .catch(() => {});
+(function(){
+  const $ = id => document.getElementById(id);
+  const el = (tag, text, cls) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (cls) e.className = cls; return e; };
+  const fmtPct = v => v == null ? '—' : v.toFixed(1) + '%';
+  const fmtN = v => v == null ? '—' : Number(v).toLocaleString('en-US');
+  const setStat = (key, v) => { if (v == null) return; document.querySelectorAll(`[data-stat="${key}"]`).forEach(e => { e.textContent = v; }); };
+
+  // 1. Claim and afternoon numbers: written by scripts/make_claim_chart.py from
+  // the same data as the chart. The numbers in the HTML are a fallback.
+  fetch('./data/school-commute/project_c_claim.json', {cache: 'no-store'})
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(d => {
+      const shown = d.display || {};  // rounded exactly like the chart labels
+      setStat('canceled_or_late', shown.canceled_or_late);
+      setStat('on_time_8_to_9', shown.on_time_8_to_9);
+      setStat('on_time_6', shown.on_time_6);
+      setStat('arrivals', fmtN(d.scheduled_arrivals));
+      setStat('mornings', String(d.school_mornings));
+      setStat('range', `Morning data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
+      const pm = d.afternoon;
+      if (pm) {
+        setStat('pm_canceled_or_late', pm.display.canceled_or_late);
+        setStat('pm_on_time', pm.display.on_time);
+        setStat('pm_days', String(pm.school_afternoons));
+      }
+    })
+    .catch(() => {});
+
+  // Sortable table that shows PREVIEW rows, with a "Show all" button below.
+  const PREVIEW = 8;
+  function table(target, cols, rows, defaultSort){
+    let sortKey = defaultSort || null, asc = false, expanded = false;
+    const more = el('button', undefined, 'sc-more');
+    more.type = 'button';
+    more.addEventListener('click', () => { expanded = !expanded; render(); });
+    target.closest('.sc-table-wrap').after(more);
+    function render(){
+      target.textContent = '';
+      const thead = el('thead'), tr = el('tr');
+      cols.forEach(c => {
+        const th = el('th', c.label);
+        if (c.key === sortKey) th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+        th.addEventListener('click', () => { asc = sortKey === c.key ? !asc : false; sortKey = c.key; render(); });
+        tr.append(th);
+      });
+      thead.append(tr); target.append(thead);
+      const tbody = el('tbody');
+      const data = rows();
+      if (sortKey) data.sort((a, b) => { const x = a[sortKey] ?? -Infinity, y = b[sortKey] ?? -Infinity;
+        const r = x > y ? 1 : x < y ? -1 : 0; return asc ? r : -r; });
+      const total = data.length;
+      more.hidden = total <= PREVIEW;
+      more.textContent = expanded ? 'Show fewer' : `Show all ${total} rows ▾`;
+      more.setAttribute('aria-expanded', String(expanded));
+      if (!expanded) data.splice(PREVIEW);
+      data.forEach(r => { const row = el('tr'); cols.forEach(c => { const td = el('td', undefined, c.wrap ? 'wrap' : '');
+        if (c.bar) { const v = r[c.key]; if (v != null) { const b = el('span', undefined, 'bar'); b.style.width = Math.max(2, v) + 'px'; td.append(b); } td.append(document.createTextNode(fmtPct(v))); }
+        else td.textContent = c.fmt ? c.fmt(r[c.key], r) : (r[c.key] ?? '—');
+        row.append(td); }); tbody.append(row); });
+      if (!total) { const row = el('tr'); const td = el('td', 'No rows match.'); td.colSpan = cols.length; row.append(td); tbody.append(row); }
+      target.append(tbody);
+    }
+    render();
+    return render;
+  }
+
+  // 2. Routes, drive-pasts and stop behavior: written by the tracker
+  // (scripts/school_commute_watch.py) after every commute window.
+  fetch('./data/school-commute/summary.json', {cache: 'no-store'})
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(s => {
+      if (s.stop_behavior && s.stop_behavior.pct_drove_past != null) setStat('drove_past', Math.round(s.stop_behavior.pct_drove_past) + '%');
+
+      const rerender = table($('routes'), [
+        {key: 'route_name', label: 'Route'},
+        {key: 'scheduled_trips', label: 'Trips scheduled', fmt: fmtN},
+        {key: 'pct_on_time', label: 'On time', fmt: fmtPct},
+        {key: 'pct_failed_15min_or_missing', label: 'Late 15+ / canceled / missing', bar: true},
+        {key: 'trips_canceled_by_mta', label: 'Canceled trips', fmt: fmtN},
+        {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct}],
+        () => {
+          const q = $('route-q').value.trim().toLowerCase();
+          return s.routes.filter(r => (r.measured_stop_events + r.canceled_by_mta + r.no_realtime_record) >= 20 &&
+            (!q || String(r.route_name).toLowerCase().includes(q)));
+        }, 'pct_failed_15min_or_missing');
+      $('route-q').addEventListener('input', rerender);
+
+      table($('passes'), [
+        {key: 'stop_name', label: 'Stop', wrap: true, fmt: (v, r) => v || r.stop_id},
+        {key: 'routes', label: 'Routes', wrap: true, fmt: v => (v || []).join(', ')},
+        {key: 'pct_drove_past', label: 'Drove past', bar: true},
+        {key: 'drove_past', label: 'Times', fmt: fmtN},
+        {key: 'stop_visits_observed', label: 'Bus visits', fmt: fmtN}],
+        () => (s.stops_most_driven_past_100 || []).slice(0, 25), 'pct_drove_past');
+
+      $('report-updated').textContent = `Route and stop tables: ${s.school_windows_counted} school commute windows, last updated ` +
+        new Date(s.generated_utc).toLocaleString('en-US', {timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'}) + ' (Baltimore time).';
+    })
+    .catch(() => { $('report-updated').textContent = 'Route and stop results could not be loaded.'; });
+})();
 </script>
 </body></html>
