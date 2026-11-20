@@ -8,6 +8,7 @@ scheduled arrival, and draw one stacked bar per half hour.
 Writes, next to each other in docs/data/school-commute/:
   project_c_claim.png      morning chart (6:00 to 9:00 AM blocks)
   project_c_afternoon.png  afternoon chart (2:00 to 5:00 PM blocks)
+  project_c_overall.png    both commutes on one timeline (the "Overall" view)
   project_c_claim.json     headline numbers the web page reads
 
 The school-commute workflow runs this after each collection, so the GitHub
@@ -29,6 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "school-commute-raw"
 DEFAULT_OUT = ROOT / "docs" / "data" / "school-commute" / "project_c_claim.png"
 AFTERNOON_NAME = "project_c_afternoon.png"
+OVERALL_NAME = "project_c_overall.png"
 
 ORDER = ["on_time", "early", "late", "severely_late", "canceled"]
 FAILED = ["late", "severely_late", "canceled"]  # canceled or 7+ minutes late
@@ -46,6 +48,10 @@ WINDOWS = {
     "pm": {"pattern": "*-pm.csv.gz", "drop": "5:30", "noun": "afternoons", "xlabel": "Scheduled arrival time (PM)",
            "title": "The ride home: afternoon bus reliability by half hour",
            "shade": None},
+    # Both windows together: morning and afternoon half hours on one timeline.
+    "all": {"noun": "school days", "xlabel": "Scheduled arrival time",
+            "title": "Across the school day: the ride to school and the ride home",
+            "shade": None},  # the morning chart shows bell times
 }
 
 
@@ -78,7 +84,8 @@ def draw(known, window, out):
     by_time = by_half_hour(known)
     pct_failed = known["outcome"].isin(FAILED).mean() * 100
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    wide = window == "all"
+    fig, ax = plt.subplots(figsize=(13, 6) if wide else (10, 6))
     bottom = pd.Series(0.0, index=by_time.index)
     for col in ORDER:
         ax.bar(by_time.index, by_time[col], bottom=bottom, color=COLORS[col],
@@ -87,7 +94,7 @@ def draw(known, window, out):
     # Print the on-time percent inside each green bar.
     for i, v in enumerate(by_time["on_time"]):
         ax.text(i, v / 2, f"{v:.0f}%", ha="center", va="center", color="white",
-                fontsize=12, fontweight="bold")
+                fontsize=10.5 if wide else 12, fontweight="bold")
 
     idx = list(by_time.index)
     if w["shade"] and w["shade"][0] in idx:
@@ -97,6 +104,16 @@ def draw(known, window, out):
         ax.axvspan(start - 0.5, end + 0.5, color="#FFE8A3", alpha=0.45, zorder=0)
         ax.text((start + end) / 2, 101, text, ha="center", va="bottom", fontsize=10)
 
+    if window == "all":
+        # A dashed line between the last morning and first afternoon bar.
+        pm_start = next((i for i, t in enumerate(idx) if t.endswith("PM")), None)
+        if pm_start:
+            ax.axvline(pm_start - 0.5, color="gray", linestyle="--", linewidth=1)
+            ax.text(pm_start / 2 - 0.5, 101, "Ride to school", ha="center", va="bottom", fontsize=10, color="gray")
+            ax.text((pm_start + len(idx)) / 2 - 0.5, 101, "Ride home", ha="center", va="bottom", fontsize=10, color="gray")
+        # Two-line tick labels ("6:00" over "AM") so they don't collide.
+        ax.set_xticks(range(len(idx)), [t.replace(" ", "\n") for t in idx])
+
     ax.set_ylim(0, 108)
     ax.set_ylabel("% of scheduled bus arrivals")
     ax.set_xlabel(w["xlabel"])
@@ -105,11 +122,12 @@ def draw(known, window, out):
 
     days = known["service_date"].nunique()
     noun = w["noun"]
+    which = {"am": "morning buses", "pm": "afternoon buses", "all": "school-commute buses"}[window]
     ax.set_title(f"{w['title']}\n"
-                 f"Overall, {pct_failed:.0f}% of {noun[:-1]} buses were canceled or 7+ minutes late",
+                 f"Overall, {pct_failed:.0f}% of {which} were canceled or 7+ minutes late",
                  fontsize=14, fontweight="bold", loc="left")
     fig.text(0.01, 0.01,
-             f"MTA local bus, {days} school {noun} ({known.service_date.min()} to "
+             f"MTA local bus, {days} {'' if window == 'all' else 'school '}{noun} ({known.service_date.min()} to "
              f"{known.service_date.max()}), {len(known):,} scheduled arrivals. "
              "Source: MTA real-time feed vs. GTFS schedule, collected by the author. Updated automatically.",
              fontsize=8.5, color="gray")
@@ -158,6 +176,13 @@ def main(out):
     if pm is not None and len(pm):
         pm_time, pm_failed = draw(pm, "pm", out.with_name(AFTERNOON_NAME))
         stats["afternoon"] = summarize(pm, pm_time, pm_failed, "afternoons")
+
+    # Overall: both commutes together, on one timeline with AM/PM labels.
+    if pm is not None and len(pm):
+        both = pd.concat([am.assign(half_hour=am["half_hour"] + " AM"),
+                          pm.assign(half_hour=pm["half_hour"] + " PM")], ignore_index=True)
+        all_time, all_failed = draw(both, "all", out.with_name(OVERALL_NAME))
+        stats["overall"] = summarize(both, all_time, all_failed, "days")
 
     # School days with any data, morning or afternoon.
     dates = set(am["service_date"]) | (set(pm["service_date"]) if pm is not None else set())
