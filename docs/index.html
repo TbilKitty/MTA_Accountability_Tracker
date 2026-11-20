@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Are Baltimore's buses getting students to school on time? | Project C</title>
+<title>Can Baltimore students count on MTA buses to get them to and from school? | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
 <style>
 .pc-wrap{width:min(1000px,100%);margin:0 auto;padding:30px 20px 60px}
@@ -38,41 +38,48 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 
 <header class="hero"><div class="hero-inner">
   <div class="eyebrow">Project C · Baltimore, Maryland</div>
-  <h1>Are buses getting students to school on time?</h1>
+  <h1>Can Baltimore students count on MTA buses to get them to and from school?</h1>
   <div class="gold-line"></div>
-  <p>Many Baltimore students ride MTA local buses to school. I tracked every one of those buses, every school morning, to find out whether students can count on them.</p>
+  <p>Many Baltimore students ride MTA local buses to and from school. I tracked every one of those buses, every school morning and afternoon, to find out whether students can count on them.</p>
 </div></header>
 
 <main class="pc-wrap">
 
-  <!-- 1. THE CLAIM (mornings only) -->
+  <!-- 1. THE CLAIM (both rides) -->
   <section class="pc-section" id="claim">
     <p class="pc-kicker">The claim</p>
-    <h2>No, not reliably, and it's worst right before the bell</h2>
-    <p class="pc-claim">About <span data-stat="canceled_or_late">30%</span> of morning bus arrivals, roughly 1 in 3, were canceled or more than 7 minutes late. Between 8:00 and 9:00 AM, when many schools start, only <span data-stat="on_time_8_to_9">54%</span> of buses were on time.</p>
+    <h2>No.</h2>
+    <p class="pc-claim">Over <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">30%</span> of morning buses and <span data-stat="pm_canceled_or_late">48%</span> of afternoon buses were canceled or more than 7 minutes late. Even in the hour before school starts, only <span data-stat="on_time_8_to_9">54%</span> arrived on time.</p>
     <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled morning bus arrivals were canceled or 7+ minutes late</div></div>
-      <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">of buses were on time between 8:00 and 9:00 AM</div></div>
-      <div class="pc-stat"><div class="num neutral" data-stat="arrivals">89,446</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="mornings">14</span> school mornings</div></div>
+      <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled <strong>morning</strong> bus arrivals were canceled or 7+ minutes late</div></div>
+      <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled <strong>afternoon</strong> bus arrivals were canceled or 7+ minutes late</div></div>
+      <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">of buses were on time between 8:00 and 9:00 AM, the hour before many schools start</div></div>
+      <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="school_days">14</span> school days</div></div>
     </div>
+
+    <h3>The ride to school</h3>
     <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all.</p>
     <figure class="pc-figure">
       <img src="./data/school-commute/project_c_claim.png" alt="Stacked bar chart of morning MTA bus arrivals by half hour from 6:00 to 9:00 AM, showing the share on time, early, late, very late and canceled. The on-time share falls from about three quarters at 6:00 to about half between 8:00 and 9:00."/>
-      <figcaption>Each bar is one half hour of the morning commute. Green is on time; every other color is a bus a student could not count on. This chart and the numbers on this page update automatically after each school day. <span data-stat="range"></span></figcaption>
+      <figcaption>Each bar is one half hour of the morning commute. Green is on time; every other color is a bus a student could not count on. <span data-stat="am_range"></span></figcaption>
+    </figure>
+
+    <h3>The ride home</h3>
+    <p>The afternoon is worse. Only <span data-stat="pm_on_time">46%</span> of afternoon buses were on time, and canceled trips make up a large share of the rest.</p>
+    <figure class="pc-figure">
+      <img src="./data/school-commute/project_c_afternoon.png" alt="Stacked bar chart of afternoon MTA bus arrivals by half hour from 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. Fewer than half of afternoon buses were on time in most half hours."/>
+      <figcaption>Each bar is one half hour of the afternoon commute (2:00 to 5:30 PM). <span data-stat="pm_range"></span> Both charts and every number on this page update automatically after each school day.</figcaption>
     </figure>
   </section>
 
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
   <section class="pc-section" id="bigger-picture">
     <p class="pc-kicker">The bigger picture for students</p>
-    <h2>The ride home, the worst routes, and buses that don't stop</h2>
-    <p>The claim above is about getting to school. The same tracker also watches the afternoon ride home and every route and stop, which shows where the problems are.</p>
+    <h2>The worst routes, and buses that don't stop</h2>
+    <p>The same data, broken down by route and by stop, shows where the problems are.</p>
 
-    <h3>The afternoon ride home</h3>
     <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled afternoon bus arrivals (2:00 to 5:30 PM) were canceled or 7+ minutes late</div></div>
-      <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">of afternoon arrivals were on time, over <span data-stat="pm_days">12</span> school afternoons</div></div>
-      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of bus visits to a stop, the bus drove past without stopping (see the note under the stops table)</div></div>
+      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of bus visits to a stop during school commutes, the bus drove past without stopping (see the note under the stops table)</div></div>
     </div>
 
     <h3>Routes that fail students most</h3>
@@ -89,8 +96,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   <!-- 3. WHY IT MATTERS -->
   <section class="pc-section" id="why">
     <p class="pc-kicker">Why it matters</p>
-    <h2>A late bus means a late student</h2>
-    <p>For a student who rides the bus to school, the bus is the only way to get there on time. When a bus is canceled or more than 7 minutes late in the last hour before the bell, that student either arrives late or has to leave much earlier just in case. A student who can't count on the next bus can miss the start of first period. The problem is worst exactly when students need the bus most, right before school starts.</p>
+    <h2>A late bus means a late student, and a long wait home</h2>
+    <p>For a student who rides the bus to school, the bus is the only way to get there on time. When a bus is canceled or more than 7 minutes late in the last hour before the bell, that student either arrives late or has to leave much earlier just in case. A student who can't count on the next bus can miss the start of first period. The problem is worst exactly when students need the bus most, right before school starts. On the ride home, a canceled or late bus means a longer wait at the stop after school, and a later arrival home.</p>
   </section>
 
   <!-- 4. DATA, COLAB AND LIMITS -->
@@ -104,7 +111,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <li>Each commute window is saved as one file. All of the raw files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
     </ul>
     <h3>The analysis</h3>
-    <p>The full analysis of the morning claim is in a commented Google Colab notebook. It loads the morning files, cleans them, calculates the claim's numbers, and draws the chart.</p>
+    <p>The full analysis is in a commented Google Colab notebook. It loads the commute files, cleans them, calculates the claim's numbers, and draws the charts.</p>
     <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link">Open the Colab notebook →</a></p>
 
     <h3>Definitions</h3>
@@ -112,7 +119,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <dt>On time</dt><dd>The MTA's own standard: no more than 2 minutes early and no more than 7 minutes late, measured at scheduled timepoint stops.</dd>
       <dt>Late / very late</dt><dd>7 to 15 minutes late / more than 15 minutes late.</dd>
       <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
-      <dt>No record</dt><dd>A scheduled trip that never appeared in the live feed. Very likely a missed trip, but a bus with broken tracking would look the same, so it is counted separately from canceled trips (and is not counted in the morning claim).</dd>
+      <dt>No record</dt><dd>A scheduled trip that never appeared in the live feed. Very likely a missed trip, but a bus with broken tracking would look the same, so it is counted separately from canceled trips (and is not counted in the claim).</dd>
       <dt>Drove past</dt><dd>The bus's speed as it crossed the stop rules out a stop. Slow drive-pasts in traffic are left out, so the real number is likely higher.</dd>
     </dl>
 
@@ -148,14 +155,14 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       setStat('canceled_or_late', shown.canceled_or_late);
       setStat('on_time_8_to_9', shown.on_time_8_to_9);
       setStat('on_time_6', shown.on_time_6);
-      setStat('arrivals', fmtN(d.scheduled_arrivals));
-      setStat('mornings', String(d.school_mornings));
-      setStat('range', `Morning data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
+      setStat('school_days', d.school_days != null ? String(d.school_days) : null);
+      setStat('am_range', `Data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
       const pm = d.afternoon;
+      setStat('all_arrivals', fmtN(d.scheduled_arrivals + (pm ? pm.scheduled_arrivals : 0)));
       if (pm) {
         setStat('pm_canceled_or_late', pm.display.canceled_or_late);
         setStat('pm_on_time', pm.display.on_time);
-        setStat('pm_days', String(pm.school_afternoons));
+        setStat('pm_range', `Data: ${pm.school_afternoons} school afternoons, ${pm.first_date} to ${pm.last_date}.`);
       }
     })
     .catch(() => {});
