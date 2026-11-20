@@ -45,6 +45,24 @@ def load_known():
     return known[known["half_hour"] != "9:30"]
 
 
+def afternoon_stats():
+    """Same measure as the morning claim, for the afternoon ride home (supporting context)."""
+    files = sorted(RAW.glob("*-pm.csv.gz"))
+    if not files:
+        return None
+    df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+    known = df[df["outcome"].isin(ORDER)]
+    failed = known["outcome"].isin(["late", "severely_late", "canceled"]).mean() * 100
+    on_time = (known["outcome"] == "on_time").mean() * 100
+    return {
+        "school_afternoons": int(known["service_date"].nunique()),
+        "scheduled_arrivals": int(len(known)),
+        "pct_on_time": round(float(on_time), 1),
+        "pct_canceled_or_late": round(float(failed), 1),
+        "display": {"canceled_or_late": f"{failed:.0f}%", "on_time": f"{on_time:.0f}%"},
+    }
+
+
 def draw(known, out):
     failed = known["outcome"].isin(["late", "severely_late", "canceled"])
     pct_failed = failed.mean() * 100
@@ -109,6 +127,7 @@ def draw(known, out):
         "on_time_8_to_9": f"{by_time.loc[peak, 'on_time'].mean():.0f}%" if peak else None,
         "on_time_6": f"{by_time.loc['6:00', 'on_time']:.0f}%" if "6:00" in by_time.index else None,
     }
+    stats["afternoon"] = afternoon_stats()
     out.with_suffix(".json").write_text(json.dumps(stats, indent=2) + "\n")
     print(f"Saved {out} ({days} mornings, {len(known):,} arrivals, {pct_failed:.0f}% failed)")
 
