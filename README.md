@@ -24,9 +24,6 @@ See docs/METHODOLOGY.md, docs/EVIDENCE.md, docs/REALTIME_SETUP.md and docs/DEPLO
 ## Child safety research module
 See `docs/CHILD_SAFETY_RESEARCH.md` and `docs/CHILD_SAFETY_DATA_DICTIONARY.md` for sources, templates, privacy safeguards and evidentiary standards. The module contains **schemas and a research plan, not fabricated child abduction statistics**. Never commit filled restricted case records to GitHub.
 
-## Education and family impact scenario tool
-Open `docs/education-impact.html` in a browser or through GitHub Pages. Adjust students, delay, missed classroom minutes, parent pickups, additional car miles, and work hours with sliders. Export a labeled hypothetical JSON scenario. **This is not an empirical data source or a legal finding.**
-
 ## Why complaints alone are insufficient
 The public dashboard includes a reporting-gap statement. See `docs/REPORTING_GAP.md` for the methodology and evidentiary limitations of complaint data and MPIA requests.
 
