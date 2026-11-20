@@ -5,7 +5,6 @@
   "scheduled_arrivals": 89446,
   "pct_on_time": 62.8,
   "pct_canceled_or_late": 30.5,
-  "pct_on_time_8_to_9": 54.0,
   "pct_on_time_by_half_hour": {
     "6:00": 75.0,
     "6:30": 72.1,
@@ -17,17 +16,31 @@
   },
   "display": {
     "canceled_or_late": "30%",
+    "on_time": "63%",
     "on_time_8_to_9": "54%",
     "on_time_6": "75%"
   },
+  "pct_on_time_8_to_9": 54.0,
   "afternoon": {
     "school_afternoons": 12,
-    "scheduled_arrivals": 79166,
+    "first_date": "2026-11-02",
+    "last_date": "2026-11-19",
+    "scheduled_arrivals": 78639,
     "pct_on_time": 46.0,
-    "pct_canceled_or_late": 47.9,
+    "pct_canceled_or_late": 48.0,
+    "pct_on_time_by_half_hour": {
+      "2:00": 57.8,
+      "2:30": 47.4,
+      "3:00": 48.3,
+      "3:30": 44.9,
+      "4:00": 43.8,
+      "4:30": 42.7,
+      "5:00": 43.4
+    },
     "display": {
       "canceled_or_late": "48%",
       "on_time": "46%"
     }
-  }
+  },
+  "school_days": 14
 }
