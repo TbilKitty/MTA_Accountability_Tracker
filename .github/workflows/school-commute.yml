@@ -71,6 +71,15 @@ jobs:
           else
             python scripts/school_commute_watch.py --window "${{ inputs.window || 'auto' }}"
           fi
+      - name: Redraw the Project C morning chart
+        # Rebuilds docs/data/school-commute/project_c_claim.png from every saved
+        # morning file, so the Pages site always shows the latest chart. If it
+        # fails, the day's data is still committed below.
+        if: ${{ !inputs.test_drive }}
+        continue-on-error: true
+        run: |
+          pip install 'pandas>=2.2,<3' 'matplotlib>=3.8,<4'
+          python scripts/make_claim_chart.py
       - name: Commit results
         if: ${{ !inputs.test_drive }}
         run: |
