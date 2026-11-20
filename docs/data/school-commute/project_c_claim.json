@@ -42,5 +42,33 @@
       "on_time": "46%"
     }
   },
+  "overall": {
+    "school_days": 14,
+    "first_date": "2026-10-30",
+    "last_date": "2026-11-20",
+    "scheduled_arrivals": 168085,
+    "pct_on_time": 55.0,
+    "pct_canceled_or_late": 38.6,
+    "pct_on_time_by_half_hour": {
+      "6:00 AM": 75.0,
+      "6:30 AM": 72.1,
+      "7:00 AM": 67.8,
+      "7:30 AM": 60.1,
+      "8:00 AM": 54.4,
+      "8:30 AM": 53.6,
+      "9:00 AM": 57.7,
+      "2:00 PM": 57.8,
+      "2:30 PM": 47.4,
+      "3:00 PM": 48.3,
+      "3:30 PM": 44.9,
+      "4:00 PM": 43.8,
+      "4:30 PM": 42.7,
+      "5:00 PM": 43.4
+    },
+    "display": {
+      "canceled_or_late": "39%",
+      "on_time": "55%"
+    }
+  },
   "school_days": 14
 }

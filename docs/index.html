@@ -19,6 +19,11 @@
 .pc-figure img{display:block;max-width:100%;height:auto}
 .pc-figure figcaption{font-size:.88rem;color:#4a5a6c;margin-top:8px}
 .pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
+.pc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 16px}
+.pc-tabs button{padding:9px 18px;border:2px solid var(--navy);border-radius:999px;background:#fff;color:var(--navy);font:inherit;font-weight:700;cursor:pointer}
+.pc-tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
+.pc-tabs button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.pc-view[hidden]{display:none}
 .pc-note{font-size:.9rem;color:#4a5a6c}
 .sc-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fffefa}
 table.sc{border-collapse:collapse;width:100%;font-size:.9rem}
@@ -50,26 +55,52 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <p class="pc-kicker">The claim</p>
     <h2>No.</h2>
     <p class="pc-claim">Over <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">30%</span> of morning buses and <span data-stat="pm_canceled_or_late">48%</span> of afternoon buses were canceled or more than 7 minutes late. Even in the hour before school starts, only <span data-stat="on_time_8_to_9">54%</span> arrived on time.</p>
-    <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled <strong>morning</strong> bus arrivals were canceled or 7+ minutes late</div></div>
-      <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled <strong>afternoon</strong> bus arrivals were canceled or 7+ minutes late</div></div>
-      <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">of buses were on time between 8:00 and 9:00 AM, the hour before many schools start</div></div>
-      <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="school_days">14</span> school days</div></div>
+    <!-- Clickable view switcher: Overall / Morning commute / Afternoon commute. -->
+    <div class="pc-tabs" role="tablist" aria-label="Choose which commute to show">
+      <button type="button" role="tab" id="tab-all" aria-controls="view-all" aria-selected="true">Overall</button>
+      <button type="button" role="tab" id="tab-am" aria-controls="view-am" aria-selected="false" tabindex="-1">Morning commute</button>
+      <button type="button" role="tab" id="tab-pm" aria-controls="view-pm" aria-selected="false" tabindex="-1">Afternoon commute</button>
     </div>
 
-    <h3>The ride to school</h3>
-    <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all.</p>
-    <figure class="pc-figure">
-      <img src="./data/school-commute/project_c_claim.png" alt="Stacked bar chart of morning MTA bus arrivals by half hour from 6:00 to 9:00 AM, showing the share on time, early, late, very late and canceled. The on-time share falls from about three quarters at 6:00 to about half between 8:00 and 9:00."/>
-      <figcaption>Each bar is one half hour of the morning commute. Green is on time; every other color is a bus a student could not count on. <span data-stat="am_range"></span></figcaption>
-    </figure>
+    <div class="pc-view" role="tabpanel" id="view-all" aria-labelledby="tab-all">
+      <div class="pc-stats">
+        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">39%</div><div class="lbl">of all scheduled school-commute bus arrivals, morning and afternoon, were canceled or 7+ minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_on_time">55%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled bus arrivals checked over <span data-stat="school_days">14</span> school days</div></div>
+      </div>
+      <p>Across the whole school day, on-time service is best early in the morning and worst on the ride home. Use the buttons above to look at each commute on its own.</p>
+      <figure class="pc-figure">
+        <img src="./data/school-commute/project_c_overall.png" alt="Stacked bar chart of MTA bus arrivals by half hour across the school day, 6:00 to 9:00 AM and 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. The on-time share falls from 75% at 6:00 AM to about half before school, and stays below half for most of the afternoon."/>
+        <figcaption>Each bar is one half hour. The dashed line separates the ride to school from the ride home. Green is on time; every other color is a bus a student could not count on. <span data-stat="all_range"></span></figcaption>
+      </figure>
+    </div>
 
-    <h3>The ride home</h3>
-    <p>The afternoon is worse. Only <span data-stat="pm_on_time">46%</span> of afternoon buses were on time, and canceled trips make up a large share of the rest.</p>
-    <figure class="pc-figure">
-      <img src="./data/school-commute/project_c_afternoon.png" alt="Stacked bar chart of afternoon MTA bus arrivals by half hour from 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. Fewer than half of afternoon buses were on time in most half hours."/>
-      <figcaption>Each bar is one half hour of the afternoon commute (2:00 to 5:30 PM). <span data-stat="pm_range"></span> Both charts and every number on this page update automatically after each school day.</figcaption>
-    </figure>
+    <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
+      <div class="pc-stats">
+        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of scheduled <strong>morning</strong> bus arrivals were canceled or 7+ minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the hour before many schools start</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals over <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
+      </div>
+      <p>Early in the morning, about <span data-stat="on_time_6">75%</span> of buses are on time. As the school bell gets closer, that falls to about <span data-stat="on_time_8_to_9">54%</span>. The rest are late, very late, early, or never come at all.</p>
+      <figure class="pc-figure">
+        <img src="./data/school-commute/project_c_claim.png" alt="Stacked bar chart of morning MTA bus arrivals by half hour from 6:00 to 9:00 AM, showing the share on time, early, late, very late and canceled. The on-time share falls from about three quarters at 6:00 to about half between 8:00 and 9:00."/>
+        <figcaption>Each bar is one half hour of the morning commute. <span data-stat="am_range"></span></figcaption>
+      </figure>
+    </div>
+
+    <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
+      <div class="pc-stats">
+        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of scheduled <strong>afternoon</strong> bus arrivals were canceled or 7+ minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals over <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
+      </div>
+      <p>The ride home is less reliable than the ride to school. Only <span data-stat="pm_on_time">46%</span> of afternoon buses were on time, and canceled trips make up a large share of the rest.</p>
+      <figure class="pc-figure">
+        <img src="./data/school-commute/project_c_afternoon.png" alt="Stacked bar chart of afternoon MTA bus arrivals by half hour from 2:00 to 5:00 PM, showing the share on time, early, late, very late and canceled. Fewer than half of afternoon buses were on time in most half hours."/>
+        <figcaption>Each bar is one half hour of the afternoon commute. <span data-stat="pm_range"></span></figcaption>
+      </figure>
+    </div>
+    <p class="pc-note">All three charts and every number on this page update automatically after each school day.</p>
   </section>
 
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
@@ -158,14 +189,44 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       setStat('school_days', d.school_days != null ? String(d.school_days) : null);
       setStat('am_range', `Data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
       const pm = d.afternoon;
-      setStat('all_arrivals', fmtN(d.scheduled_arrivals + (pm ? pm.scheduled_arrivals : 0)));
+      setStat('am_arrivals', fmtN(d.scheduled_arrivals));
+      setStat('mornings', String(d.school_mornings));
+      const all = d.overall;
+      if (all) {
+        setStat('all_canceled_or_late', all.display.canceled_or_late);
+        setStat('all_on_time', all.display.on_time);
+        setStat('all_arrivals', fmtN(all.scheduled_arrivals));
+        setStat('all_range', `Data: ${all.school_days} school days, ${all.first_date} to ${all.last_date}.`);
+      }
       if (pm) {
         setStat('pm_canceled_or_late', pm.display.canceled_or_late);
         setStat('pm_on_time', pm.display.on_time);
+        setStat('pm_arrivals', fmtN(pm.scheduled_arrivals));
+        setStat('afternoons', String(pm.school_afternoons));
         setStat('pm_range', `Data: ${pm.school_afternoons} school afternoons, ${pm.first_date} to ${pm.last_date}.`);
       }
     })
     .catch(() => {});
+
+  // Overall / Morning / Afternoon buttons: show one view at a time.
+  const tabs = [...document.querySelectorAll('.pc-tabs [role="tab"]')];
+  function select(tab){
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      $(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {  // arrow keys move between buttons
+      const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!step) return;
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      next.focus(); select(next);
+    });
+  });
 
   // Sortable table that shows PREVIEW rows, with a "Show all" button below.
   const PREVIEW = 8;
