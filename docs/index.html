@@ -72,6 +72,18 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-stat .num{color:var(--md-red)}
 .pc-stat .num.neutral{color:var(--md-black)}
 .pc-break,.pc-figure{border-color:#d9d9d9}
+.pc-stat .ci{display:block;margin-top:6px;font-size:.8rem;color:#555}
+.pc-section[hidden]{display:none}
+.pc-map{position:relative;background:#fff;border:1px solid #d9d9d9;border-radius:12px;padding:10px}
+.pc-map svg{display:block;width:100%;max-width:760px;margin:0 auto;height:auto}
+.pc-map path{stroke:#fff;stroke-width:.8;cursor:pointer}
+.pc-map path:hover,.pc-map path:focus,.pc-map path.on{stroke:var(--md-black);stroke-width:2.5;outline:none}
+.pc-map-tip{position:absolute;z-index:3;pointer-events:none;background:var(--md-black);color:#fff;border-top:4px solid var(--md-gold);border-radius:8px;padding:10px 12px;font-size:.85rem;line-height:1.45;min-width:220px;max-width:280px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.pc-map-tip b{color:var(--md-gold)}
+.pc-map-tip .big{font-size:1.3rem;font-weight:700;color:#fff}
+.pc-map-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;font-size:.86rem}
+.pc-map-legend li{display:flex;align-items:center;gap:6px}
+.pc-map-legend span{width:16px;height:16px;border-radius:3px;border:1px solid #bbb}
 .pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
 .pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
 .pc-more .pc-figure{margin:0 0 14px}
@@ -104,7 +116,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
 
     <div class="pc-view" role="tabpanel" id="view-all" aria-labelledby="tab-all">
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">40%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">40%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="all_failed_ci">—</span></span></div></div>
         <div class="pc-stat"><div class="num" data-stat="all_on_time">54%</div><div class="lbl">were on time across both windows (6:00 to 9:30 AM and 2:00 to 5:30 PM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_drove_past">29%</div><div class="lbl">of bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">174,150</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
@@ -144,7 +156,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
 
     <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="am_failed_ci">—</span></span></div></div>
         <div class="pc-stat"><div class="num" data-stat="am_on_time">63%</div><div class="lbl">were on time across the whole morning window (6:00 to 9:30 AM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window for school start times</div></div>
         <div class="pc-stat"><div class="num" data-stat="am_drove_past">32%</div><div class="lbl">of morning bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
@@ -185,7 +197,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
 
     <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">49%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">49%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="pm_failed_ci">—</span></span></div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_on_time">45%</div><div class="lbl">were on time across the whole afternoon window (2:00 to 5:30 PM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="on_time_3_to_4">46%</div><div class="lbl">were on time between 3:00 and 4:00 PM, the reference window for school dismissal times</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_drove_past">26%</div><div class="lbl">of afternoon bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
@@ -224,6 +236,57 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
       </div>
     </div>
     <p class="pc-note">The charts and headline figures refresh as new commute data is processed.</p>
+  </section>
+
+  <!-- 1b. HOW STRONG IS THE EVIDENCE (confidence intervals and consistency checks) -->
+  <section class="pc-section" id="strength">
+    <h2>How strong is the evidence?</h2>
+    <p>Any sample of days could be a little better or worse than usual. A <strong>95% confidence interval</strong> gives the range the true rate most likely falls in. We built it by <strong>bootstrapping</strong>: we re-drew the school days at random thousands of times and recalculated the rate each time. Whole days are re-drawn because buses on the same day share weather, traffic and staffing.</p>
+    <figure class="pc-figure">
+      <img src="./data/school-commute/project_c_strength.png" alt="Share of buses canceled or 7+ minutes late with 95% confidence intervals for overall, morning and afternoon" loading="lazy"/>
+      <figcaption>Dot: the measured rate. Bar: the 95% confidence interval.</figcaption>
+    </figure>
+    <div class="pc-stats">
+      <div class="pc-stat"><div class="num" data-stat="all_consistency">—</div><div class="lbl">of all <span data-stat="all_blocks">—</span> day-by-half-hour blocks had at least 1 in 5 buses canceled or 7+ minutes late (a <strong>consistency check</strong>: the problem is not limited to a few bad days or hours)</div></div>
+      <div class="pc-stat"><div class="num" data-stat="pm_minus_am_days">—</div><div class="lbl">school days on which the ride home was worse than the ride to school. Gap: <span data-stat="pm_minus_am">—</span></div></div>
+      <div class="pc-stat"><div class="num" data-stat="am_bell_ci">—</div><div class="lbl">95% confidence interval for on time from 8:00 to 9:00 AM (3:00 to 4:00 PM: <span data-stat="pm_bell_ci">—</span>)</div></div>
+    </div>
+    <p class="pc-note">A confidence interval covers chance from which days were sampled. It does not fix measurement limits, such as GPS gaps, which are covered in the strict count and limitations below.</p>
+  </section>
+
+  <!-- 1c. CITY MAP: hover a census tract to see its numbers (shown once city_tracts.geojson exists) -->
+  <section class="pc-section" id="city-map" hidden>
+    <h2>Explore the city, neighborhood by neighborhood</h2>
+    <p>Each shape is a census tract, a neighborhood-sized area of about 4,000 people. Its color shows the share of buses at its stops that were canceled or more than 7 minutes late. Hover over a tract, or tap or tab to it, to see its numbers.</p>
+    <div class="pc-tabs" role="tablist" aria-label="Choose which commute the map shows" id="map-tabs">
+      <button type="button" role="tab" data-view="all" aria-selected="true">Overall</button>
+      <button type="button" role="tab" data-view="am" aria-selected="false" tabindex="-1">Morning commute</button>
+      <button type="button" role="tab" data-view="pm" aria-selected="false" tabindex="-1">Afternoon commute</button>
+    </div>
+    <div class="pc-map">
+      <svg id="map-svg" role="img" aria-label="Map of Baltimore City census tracts colored by bus failure rate"></svg>
+      <div class="pc-map-tip" id="map-tip" hidden></div>
+    </div>
+    <ul class="pc-map-legend" id="map-legend"></ul>
+    <p class="pc-note">Gray tracts had fewer than <span data-stat="map_min">100</span> bus arrivals with a known outcome, too few to rate fairly. Many have no timepoint stop. Income and poverty: American Community Survey, 2019 to 2023. Average minutes late counts buses that ran (early buses count as negative).</p>
+  </section>
+
+  <!-- 1d. POORER VS. WEALTHIER NEIGHBORHOODS (shown once stop_areas.csv exists) -->
+  <section class="pc-section" id="neighborhoods" hidden>
+    <h2>Poorer and wealthier neighborhoods</h2>
+    <p>Students from lower-income families are more likely to depend on public buses. Each stop was matched to its census tract, and each tract to its median household income and poverty rate (American Community Survey, 2019 to 2023). The Census Bureau calls a tract with 20% or more of residents below the poverty line a <strong>poverty area</strong>.</p>
+    <div class="pc-stats">
+      <div class="pc-stat"><div class="num" data-stat="nb_am_high">—</div><div class="lbl">of morning buses canceled or 7+ min late at stops in poverty areas (<span data-stat="nb_am_high_ci">—</span>)</div></div>
+      <div class="pc-stat"><div class="num neutral" data-stat="nb_am_low">—</div><div class="lbl">at stops in other city tracts (<span data-stat="nb_am_low_ci">—</span>)</div></div>
+      <div class="pc-stat"><div class="num" data-stat="nb_pm_high">—</div><div class="lbl">of afternoon buses canceled or 7+ min late at stops in poverty areas (<span data-stat="nb_pm_high_ci">—</span>)</div></div>
+      <div class="pc-stat"><div class="num neutral" data-stat="nb_pm_low">—</div><div class="lbl">at stops in other city tracts (<span data-stat="nb_pm_low_ci">—</span>)</div></div>
+    </div>
+    <figure class="pc-figure">
+      <img src="./data/school-commute/project_c_neighborhoods.png" alt="Share of buses canceled or 7+ minutes late by neighborhood income quarter, morning and afternoon" loading="lazy"/>
+      <figcaption>City tracts split into four equal groups by median household income (cut points: <span data-stat="nb_cuts">—</span>).</figcaption>
+    </figure>
+    <p><strong>A more careful comparison.</strong> Poorer and wealthier areas are served by different routes at different times, so a simple comparison can mislead. A <strong>logistic regression</strong> compares stops <em>on the same route, in the same commute and half hour</em>. Its <strong>odds ratio</strong> for a stop being in a poverty area is <span data-stat="nb_model">—</span>. An odds ratio of 1 means no difference, and above 1 means buses fail more often in poverty areas.</p>
+    <p class="pc-note">Limits: this compares neighborhoods, not individual riders. We cannot tell whether the people waiting at a stop are poor (the <strong>ecological fallacy</strong>). Income figures are Census estimates with their own margins of error, and a bus route crosses many tracts.</p>
   </section>
 
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
@@ -270,6 +333,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
       <dt>Drove past</dt><dd>The tracker infers a drive-past from vehicle positions and speed near the stop when the feed shows no stop. Some visits, including slow passes, are classified as unclear.</dd>
     </dl>
 
+    <p class="pc-note" id="scope-note" hidden></p>
     <h3>Limitations</h3>
     <ul>
       <li>The arrival analysis counts scheduled stop arrivals. A single trip can contribute multiple arrivals.</li>
@@ -364,6 +428,32 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
         if (l) { setStat(k + '_late_median', l.display.median); setStat(k + '_late_p90', l.display.p90); }
         if (w) { setStat(k + '_routes_bad', String(w.routes_40_plus)); setStat(k + '_routes_n', String(w.routes_ranked)); }
       });
+      // How strong is the evidence: confidence intervals and consistency.
+      [['all', all], ['am', d], ['pm', pm]].forEach(([k, v]) => {
+        const st = v && v.strength; if (!st) return;
+        setStat(k + '_failed_ci', st.failed_ci.display);
+        if (st.bell_on_time_ci) setStat(k + '_bell_ci', st.bell_on_time_ci.display);
+        if (k === 'all') {
+          setStat('all_consistency', st.consistency.display); setStat('all_blocks', fmtN(st.consistency.blocks));
+          if (st.pm_minus_am) { setStat('pm_minus_am', st.pm_minus_am.display);
+            setStat('pm_minus_am_days', `${st.pm_minus_am.days_b_worse} of ${st.pm_minus_am.days}`); }
+        }
+      });
+      // Poorer vs. wealthier neighborhoods (only once stops are matched to census tracts).
+      if (d.neighborhoods && pm && pm.neighborhoods) {
+        $('neighborhoods').hidden = false;
+        [['am', d.neighborhoods], ['pm', pm.neighborhoods]].forEach(([k, n]) => {
+          setStat(`nb_${k}_high`, Math.round(n.high_poverty.pct) + '%'); setStat(`nb_${k}_high_ci`, '95% CI ' + n.high_poverty.display);
+          setStat(`nb_${k}_low`, Math.round(n.lower_poverty.pct) + '%'); setStat(`nb_${k}_low_ci`, '95% CI ' + n.lower_poverty.display);
+        });
+        if (all && all.neighborhoods && all.neighborhoods.model) setStat('nb_model', all.neighborhoods.model.display);
+        if (d.scope && d.scope.income_cuts) setStat('nb_cuts', d.scope.income_cuts.map(c => '$' + fmtN(c)).join(', '));
+      }
+      if (d.scope && d.scope.city_only) {
+        const sc = d.scope, note = $('scope-note');
+        note.hidden = false;
+        note.textContent = `City only: the results use the ${fmtN(sc.stops_kept)} timepoint stops inside Baltimore City (${fmtN(sc.arrivals_kept)} of ${fmtN(sc.arrivals_before)} arrivals with a known outcome). Stops outside the city line, in Baltimore County and beyond, are left out.`;
+      }
       // Outcome breakdown for each view: a 100% strip plus one line per outcome.
       [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => {
         drawBreakdown(key, v && v.breakdown);
@@ -381,8 +471,85 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
     })
     .catch(() => {});
 
+  // City map: census tracts colored by failure rate, with a hover card for each.
+  const BINS = [[30, '#FFF1CC', 'Under 30%'], [40, '#FFB81C', '30 to 40%'], [50, '#EE7D8B', '40 to 50%'],
+                [60, '#C8102E', '50 to 60%'], [Infinity, '#111111', '60% or more']];
+  const NO_DATA = '#E3E3E3';
+  const colorFor = v => (BINS.find(b => v < b[0]) || BINS[BINS.length - 1])[1];
+  Promise.all([
+    fetch('./data/school-commute/city_tracts.geojson', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error(); return r.json(); }),
+    fetch('./data/school-commute/tract_stats.json', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  ]).then(([geo, ts]) => {
+    $('city-map').hidden = false;
+    setStat('map_min', String(ts.min_arrivals));
+    const svg = $('map-svg'), tip = $('map-tip'), NS = 'http://www.w3.org/2000/svg';
+    // Simple flat projection: longitude shrunk by cos(latitude) so the city keeps its shape.
+    const rings = f => f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
+    let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+    geo.features.forEach(f => rings(f).forEach(r => r.forEach(([x, y]) => {
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+    const k = Math.cos((y0 + y1) / 2 * Math.PI / 180), W = 1000, scale = W / ((x1 - x0) * k), H = (y1 - y0) * scale;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H.toFixed(0)}`);
+    const pt = ([x, y]) => `${((x - x0) * k * scale).toFixed(1)},${((y1 - y) * scale).toFixed(1)}`;
+    const paths = geo.features.map(f => {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', rings(f).map(r => 'M' + r.map(pt).join('L') + 'Z').join(''));
+      p.setAttribute('tabindex', '0');
+      p._f = f; svg.append(p); return p;
+    });
+    let view = 'all';
+    const money = v => v == null ? 'not reported' : '$' + fmtN(Math.round(v));
+    const card = f => {
+      const pr = f.properties, st = (ts.tracts[pr.GEOID] || {})[view];
+      const head = `<b>${pr.name}</b><br>Median household income: ${money(pr.median_household_income)}<br>` +
+                   `Below poverty line: ${pr.poverty_rate == null ? 'not reported' : pr.poverty_rate.toFixed(0) + '%'}<hr style="border-color:#444">`;
+      if (!st) return head + 'No timepoint stops measured here.';
+      const body = `<span class="big">${st.pct_failed.toFixed(0)}%</span> canceled or 7+ min late<br>` +
+        `On time: ${st.pct_on_time.toFixed(0)}% · Canceled: ${st.pct_canceled.toFixed(0)}%<br>` +
+        `Average minutes late (buses that ran): ${st.avg_delay_min == null ? '—' : st.avg_delay_min.toFixed(1)}<br>` +
+        `${fmtN(st.arrivals)} arrivals at ${st.stops} stop${st.stops === 1 ? '' : 's'}`;
+      return head + body + (st.enough_data ? '' : '<br><i>Too few arrivals to rate fairly.</i>');
+    };
+    function paint(){
+      paths.forEach(p => {
+        const st = (ts.tracts[p._f.properties.GEOID] || {})[view];
+        p.setAttribute('fill', st && st.enough_data ? colorFor(st.pct_failed) : NO_DATA);
+        p.setAttribute('aria-label', p._f.properties.name + (st ? `: ${st.pct_failed.toFixed(0)}% canceled or 7+ minutes late` : ': no data'));
+      });
+    }
+    function show(p, ev){
+      paths.forEach(q => q.classList.toggle('on', q === p));
+      tip.innerHTML = card(p._f); tip.hidden = false;
+      const box = svg.parentElement.getBoundingClientRect();
+      const r = ev && ev.clientX != null ? {x: ev.clientX, y: ev.clientY} : (b => ({x: b.left + b.width / 2, y: b.top + b.height / 2}))(p.getBoundingClientRect());
+      let left = r.x - box.left + 14, top = r.y - box.top + 14;
+      if (left + 290 > box.width) left = Math.max(4, r.x - box.left - 300);
+      if (top + tip.offsetHeight > box.height) top = Math.max(4, r.y - box.top - tip.offsetHeight - 14);
+      tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    }
+    paths.forEach(p => {
+      p.addEventListener('mousemove', e => show(p, e));
+      p.addEventListener('click', e => show(p, e));
+      p.addEventListener('focus', () => show(p));
+    });
+    svg.addEventListener('mouseleave', () => { tip.hidden = true; paths.forEach(q => q.classList.remove('on')); });
+    const legend = $('map-legend');
+    [...BINS.map(b => [b[1], b[2]]), [NO_DATA, 'Too little data']].forEach(([c, t]) => {
+      const li = el('li'), sw = el('span'); sw.style.background = c; li.append(sw, document.createTextNode(t)); legend.append(li);
+    });
+    const mt = [...document.querySelectorAll('#map-tabs button')];
+    mt.forEach((b, i) => {
+      const pick = t => { mt.forEach(x => { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
+                          view = t.dataset.view; paint(); tip.hidden = true; };
+      b.addEventListener('click', () => pick(b));
+      b.addEventListener('keydown', e => { const st = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (st) { const n = mt[(i + st + mt.length) % mt.length]; n.focus(); pick(n); } });
+    });
+    paint();
+  }).catch(() => {});
+
   // Overall / Morning / Afternoon buttons: show one view at a time.
-  const tabs = [...document.querySelectorAll('.pc-tabs [role="tab"]')];
+  const tabs = [...document.querySelectorAll('#claim .pc-tabs [role="tab"]')];
   function select(tab){
     tabs.forEach(t => {
       const on = t === tab;

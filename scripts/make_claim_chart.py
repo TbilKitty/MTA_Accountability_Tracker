@@ -31,6 +31,7 @@ import matplotlib
 
 matplotlib.use("Agg")  # no screen on GitHub's runner
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -73,6 +74,24 @@ def load_raw():
     if not files:
         raise SystemExit(f"No commute files in {RAW}")
     return pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+
+
+STOP_AREAS = ROOT / "data" / "reference" / "stop_areas.csv"
+INCOME_QUARTERS = ["Lowest income", "Lower middle", "Upper middle", "Highest income"]
+
+
+def load_stop_areas():
+    """Each stop's census tract, whether it is inside Baltimore City, and the
+    tract's income and poverty rate (built by scripts/build_stop_areas.py)."""
+    if not STOP_AREAS.exists():
+        return None
+    a = pd.read_csv(STOP_AREAS, dtype={"stop_id": str, "tract_geoid": str})
+    # Income quarters: split the city's tracts (not stops) into four equal groups.
+    city = a[a["in_baltimore_city"]].drop_duplicates("tract_geoid").dropna(subset=["median_household_income"])
+    cuts = city["median_household_income"].quantile([0.25, 0.5, 0.75]).tolist()
+    a["income_quarter"] = pd.cut(a["median_household_income"], [-np.inf, *cuts, np.inf], labels=INCOME_QUARTERS)
+    a.attrs["income_cuts"] = cuts
+    return a
 
 
 def load_stops():
@@ -335,6 +354,187 @@ def draw_routes(routes, n_bad, n_routes, window, known, out, min_arrivals):
 
 
 # ==========================================================================
+# 4b. How strong is the evidence? (confidence intervals and consistency)
+# ==========================================================================
+BOOT_N, SEED = 2000, 2026   # fixed seed: the Colab gets the very same intervals
+
+
+def day_totals(known, flag):
+    """Per school day: how many arrivals had the flag, and how many in all."""
+    return known.assign(_f=flag).groupby("service_date")["_f"].agg(["sum", "count"])
+
+
+def boot_pct(d, rng_seed=SEED):
+    """95% confidence interval for a percentage, resampling whole school days.
+
+    Buses on the same day share weather, traffic and staffing, so the honest
+    unit of chance is the day, not the single arrival (a 'cluster bootstrap').
+    """
+    rng = np.random.default_rng(rng_seed)
+    idx = rng.integers(0, len(d), (BOOT_N, len(d)))
+    sims = d["sum"].values[idx].sum(1) / d["count"].values[idx].sum(1) * 100
+    lo, hi = np.percentile(sims, [2.5, 97.5])
+    return {"pct": round(float(d["sum"].sum() / d["count"].sum() * 100), 1),
+            "lo": round(float(lo), 1), "hi": round(float(hi), 1),
+            "display": f"{lo:.0f}% to {hi:.0f}%"}
+
+
+def boot_diff(a, b, rng_seed=SEED):
+    """95% interval for (rate in b) minus (rate in a), resampling shared days."""
+    both = a.index.intersection(b.index)
+    a, b = a.loc[both], b.loc[both]
+    rng = np.random.default_rng(rng_seed)
+    idx = rng.integers(0, len(both), (BOOT_N, len(both)))
+    rate = lambda d: d["sum"].values[idx].sum(1) / d["count"].values[idx].sum(1) * 100
+    sims = rate(b) - rate(a)
+    lo, hi = np.percentile(sims, [2.5, 97.5])
+    diff = (b["sum"].sum() / b["count"].sum() - a["sum"].sum() / a["count"].sum()) * 100
+    worse_days = int(((b["sum"] / b["count"]) > (a["sum"] / a["count"])).sum())
+    return {"diff": round(float(diff), 1), "lo": round(float(lo), 1), "hi": round(float(hi), 1),
+            "days": len(both), "days_b_worse": worse_days,
+            "display": f"{diff:+.0f} points (95% CI {lo:+.0f} to {hi:+.0f})"}
+
+
+def consistency(known, min_arrivals=200, bar=20):
+    """Split the data into day-by-half-hour blocks. In what share of blocks did
+    more than `bar`% of buses fail? A claim that only held at a few times or on a
+    few days would show up here."""
+    c = known.groupby(["window", "service_date", "half_hour"])["failed"].agg(["mean", "size"])
+    c = c[c["size"] >= min_arrivals]
+    share = (c["mean"] * 100 >= bar).mean() * 100
+    return {"blocks": int(len(c)), "bar_pct": bar, "pct_blocks_at_or_above": round(float(share), 1),
+            "lowest_block_pct": round(float(c["mean"].min() * 100), 1),
+            "display": f"{share:.0f}%"}
+
+
+def strength(known, window):
+    on_time = known["status"] == "On time"
+    out = {"failed_ci": boot_pct(day_totals(known, known["failed"])),
+           "on_time_ci": boot_pct(day_totals(known, on_time)),
+           "consistency": consistency(known)}
+    if window in ("am", "pm"):
+        bell = ["8:00", "8:30"] if window == "am" else ["3:00", "3:30"]
+        k = known[known["half_hour"].isin(bell)]
+        out["bell_on_time_ci"] = boot_pct(day_totals(k, k["status"] == "On time"))
+    else:
+        am, pm = known[known["window"] == "am"], known[known["window"] == "pm"]
+        out["pm_minus_am"] = boot_diff(day_totals(am, am["failed"]), day_totals(pm, pm["failed"]))
+    return out
+
+
+# ==========================================================================
+# 4c. Poorer vs. wealthier neighborhoods
+# ==========================================================================
+POVERTY_AREA = 20  # Census Bureau: a "poverty area" is a tract where 20%+ live below poverty
+
+
+def neighborhoods(known):
+    """Failure rate at stops in high-poverty tracts vs. the rest of the city,
+    plus by income quarter (four equal-sized groups of city tracts)."""
+    k = known.dropna(subset=["poverty_rate"])
+    high = k["poverty_rate"] >= POVERTY_AREA
+    hi_d, lo_d = day_totals(k[high], k.loc[high, "failed"]), day_totals(k[~high], k.loc[~high, "failed"])
+    out = {"high_poverty": {**boot_pct(hi_d), "arrivals": int(high.sum()), "stops": int(k.loc[high, "stop_id"].nunique())},
+           "lower_poverty": {**boot_pct(lo_d), "arrivals": int((~high).sum()), "stops": int(k.loc[~high, "stop_id"].nunique())},
+           "high_minus_lower": boot_diff(lo_d, hi_d)}
+    q = k.dropna(subset=["income_quarter"])
+    out["by_income_quarter"] = []
+    for name in INCOME_QUARTERS:
+        g = q[q["income_quarter"] == name]
+        if len(g):
+            out["by_income_quarter"].append({"group": name, "arrivals": int(len(g)),
+                                             **boot_pct(day_totals(g, g["failed"]))})
+    return out
+
+
+def model(known):
+    """Logistic regression: is a bus in a high-poverty tract more likely to fail
+    once we compare stops on the same route, at the same commute and half hour?
+    Standard errors are clustered by school day (same reason as the bootstrap)."""
+    import statsmodels.formula.api as smf
+    k = known.dropna(subset=["poverty_rate"]).assign(
+        y=lambda x: x["failed"].astype(int),
+        high_poverty=lambda x: (x["poverty_rate"] >= POVERTY_AREA).astype(int))
+    fit = smf.logit("y ~ high_poverty + C(route_name) + C(window) + C(half_hour)", data=k).fit(
+        disp=0, maxiter=200, cov_type="cluster", cov_kwds={"groups": pd.factorize(k["service_date"])[0]})
+    or_, (lo, hi) = np.exp(fit.params["high_poverty"]), np.exp(fit.conf_int().loc["high_poverty"])
+    return {"odds_ratio": round(float(or_), 2), "lo": round(float(lo), 2), "hi": round(float(hi), 2),
+            "p_value": float(fit.pvalues["high_poverty"]), "arrivals": int(len(k)),
+            "display": f"{or_:.2f} (95% CI {lo:.2f} to {hi:.2f})"}
+
+
+def draw_strength(rows_by_view, folder):
+    """'How sure are we': each headline percentage with its 95% interval."""
+    items = [(label, s) for label, s in rows_by_view if s]
+    fig, ax = plt.subplots(figsize=(10, 3))
+    for i, (label, ci) in enumerate(items[::-1]):
+        ax.plot([ci["lo"], ci["hi"]], [i, i], color=BLACK, linewidth=3, solid_capstyle="butt")
+        ax.plot(ci["pct"], i, "o", color=RED, markersize=11, markeredgecolor=BLACK)
+        ax.text(ci["hi"] + 1.2, i, f"{ci['pct']:.0f}%  ({ci['lo']:.0f} to {ci['hi']:.0f})", va="center", fontsize=10.5)
+    ax.set_yticks(range(len(items)), [l for l, _ in items[::-1]])
+    ax.set_xlim(0, 100)
+    ax.axvspan(0, 100, ymin=0, ymax=1, color=WHITE, zorder=-2)
+    ax.set_xlabel("% of buses canceled or 7+ minutes late (dot) with 95% confidence interval (bar)")
+    style(ax)
+    ax.set_title("How sure are we? Even the low end of every range is far from reliable",
+                 fontsize=13, fontweight="bold", loc="left", color=BLACK)
+    plt.tight_layout()
+    save(fig, folder / "project_c_strength.png")
+
+
+def draw_neighborhoods(nb_am, nb_pm, folder):
+    """Failure rate by neighborhood income quarter, morning and afternoon, with 95% intervals."""
+    fig, ax = plt.subplots(figsize=(10, 5))
+    groups = [g["group"] for g in nb_am["by_income_quarter"]]
+    x = np.arange(len(groups))
+    for off, nb, color, label in [(-0.2, nb_am, RED, "Morning"), (0.2, nb_pm, BLACK, "Afternoon")]:
+        v = nb["by_income_quarter"]
+        pct = np.array([g["pct"] for g in v])
+        err = np.array([[g["pct"] - g["lo"] for g in v], [g["hi"] - g["pct"] for g in v]])
+        ax.bar(x + off, pct, width=0.4, color=color, label=label, yerr=err, capsize=4,
+               error_kw={"ecolor": GOLD if color == BLACK else BLACK, "elinewidth": 2})
+        for xi, p in zip(x + off, pct):
+            ax.text(xi, 2, f"{p:.0f}%", ha="center", va="bottom", color=WHITE, fontweight="bold")
+    ax.set_xticks(x, [g.replace(" (", "\n(") for g in groups])
+    ax.set_ylim(0, 70)
+    ax.set_ylabel("% canceled or 7+ min late")
+    style(ax)
+    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(1.0, 1.0))
+    ax.set_title("Stops in poorer and wealthier Baltimore neighborhoods", fontsize=13, fontweight="bold",
+                 loc="left", color=BLACK)
+    fig.text(0.01, 0.01, "Neighborhood = census tract of the stop. Income: ACS 2019-2023 median household income. "
+             "Bars: 95% confidence intervals (resampling school days).", fontsize=8.5, color="#555555")
+    plt.tight_layout(rect=(0, 0.05, 1, 1))
+    save(fig, folder / "project_c_neighborhoods.png")
+
+
+def tract_stats(rows, min_arrivals=100):
+    """Reliability for each city census tract, for the hover map on the web page.
+    Tracts with fewer than min_arrivals known arrivals are marked as too little data."""
+    out = {}
+    for view, sub in [("all", rows), ("am", rows[rows["window"] == "am"]), ("pm", rows[rows["window"] == "pm"])]:
+        k = known_rows(sub).dropna(subset=["tract_geoid"])
+        measured = k[k["status"] != "Canceled"]
+        g = k.groupby("tract_geoid")
+        table = pd.DataFrame({
+            "arrivals": g.size(),
+            "stops": g["stop_id"].nunique(),
+            "pct_failed": g["failed"].mean() * 100,
+            "pct_on_time": g["status"].apply(lambda x: (x == "On time").mean() * 100),
+            "pct_canceled": g["status"].apply(lambda x: (x == "Canceled").mean() * 100),
+            # Service time: how far from schedule buses that ran actually were, on average.
+            "avg_delay_min": measured.groupby("tract_geoid")["delay_min"].mean(),
+            "median_delay_min": measured.groupby("tract_geoid")["delay_min"].median(),
+        }).round(1)
+        for geoid, r in table.iterrows():
+            out.setdefault(geoid, {})[view] = {**{c: (None if pd.isna(v) else float(v)) for c, v in r.items()},
+                                               "enough_data": bool(r["arrivals"] >= min_arrivals)}
+            out[geoid][view]["arrivals"] = int(r["arrivals"])
+            out[geoid][view]["stops"] = int(r["stops"])
+    return {"min_arrivals": min_arrivals, "tracts": out}
+
+
+# ==========================================================================
 # 5. Put it together
 # ==========================================================================
 def measure(rows, window, stops, folder):
@@ -382,7 +582,12 @@ def measure(rows, window, stops, folder):
         "worst_routes": {"routes_ranked": n_routes, "routes_40_plus": n_bad, "min_arrivals": min_arrivals,
                          "top": [{"route": r, "pct_failed": round(float(v), 1)}
                                  for r, v in routes["failed"].head(10).items()]},
+        "strength": strength(known, window),
     }
+    if "poverty_rate" in known.columns:
+        stats["neighborhoods"] = neighborhoods(known)
+        if window == "all":
+            stats["neighborhoods"]["model"] = model(known)
     return stats, table
 
 
@@ -391,13 +596,27 @@ def main(out):
     rows = clean(load_raw())
     stops = load_stops()
 
+    # Keep only stops inside Baltimore City (Colab Step 10).
+    areas = load_stop_areas()
+    scope = {"city_only": False}
+    if areas is not None:
+        rows["stop_id"] = rows["stop_id"].astype(str)
+        before_stops, before_known = rows["stop_id"].nunique(), len(known_rows(rows))
+        rows = rows.merge(areas[["stop_id", "in_baltimore_city", "tract_geoid", "median_household_income",
+                                 "poverty_rate", "income_quarter"]], on="stop_id", how="left")
+        rows = rows[rows["in_baltimore_city"].fillna(False).astype(bool)].copy()
+        if stops is not None:
+            stops = stops[stops["stop_id"].astype(str).isin(rows["stop_id"])]
+        scope = {"city_only": True, "stops_kept": int(rows["stop_id"].nunique()), "stops_before": int(before_stops),
+                 "arrivals_kept": int(len(known_rows(rows))), "arrivals_before": int(before_known),
+                 "income_cuts": [round(c) for c in areas.attrs["income_cuts"]]}
+
     stats, am_table = measure(rows[rows["window"] == "am"], "am", stops, folder)
-    # Morning extras: the hour before school (8:00 and 8:30 blocks) and 6:00.
-    peak = [t for t in ("8:00", "8:30") if t in am_table.index]
-    if peak:
-        v = am_table.loc[peak, "On time"].mean()
-        stats["pct_on_time_8_to_9"] = round(float(v), 1)
-        stats["display"]["on_time_8_to_9"] = f"{v:.0f}%"
+    # Morning extras: the hour before school (8:00 to 9:00, pooled) and 6:00.
+    bell = stats["strength"].get("bell_on_time_ci")
+    if bell:
+        stats["pct_on_time_8_to_9"] = bell["pct"]
+        stats["display"]["on_time_8_to_9"] = f"{bell['pct']:.0f}%"
     if "6:00" in am_table.index:
         stats["display"]["on_time_6"] = f"{am_table.loc['6:00', 'On time']:.0f}%"
 
@@ -405,16 +624,23 @@ def main(out):
     pm_rows = rows[rows["window"] == "pm"]
     if len(known_rows(pm_rows)):
         pm, pm_table = measure(pm_rows, "pm", stops, folder)
-        aft = [t for t in ("3:00", "3:30") if t in pm_table.index]
-        if aft:
-            v = pm_table.loc[aft, "On time"].mean()
-            pm["pct_on_time_3_to_4"] = round(float(v), 1)
-            pm["display"]["on_time_3_to_4"] = f"{v:.0f}%"
+        bell = pm["strength"].get("bell_on_time_ci")
+        if bell:
+            pm["pct_on_time_3_to_4"] = bell["pct"]
+            pm["display"]["on_time_3_to_4"] = f"{bell['pct']:.0f}%"
         if "2:00" in pm_table.index:
             pm["display"]["on_time_2"] = f"{pm_table.loc['2:00', 'On time']:.0f}%"
         stats["afternoon"] = pm
         stats["overall"], _ = measure(rows, "all", stops, folder)
+        draw_strength([("Overall", stats["overall"]["strength"]["failed_ci"]),
+                       ("Morning", stats["strength"]["failed_ci"]),
+                       ("Afternoon", pm["strength"]["failed_ci"])], folder)
+        if "neighborhoods" in stats:
+            draw_neighborhoods(stats["neighborhoods"], pm["neighborhoods"], folder)
 
+    stats["scope"] = scope
+    if scope["city_only"]:  # per-tract numbers for the hover map
+        (folder / "tract_stats.json").write_text(json.dumps(tract_stats(rows)) + "\n")
     stats["school_days"] = int(known_rows(rows)["service_date"].nunique())
     out.with_suffix(".json").write_text(json.dumps(stats, indent=2) + "\n")
     print(f"Morning {stats['display']['canceled_or_late']} canceled or 7+ late; "

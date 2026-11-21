@@ -78,7 +78,7 @@ jobs:
         if: ${{ !inputs.test_drive }}
         continue-on-error: true
         run: |
-          pip install 'pandas>=2.2,<3' 'matplotlib>=3.8,<4'
+          pip install 'pandas>=2.2,<3' 'matplotlib>=3.8,<4' 'statsmodels>=0.14,<1'
           python scripts/make_claim_chart.py
       - name: Commit results
         if: ${{ !inputs.test_drive }}

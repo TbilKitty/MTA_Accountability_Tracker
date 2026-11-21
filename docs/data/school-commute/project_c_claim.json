@@ -180,7 +180,34 @@
       }
     ]
   },
-  "pct_on_time_8_to_9": 54.1,
+  "strength": {
+    "failed_ci": {
+      "pct": 30.5,
+      "lo": 28.0,
+      "hi": 32.9,
+      "display": "28% to 33%"
+    },
+    "on_time_ci": {
+      "pct": 62.9,
+      "lo": 59.9,
+      "hi": 65.8,
+      "display": "60% to 66%"
+    },
+    "consistency": {
+      "blocks": 92,
+      "bar_pct": 20,
+      "pct_blocks_at_or_above": 78.3,
+      "lowest_block_pct": 10.1,
+      "display": "78%"
+    },
+    "bell_on_time_ci": {
+      "pct": 54.2,
+      "lo": 51.0,
+      "hi": 57.2,
+      "display": "51% to 57%"
+    }
+  },
+  "pct_on_time_8_to_9": 54.2,
   "afternoon": {
     "breakdown": {
       "on_time": {
@@ -362,6 +389,33 @@
           "pct_failed": 57.0
         }
       ]
+    },
+    "strength": {
+      "failed_ci": {
+        "pct": 49.1,
+        "lo": 45.7,
+        "hi": 52.5,
+        "display": "46% to 53%"
+      },
+      "on_time_ci": {
+        "pct": 45.1,
+        "lo": 42.1,
+        "hi": 48.0,
+        "display": "42% to 48%"
+      },
+      "consistency": {
+        "blocks": 91,
+        "bar_pct": 20,
+        "pct_blocks_at_or_above": 100.0,
+        "lowest_block_pct": 26.3,
+        "display": "100%"
+      },
+      "bell_on_time_ci": {
+        "pct": 45.7,
+        "lo": 42.9,
+        "hi": 48.3,
+        "display": "43% to 48%"
+      }
     },
     "pct_on_time_3_to_4": 45.7
   },
@@ -551,7 +605,39 @@
           "pct_failed": 44.7
         }
       ]
+    },
+    "strength": {
+      "failed_ci": {
+        "pct": 39.6,
+        "lo": 37.0,
+        "hi": 42.1,
+        "display": "37% to 42%"
+      },
+      "on_time_ci": {
+        "pct": 54.2,
+        "lo": 51.8,
+        "hi": 56.7,
+        "display": "52% to 57%"
+      },
+      "consistency": {
+        "blocks": 183,
+        "bar_pct": 20,
+        "pct_blocks_at_or_above": 89.1,
+        "lowest_block_pct": 10.1,
+        "display": "89%"
+      },
+      "pm_minus_am": {
+        "diff": 18.6,
+        "lo": 16.0,
+        "hi": 21.4,
+        "days": 13,
+        "days_b_worse": 13,
+        "display": "+19 points (95% CI +16 to +21)"
+      }
     }
+  },
+  "scope": {
+    "city_only": false
   },
   "school_days": 14
 }
