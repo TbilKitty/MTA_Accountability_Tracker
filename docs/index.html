@@ -107,11 +107,9 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
     </table></div>
     <p id="evidence-note">The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted slightly less often than in the lowest-poverty tracts.</p>
     <h3 id="student-impact">What the morning gap means for students</h3>
-    <p id="gap-text">Morning cancellations and delays over seven minutes were 3.1 percentage points more common at stops in the highest-poverty tracts than in the lowest-poverty tracts when comparing stops on the same route and school date.</p>
-    <p>Maryland requires fare-free transit for eligible Baltimore City public school students for covered activities. MTA measures bus punctuality, but the student transit law sets no standard for arriving at school on time. The tracker measures stop events, so it cannot establish how many students missed class or whether the law was violated.</p>
-    <p class="pc-note"><a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Maryland Transportation § 7-710</a> · <a href="https://www.mta.maryland.gov/performance-improvement">MTA performance measures</a></p>
-    <p><strong>What Baltimore could report next.</strong> WMATA reports missed trips separately from punctuality. New York City publishes each reported school-bus delay with how long it lasted, how many students were on board, and whether schools and parents were told. Baltimore could adapt both models by reporting whether scheduled buses ran, whether they served school-route stops on time, and whether students arrived before the first bell.</p>
-    <p class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">NYC school-bus delay reporting</a></p>
+    <p><strong>Maryland’s student transit requirement.</strong> Under Md. Code Ann., Transp. § 7–710(a)(1), (b)(1), and (c), MTA must provide fare-free transit to eligible Baltimore City public school students between 5 a.m. and 8 p.m. for school-related or educational extracurricular activities on and off campus. The statute sets no punctuality or school-arrival standard. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Read Maryland Transportation § 7–710</a></p>
+    <p><strong>Why the morning gap matters.</strong> <span id="gap-text">On the same routes and school dates, cancellations and delays over seven minutes were 3.1 percentage points more common at stops in the highest-poverty tracts than in the lowest-poverty tracts.</span> That gap raises a practical question about how dependable fare-free service is for students who use it. The tracker records stop events, so it cannot establish a statutory violation or tell us how many students arrived late.</p>
+    <p><strong>What Baltimore could report.</strong> WMATA reports missed trips separately from punctuality, and New York City publishes each reported school-bus delay with how long it lasted, how many students were on board, and whether schools and parents were told. Baltimore could report whether scheduled buses ran, whether they served key school-route stops on time, and whether students reached school before the first bell. <span class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">NYC school-bus delay reporting</a></span></p>
   </section>
 
   <!-- 4. BRIEF METHODS AND SOURCES -->
@@ -200,9 +198,9 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
   const amSign = Math.sign(pov.am.high - pov.am.low), pmSign = Math.sign(pov.pm.high - pov.pm.low);
   const mg = pov.matched_am;
   if (mg != null) $('gap-text').textContent = Math.abs(mg) < 0.05
-    ? 'Morning cancellations and delays over seven minutes were about equally common at stops in the highest-poverty and lowest-poverty tracts when comparing stops on the same route and school date.'
-    : 'Morning cancellations and delays over seven minutes were ' + Math.abs(mg).toFixed(1) + ' percentage points ' + (mg > 0 ? 'more' : 'less') +
-      ' common at stops in the highest-poverty tracts than in the lowest-poverty tracts when comparing stops on the same route and school date.';
+    ? 'On the same routes and school dates, cancellations and delays over seven minutes were about equally common at stops in the highest-poverty and lowest-poverty tracts.'
+    : 'On the same routes and school dates, cancellations and delays over seven minutes were ' + Math.abs(mg).toFixed(1) + ' percentage points ' + (mg > 0 ? 'more' : 'less') +
+      ' common at stops in the highest-poverty tracts than in the lowest-poverty tracts.';
   $('evidence-note').textContent = amSign && pmSign && amSign !== pmSign
     ? 'The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted ' + (pmSign < 0 ? 'less' : 'more') + ' often than in the lowest-poverty tracts (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').'
     : 'In the afternoon the poverty gap ran in the same direction as in the morning (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').';
