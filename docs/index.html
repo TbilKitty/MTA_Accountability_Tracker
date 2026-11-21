@@ -85,6 +85,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-map-legend li{display:flex;align-items:center;gap:6px}
 .pc-map-legend span{width:16px;height:16px;border-radius:3px;border:1px solid #bbb}
 .pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
+.pc-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 6px}
 .pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
 .pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
 .pc-more .pc-figure{margin:0 0 14px}
@@ -108,6 +109,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
   <section class="pc-section" id="claim">
     <h2>Delays and cancellations were more common in the afternoon</h2>
     <p class="pc-claim">Across <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">30%</span> of morning arrivals with a known outcome and <span data-stat="pm_canceled_or_late">48%</span> of afternoon arrivals with a known outcome were canceled or more than 7 minutes late. From 8:00 to 9:00 a.m., <span data-stat="on_time_8_to_9">54%</span> of morning arrivals with a known outcome were on time.</p>
+    <p class="pc-links"><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" target="_blank" rel="noopener">Open the analysis in Colab</a> <span class="pc-note">The notebook that cleans the data and makes every chart and number on this page.</span></p>
     <!-- Clickable view switcher: Overall / Morning commute / Afternoon commute. -->
     <div class="pc-tabs" role="tablist" aria-label="Choose which commute to show">
       <button type="button" role="tab" id="tab-all" aria-controls="view-all" aria-selected="true">Overall</button>
@@ -326,7 +328,8 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
     </ul>
     <h3>The analysis</h3>
     <p>The full analysis is in a commented Google Colab notebook. It loads the commute files, cleans them, calculates the headline results, and generates the charts.</p>
-    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link">Open the Colab notebook</a></p>
+    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing" id="colab-link" target="_blank" rel="noopener">Open the analysis in Colab</a></p>
+    <p id="map-colab-link" hidden>The neighborhood map page has its own notebook: <a href="https://colab.research.google.com/github/TbilKitty/MTA_Accountability_Tracker/blob/main/notebooks/Baltimore_City_MTA_Map_Colab.ipynb" target="_blank" rel="noopener">open the map notebook in Colab</a>.</p>
 
     <h3>Definitions</h3>
     <dl class="pc-defs">
@@ -583,7 +586,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
 
   // Link to the full-page neighborhood map, shown only if that page exists.
   fetch('./baltimore-city-map.html', {method: 'HEAD', cache: 'no-store'})
-    .then(r => { if (r.ok) $('full-map-link').hidden = false; }).catch(() => {});
+    .then(r => { if (r.ok) { $('full-map-link').hidden = false; $('map-colab-link').hidden = false; } }).catch(() => {});
 
   // Overall / Morning / Afternoon buttons: show one view at a time.
   const tabs = [...document.querySelectorAll('#claim .pc-tabs [role="tab"]')];
