@@ -85,6 +85,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <div class="pc-stats">
         <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">39%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_on_time">55%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_drove_past">29%</div><div class="lbl">of bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
       </div>
       <!-- How every arrival turned out; filled in from project_c_claim.json -->
@@ -105,6 +106,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <div class="pc-stats">
         <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window used for school start times</div></div>
+        <div class="pc-stat"><div class="num" data-stat="am_drove_past">32%</div><div class="lbl">of morning bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
       </div>
       <!-- How every morning arrival turned out; filled in from project_c_claim.json -->
@@ -125,6 +127,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       <div class="pc-stats">
         <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_drove_past">26%</div><div class="lbl">of afternoon bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
       </div>
       <!-- How every afternoon arrival turned out; filled in from project_c_claim.json -->
@@ -146,10 +149,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
   <section class="pc-section" id="bigger-picture">
     <h2>Reliability by route and stop</h2>
-
-    <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="drove_past">29%</div><div class="lbl">of observed stop visits were classified as drive-pasts</div></div>
-    </div>
 
     <h3>Routes ranked by disruption rate</h3>
     <p class="pc-note">The default ranking uses the share of scheduled stop visits that were more than 15 minutes late, canceled, or had no real-time record. The table includes routes with at least 20 measured, canceled, or unrecorded stop visits. The on-time rate uses measured arrivals only.</p>
@@ -352,7 +351,11 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   fetch('./data/school-commute/summary.json', {cache: 'no-store'})
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .then(s => {
-      if (s.stop_behavior && s.stop_behavior.pct_drove_past != null) setStat('drove_past', Math.round(s.stop_behavior.pct_drove_past) + '%');
+      // Drive-past share for each view's key-numbers row.
+      const sbw = s.stop_behavior_by_window_type || {};
+      [['all', s.stop_behavior], ['am', sbw.am], ['pm', sbw.pm]].forEach(([k, b]) => {
+        if (b && b.pct_drove_past != null) setStat(k + '_drove_past', Math.round(b.pct_drove_past) + '%');
+      });
 
       const rerender = table($('routes'), [
         {key: 'route_name', label: 'Route'},
