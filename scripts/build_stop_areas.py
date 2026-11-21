@@ -23,6 +23,7 @@ web page map).
 Usage: python scripts/build_stop_areas.py
 """
 import io
+import os
 import zipfile
 from pathlib import Path
 
@@ -45,16 +46,39 @@ ACS_PLACES = [{"for": "tract:*", "in": "state:24 county:510"},
 
 
 def get_acs():
-    """Download the ACS table for every Baltimore City tract. The Census API
-    answers errors in plain text, so print it if the answer isn't JSON."""
-    for place in ACS_PLACES:
-        r = requests.get(ACS_BASE, params={"get": ",".join(ACS_VARS), **place}, timeout=120)
+    """Download the ACS table for every Baltimore City tract.
+
+    The Census Bureau API now asks for a free key. With a CENSUS_API_KEY secret
+    we use it; without one we use Census Reporter (censusreporter.org), which
+    republishes the same ACS 5-year tables and needs no key."""
+    key = os.environ.get("CENSUS_API_KEY")
+    if key:
+        r = requests.get(ACS_BASE, params={"get": ",".join(ACS_VARS), "for": "tract:*",
+                                           "in": "state:24 county:510", "key": key}, timeout=120)
         try:
             rows = r.json()
+            print("ACS source: Census Bureau API,", ACS_BASE)
             return pd.DataFrame(rows[1:], columns=rows[0])
         except ValueError:
-            print(f"Census API answered {r.status_code} for {r.url}: {r.text[:300]}")
-    raise SystemExit("Could not download the ACS table")
+            print(f"Census API answered {r.status_code}: {r.text[:200]}")
+    tables = sorted({v.split("_")[0] for v in ACS_VARS})
+    r = requests.get("https://api.censusreporter.org/1.0/data/show/acs2023_5yr",
+                     params={"table_ids": ",".join(tables), "geo_ids": "140|05000US24510"}, timeout=180)
+    if r.status_code != 200 or not r.text.startswith("{"):
+        r = requests.get("https://api.censusreporter.org/1.0/data/show/latest",
+                         params={"table_ids": ",".join(tables), "geo_ids": "140|05000US24510"}, timeout=180)
+    d = r.json()
+    print("ACS source: Census Reporter,", d.get("release", {}).get("name"))
+    rows = []
+    for geo, t in d["data"].items():
+        row = {"GEOID": geo.split("US")[-1]}
+        for v in ACS_VARS:
+            table, num = v.split("_")[0], v.split("_")[1][:-1]
+            row[v] = t.get(table, {}).get("estimate", {}).get(f"{table}{num}")
+        rows.append(row)
+    acs = pd.DataFrame(rows)
+    acs["state"], acs["county"], acs["tract"] = acs["GEOID"].str[:2], acs["GEOID"].str[2:5], acs["GEOID"].str[5:]
+    return acs.drop(columns="GEOID")
 
 # Neighborhood names. Baltimore City publishes its official neighborhood
 # boundaries (and BNIA its Community Statistical Areas) as ArcGIS layers. Layer
