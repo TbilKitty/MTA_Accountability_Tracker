@@ -58,20 +58,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-funnel p{font-size:.86rem;color:#4a5a6c;margin:8px 0 0;line-height:1.55}
 .pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
 .pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
-/* Maryland flag colors: black, gold, red and white */
-:root{--md-black:#111111;--md-gold:#FFB81C;--md-red:#C8102E;--md-white:#ffffff}
-.md-band{height:12px;background:repeating-linear-gradient(90deg,var(--md-black) 0 28px,var(--md-gold) 28px 56px,var(--md-red) 56px 84px,var(--md-white) 84px 112px)}
-.pc-claim{border-left-color:var(--md-red)}
-.pc-tabs{gap:0;border:2px solid var(--md-black);border-radius:10px;overflow:hidden;width:fit-content;max-width:100%}
-.pc-tabs button{padding:11px 22px;border:0;border-right:2px solid var(--md-black);border-radius:0;background:var(--md-white);color:var(--md-black);font:inherit;font-weight:700;cursor:pointer}
-.pc-tabs button:last-child{border-right:0}
-.pc-tabs button:hover{background:#fff6dd}
-.pc-tabs button[aria-selected="true"]{background:var(--md-black);color:var(--md-gold);box-shadow:inset 0 -5px 0 var(--md-red)}
-.pc-tabs button:focus-visible{outline:3px solid var(--md-red);outline-offset:-5px}
-.pc-stat{background:var(--md-white);border:1px solid #d9d9d9;border-top:5px solid var(--md-gold)}
-.pc-stat .num{color:var(--md-red)}
-.pc-stat .num.neutral{color:var(--md-black)}
-.pc-break,.pc-figure{border-color:#d9d9d9}
+/* Map tooltip and accents use the site palette (navy, gold, brick). */
+:root{--md-black:var(--navy);--md-gold:var(--gold);--md-red:var(--brick)}
 .pc-stat .ci{display:block;margin-top:6px;font-size:.8rem;color:#555}
 .pc-section[hidden]{display:none}
 .pc-map{position:relative;background:#fff;border:1px solid #d9d9d9;border-radius:12px;padding:10px}
@@ -89,9 +77,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
 .pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
 .pc-more .pc-figure{margin:0 0 14px}
-.bar{background:var(--md-red)}
-table.sc th{background:var(--md-black);color:var(--md-gold)}
-.pc-colab{background:var(--md-black);color:var(--md-gold);border-bottom:4px solid var(--md-red)}
 </style></head>
 <body>
 
@@ -101,7 +86,6 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
   <div class="gold-line"></div>
   <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data to see how often buses arrived on time during Baltimore’s morning and afternoon school commute windows.</p>
 </div></header>
-<div class="md-band" aria-hidden="true"></div>
 
 <main class="pc-wrap">
 
