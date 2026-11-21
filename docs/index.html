@@ -58,6 +58,26 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-funnel p{font-size:.86rem;color:#4a5a6c;margin:8px 0 0;line-height:1.55}
 .pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
 .pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
+/* Maryland flag colors: black, gold, red and white */
+:root{--md-black:#111111;--md-gold:#FFB81C;--md-red:#C8102E;--md-white:#ffffff}
+.md-band{height:12px;background:repeating-linear-gradient(90deg,var(--md-black) 0 28px,var(--md-gold) 28px 56px,var(--md-red) 56px 84px,var(--md-white) 84px 112px)}
+.pc-claim{border-left-color:var(--md-red)}
+.pc-tabs{gap:0;border:2px solid var(--md-black);border-radius:10px;overflow:hidden;width:fit-content;max-width:100%}
+.pc-tabs button{padding:11px 22px;border:0;border-right:2px solid var(--md-black);border-radius:0;background:var(--md-white);color:var(--md-black);font:inherit;font-weight:700;cursor:pointer}
+.pc-tabs button:last-child{border-right:0}
+.pc-tabs button:hover{background:#fff6dd}
+.pc-tabs button[aria-selected="true"]{background:var(--md-black);color:var(--md-gold);box-shadow:inset 0 -5px 0 var(--md-red)}
+.pc-tabs button:focus-visible{outline:3px solid var(--md-red);outline-offset:-5px}
+.pc-stat{background:var(--md-white);border:1px solid #d9d9d9;border-top:5px solid var(--md-gold)}
+.pc-stat .num{color:var(--md-red)}
+.pc-stat .num.neutral{color:var(--md-black)}
+.pc-break,.pc-figure{border-color:#d9d9d9}
+.pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
+.pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
+.pc-more .pc-figure{margin:0 0 14px}
+.bar{background:var(--md-red)}
+table.sc th{background:var(--md-black);color:var(--md-gold)}
+.pc-colab{background:var(--md-black);color:var(--md-gold);border-bottom:4px solid var(--md-red)}
 </style></head>
 <body>
 
@@ -67,6 +87,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   <div class="gold-line"></div>
   <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data to see how often buses arrived on time during Baltimore’s morning and afternoon school commute windows.</p>
 </div></header>
+<div class="md-band" aria-hidden="true"></div>
 
 <main class="pc-wrap">
 
@@ -86,7 +107,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">40%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_on_time">54%</div><div class="lbl">were on time across both windows (6:00 to 9:30 AM and 2:00 to 5:30 PM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_drove_past">29%</div><div class="lbl">of bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">174,150</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
       </div>
       <!-- How every arrival turned out; filled in from project_c_claim.json -->
       <div class="pc-break" data-breakdown="all">
@@ -100,6 +121,25 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <img src="./data/school-commute/project_c_overall.png" alt="Morning and afternoon bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar represents 30 minutes. The dashed line separates the morning and afternoon windows. Green shows the on-time share. <span data-stat="all_range"></span></figcaption>
       </figure>
+      <!-- More evidence for the claim (both rides); numbers from project_c_claim.json, charts from the same code as the Colab -->
+      <div class="pc-more">
+        <h3>More evidence: you could not plan around these buses</h3>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="num" data-stat="all_reg_every">—</div><div class="lbl">of <span data-stat="all_reg_n">—</span> regular school-hour (8 to 9 AM and 3 to 4 PM) buses were on time every day we watched them</div></div>
+          <div class="pc-stat"><div class="num" data-stat="all_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
+          <div class="pc-stat"><div class="num" data-stat="all_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school day (worst: <span data-stat="all_worst_day">—</span>)</div></div>
+          <div class="pc-stat"><div class="num" data-stat="all_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="all_late_p90">—</span>+ minutes late</div></div>
+        </div>
+        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_overall_days.png" alt="Share of both rides buses canceled or 7+ minutes late on each school day" loading="lazy"/>
+          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
+        </figure>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_overall_routes.png" alt="The ten both rides routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
+          <figcaption><span data-stat="all_routes_bad">—</span> of <span data-stat="all_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
+        </figure>
+      </div>
     </div>
 
     <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
@@ -108,7 +148,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="am_on_time">63%</div><div class="lbl">were on time across the whole morning window (6:00 to 9:30 AM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window for school start times</div></div>
         <div class="pc-stat"><div class="num" data-stat="am_drove_past">32%</div><div class="lbl">of morning bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,129</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
       </div>
       <!-- How every morning arrival turned out; filled in from project_c_claim.json -->
       <div class="pc-break" data-breakdown="am">
@@ -122,6 +162,25 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <img src="./data/school-commute/project_c_claim.png" alt="Morning bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar is one half hour of the morning commute. <span data-stat="am_range"></span></figcaption>
       </figure>
+      <!-- More evidence for the claim (morning); numbers from project_c_claim.json, charts from the same code as the Colab -->
+      <div class="pc-more">
+        <h3>More evidence: you could not plan around these buses</h3>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="num" data-stat="am_reg_every">—</div><div class="lbl">of <span data-stat="am_reg_n">—</span> regular 8 to 9 AM buses were on time every day we watched them</div></div>
+          <div class="pc-stat"><div class="num" data-stat="am_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
+          <div class="pc-stat"><div class="num" data-stat="am_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school morning (worst: <span data-stat="am_worst_day">—</span>)</div></div>
+          <div class="pc-stat"><div class="num" data-stat="am_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="am_late_p90">—</span>+ minutes late</div></div>
+        </div>
+        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_claim_days.png" alt="Share of morning buses canceled or 7+ minutes late on each school day" loading="lazy"/>
+          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
+        </figure>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_claim_routes.png" alt="The ten morning routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
+          <figcaption><span data-stat="am_routes_bad">—</span> of <span data-stat="am_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
+        </figure>
+      </div>
     </div>
 
     <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
@@ -130,7 +189,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <div class="pc-stat"><div class="num" data-stat="pm_on_time">45%</div><div class="lbl">were on time across the whole afternoon window (2:00 to 5:30 PM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="on_time_3_to_4">46%</div><div class="lbl">were on time between 3:00 and 4:00 PM, the reference window for school dismissal times</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_drove_past">26%</div><div class="lbl">of afternoon bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
+        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">85,021</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">13</span> school afternoons (2:00 to 5:30 PM)</div></div>
       </div>
       <!-- How every afternoon arrival turned out; filled in from project_c_claim.json -->
       <div class="pc-break" data-breakdown="pm">
@@ -144,6 +203,25 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <img src="./data/school-commute/project_c_afternoon.png" alt="Afternoon bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar is one half hour of the afternoon commute. <span data-stat="pm_range"></span></figcaption>
       </figure>
+      <!-- More evidence for the claim (afternoon); numbers from project_c_claim.json, charts from the same code as the Colab -->
+      <div class="pc-more">
+        <h3>More evidence: you could not plan around these buses</h3>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="num" data-stat="pm_reg_every">—</div><div class="lbl">of <span data-stat="pm_reg_n">—</span> regular 3 to 4 PM buses were on time every day we watched them</div></div>
+          <div class="pc-stat"><div class="num" data-stat="pm_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
+          <div class="pc-stat"><div class="num" data-stat="pm_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school afternoon (worst: <span data-stat="pm_worst_day">—</span>)</div></div>
+          <div class="pc-stat"><div class="num" data-stat="pm_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="pm_late_p90">—</span>+ minutes late</div></div>
+        </div>
+        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_afternoon_days.png" alt="Share of afternoon buses canceled or 7+ minutes late on each school day" loading="lazy"/>
+          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
+        </figure>
+        <figure class="pc-figure">
+          <img src="./data/school-commute/project_c_afternoon_routes.png" alt="The ten afternoon routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
+          <figcaption><span data-stat="pm_routes_bad">—</span> of <span data-stat="pm_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
+        </figure>
+      </div>
     </div>
     <p class="pc-note">The charts and headline figures refresh as new commute data is processed.</p>
   </section>
@@ -276,6 +354,16 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         setStat('all_arrivals', fmtN(all.scheduled_arrivals));
         setStat('all_range', `Data: ${all.school_days} school days, ${all.first_date} to ${all.last_date}.`);
       }
+      // Extra evidence and drive-pasts for each view (same numbers as the Colab).
+      [['all', all], ['am', d], ['pm', pm]].forEach(([k, v]) => {
+        if (!v) return;
+        if (v.drive_pasts) setStat(k + '_drove_past', v.drive_pasts.display);
+        const r = v.regular_buses, b = v.by_day, l = v.lateness, w = v.worst_routes;
+        if (r) { setStat(k + '_reg_every', r.display.on_time_every_day); setStat(k + '_reg_fail', r.display.failed_1_in_5_days); setStat(k + '_reg_n', fmtN(r.buses)); }
+        if (b) { setStat(k + '_best_day', b.display.best); setStat(k + '_worst_day', b.display.worst); }
+        if (l) { setStat(k + '_late_median', l.display.median); setStat(k + '_late_p90', l.display.p90); }
+        if (w) { setStat(k + '_routes_bad', String(w.routes_40_plus)); setStat(k + '_routes_n', String(w.routes_ranked)); }
+      });
       // Outcome breakdown for each view: a 100% strip plus one line per outcome.
       [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => {
         drawBreakdown(key, v && v.breakdown);
@@ -356,12 +444,6 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   fetch('./data/school-commute/summary.json', {cache: 'no-store'})
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .then(s => {
-      // Drive-past share for each view's key-numbers row.
-      const sbw = s.stop_behavior_by_window_type || {};
-      [['all', s.stop_behavior], ['am', sbw.am], ['pm', sbw.pm]].forEach(([k, b]) => {
-        if (b && b.pct_drove_past != null) setStat(k + '_drove_past', Math.round(b.pct_drove_past) + '%');
-      });
-
       const rerender = table($('routes'), [
         {key: 'route_name', label: 'Route'},
         {key: 'scheduled_trips', label: 'Trips scheduled', fmt: fmtN},
