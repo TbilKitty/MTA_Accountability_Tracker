@@ -1,0 +1,35 @@
+name: Build stop areas (city line and census income)
+
+# Rebuilds data/reference/stop_areas.csv: each bus stop's census tract, whether
+# it is inside Baltimore City, and the tract's income and poverty rate. Run it by
+# hand when MTA changes its stops; it also runs when the build script changes.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/build_stop_areas.py
+      - .github/workflows/stop-areas.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'geopandas>=1.0,<2' 'pyogrio>=0.9' 'pandas>=2.2,<3' requests
+      - run: python scripts/build_stop_areas.py
+      - name: Commit the stop list
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reference/stop_areas.csv
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Rebuild stop areas (census tract, city line, income)"
+          git push
