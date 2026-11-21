@@ -66,7 +66,8 @@ def get_acs():
     for table in tables:  # one table per request keeps each answer small
         for release in ("acs2023_5yr", "latest"):
             r = requests.get(f"https://api.censusreporter.org/1.0/data/show/{release}",
-                             params={"table_ids": table, "geo_ids": "140|05000US24510"}, timeout=180)
+                             params={"table_ids": table, "geo_ids": "140|05000US24510"}, timeout=180,
+                             headers={"User-Agent": "mta-school-commute-tracker/1.0 (student data project)"})
             try:
                 d = r.json()
             except ValueError:
