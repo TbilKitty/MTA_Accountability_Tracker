@@ -12,7 +12,7 @@
 .pc-section h3{color:var(--navy);margin:26px 0 6px;font-size:1.15rem}
 .pc-section p,.pc-section li{line-height:1.7;color:#243b52}
 .pc-claim{font-size:1.2rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 18px}
-.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:6px 0 18px}
+.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin:6px 0 18px}
 .pc-stat{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .pc-stat .num{font:700 2.3rem/1.1 'Libre Baskerville',Georgia,serif;color:var(--brick)}
 .pc-stat .num.neutral{color:var(--navy)}
@@ -83,8 +83,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 
     <div class="pc-view" role="tabpanel" id="view-all" aria-labelledby="tab-all">
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">39%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
-        <div class="pc-stat"><div class="num" data-stat="all_on_time">55%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">40%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="all_on_time">54%</div><div class="lbl">were on time across both windows (6:00 to 9:30 AM and 2:00 to 5:30 PM)</div></div>
         <div class="pc-stat"><div class="num" data-stat="all_drove_past">29%</div><div class="lbl">of bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">168,085</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
       </div>
@@ -105,7 +105,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
       <div class="pc-stats">
         <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
-        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window used for school start times</div></div>
+        <div class="pc-stat"><div class="num" data-stat="am_on_time">63%</div><div class="lbl">were on time across the whole morning window (6:00 to 9:30 AM)</div></div>
+        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window for school start times</div></div>
         <div class="pc-stat"><div class="num" data-stat="am_drove_past">32%</div><div class="lbl">of morning bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,446</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
       </div>
@@ -125,8 +126,9 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 
     <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
       <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">48%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
-        <div class="pc-stat"><div class="num" data-stat="pm_on_time">46%</div><div class="lbl">were on time</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">49%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late</div></div>
+        <div class="pc-stat"><div class="num" data-stat="pm_on_time">45%</div><div class="lbl">were on time across the whole afternoon window (2:00 to 5:30 PM)</div></div>
+        <div class="pc-stat"><div class="num" data-stat="on_time_3_to_4">46%</div><div class="lbl">were on time between 3:00 and 4:00 PM, the reference window for school dismissal times</div></div>
         <div class="pc-stat"><div class="num" data-stat="pm_drove_past">26%</div><div class="lbl">of afternoon bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
         <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">78,639</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">12</span> school afternoons (2:00 to 5:30 PM)</div></div>
       </div>
@@ -137,7 +139,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
         <ul><li>Loading…</li></ul>
         <div class="pc-funnel"></div>
       </div>
-      <p>Among afternoon arrivals with a known outcome, <span data-stat="pm_on_time">46%</span> were on time.</p>
+      <p>The on-time share fell from <span data-stat="on_time_2">56%</span> in the 2:00 p.m. half-hour to <span data-stat="on_time_3_to_4">46%</span> between 3:00 and 4:00 p.m., when many students head home.</p>
       <figure class="pc-figure">
         <img src="./data/school-commute/project_c_afternoon.png" alt="Afternoon bus arrival outcomes by scheduled half-hour"/>
         <figcaption>Each bar is one half hour of the afternoon commute. <span data-stat="pm_range"></span></figcaption>
@@ -194,7 +196,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
     <ul>
       <li>The arrival analysis counts scheduled stop arrivals. A single trip can contribute multiple arrivals.</li>
       <li>The number of monitored mornings and afternoons can differ. Each chart shows the dates covered.</li>
-      <li>The 8:00 to 9:00 a.m. interval is a reference window. Actual start times vary by school.</li>
+      <li>The 8:00 to 9:00 a.m. and 3:00 to 4:00 p.m. intervals are reference windows. Actual start and dismissal times vary by school.</li>
       <li>The tracker covers general MTA bus service during school commute hours. It does not identify student riders or individual journeys.</li>
       <li>Arrival times are estimates from periodic feed reports. Their precision depends on the time between usable updates.</li>
       <li>The results cover the school days collected so far, not a full school year.</li>
@@ -261,6 +263,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       setStat('canceled_or_late', shown.canceled_or_late);
       setStat('on_time_8_to_9', shown.on_time_8_to_9);
       setStat('on_time_6', shown.on_time_6);
+      setStat('am_on_time', shown.on_time);
       setStat('school_days', d.school_days != null ? String(d.school_days) : null);
       setStat('am_range', `Data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
       const pm = d.afternoon;
@@ -281,6 +284,8 @@ table.sc td.wrap{white-space:normal;min-width:220px}
       if (pm) {
         setStat('pm_canceled_or_late', pm.display.canceled_or_late);
         setStat('pm_on_time', pm.display.on_time);
+        setStat('on_time_3_to_4', pm.display.on_time_3_to_4);
+        setStat('on_time_2', pm.display.on_time_2);
         setStat('pm_arrivals', fmtN(pm.scheduled_arrivals));
         setStat('afternoons', String(pm.school_afternoons));
         setStat('pm_range', `Data: ${pm.school_afternoons} school afternoons, ${pm.first_date} to ${pm.last_date}.`);

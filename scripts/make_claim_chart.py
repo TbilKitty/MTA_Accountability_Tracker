@@ -47,7 +47,7 @@ WINDOWS = {
            "shade": ("8:00", "8:30", "Typical bell times")},
     "pm": {"pattern": "*-pm.csv.gz", "drop": "5:30", "noun": "afternoons", "xlabel": "Scheduled arrival time (PM)",
            "title": "The ride home: afternoon bus reliability by half hour",
-           "shade": None},
+           "shade": ("3:00", "3:30", "Typical dismissal times")},
     # Both windows together: morning and afternoon half hours on one timeline.
     "all": {"noun": "school days", "xlabel": "Scheduled arrival time",
             "title": "Across the school day: the ride to school and the ride home",
@@ -229,6 +229,15 @@ def main(out):
     if pm is not None and len(pm):
         pm_time, pm_failed = draw(pm, "pm", out.with_name(AFTERNOON_NAME))
         stats["afternoon"] = summarize(pm, pm_time, pm_failed, "afternoons")
+        # Afternoon extras, mirroring the morning: the hour after dismissal
+        # (3:00 and 3:30 blocks, a reference window) and the first block, 2:00.
+        aft = [t for t in ("3:00", "3:30") if t in pm_time.index]
+        if aft:
+            v = pm_time.loc[aft, "on_time"].mean()
+            stats["afternoon"]["pct_on_time_3_to_4"] = round(float(v), 1)
+            stats["afternoon"]["display"]["on_time_3_to_4"] = f"{v:.0f}%"
+        if "2:00" in pm_time.index:
+            stats["afternoon"]["display"]["on_time_2"] = f"{pm_time.loc['2:00', 'on_time']:.0f}%"
         stats["afternoon"]["funnel"] = funnel(pm_all)
 
     # Overall: both commutes together, on one timeline with AM/PM labels.
