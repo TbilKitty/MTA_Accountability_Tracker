@@ -2,35 +2,35 @@
   "breakdown": {
     "on_time": {
       "label": "On time",
-      "color": "#2E8B57",
-      "count": 56198,
-      "pct": 62.8,
+      "color": "#FFB81C",
+      "count": 56101,
+      "pct": 62.9,
       "display": "63%"
     },
     "early": {
       "label": "Early (2+ min)",
-      "color": "#B8B8B8",
-      "count": 5999,
-      "pct": 6.7,
+      "color": "#C9C9C9",
+      "count": 5860,
+      "pct": 6.6,
       "display": "7%"
     },
     "late": {
       "label": "Late (7 to 15 min)",
-      "color": "#F2A541",
-      "count": 12363,
+      "color": "#EE7D8B",
+      "count": 12329,
       "pct": 13.8,
       "display": "14%"
     },
     "severely_late": {
       "label": "Very late (15+ min)",
-      "color": "#D1495B",
-      "count": 3267,
-      "pct": 3.7,
+      "color": "#C8102E",
+      "count": 3220,
+      "pct": 3.6,
       "display": "4%"
     },
     "canceled": {
       "label": "Canceled",
-      "color": "#3D2C3E",
+      "color": "#111111",
       "count": 11619,
       "pct": 13.0,
       "display": "13%"
@@ -39,16 +39,16 @@
   "school_mornings": 14,
   "first_date": "2026-10-30",
   "last_date": "2026-11-20",
-  "scheduled_arrivals": 89446,
-  "pct_on_time": 62.8,
+  "scheduled_arrivals": 89129,
+  "pct_on_time": 62.9,
   "pct_canceled_or_late": 30.5,
   "pct_on_time_by_half_hour": {
-    "6:00": 75.0,
-    "6:30": 72.1,
-    "7:00": 67.8,
-    "7:30": 60.1,
-    "8:00": 54.4,
-    "8:30": 53.6,
+    "6:00": 75.2,
+    "6:30": 72.2,
+    "7:00": 67.9,
+    "7:30": 60.2,
+    "8:00": 54.6,
+    "8:30": 53.7,
     "9:00": 57.7
   },
   "display": {
@@ -81,60 +81,166 @@
       {
         "key": "late",
         "label": "Late by more than 7 minutes",
-        "count": 15630,
+        "count": 15549,
         "pct": 14.2
       },
       {
         "key": "early",
         "label": "Left more than 2 minutes early",
-        "count": 5999,
-        "pct": 5.5
+        "count": 5860,
+        "pct": 5.3
       },
       {
         "key": "unverified",
         "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-        "count": 18329,
-        "pct": 16.7
+        "count": 18646,
+        "pct": 17.0
       }
     ],
-    "on_time": 56198,
-    "pct_on_time": 51.2,
+    "on_time": 56101,
+    "pct_on_time": 51.1,
     "display_on_time": "51%"
   },
-  "pct_on_time_8_to_9": 54.0,
+  "drive_pasts": {
+    "visits": 659472,
+    "drove_past": 210252,
+    "pct_drove_past": 31.9,
+    "display": "32%"
+  },
+  "by_day": {
+    "best_pct": 21.8,
+    "worst_pct": 38.9,
+    "display": {
+      "best": "22%",
+      "worst": "39%"
+    }
+  },
+  "regular_buses": {
+    "buses": 2052,
+    "min_days": 8,
+    "pct_on_time_every_day": 4.0,
+    "pct_failed_1_in_5_days": 70.9,
+    "display": {
+      "on_time_every_day": "4%",
+      "failed_1_in_5_days": "71%"
+    }
+  },
+  "lateness": {
+    "median_min": 10.4,
+    "p90_min": 18.7,
+    "display": {
+      "median": "10",
+      "p90": "19"
+    }
+  },
+  "worst_routes": {
+    "routes_ranked": 63,
+    "routes_40_plus": 8,
+    "min_arrivals": 200,
+    "top": [
+      {
+        "route": "120",
+        "pct_failed": 48.2
+      },
+      {
+        "route": "150",
+        "pct_failed": 47.7
+      },
+      {
+        "route": "CityLink LIME",
+        "pct_failed": 46.3
+      },
+      {
+        "route": "40",
+        "pct_failed": 45.4
+      },
+      {
+        "route": "26",
+        "pct_failed": 44.6
+      },
+      {
+        "route": "CityLink GOLD",
+        "pct_failed": 43.3
+      },
+      {
+        "route": "CityLink BLUE",
+        "pct_failed": 42.4
+      },
+      {
+        "route": "CityLink RED",
+        "pct_failed": 42.3
+      },
+      {
+        "route": "CityLink NAVY",
+        "pct_failed": 38.8
+      },
+      {
+        "route": "70",
+        "pct_failed": 37.6
+      }
+    ]
+  },
+  "strength": {
+    "failed_ci": {
+      "pct": 30.5,
+      "lo": 28.0,
+      "hi": 32.9,
+      "display": "28% to 33%"
+    },
+    "on_time_ci": {
+      "pct": 62.9,
+      "lo": 59.9,
+      "hi": 65.8,
+      "display": "60% to 66%"
+    },
+    "consistency": {
+      "blocks": 92,
+      "bar_pct": 20,
+      "pct_blocks_at_or_above": 78.3,
+      "lowest_block_pct": 10.1,
+      "display": "78%"
+    },
+    "bell_on_time_ci": {
+      "pct": 54.2,
+      "lo": 51.0,
+      "hi": 57.2,
+      "display": "51% to 57%"
+    }
+  },
+  "pct_on_time_8_to_9": 54.2,
   "afternoon": {
     "breakdown": {
       "on_time": {
         "label": "On time",
-        "color": "#2E8B57",
-        "count": 38437,
+        "color": "#FFB81C",
+        "count": 38364,
         "pct": 45.1,
         "display": "45%"
       },
       "early": {
         "label": "Early (2+ min)",
-        "color": "#B8B8B8",
-        "count": 4994,
-        "pct": 5.9,
+        "color": "#C9C9C9",
+        "count": 4935,
+        "pct": 5.8,
         "display": "6%"
       },
       "late": {
         "label": "Late (7 to 15 min)",
-        "color": "#F2A541",
-        "count": 14340,
+        "color": "#EE7D8B",
+        "count": 14308,
         "pct": 16.8,
         "display": "17%"
       },
       "severely_late": {
         "label": "Very late (15+ min)",
-        "color": "#D1495B",
-        "count": 7149,
-        "pct": 8.4,
+        "color": "#C8102E",
+        "count": 7072,
+        "pct": 8.3,
         "display": "8%"
       },
       "canceled": {
         "label": "Canceled",
-        "color": "#3D2C3E",
+        "color": "#111111",
         "count": 20342,
         "pct": 23.9,
         "display": "24%"
@@ -143,15 +249,15 @@
     "school_afternoons": 13,
     "first_date": "2026-11-02",
     "last_date": "2026-11-20",
-    "scheduled_arrivals": 85262,
+    "scheduled_arrivals": 85021,
     "pct_on_time": 45.1,
     "pct_canceled_or_late": 49.1,
     "pct_on_time_by_half_hour": {
       "2:00": 56.4,
       "2:30": 46.4,
-      "3:00": 47.2,
-      "3:30": 44.1,
-      "4:00": 42.8,
+      "3:00": 47.3,
+      "3:30": 44.2,
+      "4:00": 42.9,
       "4:30": 42.1,
       "5:00": 42.5
     },
@@ -161,7 +267,6 @@
       "on_time_3_to_4": "46%",
       "on_time_2": "56%"
     },
-    "pct_on_time_3_to_4": 45.7,
     "funnel": {
       "scheduled": 106054,
       "steps": [
@@ -186,84 +291,191 @@
         {
           "key": "late",
           "label": "Late by more than 7 minutes",
-          "count": 21489,
-          "pct": 20.3
+          "count": 21380,
+          "pct": 20.2
         },
         {
           "key": "early",
           "label": "Left more than 2 minutes early",
-          "count": 4994,
+          "count": 4935,
           "pct": 4.7
         },
         {
           "key": "unverified",
           "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-          "count": 18428,
-          "pct": 17.4
+          "count": 18669,
+          "pct": 17.6
         }
       ],
-      "on_time": 38437,
+      "on_time": 38364,
       "pct_on_time": 36.2,
       "display_on_time": "36%"
-    }
+    },
+    "drive_pasts": {
+      "visits": 604805,
+      "drove_past": 155286,
+      "pct_drove_past": 25.7,
+      "display": "26%"
+    },
+    "by_day": {
+      "best_pct": 36.3,
+      "worst_pct": 62.3,
+      "display": {
+        "best": "36%",
+        "worst": "62%"
+      }
+    },
+    "regular_buses": {
+      "buses": 2141,
+      "min_days": 8,
+      "pct_on_time_every_day": 2.2,
+      "pct_failed_1_in_5_days": 76.1,
+      "display": {
+        "on_time_every_day": "2%",
+        "failed_1_in_5_days": "76%"
+      }
+    },
+    "lateness": {
+      "median_min": 12.1,
+      "p90_min": 22.8,
+      "display": {
+        "median": "12",
+        "p90": "23"
+      }
+    },
+    "worst_routes": {
+      "routes_ranked": 61,
+      "routes_40_plus": 47,
+      "min_arrivals": 200,
+      "top": [
+        {
+          "route": "53",
+          "pct_failed": 64.4
+        },
+        {
+          "route": "CityLink RED",
+          "pct_failed": 63.0
+        },
+        {
+          "route": "70",
+          "pct_failed": 61.3
+        },
+        {
+          "route": "82",
+          "pct_failed": 60.9
+        },
+        {
+          "route": "CityLink PINK",
+          "pct_failed": 60.3
+        },
+        {
+          "route": "CityLink BLUE",
+          "pct_failed": 58.5
+        },
+        {
+          "route": "95",
+          "pct_failed": 58.1
+        },
+        {
+          "route": "28",
+          "pct_failed": 57.6
+        },
+        {
+          "route": "34",
+          "pct_failed": 57.3
+        },
+        {
+          "route": "92",
+          "pct_failed": 57.0
+        }
+      ]
+    },
+    "strength": {
+      "failed_ci": {
+        "pct": 49.1,
+        "lo": 45.7,
+        "hi": 52.5,
+        "display": "46% to 53%"
+      },
+      "on_time_ci": {
+        "pct": 45.1,
+        "lo": 42.1,
+        "hi": 48.0,
+        "display": "42% to 48%"
+      },
+      "consistency": {
+        "blocks": 91,
+        "bar_pct": 20,
+        "pct_blocks_at_or_above": 100.0,
+        "lowest_block_pct": 26.3,
+        "display": "100%"
+      },
+      "bell_on_time_ci": {
+        "pct": 45.7,
+        "lo": 42.9,
+        "hi": 48.3,
+        "display": "43% to 48%"
+      }
+    },
+    "pct_on_time_3_to_4": 45.7
   },
   "overall": {
     "breakdown": {
       "on_time": {
         "label": "On time",
-        "color": "#2E8B57",
-        "count": 94635,
+        "color": "#FFB81C",
+        "count": 94465,
         "pct": 54.2,
         "display": "54%"
       },
       "early": {
         "label": "Early (2+ min)",
-        "color": "#B8B8B8",
-        "count": 10993,
-        "pct": 6.3,
+        "color": "#C9C9C9",
+        "count": 10795,
+        "pct": 6.2,
         "display": "6%"
       },
       "late": {
         "label": "Late (7 to 15 min)",
-        "color": "#F2A541",
-        "count": 26703,
+        "color": "#EE7D8B",
+        "count": 26637,
         "pct": 15.3,
         "display": "15%"
       },
       "severely_late": {
         "label": "Very late (15+ min)",
-        "color": "#D1495B",
-        "count": 10416,
-        "pct": 6.0,
+        "color": "#C8102E",
+        "count": 10292,
+        "pct": 5.9,
         "display": "6%"
       },
       "canceled": {
         "label": "Canceled",
-        "color": "#3D2C3E",
+        "color": "#111111",
         "count": 31961,
-        "pct": 18.3,
+        "pct": 18.4,
         "display": "18%"
       }
     },
     "school_days": 14,
     "first_date": "2026-10-30",
     "last_date": "2026-11-20",
-    "scheduled_arrivals": 174708,
+    "scheduled_arrivals": 174150,
     "pct_on_time": 54.2,
-    "pct_canceled_or_late": 39.5,
+    "pct_canceled_or_late": 39.6,
     "pct_on_time_by_half_hour": {
-      "6:00 AM": 75.0,
-      "6:30 AM": 72.1,
-      "7:00 AM": 67.8,
-      "7:30 AM": 60.1,
-      "8:00 AM": 54.4,
-      "8:30 AM": 53.6,
+      "6:00 AM": 75.2,
+      "6:30 AM": 72.2,
+      "7:00 AM": 67.9,
+      "7:30 AM": 60.2,
+      "8:00 AM": 54.6,
+      "8:30 AM": 53.7,
       "9:00 AM": 57.7,
       "2:00 PM": 56.4,
       "2:30 PM": 46.4,
-      "3:00 PM": 47.2,
-      "3:30 PM": 44.1,
-      "4:00 PM": 42.8,
+      "3:00 PM": 47.3,
+      "3:30 PM": 44.2,
+      "4:00 PM": 42.9,
       "4:30 PM": 42.1,
       "5:00 PM": 42.5
     },
@@ -295,26 +507,137 @@
         {
           "key": "late",
           "label": "Late by more than 7 minutes",
-          "count": 37119,
-          "pct": 17.2
+          "count": 36929,
+          "pct": 17.1
         },
         {
           "key": "early",
           "label": "Left more than 2 minutes early",
-          "count": 10993,
-          "pct": 5.1
+          "count": 10795,
+          "pct": 5.0
         },
         {
           "key": "unverified",
           "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-          "count": 36757,
-          "pct": 17.0
+          "count": 37315,
+          "pct": 17.3
         }
       ],
-      "on_time": 94635,
+      "on_time": 94465,
       "pct_on_time": 43.8,
       "display_on_time": "44%"
+    },
+    "drive_pasts": {
+      "visits": 1264277,
+      "drove_past": 365538,
+      "pct_drove_past": 28.9,
+      "display": "29%"
+    },
+    "by_day": {
+      "best_pct": 21.8,
+      "worst_pct": 62.3,
+      "display": {
+        "best": "22%",
+        "worst": "62%"
+      }
+    },
+    "regular_buses": {
+      "buses": 4193,
+      "min_days": 8,
+      "pct_on_time_every_day": 3.1,
+      "pct_failed_1_in_5_days": 73.6,
+      "display": {
+        "on_time_every_day": "3%",
+        "failed_1_in_5_days": "74%"
+      }
+    },
+    "lateness": {
+      "median_min": 11.2,
+      "p90_min": 21.2,
+      "display": {
+        "median": "11",
+        "p90": "21"
+      }
+    },
+    "worst_routes": {
+      "routes_ranked": 62,
+      "routes_40_plus": 22,
+      "min_arrivals": 400,
+      "top": [
+        {
+          "route": "CityLink RED",
+          "pct_failed": 52.5
+        },
+        {
+          "route": "26",
+          "pct_failed": 50.7
+        },
+        {
+          "route": "CityLink BLUE",
+          "pct_failed": 50.7
+        },
+        {
+          "route": "CityLink LIME",
+          "pct_failed": 50.0
+        },
+        {
+          "route": "CityLink GOLD",
+          "pct_failed": 49.9
+        },
+        {
+          "route": "53",
+          "pct_failed": 49.0
+        },
+        {
+          "route": "70",
+          "pct_failed": 48.3
+        },
+        {
+          "route": "40",
+          "pct_failed": 45.2
+        },
+        {
+          "route": "94",
+          "pct_failed": 45.1
+        },
+        {
+          "route": "CityLink ORANGE",
+          "pct_failed": 44.7
+        }
+      ]
+    },
+    "strength": {
+      "failed_ci": {
+        "pct": 39.6,
+        "lo": 37.0,
+        "hi": 42.1,
+        "display": "37% to 42%"
+      },
+      "on_time_ci": {
+        "pct": 54.2,
+        "lo": 51.8,
+        "hi": 56.7,
+        "display": "52% to 57%"
+      },
+      "consistency": {
+        "blocks": 183,
+        "bar_pct": 20,
+        "pct_blocks_at_or_above": 89.1,
+        "lowest_block_pct": 10.1,
+        "display": "89%"
+      },
+      "pm_minus_am": {
+        "diff": 18.6,
+        "lo": 16.0,
+        "hi": 21.4,
+        "days": 13,
+        "days_b_worse": 13,
+        "display": "+19 points (95% CI +16 to +21)"
+      }
     }
+  },
+  "scope": {
+    "city_only": false
   },
   "school_days": 14
 }
