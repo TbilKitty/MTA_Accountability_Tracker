@@ -257,7 +257,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
   <!-- 1c. CITY MAP: hover a census tract to see its numbers (shown once city_tracts.geojson exists) -->
   <section class="pc-section" id="city-map" hidden>
     <h2>Explore the city, neighborhood by neighborhood</h2>
-    <p>Each shape is a census tract, a neighborhood-sized area of about 4,000 people. Its color shows the share of buses at its stops that were canceled or more than 7 minutes late. Hover over a tract, or tap or tab to it, to see its numbers.</p>
+    <p>Each shape is a census tract, an area of about 4,000 people, labeled with the Baltimore neighborhoods it covers. Its color shows the share of buses at its stops that were canceled or more than 7 minutes late. Hover over a tract, or tap or tab to it, to see its numbers.</p>
     <div class="pc-tabs" role="tablist" aria-label="Choose which commute the map shows" id="map-tabs">
       <button type="button" role="tab" data-view="all" aria-selected="true">Overall</button>
       <button type="button" role="tab" data-view="am" aria-selected="false" tabindex="-1">Morning commute</button>
@@ -501,7 +501,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
     const money = v => v == null ? 'not reported' : '$' + fmtN(Math.round(v));
     const card = f => {
       const pr = f.properties, st = (ts.tracts[pr.GEOID] || {})[view];
-      const head = `<b>${pr.name}</b><br>Median household income: ${money(pr.median_household_income)}<br>` +
+      const head = `<b>${pr.neighborhood || pr.name}</b><br>${pr.neighborhood ? `<small>${pr.name}</small><br>` : ''}Median household income: ${money(pr.median_household_income)}<br>` +
                    `Below poverty line: ${pr.poverty_rate == null ? 'not reported' : pr.poverty_rate.toFixed(0) + '%'}<hr style="border-color:#444">`;
       if (!st) return head + 'No timepoint stops measured here.';
       const body = `<span class="big">${st.pct_failed.toFixed(0)}%</span> canceled or 7+ min late<br>` +
@@ -514,7 +514,7 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
       paths.forEach(p => {
         const st = (ts.tracts[p._f.properties.GEOID] || {})[view];
         p.setAttribute('fill', st && st.enough_data ? colorFor(st.pct_failed) : NO_DATA);
-        p.setAttribute('aria-label', p._f.properties.name + (st ? `: ${st.pct_failed.toFixed(0)}% canceled or 7+ minutes late` : ': no data'));
+        p.setAttribute('aria-label', (p._f.properties.neighborhood || p._f.properties.name) + (st ? `: ${st.pct_failed.toFixed(0)}% canceled or 7+ minutes late` : ': no data'));
       });
     }
     function show(p, ev){
