@@ -106,6 +106,12 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       </tbody>
     </table></div>
     <p id="evidence-note">The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted slightly less often than in the lowest-poverty tracts.</p>
+    <h3 id="student-impact">What the morning gap means for students</h3>
+    <p id="gap-text">Morning cancellations and delays over seven minutes were 3.1 percentage points more common at stops in the highest-poverty tracts than in the lowest-poverty tracts when comparing stops on the same route and school date.</p>
+    <p>Maryland requires fare-free transit for eligible Baltimore City public school students for covered activities. MTA measures bus punctuality, but the student transit law sets no standard for arriving at school on time. The tracker measures stop events, so it cannot establish how many students missed class or whether the law was violated.</p>
+    <p class="pc-note"><a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Maryland Transportation § 7-710</a> · <a href="https://www.mta.maryland.gov/performance-improvement">MTA performance measures</a></p>
+    <p><strong>What Baltimore could report next.</strong> WMATA reports missed trips separately from punctuality. New York City publishes each reported school-bus delay with how long it lasted, how many students were on board, and whether schools and parents were told. Baltimore could adapt both models by reporting whether scheduled buses ran, whether they served school-route stops on time, and whether students arrived before the first bell.</p>
+    <p class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">NYC school-bus delay reporting</a></p>
   </section>
 
   <!-- 4. BRIEF METHODS AND SOURCES -->
@@ -119,7 +125,6 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       <li><strong>Neighborhoods.</strong> Map figures are approximate: tract counts are allocated to Baltimore’s named neighborhoods by overlapping area. The claim itself uses the tract rates.</li>
       <li><strong>Limits.</strong> The results describe one autumn sample of stop events, not students: the records cannot show who rode or whether anyone reached school late. No significance test is reported, and Census sampling error is not carried into the comparisons.</li>
     </ul>
-    <p class="pc-note"><strong>Legal note.</strong> Md. Code Ann., Transp. § 7–710 requires MTA to provide fare-free transit to eligible Baltimore City public school students between 5 a.m. and 8 p.m. It sets no punctuality or arrival-at-school standard, so these results do not show a violation of the statute. They suggest that the access the statute promises is less dependable in the morning in poorer, lower-car neighborhoods, and that MTA and City Schools could report on-time and arrival-before-the-bell measures for school routes.</p>
     <h3 id="sources">Sources</h3>
     <ol class="pc-sources">
       <li>Maryland Transit Administration. (2026). <em>Local bus GTFS schedule and GTFS-Realtime feeds</em> [Data]. <a href="https://www.mta.maryland.gov/developer-resources">https://www.mta.maryland.gov/developer-resources</a></li>
@@ -129,6 +134,8 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       <li>U.S. Census Bureau. <em>TIGER/Line shapefiles, 2024: Maryland census tracts</em>. <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract">https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract</a></li>
       <li>City of Baltimore. <em>CityView neighborhood boundaries</em>. <a href="https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer">https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer</a></li>
       <li>Md. Code Ann., Transp. § 7–710. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf</a>; COMAR 11.06.05, Baltimore City student transit. <a href="https://regs.maryland.gov/us/md/exec/comar/11.06.05">https://regs.maryland.gov/us/md/exec/comar/11.06.05</a></li>
+      <li>Washington Metropolitan Area Transit Authority. (2025). <em>Service Excellence Report FY25 measure definitions</em>. <a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf</a></li>
+      <li>City of New York, Office of Pupil Transportation. <em>Bus breakdown and delays</em> [Data set]. NYC Open Data. <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">https://catalog.data.gov/dataset/bus-breakdown-and-delays</a></li>
       <li>Baltimore City Public Schools. <em>2026–27 student transit program</em>. <a href="https://www.baltimorecityschools.org/article/3080724">https://www.baltimorecityschools.org/article/3080724</a></li>
     </ol>
   </section>
@@ -191,6 +198,11 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
   }
   $('evidence-rows').innerHTML = rows.join('');
   const amSign = Math.sign(pov.am.high - pov.am.low), pmSign = Math.sign(pov.pm.high - pov.pm.low);
+  const mg = pov.matched_am;
+  if (mg != null) $('gap-text').textContent = Math.abs(mg) < 0.05
+    ? 'Morning cancellations and delays over seven minutes were about equally common at stops in the highest-poverty and lowest-poverty tracts when comparing stops on the same route and school date.'
+    : 'Morning cancellations and delays over seven minutes were ' + Math.abs(mg).toFixed(1) + ' percentage points ' + (mg > 0 ? 'more' : 'less') +
+      ' common at stops in the highest-poverty tracts than in the lowest-poverty tracts when comparing stops on the same route and school date.';
   $('evidence-note').textContent = amSign && pmSign && amSign !== pmSign
     ? 'The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted ' + (pmSign < 0 ? 'less' : 'more') + ' often than in the lowest-poverty tracts (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').'
     : 'In the afternoon the poverty gap ran in the same direction as in the morning (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').';
