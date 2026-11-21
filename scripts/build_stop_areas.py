@@ -23,6 +23,7 @@ web page map).
 Usage: python scripts/build_stop_areas.py
 """
 import io
+import os
 import zipfile
 from pathlib import Path
 
@@ -36,9 +37,60 @@ MAP_OUT = ROOT / "docs" / "data" / "school-commute" / "city_tracts.geojson"
 GTFS_URL = "https://feeds.mta.maryland.gov/gtfs/local-bus"
 TRACTS_URL = "https://www2.census.gov/geo/tiger/TIGER2023/TRACT/tl_2023_24_tract.zip"
 SCHOOL_AGE = [f"B09001_00{i}E" for i in range(5, 10)]  # children age 5, 6-8, 9-11, 12-14, 15-17
-ACS_URL = ("https://api.census.gov/data/2023/acs/acs5?get=B19013_001E,B17001_001E,B17001_002E,"
-           "B25044_001E,B25044_003E,B25044_010E,B01003_001E," + ",".join(SCHOOL_AGE) +
-           "&for=tract:*&in=state:24&in=county:*")
+ACS_VARS = ["B19013_001E", "B17001_001E", "B17001_002E", "B25044_001E", "B25044_003E", "B25044_010E",
+            "B01003_001E"] + SCHOOL_AGE
+# Baltimore City is county 510 in Maryland (24). Only city tracts need Census numbers.
+ACS_BASE = "https://api.census.gov/data/2023/acs/acs5"
+ACS_PLACES = [{"for": "tract:*", "in": "state:24 county:510"},
+              {"for": "tract:*", "in": ["state:24", "county:510"]}]
+
+
+def get_acs():
+    """Download the ACS table for every Baltimore City tract.
+
+    The Census Bureau API now asks for a free key. With a CENSUS_API_KEY secret
+    we use it; without one we use Census Reporter (censusreporter.org), which
+    republishes the same ACS 5-year tables and needs no key."""
+    key = os.environ.get("CENSUS_API_KEY")
+    if key:
+        r = requests.get(ACS_BASE, params={"get": ",".join(ACS_VARS), "for": "tract:*",
+                                           "in": "state:24 county:510", "key": key}, timeout=120)
+        try:
+            rows = r.json()
+            print("ACS source: Census Bureau API,", ACS_BASE)
+            return pd.DataFrame(rows[1:], columns=rows[0])
+        except ValueError:
+            print(f"Census API answered {r.status_code}: {r.text[:200]}")
+    tables = sorted({v.split("_")[0] for v in ACS_VARS})
+    data = {}
+    for table in tables:  # one table per request keeps each answer small
+        for release in ("acs2023_5yr", "latest"):
+            r = requests.get(f"https://api.censusreporter.org/1.0/data/show/{release}",
+                             params={"table_ids": table, "geo_ids": "140|05000US24510"}, timeout=180,
+                             headers={"User-Agent": "mta-school-commute-tracker/1.0 (student data project)"})
+            try:
+                d = r.json()
+            except ValueError:
+                d = {}
+            if "data" in d:
+                print(f"ACS {table}: Census Reporter, {d.get('release', {}).get('name')}")
+                for geo, t in d["data"].items():
+                    data.setdefault(geo, {}).update(t)
+                break
+            print(f"Census Reporter {release} {table} answered {r.status_code}: {r.text[:300]}")
+        else:
+            raise SystemExit(f"Could not download ACS table {table}")
+    d = {"data": data}
+    rows = []
+    for geo, t in d["data"].items():
+        row = {"GEOID": geo.split("US")[-1]}
+        for v in ACS_VARS:
+            table, num = v.split("_")[0], v.split("_")[1][:-1]
+            row[v] = t.get(table, {}).get("estimate", {}).get(f"{table}{num}")
+        rows.append(row)
+    acs = pd.DataFrame(rows)
+    acs["state"], acs["county"], acs["tract"] = acs["GEOID"].str[:2], acs["GEOID"].str[2:5], acs["GEOID"].str[5:]
+    return acs.drop(columns="GEOID")
 
 # Neighborhood names. Baltimore City publishes its official neighborhood
 # boundaries (and BNIA its Community Statistical Areas) as ArcGIS layers. Layer
@@ -107,8 +159,7 @@ def main():
     joined = gpd.sjoin(points, tracts[["GEOID", "geometry"]], how="left", predicate="within").drop(
         columns=["geometry", "index_right"])
 
-    rows = requests.get(ACS_URL, timeout=120).json()
-    acs = pd.DataFrame(rows[1:], columns=rows[0])
+    acs = get_acs()
     acs["GEOID"] = acs["state"] + acs["county"] + acs["tract"]
     acs["median_household_income"] = pd.to_numeric(acs["B19013_001E"], errors="coerce")
     acs.loc[acs["median_household_income"] < 0, "median_household_income"] = None  # census "no data" codes
@@ -134,8 +185,12 @@ def main():
     city = tracts[tracts["GEOID"].str.startswith("24510") & (tracts["ALAND"] > 0)].copy()
     city = city.merge(acs[["GEOID"] + ACS_COLS], on="GEOID", how="left")
     city["geometry"] = city.to_crs("EPSG:26985").simplify(20).to_crs("EPSG:4326").set_precision(0.00001)
-    hoods, source = find_neighborhoods()
-    labels = tract_labels(city, hoods) if hoods is not None else {}
+    try:  # names are nice to have; never let them stop the build
+        hoods, source = find_neighborhoods()
+        labels = tract_labels(city, hoods) if hoods is not None else {}
+    except Exception as e:
+        print("Neighborhood names skipped:", e)
+        source, labels = None, {}
     city["neighborhood"] = city["GEOID"].map(labels)
     city = city.rename(columns={"NAMELSAD": "name"})[["GEOID", "name", "neighborhood", *ACS_COLS, "geometry"]]
     out = out.merge(city[["GEOID", "neighborhood"]].rename(columns={"GEOID": "tract_geoid"}), on="tract_geoid", how="left")
