@@ -62,13 +62,24 @@ def get_acs():
         except ValueError:
             print(f"Census API answered {r.status_code}: {r.text[:200]}")
     tables = sorted({v.split("_")[0] for v in ACS_VARS})
-    r = requests.get("https://api.censusreporter.org/1.0/data/show/acs2023_5yr",
-                     params={"table_ids": ",".join(tables), "geo_ids": "140|05000US24510"}, timeout=180)
-    if r.status_code != 200 or not r.text.startswith("{"):
-        r = requests.get("https://api.censusreporter.org/1.0/data/show/latest",
-                         params={"table_ids": ",".join(tables), "geo_ids": "140|05000US24510"}, timeout=180)
-    d = r.json()
-    print("ACS source: Census Reporter,", d.get("release", {}).get("name"))
+    data = {}
+    for table in tables:  # one table per request keeps each answer small
+        for release in ("acs2023_5yr", "latest"):
+            r = requests.get(f"https://api.censusreporter.org/1.0/data/show/{release}",
+                             params={"table_ids": table, "geo_ids": "140|05000US24510"}, timeout=180)
+            try:
+                d = r.json()
+            except ValueError:
+                d = {}
+            if "data" in d:
+                print(f"ACS {table}: Census Reporter, {d.get('release', {}).get('name')}")
+                for geo, t in d["data"].items():
+                    data.setdefault(geo, {}).update(t)
+                break
+            print(f"Census Reporter {release} {table} answered {r.status_code}: {r.text[:300]}")
+        else:
+            raise SystemExit(f"Could not download ACS table {table}")
+    d = {"data": data}
     rows = []
     for geo, t in d["data"].items():
         row = {"GEOID": geo.split("US")[-1]}
