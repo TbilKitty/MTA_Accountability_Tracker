@@ -82,8 +82,9 @@ jobs:
           python scripts/make_claim_chart.py
       - name: Rebuild the Baltimore City neighborhood map
         # Runs the Project C Colab (notebooks/Baltimore_City_MTA_Map_Colab.ipynb)
-        # on every saved school day and writes docs/baltimore-city-map.html, so
-        # the map page updates itself. If it fails, the old page stays up.
+        # on every saved school day and writes the map data and shapes that the
+        # Project C page (docs/index.html) reads, so the claim and map update
+        # themselves. If it fails, the old files stay up.
         if: ${{ !inputs.test_drive }}
         continue-on-error: true
         run: |
@@ -94,7 +95,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/data/school-commute data/school-commute-raw docs/baltimore-city-map.html
+          git add docs/data/school-commute data/school-commute-raw
           if git diff --cached --quiet; then echo "Nothing new to commit"; exit 0; fi
           git commit -m "School commute watch: $(date +%F) results"
           # You may have pushed edits while this ran for hours; rebase and retry.

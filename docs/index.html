@@ -1,82 +1,59 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>How reliable are MTA buses during Baltimore school commutes? | Project C</title>
+<title>Morning MTA bus disruptions and poverty in Baltimore City | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
 <style>
 .hero.pc-hero:not(.calculator-hero){min-height:0}
-.pc-hero .hero-inner{padding-block:clamp(2.75rem,6vw,5rem)}
-.pc-hero .hero-inner h1{font-size:clamp(2.25rem,5.2vw,4.4rem);max-width:21ch}
-.pc-wrap{width:min(1000px,100%);margin:0 auto;padding:30px 20px 60px}
-.pc-section{margin:0 0 40px}
+.pc-hero .hero-inner{padding-block:clamp(2.5rem,5vw,4.25rem)}
+.pc-hero .hero-inner h1{font-size:clamp(2rem,4.6vw,3.8rem);max-width:22ch}
+.pc-wrap{width:min(1060px,100%);margin:0 auto;padding:30px 16px 60px}
+.pc-section{margin:0 0 28px}
 .pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
-.pc-section h3{color:var(--navy);margin:26px 0 6px;font-size:1.15rem}
+.pc-section h3{color:var(--navy);margin:22px 0 6px;font-size:1.1rem}
 .pc-section p,.pc-section li{line-height:1.7;color:#243b52}
-.pc-claim{font-size:1.2rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 18px}
-.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin:6px 0 18px}
-.pc-stat{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.pc-stat .num{font:700 2.3rem/1.1 'Libre Baskerville',Georgia,serif;color:var(--brick)}
-.pc-stat .num.neutral{color:var(--navy)}
-.pc-stat .lbl{font-size:.92rem;color:#3f5167;margin-top:6px}
-.pc-figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
-.pc-figure img{display:block;max-width:100%;height:auto}
-.pc-figure figcaption{font-size:.88rem;color:#4a5a6c;margin-top:8px}
+.pc-claim{font-size:1.15rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 14px}
+.pc-support{border-left:5px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 14px}
+.pc-note{font-size:.92rem;color:#4a5a6c}
 .pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
-.pc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 16px}
-.pc-tabs button{padding:9px 18px;border:2px solid var(--navy);border-radius:999px;background:#fff;color:var(--navy);font:inherit;font-weight:700;cursor:pointer}
-.pc-tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
-.pc-tabs button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.pc-view[hidden]{display:none}
-.pc-note{font-size:.9rem;color:#4a5a6c}
-.sc-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fffefa}
-table.sc{border-collapse:collapse;width:100%;font-size:.9rem}
-table.sc th,table.sc td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
-table.sc th{background:#f3efe4;color:var(--navy);cursor:pointer;user-select:none}
-table.sc th[aria-sort]::after{content:' ▾'}table.sc th[aria-sort=ascending]::after{content:' ▴'}
-table.sc td.wrap{white-space:normal;min-width:220px}
-.bar{display:inline-block;height:9px;border-radius:3px;background:var(--brick);vertical-align:middle;margin-right:6px}
-.sc-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 10px;font-size:.9rem}
-.sc-filter input{padding:6px 8px;border:1px solid #c9ccd0;border-radius:6px;font:inherit}
-.sc-more{display:block;margin:10px auto 0;padding:7px 16px;border:1px solid var(--line);border-radius:6px;background:#fffefa;color:var(--navy);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
-.sc-more:hover{background:#f3efe4}.sc-more[hidden]{display:none}
-.pc-break{background:#fffefa;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px}
-.pc-break h3{margin:0 0 10px;font-size:1.05rem;color:var(--navy)}
-.pc-break .strip{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:0 0 12px}
-.pc-break .strip span{display:block;height:100%}
-.pc-break ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 16px}
-.pc-break li{display:flex;gap:8px;align-items:baseline;line-height:1.35}
-.pc-break .sw{flex:none;width:12px;height:12px;border-radius:3px;transform:translateY(1px)}
-.pc-break .p{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;min-width:3ch}
-.pc-break .c{display:block;font-size:.82rem;color:#5a6a7c}
-.pc-funnel{margin:16px 0 0;border-top:1px solid var(--line);padding-top:12px}
-.pc-funnel h4{margin:0 0 6px;color:var(--navy);font-size:.98rem}
-.pc-funnel table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
-.pc-funnel td{padding:5px 8px;border-bottom:1px solid var(--line)}
-.pc-funnel td.n,.pc-funnel td.pct{text-align:right;white-space:nowrap}
-.pc-funnel tr.start td{font-weight:700;color:var(--navy)}
-.pc-funnel tr.minus td:first-child{color:#8a2f2f}
-.pc-funnel tr.end td{font-weight:700;color:var(--navy);border-top:2px solid var(--navy);border-bottom:none}
-.pc-funnel p{font-size:.86rem;color:#4a5a6c;margin:8px 0 0;line-height:1.55}
-.pc-defs{background:#fffefa;border:1px solid var(--line);border-radius:8px;padding:6px 18px}
-.pc-defs dt{font-weight:700;color:var(--navy);margin-top:10px}.pc-defs dd{margin:2px 0 8px 0;color:#34465c}
-/* Map tooltip and accents use the site palette (navy, gold, brick). */
-:root{--md-black:var(--navy);--md-gold:var(--gold);--md-red:var(--brick)}
-.pc-stat .ci{display:block;margin-top:6px;font-size:.8rem;color:#555}
-.pc-section[hidden]{display:none}
-.pc-map{position:relative;background:#fff;border:1px solid #d9d9d9;border-radius:12px;padding:10px}
-.pc-map svg{display:block;width:100%;max-width:760px;margin:0 auto;height:auto}
-.pc-map path{stroke:#fff;stroke-width:.8;cursor:pointer}
-.pc-map path:hover,.pc-map path:focus,.pc-map path.on{stroke:var(--md-black);stroke-width:2.5;outline:none}
-.pc-map-tip{position:absolute;z-index:3;pointer-events:none;background:var(--md-black);color:#fff;border-top:4px solid var(--md-gold);border-radius:8px;padding:10px 12px;font-size:.85rem;line-height:1.45;min-width:220px;max-width:280px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
-.pc-map-tip b{color:var(--md-gold)}
-.pc-map-tip .big{font-size:1.3rem;font-weight:700;color:#fff}
-.pc-map-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;font-size:.86rem}
-.pc-map-legend li{display:flex;align-items:center;gap:6px}
-.pc-map-legend span{width:16px;height:16px;border-radius:3px;border:1px solid #bbb}
+.pc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.pc-table{border-collapse:collapse;width:100%;font-size:.93rem;font-variant-numeric:tabular-nums}
+table.pc-table caption{text-align:left;font-size:.9rem;color:#4a5a6c;padding:0 0 8px}
+table.pc-table th,table.pc-table td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line)}
+table.pc-table thead th{background:#f3efe4;color:var(--navy)}
+table.pc-table td.num{text-align:right;white-space:nowrap}
 .pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
-.pc-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 6px}
-.pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
-.pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
-.pc-more .pc-figure{margin:0 0 14px}
+/* Interactive neighborhood map (moved here from the separate map page). */
+#city-map button{color:var(--navy);padding:.4em 1em;border:2px solid var(--navy);background:#fff;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;min-height:40px}
+#city-map button[aria-pressed=true]{background:var(--navy);color:#fff}
+#city-map button:focus-visible,#city-map select:focus-visible,#city-map path:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+#city-map .pc-controls{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center}
+#city-map .pc-controls .lbl{font-size:.85rem;font-weight:700;color:#3f5167;margin-right:4px}
+#city-map select{font:inherit;max-width:100%;padding:.4em .5em;border:1px solid #c9ccd0;border-radius:8px;min-height:40px}
+#city-map #clear-selected{color:#fff;background:var(--brick);border-color:var(--brick)}
+#city-map svg{display:block;width:100%;max-height:600px;background:#f6f2ea;border-radius:10px;touch-action:manipulation}
+#city-map path{stroke:#fff;stroke-width:.65;fill-rule:evenodd;cursor:pointer;vector-effect:non-scaling-stroke}
+#city-map path:hover,#city-map path:focus,#city-map path.selected,#city-map path.comparison-hover{stroke:var(--navy);stroke-width:2;outline:none}
+#city-map .maps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:14px}
+#city-map .maps.combined{grid-template-columns:1fr}
+#city-map .map-panel{min-width:0}#city-map .map-panel h3{margin:0 0 6px}
+#city-map .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;margin-top:10px}
+#city-map .swatch{display:inline-block;width:13px;height:13px;border:1px solid #9a9a9a;border-radius:3px;vertical-align:middle;margin-right:4px}
+#city-map .overlay-stripes{background-image:repeating-linear-gradient(135deg,transparent 0 4px,#21212b 4px 5px,white 5px 6px)}
+#city-map .overlay-dots{background-image:radial-gradient(circle,#21212b 0 1px,white 1.2px 2px,transparent 2.1px);background-size:6px 6px}
+#city-map .pc-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;margin-top:16px}
+#city-map .pc-box{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fffefa;min-width:0}
+#city-map .pc-box h3{margin-top:0}
+#city-map .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:0}
+#city-map .metrics div{border-left:3px solid var(--gold);padding-left:9px}
+#city-map .metrics dt{font-size:.83rem;color:#3f5167}
+#city-map .metrics dd{margin:0;font:700 1.3rem/1.3 'Libre Baskerville',Georgia,serif;color:var(--navy)}
+#city-map .counts{padding-top:8px;font-size:.88rem}#city-map small{display:block}
+#city-map .comparison-scroll{overflow-x:auto}
+#city-map .comparison-scroll table{width:100%;border-collapse:collapse;font-size:.9rem}
+#city-map .comparison-scroll th,#city-map .comparison-scroll td{text-align:left;padding:.5rem;border-bottom:1px solid var(--line)}
+#city-map .comparison-scroll thead th{background:#f3efe4;color:var(--navy)}
+#city-map .comparison-scroll button{min-height:32px;padding:.2em .8em}
+#city-map .map-loading{padding:40px 0;text-align:center;color:#4a5a6c}
 </style></head>
 <body>
 
@@ -84,273 +61,75 @@ table.sc td.wrap{white-space:normal;min-width:220px}
   <div class="eyebrow">Project C · Data Science for Lawyers</div>
   <h1>How reliable are MTA buses during Baltimore school commutes?</h1>
   <div class="gold-line"></div>
-  <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data to see how often buses arrived on time during Baltimore’s morning and afternoon school commute windows.</p>
+  <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data at stops inside Baltimore City during the morning and afternoon school commutes.</p>
 </div></header>
 
 <main class="pc-wrap">
 
-  <!-- 1. THE CLAIM (both rides) -->
+  <!-- 1. THE CLAIM. Figures and dates are filled in from the map data; the text here is the October 30 to November 20, 2026 snapshot. -->
   <section class="pc-section" id="claim">
-    <h2>No: Baltimore City students cannot count on MTA buses to get them to and from school</h2>
-    <p class="pc-claim">At bus stops inside Baltimore City over <span data-stat="school_days">14</span> school days, <span data-stat="canceled_or_late">32%</span> of morning buses (95% confidence interval <span data-stat="am_failed_ci">30% to 34%</span>) and <span data-stat="pm_canceled_or_late">51%</span> of afternoon buses (<span data-stat="pm_failed_ci">47% to 54%</span>) were canceled or more than 7 minutes late, and only <span data-stat="on_time_8_to_9">52%</span> were on time between 8 and 9 a.m. The morning ride was somewhat worse in neighborhoods where more families have no car.</p>
-    <p><strong>What supports the claim.</strong> No school day was good: even the best morning had <span data-stat="am_best_day">23%</span> of buses fail, and <span data-stat="all_consistency">89%</span> of the half-hour blocks we measured had at least 1 bus in 5 failing (see <a href="#strength">How strong is the evidence</a>). The ride home was worse than the ride in on <span data-stat="pm_minus_am_days">13 of 13</span> days. Only <span data-stat="am_reg_every">3%</span> of the regular 8 to 9 a.m. buses were on time every day. In the morning, tracts where more households have no car saw <span data-stat="nb_am_nocar_high">34%</span> of buses fail, against <span data-stat="nb_am_nocar_rest">29%</span> elsewhere, a gap of <span data-stat="nb_am_nocar_gap">+4 points (95% CI +2 to +7)</span>, and those are the students most likely to need the bus (U.S. Census Bureau, ACS 2019&ndash;2023, table B25044). Sources: MTA real-time bus feed and GTFS schedule, collected by this tracker; full list in <a href="#sources">Sources</a>.</p>
-    <p><strong>What does not support it, or limits it.</strong> The neighborhood gap is small, it does not appear in the afternoon, and it disappears when we compare stops on the same route at the same time: the odds ratio is <span data-stat="nb_nocar_or">1.02 (95% CI 0.93 to 1.12)</span>, which means no difference. So the gap comes from which routes serve those neighborhoods, not from the MTA treating stops differently. The data measure buses, not students: we do not know who was waiting at each stop, so we cannot say any one student was late (see <a href="#neighborhoods">Where students most depend on the bus</a>). The sample is 14 autumn school days, bus positions arrive about every 30 seconds, and 8 to 9 a.m. is a reference window, not each school's bell time.</p>
-    <p class="pc-links"><a class="pc-colab" href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO" target="_blank" rel="noopener">Open the analysis in Colab</a> <span class="pc-note">The notebook that cleans the data and makes every chart and number on this page.</span></p>
-    <!-- Clickable view switcher: Overall / Morning commute / Afternoon commute. -->
-    <div class="pc-tabs" role="tablist" aria-label="Choose which commute to show">
-      <button type="button" role="tab" id="tab-all" aria-controls="view-all" aria-selected="true">Overall</button>
-      <button type="button" role="tab" id="tab-am" aria-controls="view-am" aria-selected="false" tabindex="-1">Morning commute</button>
-      <button type="button" role="tab" id="tab-pm" aria-controls="view-pm" aria-selected="false" tabindex="-1">Afternoon commute</button>
-    </div>
-
-    <div class="pc-view" role="tabpanel" id="view-all" aria-labelledby="tab-all">
-      <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="all_canceled_or_late">40%</div><div class="lbl">of arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="all_failed_ci">—</span></span></div></div>
-        <div class="pc-stat"><div class="num" data-stat="all_on_time">54%</div><div class="lbl">were on time across both windows (6:00 to 9:30 AM and 2:00 to 5:30 PM)</div></div>
-        <div class="pc-stat"><div class="num" data-stat="all_drove_past">29%</div><div class="lbl">of bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="all_arrivals">174,150</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="school_days">14</span> school days</div></div>
-      </div>
-      <!-- How every arrival turned out; filled in from project_c_claim.json -->
-      <div class="pc-break" data-breakdown="all">
-        <h3>How arrivals with a known outcome turned out</h3>
-        <div class="strip" aria-hidden="true"></div>
-        <ul><li>Loading…</li></ul>
-        <div class="pc-funnel"></div>
-      </div>
-      <p>The charts show outcomes by scheduled arrival time. The chart and headline calculations include recorded arrivals and cancellations flagged by MTA.</p>
-      <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_overall.png" alt="Morning and afternoon bus arrival outcomes by scheduled half-hour"/>
-        <figcaption>Each bar represents 30 minutes. The dashed line separates the morning and afternoon windows. Green shows the on-time share. <span data-stat="all_range"></span></figcaption>
-      </figure>
-      <!-- More evidence for the claim (both rides); numbers from project_c_claim.json, charts from the same code as the Colab -->
-      <div class="pc-more">
-        <h3>More evidence: you could not plan around these buses</h3>
-        <div class="pc-stats">
-          <div class="pc-stat"><div class="num" data-stat="all_reg_every">—</div><div class="lbl">of <span data-stat="all_reg_n">—</span> regular school-hour (8 to 9 AM and 3 to 4 PM) buses were on time every day we watched them</div></div>
-          <div class="pc-stat"><div class="num" data-stat="all_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
-          <div class="pc-stat"><div class="num" data-stat="all_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school day (worst: <span data-stat="all_worst_day">—</span>)</div></div>
-          <div class="pc-stat"><div class="num" data-stat="all_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="all_late_p90">—</span>+ minutes late</div></div>
-        </div>
-        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_overall_days.png" alt="Share of both rides buses canceled or 7+ minutes late on each school day" loading="lazy"/>
-          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
-        </figure>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_overall_routes.png" alt="The ten both rides routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
-          <figcaption><span data-stat="all_routes_bad">—</span> of <span data-stat="all_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <div class="pc-view" role="tabpanel" id="view-am" aria-labelledby="tab-am" hidden>
-      <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="canceled_or_late">30%</div><div class="lbl">of morning arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="am_failed_ci">—</span></span></div></div>
-        <div class="pc-stat"><div class="num" data-stat="am_on_time">63%</div><div class="lbl">were on time across the whole morning window (6:00 to 9:30 AM)</div></div>
-        <div class="pc-stat"><div class="num" data-stat="on_time_8_to_9">54%</div><div class="lbl">were on time between 8:00 and 9:00 AM, the reference window for school start times</div></div>
-        <div class="pc-stat"><div class="num" data-stat="am_drove_past">32%</div><div class="lbl">of morning bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="am_arrivals">89,129</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="mornings">14</span> school mornings (6:00 to 9:30 AM)</div></div>
-      </div>
-      <!-- How every morning arrival turned out; filled in from project_c_claim.json -->
-      <div class="pc-break" data-breakdown="am">
-        <h3>How morning arrivals with a known outcome turned out</h3>
-        <div class="strip" aria-hidden="true"></div>
-        <ul><li>Loading…</li></ul>
-        <div class="pc-funnel"></div>
-      </div>
-      <p>The on-time share fell from <span data-stat="on_time_6">75%</span> in the 6:00 a.m. half-hour to <span data-stat="on_time_8_to_9">54%</span> between 8:00 and 9:00 a.m.</p>
-      <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_claim.png" alt="Morning bus arrival outcomes by scheduled half-hour"/>
-        <figcaption>Each bar is one half hour of the morning commute. <span data-stat="am_range"></span></figcaption>
-      </figure>
-      <!-- More evidence for the claim (morning); numbers from project_c_claim.json, charts from the same code as the Colab -->
-      <div class="pc-more">
-        <h3>More evidence: you could not plan around these buses</h3>
-        <div class="pc-stats">
-          <div class="pc-stat"><div class="num" data-stat="am_reg_every">—</div><div class="lbl">of <span data-stat="am_reg_n">—</span> regular 8 to 9 AM buses were on time every day we watched them</div></div>
-          <div class="pc-stat"><div class="num" data-stat="am_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
-          <div class="pc-stat"><div class="num" data-stat="am_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school morning (worst: <span data-stat="am_worst_day">—</span>)</div></div>
-          <div class="pc-stat"><div class="num" data-stat="am_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="am_late_p90">—</span>+ minutes late</div></div>
-        </div>
-        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_claim_days.png" alt="Share of morning buses canceled or 7+ minutes late on each school day" loading="lazy"/>
-          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
-        </figure>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_claim_routes.png" alt="The ten morning routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
-          <figcaption><span data-stat="am_routes_bad">—</span> of <span data-stat="am_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <div class="pc-view" role="tabpanel" id="view-pm" aria-labelledby="tab-pm" hidden>
-      <div class="pc-stats">
-        <div class="pc-stat"><div class="num" data-stat="pm_canceled_or_late">49%</div><div class="lbl">of afternoon arrivals with a known outcome were canceled or more than 7 minutes late<span class="ci">95% confidence interval: <span data-stat="pm_failed_ci">—</span></span></div></div>
-        <div class="pc-stat"><div class="num" data-stat="pm_on_time">45%</div><div class="lbl">were on time across the whole afternoon window (2:00 to 5:30 PM)</div></div>
-        <div class="pc-stat"><div class="num" data-stat="on_time_3_to_4">46%</div><div class="lbl">were on time between 3:00 and 4:00 PM, the reference window for school dismissal times</div></div>
-        <div class="pc-stat"><div class="num" data-stat="pm_drove_past">26%</div><div class="lbl">of afternoon bus visits to a stop were drive-pasts (the bus went by without stopping)</div></div>
-        <div class="pc-stat"><div class="num neutral" data-stat="pm_arrivals">85,021</div><div class="lbl">scheduled arrivals with a known outcome across <span data-stat="afternoons">13</span> school afternoons (2:00 to 5:30 PM)</div></div>
-      </div>
-      <!-- How every afternoon arrival turned out; filled in from project_c_claim.json -->
-      <div class="pc-break" data-breakdown="pm">
-        <h3>How afternoon arrivals with a known outcome turned out</h3>
-        <div class="strip" aria-hidden="true"></div>
-        <ul><li>Loading…</li></ul>
-        <div class="pc-funnel"></div>
-      </div>
-      <p>The on-time share fell from <span data-stat="on_time_2">56%</span> in the 2:00 p.m. half-hour to <span data-stat="on_time_3_to_4">46%</span> between 3:00 and 4:00 p.m., when many students head home.</p>
-      <figure class="pc-figure">
-        <img src="./data/school-commute/project_c_afternoon.png" alt="Afternoon bus arrival outcomes by scheduled half-hour"/>
-        <figcaption>Each bar is one half hour of the afternoon commute. <span data-stat="pm_range"></span></figcaption>
-      </figure>
-      <!-- More evidence for the claim (afternoon); numbers from project_c_claim.json, charts from the same code as the Colab -->
-      <div class="pc-more">
-        <h3>More evidence: you could not plan around these buses</h3>
-        <div class="pc-stats">
-          <div class="pc-stat"><div class="num" data-stat="pm_reg_every">—</div><div class="lbl">of <span data-stat="pm_reg_n">—</span> regular 3 to 4 PM buses were on time every day we watched them</div></div>
-          <div class="pc-stat"><div class="num" data-stat="pm_reg_fail">—</div><div class="lbl">of those regular buses were canceled or 7+ minutes late on at least 1 day in 5, about once a school week</div></div>
-          <div class="pc-stat"><div class="num" data-stat="pm_best_day">—</div><div class="lbl">canceled or 7+ minutes late on the <em>best</em> school afternoon (worst: <span data-stat="pm_worst_day">—</span>)</div></div>
-          <div class="pc-stat"><div class="num" data-stat="pm_late_median">—</div><div class="lbl">minutes late for the typical late bus; 1 in 10 late buses was <span data-stat="pm_late_p90">—</span>+ minutes late</div></div>
-        </div>
-        <p class="pc-note">A “regular bus” is the same route, direction, stop and scheduled time every school day, the bus a student would plan around. Only buses with a known outcome on at least 8 days count.</p>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_afternoon_days.png" alt="Share of afternoon buses canceled or 7+ minutes late on each school day" loading="lazy"/>
-          <figcaption>Each bar is one school day. The gold line marks the best day.</figcaption>
-        </figure>
-        <figure class="pc-figure">
-          <img src="./data/school-commute/project_c_afternoon_routes.png" alt="The ten afternoon routes with the highest share canceled or 7+ minutes late" loading="lazy"/>
-          <figcaption><span data-stat="pm_routes_bad">—</span> of <span data-stat="pm_routes_n">—</span> routes had 40% or more of their arrivals canceled or 7+ minutes late.</figcaption>
-        </figure>
-      </div>
-    </div>
-    <p class="pc-note">The charts and headline figures refresh as new commute data is processed.</p>
-    <p id="full-map-link" hidden><a class="pc-colab" href="./baltimore-city-map.html">Explore the Baltimore City neighborhood reliability map</a></p>
+    <h2 id="claim-heading">Morning bus disruptions were more common in higher-poverty areas</h2>
+    <p class="pc-note" id="snapshot">Snapshot: October 30 – November 20, 2026</p>
+    <p class="pc-claim" id="claim-text">During the morning school commute, 34.0% of classified MTA bus stop events in Baltimore City’s highest-poverty census tracts were canceled or more than seven minutes late, compared with 28.0% in the lowest-poverty tracts. The morning gap was 3.1 percentage points when comparing stops on the same route and school date.</p>
+    <p class="pc-support" id="vehicle-text"><strong>Supporting evidence, vehicle access:</strong> in the morning, 35.6% of classified stop events were canceled or more than seven minutes late in the tracts with the highest share of households without a vehicle, versus 27.9% in those with the lowest share.</p>
+    <p>The claim compares census tracts (the highest and lowest quarters of city tracts by poverty rate, and by share of households without a vehicle), while the map below lets you explore named neighborhoods. The data count bus stop events and cannot identify student riders.</p>
+    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO" target="_blank" rel="noopener">Open the analysis in Colab</a></p>
   </section>
 
-  <!-- 1b. HOW STRONG IS THE EVIDENCE (confidence intervals and consistency checks) -->
-  <section class="pc-section" id="strength">
-    <h2>How strong is the evidence?</h2>
-    <p>Any sample of days could be a little better or worse than usual. A <strong>95% confidence interval</strong> gives the range the true rate most likely falls in. We built it by <strong>bootstrapping</strong>: we re-drew the school days at random thousands of times and recalculated the rate each time. Whole days are re-drawn because buses on the same day share weather, traffic and staffing.</p>
-    <figure class="pc-figure">
-      <img src="./data/school-commute/project_c_strength.png" alt="Share of buses canceled or 7+ minutes late with 95% confidence intervals for overall, morning and afternoon" loading="lazy"/>
-      <figcaption>Dot: the measured rate. Bar: the 95% confidence interval.</figcaption>
-    </figure>
-    <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="all_consistency">—</div><div class="lbl">of all <span data-stat="all_blocks">—</span> day-by-half-hour blocks had at least 1 in 5 buses canceled or 7+ minutes late (a <strong>consistency check</strong>: the problem is not limited to a few bad days or hours)</div></div>
-      <div class="pc-stat"><div class="num" data-stat="pm_minus_am_days">—</div><div class="lbl">school days on which the ride home was worse than the ride to school. Gap: <span data-stat="pm_minus_am">—</span></div></div>
-      <div class="pc-stat"><div class="num" data-stat="am_bell_ci">—</div><div class="lbl">95% confidence interval for on time from 8:00 to 9:00 AM (3:00 to 4:00 PM: <span data-stat="pm_bell_ci">—</span>)</div></div>
-    </div>
-    <p class="pc-note">A confidence interval covers chance from which days were sampled. It does not fix measurement limits, such as GPS gaps, which are covered in the strict count and limitations below.</p>
-  </section>
-
-  <!-- 1c. CITY MAP: hover a census tract to see its numbers (shown once city_tracts.geojson exists) -->
-  <section class="pc-section" id="city-map" hidden>
+  <!-- 2. INTERACTIVE MAP -->
+  <section class="pc-section" id="city-map">
     <h2>Explore the city, neighborhood by neighborhood</h2>
-    <p>Each shape is a census tract, an area of about 4,000 people, labeled with the Baltimore neighborhoods it covers. Its color shows the share of buses at its stops that were canceled or more than 7 minutes late. Hover over a tract, or tap or tab to it, to see its numbers.</p>
-    <div class="pc-tabs" role="tablist" aria-label="Choose which commute the map shows" id="map-tabs">
-      <button type="button" role="tab" data-view="all" aria-selected="true">Overall</button>
-      <button type="button" role="tab" data-view="am" aria-selected="false" tabindex="-1">Morning commute</button>
-      <button type="button" role="tab" data-view="pm" aria-selected="false" tabindex="-1">Afternoon commute</button>
+    <p>Shade the map by bus reliability, poverty or vehicle access, on one combined map or side by side. Tap or click neighborhoods (or pick them from the list) to compare them.</p>
+    <div class="pc-controls" role="group" aria-label="Commute window"><span class="lbl">Commute</span><button data-window="am" aria-pressed="true">Morning</button><button data-window="pm" aria-pressed="false">Afternoon</button><button data-window="all" aria-pressed="false">Both</button></div>
+    <div class="pc-controls" role="group" aria-label="Map layers"><span class="lbl">Layers</span><button data-layer="service" aria-pressed="true">Bus reliability</button><button data-layer="poverty" aria-pressed="true">Poverty</button><button data-layer="vehicles" aria-pressed="true">Vehicle access</button></div>
+    <div class="pc-controls" role="group" aria-label="Map layout"><span class="lbl">Layout</span><button data-layout="combined" aria-pressed="true">Combined map</button><button data-layout="separate" aria-pressed="false">Side by side</button></div>
+    <div class="pc-controls"><label for="tract-select" class="lbl">Add a neighborhood</label><select id="tract-select"><option value="">Select a neighborhood</option></select><button id="clear-selected" type="button">Clear selected</button></div>
+    <div class="maps combined" id="maps"><p class="map-loading">Loading the map…</p></div>
+    <p id="overlay-note" class="pc-note"></p>
+    <div class="pc-panels">
+      <div class="pc-box" aria-live="polite"><h3 id="tract-title">Citywide</h3><div id="tract"></div></div>
+      <div class="pc-box"><h3>Selected neighborhoods</h3><div class="comparison-scroll" id="comparison">Select neighborhoods on the map to compare their figures.</div></div>
     </div>
-    <div class="pc-map">
-      <svg id="map-svg" role="img" aria-label="Map of Baltimore City census tracts colored by bus failure rate"></svg>
-      <div class="pc-map-tip" id="map-tip" hidden></div>
-    </div>
-    <ul class="pc-map-legend" id="map-legend"></ul>
-    <p class="pc-note">Gray tracts had fewer than <span data-stat="map_min">100</span> bus arrivals with a known outcome, too few to rate fairly. Many have no timepoint stop. Income and poverty: American Community Survey, 2019 to 2023. Average minutes late counts buses that ran (early buses count as negative).</p>
   </section>
 
-  <!-- 1d. WHERE STUDENTS MOST DEPEND ON THE BUS (shown once stop_areas.csv exists) -->
-  <section class="pc-section" id="neighborhoods" hidden>
-    <h2>Where students most depend on the bus</h2>
-    <p>Students are most likely to need MTA buses where families are poorer, fewer households have a car, and more school-age children live. Each stop was matched to its census tract, and each tract to three Census measures (American Community Survey, 2019 to 2023):</p>
+  <!-- 3. ONE EVIDENCE TABLE -->
+  <section class="pc-section" id="evidence">
+    <h2>Evidence: morning and afternoon, by tract group</h2>
+    <div class="pc-scroll"><table class="pc-table">
+      <caption>Share of classified stop events canceled or more than 7 minutes late, <span id="evidence-dates">October 30 – November 20, 2026</span></caption>
+      <thead><tr><th scope="col">Tract comparison</th><th scope="col">Commute</th><th scope="col">Highest quarter</th><th scope="col">Lowest quarter</th><th scope="col">Difference</th><th scope="col">Same route and school date</th></tr></thead>
+      <tbody id="evidence-rows">
+        <tr><th scope="row" rowspan="2">Poverty rate</th><td>Morning</td><td class="num">34.0%</td><td class="num">28.0%</td><td class="num">+6.0 pts</td><td class="num">+3.1 pts</td></tr>
+        <tr><td>Afternoon</td><td class="num">51.0%</td><td class="num">53.7%</td><td class="num">−2.8 pts</td><td class="num">−3.1 pts</td></tr>
+        <tr><th scope="row" rowspan="2">Households without a vehicle</th><td>Morning</td><td class="num">35.6%</td><td class="num">27.9%</td><td class="num">+7.6 pts</td><td class="num">+3.7 pts</td></tr>
+        <tr><td>Afternoon</td><td class="num">51.1%</td><td class="num">50.1%</td><td class="num">+1.0 pts</td><td class="num">−0.7 pts</td></tr>
+      </tbody>
+    </table></div>
+    <p id="evidence-note">The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted slightly less often than in the lowest-poverty tracts.</p>
+  </section>
+
+  <!-- 4. BRIEF METHODS AND SOURCES -->
+  <section class="pc-section" id="methods">
+    <h2>Methods and sources</h2>
     <ul>
-      <li><strong>Poverty:</strong> the share of residents below the poverty line. The Census Bureau calls a tract at 20% or more a <strong>poverty area</strong>.</li>
-      <li><strong>No car:</strong> the share of households with no vehicle. Tracts above the city median count as "more car-free homes".</li>
-      <li><strong>School-age children:</strong> the share of residents age 5 to 17. Tracts above the city median count as "more school-age kids".</li>
+      <li><strong>Data.</strong> The tracker polls the MTA real-time feed about every 30 seconds from 6:00 to 9:30 a.m. and 2:00 to 5:30 p.m. on school days and compares it with the published schedule. Each record is one scheduled stop on one bus trip inside Baltimore City, so one trip can contribute several stop events. The page updates itself after each monitored commute.</li>
+      <li><strong>Classified events.</strong> Stop events with a usable timing estimate or a feed-flagged cancellation. A bus counts as on time from 2 minutes early to 7 minutes late, MTA’s own on-time window. Missing vehicle records, skipped stops and unclassified timings are left out of the rates.</li>
+      <li><strong>Tract groups.</strong> Census tracts are split at the 25th and 75th percentiles of the poverty rate and of the share of households without a vehicle (ACS 2020–2024). Each stop takes its tract’s group.</li>
+      <li><strong>Same route and school date.</strong> Highest- and lowest-quarter stops are compared within each route, date and commute window, and the gaps are averaged, weighting each by the smaller group’s event count. This removes differences that come only from which routes serve which areas.</li>
+      <li><strong>Neighborhoods.</strong> Map figures are approximate: tract counts are allocated to Baltimore’s named neighborhoods by overlapping area. The claim itself uses the tract rates.</li>
+      <li><strong>Limits.</strong> The results describe one autumn sample of stop events, not students: the records cannot show who rode or whether anyone reached school late. No significance test is reported, and Census sampling error is not carried into the comparisons.</li>
     </ul>
-    <figure class="pc-figure">
-      <img src="./data/school-commute/project_c_need.png" alt="Share of buses canceled or 7+ minutes late in higher-need tracts compared with the rest of the city, morning and afternoon, with 95% confidence intervals" loading="lazy"/>
-      <figcaption>Red: higher-need tracts. Gold: the rest of the city. Bars: 95% confidence intervals from resampling whole census tracts.</figcaption>
-    </figure>
-    <div class="sc-table-wrap"><table class="sc" id="need-table"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
-    <p><strong>A more careful test.</strong> Higher-need and lower-need areas are served by different routes at different times, so a raw comparison can mislead. A <strong>logistic regression</strong> compares stops <em>on the same route, in the same commute and half hour</em>. The <strong>odds ratio</strong> reads like this: 1 means no difference, above 1 means buses fail more often in the higher-need tracts, and below 1 means less often. If the 95% interval includes 1, the data cannot tell the groups apart.</p>
-    <figure class="pc-figure">
-      <img src="./data/school-commute/project_c_neighborhoods.png" alt="Share of buses canceled or 7+ minutes late by neighborhood income quarter, morning and afternoon" loading="lazy"/>
-      <figcaption>City tracts with bus stops, split into four equal groups by median household income (cut points: <span data-stat="nb_cuts">—</span>).</figcaption>
-    </figure>
-    <p class="pc-note">Limits: these are neighborhood averages, not individual riders. We cannot tell whether the people waiting at a given stop are poor, car-free or students (the <strong>ecological fallacy</strong>). Census figures are estimates with their own margins of error, and a bus route crosses many tracts.</p>
-  </section>
-
-  <!-- 2. THE BIGGER PICTURE (supporting context) -->
-  <section class="pc-section" id="bigger-picture">
-    <h2>Reliability by route and stop</h2>
-
-    <h3>Routes ranked by disruption rate</h3>
-    <p class="pc-note">The default ranking uses the share of scheduled stop visits that were more than 15 minutes late, canceled, or had no real-time record. The table includes routes with at least 20 measured, canceled, or unrecorded stop visits. The on-time rate uses measured arrivals only.</p>
-    <div class="sc-filter"><label>Find a route <input id="route-q" placeholder="e.g. CityLink Blue, 22"/></label></div>
-    <div class="sc-table-wrap"><table class="sc" id="routes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
-
-    <h3>Stops with the highest drive-past rates</h3>
-    <p class="pc-note">The table shows up to 25 stops with the highest drive-past rates among stops with at least 20 observed visits. A bus may pass a stop when nobody is waiting. The tracker cannot tell whether anyone was waiting to board.</p>
-    <div class="sc-table-wrap"><table class="sc" id="passes"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
-    <p class="pc-note" id="report-updated"></p>
-  </section>
-
-  <!-- 3. WHY IT MATTERS -->
-  <section class="pc-section" id="why">
-    <h2>What unreliable service means for students</h2>
-    <p>For students who rely on MTA buses, a delay or cancellation can mean missing the start of class or waiting longer after dismissal. The tracker measures bus service. It cannot measure how often students arrived late or how long they waited.</p>
-  </section>
-
-  <!-- 4. DATA, COLAB AND LIMITS -->
-  <section class="pc-section" id="data">
-    <h2>Data and methods</h2>
-    <ul>
-      <li>The MTA publishes its bus schedule (GTFS) and a real-time feed with vehicle locations and trip updates (GTFS-Realtime). Both are listed on the <a href="https://www.mta.maryland.gov/developer-resources">MTA Developer Resources</a> page.</li>
-      <li>During monitored school commute windows, the tracker polls the real-time feed about every 30 seconds. The morning window runs from 6:00 to 9:30 a.m. and the afternoon window from 2:00 to 5:30 p.m., Baltimore time.</li>
-      <li>The tracker saves arrival records for each monitored commute window. The data files are <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">public on GitHub</a>.</li>
-    </ul>
-    <h3>The analysis</h3>
-    <p>The full analysis is in a commented Google Colab notebook. It loads the commute files, cleans them, calculates the headline results, and generates the charts.</p>
-    <p><a class="pc-colab" href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO" id="colab-link" target="_blank" rel="noopener">Open the analysis in Colab</a></p>
-    <p id="map-colab-link" hidden>The same notebook also builds the neighborhood map page: <a href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO" target="_blank" rel="noopener">open it in Colab</a>.</p>
-
-    <h3>Definitions</h3>
-    <dl class="pc-defs">
-      <dt>On time</dt><dd>Our definition for this project: no more than 2 minutes early and no more than 7 minutes late, measured at scheduled timepoint stops.</dd>
-      <dt>Early</dt><dd>The bus left a timepoint more than 2 minutes ahead of schedule. A student who arrived on time could miss it.</dd>
-      <dt>Late / very late</dt><dd>Late means more than 7 minutes and up to 15 minutes after the scheduled time. Very late means more than 15 minutes after the scheduled time.</dd>
-      <dt>Canceled</dt><dd>The MTA's own feed marked the trip canceled.</dd>
-      <dt>Couldn't confirm</dt><dd>The bus trip was running but the tracker could not pin down when it reached the stop (a GPS gap, the trip stopped reporting, or an estimate fuzzier than 2 minutes). The strict count gives these no credit; the chart leaves them out.</dd>
-      <dt>No record</dt><dd>A scheduled trip with no real-time record. This can reflect a missed trip or a tracking gap. It counts against the bus in the strict count and the route disruption rate, and is left out of the charts and headline percentages.</dd>
-      <dt>Drove past</dt><dd>The tracker infers a drive-past from vehicle positions and speed near the stop when the feed shows no stop. Some visits, including slow passes, are classified as unclear.</dd>
-    </dl>
-
-    <p class="pc-note" id="scope-note" hidden></p>
-    <h3>Limitations</h3>
-    <ul>
-      <li>The arrival analysis counts scheduled stop arrivals. A single trip can contribute multiple arrivals.</li>
-      <li>The number of monitored mornings and afternoons can differ. Each chart shows the dates covered.</li>
-      <li>The 8:00 to 9:00 a.m. and 3:00 to 4:00 p.m. intervals are reference windows. Actual start and dismissal times vary by school.</li>
-      <li>The tracker covers general MTA bus service during school commute hours. It does not identify student riders or individual journeys.</li>
-      <li>Arrival times are estimates from periodic feed reports. Their precision depends on the time between usable updates.</li>
-      <li>The results cover the school days collected so far, not a full school year.</li>
-    </ul>
-
+    <p class="pc-note"><strong>Legal note.</strong> Md. Code Ann., Transp. § 7–710 requires MTA to provide fare-free transit to eligible Baltimore City public school students between 5 a.m. and 8 p.m. It sets no punctuality or arrival-at-school standard, so these results do not show a violation of the statute. They suggest that the access the statute promises is less dependable in the morning in poorer, lower-car neighborhoods, and that MTA and City Schools could report on-time and arrival-before-the-bell measures for school routes.</p>
     <h3 id="sources">Sources</h3>
     <ol class="pc-sources">
-      <li>Maryland Transit Administration. (2026). <em>Local bus GTFS schedule</em> [Data set]. https://feeds.mta.maryland.gov/gtfs/local-bus. Listed on MTA Developer Resources: <a href="https://www.mta.maryland.gov/developer-resources">https://www.mta.maryland.gov/developer-resources</a></li>
-      <li>Maryland Transit Administration. (2026). <em>Real-time vehicle positions and trip updates (GTFS-Realtime)</em>, provided through Swiftly [Data feed], collected by the author every 30 seconds during school commute windows, Oct. 30 to present. Listed on MTA Developer Resources (above).</li>
-      <li>Duvall, A. (2026). <em>MTA Accountability Tracker: school commute records</em> [Data set and code]. GitHub. <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker">https://github.com/TbilKitty/MTA_Accountability_Tracker</a>. Analysis notebook: <a href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO">Google Colab</a>.</li>
-      <li>U.S. Census Bureau. (2023). <em>TIGER/Line shapefiles: Census tracts, Maryland</em> [Data set]. <a href="https://www2.census.gov/geo/tiger/TIGER2023/TRACT/">https://www2.census.gov/geo/tiger/TIGER2023/TRACT/</a></li>
-      <li>U.S. Census Bureau. (2024). <em>American Community Survey 5-year estimates, 2019–2023</em>: Tables B19013 (median household income), B17001 (poverty status), B25044 (vehicles available), B09001 (population under 18 by age) and B01003 (total population) [Data set]. <a href="https://api.census.gov/data/2023/acs/acs5">https://api.census.gov/data/2023/acs/acs5</a></li>
-      <li>Bishaw, A. (2014). <em>Changes in areas with concentrated poverty: 2000 to 2010</em> (ACS-27). U.S. Census Bureau. (Definition of a poverty area: a tract where 20% or more of residents are below the poverty line.) <a href="https://www.census.gov/library/publications/2014/acs/acs-27.html">https://www.census.gov/library/publications/2014/acs/acs-27.html</a></li>
-      <li>Neighborhood names: City of Baltimore neighborhood boundaries (Open Baltimore) or Baltimore Neighborhood Indicators Alliance Community Statistical Areas, via ArcGIS Online. <span id="hood-source">The exact layer used is recorded in the repository at data/reference/neighborhood_source.txt.</span></li>
-      <li>Baltimore City Public Schools. School hours vary by school; see each school's page at <a href="https://www.baltimorecityschools.org">https://www.baltimorecityschools.org</a>. The 8:00 to 9:00 a.m. and 3:00 to 4:00 p.m. windows used here are the author's reference windows, not official bell times.</li>
-      <li>Efron, B., &amp; Tibshirani, R. J. (1993). <em>An introduction to the bootstrap</em>. Chapman &amp; Hall. (Method for the confidence intervals; whole school days or census tracts are resampled.)</li>
-      <li>Software: pandas, Matplotlib, statsmodels (Seabold &amp; Perktold, 2010) and GeoPandas, in Python.</li>
+      <li>Maryland Transit Administration. (2026). <em>Local bus GTFS schedule and GTFS-Realtime feeds</em> [Data]. <a href="https://www.mta.maryland.gov/developer-resources">https://www.mta.maryland.gov/developer-resources</a></li>
+      <li>Duvall, A. (2026). <em>MTA Accountability Tracker: school commute stop-event records</em> [Data set and code]. <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">https://github.com/TbilKitty/MTA_Accountability_Tracker</a>. Analysis: <a href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO">Google Colab notebook</a>.</li>
+      <li>Maryland Transit Administration. <em>Performance improvement: on-time performance definition</em>. <a href="https://www.mta.maryland.gov/performance-improvement">https://www.mta.maryland.gov/performance-improvement</a></li>
+      <li>U.S. Census Bureau. <em>American Community Survey 5-year estimates, 2020–2024</em>: <a href="https://data.census.gov/table/ACSDT5Y2024.B17001">B17001, poverty status</a>; <a href="https://data.census.gov/table/ACSDT5Y2024.B08201">B08201, vehicles available</a>.</li>
+      <li>U.S. Census Bureau. <em>TIGER/Line shapefiles, 2024: Maryland census tracts</em>. <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract">https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract</a></li>
+      <li>City of Baltimore. <em>CityView neighborhood boundaries</em>. <a href="https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer">https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer</a></li>
+      <li>Md. Code Ann., Transp. § 7–710. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf</a>; COMAR 11.06.05, Baltimore City student transit. <a href="https://regs.maryland.gov/us/md/exec/comar/11.06.05">https://regs.maryland.gov/us/md/exec/comar/11.06.05</a></li>
+      <li>Baltimore City Public Schools. <em>2026–27 student transit program</em>. <a href="https://www.baltimorecityschools.org/article/3080724">https://www.baltimorecityschools.org/article/3080724</a></li>
     </ol>
   </section>
 
@@ -359,314 +138,251 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 <footer class="site-footer">Harbor photograph: <a href="https://commons.wikimedia.org/wiki/File:Baltimore-inner-harbor-sunset-2017-panorama.jpg">Veggies, “Baltimore Inner Harbor at sunset” (2017)</a>, used with attribution.</footer>
 
 <script>
-(function(){
+(async () => {
+  const BASE = './data/school-commute/';
+  const fresh = '?v=' + Date.now();
+  let data, svgText;
+  try {
+    [data, svgText] = await Promise.all([
+      fetch(BASE + 'neighborhood_map.json' + fresh).then(r => { if (!r.ok) throw r.status; return r.json(); }),
+      fetch(BASE + 'neighborhood_map.svg' + fresh).then(r => { if (!r.ok) throw r.status; return r.text(); })]);
+  } catch (e) {
+    document.getElementById('maps').innerHTML = '<p class="map-loading">The map could not be loaded.</p>';
+    return;
+  }
   const $ = id => document.getElementById(id);
-  const el = (tag, text, cls) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; if (cls) e.className = cls; return e; };
-  const fmtPct = v => v == null ? '—' : v.toFixed(1) + '%';
-  const fmtN = v => v == null ? '—' : Number(v).toLocaleString('en-US');
-  const setStat = (key, v) => { if (v == null) return; document.querySelectorAll(`[data-stat="${key}"]`).forEach(e => { e.textContent = v; }); };
+  const pct = v => v == null ? '—' : v.toFixed(1) + '%';
+  const pts = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + ' pts';
+  const dateLabel = iso => new Intl.DateTimeFormat('en-US', {month:'long', day:'numeric', year:'numeric', timeZone:'UTC'}).format(new Date(iso + 'T00:00:00Z'));
+  const sameYear = data.dates.first.slice(0, 4) === data.dates.last.slice(0, 4);
+  const dates = (sameYear ? dateLabel(data.dates.first).replace(/, \d{4}$/, '') : dateLabel(data.dates.first)) + ' – ' + dateLabel(data.dates.last);
 
-  // Draws one outcome breakdown (on time, early, late, very late, canceled).
-  // Labels, colors and percents come from make_claim_chart.py, so they match the chart.
-  const NOTES = {early: 'left 2+ min ahead of schedule', on_time: '2 min early to 7 min late',
-                 late: 'more than 7, up to 15 min late', severely_late: 'more than 15 min late',
-                 canceled: 'trip canceled by MTA'};
-  function drawBreakdown(key, b){
-    const box = document.querySelector(`[data-breakdown="${key}"]`);
-    if (!box) return;
-    if (!b) { box.hidden = true; return; }
-    const strip = box.querySelector('.strip'), ul = box.querySelector('ul');
-    strip.textContent = ''; ul.textContent = '';
-    Object.entries(b).forEach(([k, o]) => {
-      const seg = el('span'); seg.style.width = o.pct + '%'; seg.style.background = o.color; strip.append(seg);
-      const li = el('li'), sw = el('span', undefined, 'sw'); sw.style.background = o.color;
-      const txt = el('span'); txt.append(el('span', o.display, 'p'), document.createTextNode(' ' + o.label));
-      txt.append(el('span', `${NOTES[k] || ''} · ${fmtN(o.count)} arrivals`, 'c'));
-      li.append(sw, txt); ul.append(li);
+  // ---- 1. Claim: figures, dates, and a heading that follows the direction of the gap.
+  const pov = data.equity.poverty, veh = data.equity.no_vehicle;
+  $('snapshot').textContent = 'Snapshot: ' + dates;
+  $('evidence-dates').textContent = dates;
+  const hi = pov.am.high, lo = pov.am.low;
+  if (hi != null && lo != null) {
+    const same = pct(hi) === pct(lo);
+    $('claim-heading').textContent = same ? 'Morning bus disruptions were about as common in higher- and lower-poverty areas'
+      : 'Morning bus disruptions were more common in ' + (hi > lo ? 'higher' : 'lower') + '-poverty areas';
+    const m = pov.matched_am;
+    const matched = m == null ? '' : ' The morning gap was ' + Math.abs(m).toFixed(1) + ' percentage points' +
+      ((m < 0) !== (hi < lo) && Math.abs(m) >= 0.05 ? ', in the opposite direction,' : '') + ' when comparing stops on the same route and school date.';
+    $('claim-text').textContent = 'During the morning school commute, ' + pct(hi) +
+      ' of classified MTA bus stop events in Baltimore City’s highest-poverty census tracts were canceled or more than seven minutes late, compared with ' +
+      pct(lo) + ' in the lowest-poverty tracts.' + matched;
+  }
+  if (veh.am.high != null && veh.am.low != null) {
+    $('vehicle-text').innerHTML = '<strong>Supporting evidence, vehicle access:</strong> in the morning, ' + pct(veh.am.high) +
+      ' of classified stop events were canceled or more than seven minutes late in the tracts with the highest share of households without a vehicle, versus ' +
+      pct(veh.am.low) + ' in those with the lowest share.';
+  }
+
+  // ---- 3. Evidence table (morning and afternoon for both comparisons).
+  const rows = [];
+  for (const [label, eq] of [['Poverty rate', pov], ['Households without a vehicle', veh]]) {
+    ['am', 'pm'].forEach((w, i) => {
+      const g = eq[w], d = g.high != null && g.low != null ? g.high - g.low : null;
+      rows.push('<tr>' + (i === 0 ? '<th scope="row" rowspan="2">' + label + '</th>' : '') + '<td>' + (w === 'am' ? 'Morning' : 'Afternoon') +
+        '</td><td class="num">' + pct(g.high) + '</td><td class="num">' + pct(g.low) + '</td><td class="num">' + pts(d) +
+        '</td><td class="num">' + pts(eq['matched_' + w]) + '</td></tr>');
     });
   }
+  $('evidence-rows').innerHTML = rows.join('');
+  const amSign = Math.sign(pov.am.high - pov.am.low), pmSign = Math.sign(pov.pm.high - pov.pm.low);
+  $('evidence-note').textContent = amSign && pmSign && amSign !== pmSign
+    ? 'The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted ' + (pmSign < 0 ? 'less' : 'more') + ' often than in the lowest-poverty tracts (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').'
+    : 'In the afternoon the poverty gap ran in the same direction as in the morning (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').';
 
-  // The strict count: every scheduled arrival, minus each way a bus failed,
-  // leaving only the confirmed on-time buses. Numbers from make_claim_chart.py.
-  function drawFunnel(key, f){
-    const box = document.querySelector(`[data-breakdown="${key}"] .pc-funnel`);
-    if (!box) return;
-    if (!f) { box.hidden = true; return; }
-    box.textContent = '';
-    box.append(el('h4', 'The strict count: no credit for buses we could not confirm'));
-    const t = el('table'), row = (cls, a, n, pct) => {
-      const tr = el('tr', undefined, cls);
-      tr.append(el('td', a), el('td', fmtN(n), 'n'), el('td', pct, 'pct')); t.append(tr);
-    };
-    row('start', 'Scheduled arrivals the tracker was watching', f.scheduled, '100%');
-    f.steps.forEach(st => row('minus', '− ' + st.label, st.count, fmtPct(st.pct)));
-    row('end', '= Confirmed on time', f.on_time, f.display_on_time);
-    box.append(t);
-    box.append(el('p', `How this is calculated: start with every scheduled bus arrival, subtract each one that was canceled, never showed up, skipped the stop, came more than 7 minutes late, left more than 2 minutes early, or whose time we could not confirm. What is left is the share we can prove was on time: ${f.display_on_time} of everything scheduled. The colored bar above counts only arrivals with a known outcome, so its on-time number is higher.`));
+  // ---- 2. Interactive map (same behavior as the former map page).
+  const maps = $('maps');
+  const holder = document.createElement('div');
+  holder.innerHTML = svgText;
+  const mapSource = holder.querySelector('svg');
+  const select = $('tract-select');
+  const colors = ['#FFF1CC','#FFB81C','#EE7D8B','#C8102E','#111111'];
+  const layers = {
+    service: {edges:[30,40,50,60], missing:'Fewer than 20 classified events or no data'},
+    vehicles: {edges:[10,20,30,40], missing:'No estimate'},
+    poverty: {edges:[10,20,30,40], missing:'No estimate'}
+  };
+  const activeLayers = new Set(['service', 'vehicles', 'poverty']);
+  let layout = 'combined';
+  const overlays = {
+    poverty: {pattern:'stripes', threshold:30, label:'Stripes · 30% or more of people below the poverty threshold'},
+    vehicles: {pattern:'dots', threshold:40, label:'Dots · 40% or more of households without a vehicle'}
+  };
+  const layerNames = {service:'Bus reliability', vehicles:'Households without a vehicle', poverty:'People below the poverty threshold'};
+  const gray = '#d9d3d2';
+  const number = new Intl.NumberFormat('en-US');
+  const timing = v => { if (v == null) return '—'; const m = Math.abs(v).toFixed(1); return m === '0.0' ? '0.0 min' : m + (v > 0 ? ' min late' : ' min early'); };
+  const tractName = id => data.names[id];
+  const windowName = {all:'both commutes', am:'morning commute', pm:'afternoon commute'};
+  let windowKey = 'am';
+  const selected = new Set();
+  const panels = new Map();
+  let focused = '';
+  Object.keys(data.names).sort((a, b) => tractName(a).localeCompare(tractName(b))).forEach(id => select.add(new Option(tractName(id), id)));
+
+  function metrics(m) {
+    if (!m) return '<p>No scheduled stop events here in this window.</p>';
+    const values = [['Canceled or >7 min late', pct(m.failed)], ['On time among classified', pct(m.on)],
+      ['Average vs. schedule', timing(m.avg)], ['Classified events', number.format(m.n)]];
+    return '<dl class="metrics">' + values.map(([l, v]) => '<div><dt>' + l + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>' +
+      '<p class="counts">' + number.format(m.cancel) + ' canceled · ' + number.format(m.late) + ' >7 min late · ' +
+      number.format(m.early) + ' >2 min early · ' + number.format(m.skipped) + ' skipped · ' +
+      number.format(m.missing) + ' missing vehicle records · ' + number.format(m.unclassified) + ' unclassified</p>';
   }
-
-  // 1. Claim and afternoon numbers: written by scripts/make_claim_chart.py from
-  // the same data as the chart. The numbers in the HTML are a fallback.
-  fetch('./data/school-commute/project_c_claim.json', {cache: 'no-store'})
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(d => {
-      const shown = d.display || {};  // rounded exactly like the chart labels
-      setStat('canceled_or_late', shown.canceled_or_late);
-      setStat('on_time_8_to_9', shown.on_time_8_to_9);
-      setStat('on_time_6', shown.on_time_6);
-      setStat('am_on_time', shown.on_time);
-      setStat('school_days', d.school_days != null ? String(d.school_days) : null);
-      setStat('am_range', `Data: ${d.school_mornings} school mornings, ${d.first_date} to ${d.last_date}.`);
-      const pm = d.afternoon;
-      setStat('am_arrivals', fmtN(d.scheduled_arrivals));
-      setStat('mornings', String(d.school_mornings));
-      const all = d.overall;
-      if (all) {
-        setStat('all_canceled_or_late', all.display.canceled_or_late);
-        setStat('all_on_time', all.display.on_time);
-        setStat('all_arrivals', fmtN(all.scheduled_arrivals));
-        setStat('all_range', `Data: ${all.school_days} school days, ${all.first_date} to ${all.last_date}.`);
-      }
-      // Extra evidence and drive-pasts for each view (same numbers as the Colab).
-      [['all', all], ['am', d], ['pm', pm]].forEach(([k, v]) => {
-        if (!v) return;
-        if (v.drive_pasts) setStat(k + '_drove_past', v.drive_pasts.display);
-        const r = v.regular_buses, b = v.by_day, l = v.lateness, w = v.worst_routes;
-        if (r) { setStat(k + '_reg_every', r.display.on_time_every_day); setStat(k + '_reg_fail', r.display.failed_1_in_5_days); setStat(k + '_reg_n', fmtN(r.buses)); }
-        if (b) { setStat(k + '_best_day', b.display.best); setStat(k + '_worst_day', b.display.worst); }
-        if (l) { setStat(k + '_late_median', l.display.median); setStat(k + '_late_p90', l.display.p90); }
-        if (w) { setStat(k + '_routes_bad', String(w.routes_40_plus)); setStat(k + '_routes_n', String(w.routes_ranked)); }
-      });
-      // How strong is the evidence: confidence intervals and consistency.
-      [['all', all], ['am', d], ['pm', pm]].forEach(([k, v]) => {
-        const st = v && v.strength; if (!st) return;
-        setStat(k + '_failed_ci', st.failed_ci.display);
-        if (st.bell_on_time_ci) setStat(k + '_bell_ci', st.bell_on_time_ci.display);
-        if (k === 'all') {
-          setStat('all_consistency', st.consistency.display); setStat('all_blocks', fmtN(st.consistency.blocks));
-          if (st.pm_minus_am) { setStat('pm_minus_am', st.pm_minus_am.display);
-            setStat('pm_minus_am_days', `${st.pm_minus_am.days_b_worse} of ${st.pm_minus_am.days}`); }
+  function tract(id) {
+    const title = $('tract-title'), panel = $('tract');
+    if (!id) {
+      title.textContent = 'Citywide, ' + windowName[windowKey];
+      panel.innerHTML = metrics(data[windowKey].city) + '<p class="pc-note">Choose a neighborhood on the map or from the list to see its figures.</p>';
+      return;
+    }
+    title.textContent = tractName(id) + ', ' + windowName[windowKey];
+    const m = data[windowKey].tracts[id];
+    const {poverty, vehicles} = data.demographics[id] || {};
+    panel.innerHTML = metrics(m) + (m && m.n < 20 ? '<p><small>Small sample: shown for context and left unshaded on the map.</small></p>' : '') +
+      '<dl class="metrics" style="margin-top:12px"><div><dt>Households without a vehicle</dt><dd>' + pct(vehicles) + '</dd></div>' +
+      '<div><dt>People below poverty</dt><dd>' + pct(poverty) + '</dd></div></dl><p><small>Approximate neighborhood estimates from the 2020–2024 ACS.</small></p>';
+  }
+  function renderSelection() {
+    for (const panel of panels.values()) for (const path of panel.paths) {
+      const id = path.dataset.tract;
+      path.classList.toggle('selected', selected.has(id));
+      path.classList.toggle('comparison-hover', focused === id);
+      path.setAttribute('aria-pressed', String(selected.has(id)));
+    }
+  }
+  function comparison() {
+    const target = $('comparison');
+    target.replaceChildren();
+    if (!selected.size) { target.textContent = 'Select neighborhoods on the map to compare their figures.'; return; }
+    const table = document.createElement('table');
+    const head = table.createTHead().insertRow();
+    for (const label of ['Neighborhood', 'Canceled or >7 min late', 'Without a vehicle', 'Below poverty', 'Events', '']) {
+      const th = document.createElement('th'); th.scope = 'col'; th.textContent = label; head.append(th);
+    }
+    const body = table.createTBody();
+    for (const id of selected) {
+      const m = data[windowKey].tracts[id], d = data.demographics[id];
+      const row = body.insertRow();
+      for (const v of [tractName(id), pct(m?.failed), pct(d?.vehicles), pct(d?.poverty), m ? number.format(m.n) : '—']) row.insertCell().textContent = v;
+      const remove = document.createElement('button');
+      remove.textContent = 'Remove'; remove.setAttribute('aria-label', 'Remove ' + tractName(id));
+      remove.addEventListener('click', () => choose(id));
+      row.insertCell().append(remove);
+    }
+    target.append(table);
+  }
+  function choose(id) {
+    if (!id) return;
+    if (selected.has(id)) selected.delete(id); else selected.add(id);
+    focused = id; renderSelection(); comparison(); tract(id);
+  }
+  function preview(id) { focused = id; renderSelection(); tract(id); }
+  const hoverable = window.matchMedia('(hover: hover)').matches;
+  function buildMaps() {
+    maps.replaceChildren();
+    maps.classList.toggle('combined', layout === 'combined');
+    $('overlay-note').textContent = layout === 'combined' && (activeLayers.has('vehicles') || activeLayers.has('poverty'))
+      ? 'Patterns mark neighborhoods above a threshold, using approximate neighborhood estimates. Select a neighborhood for its exact figures.' : '';
+    const visible = layout === 'combined' ? ['combined'] : Object.keys(layers).filter(k => activeLayers.has(k));
+    for (const layer of visible) {
+      if (!panels.has(layer)) {
+        const node = document.createElement('div');
+        node.className = 'map-panel';
+        const title = document.createElement('h3');
+        title.textContent = layerNames[layer] || 'Combined neighborhood map';
+        const svg = mapSource.cloneNode(true);
+        svg.setAttribute('aria-label', title.textContent + ' by Baltimore neighborhood');
+        const legend = document.createElement('div');
+        legend.className = 'legend';
+        node.append(title, svg, legend);
+        const paths = [...svg.querySelectorAll('[data-tract]')];
+        const patterns = {};
+        if (layer === 'combined') {
+          const ns = 'http://www.w3.org/2000/svg';
+          const defs = document.createElementNS(ns, 'defs');
+          defs.innerHTML = '<pattern id="overlay-stripes" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M2 0V9" style="stroke:white;stroke-width:2.8"/><path d="M2 0V9" style="stroke:#21212b;stroke-width:1.15"/></pattern>' +
+            '<pattern id="overlay-dots" width="11" height="11" patternUnits="userSpaceOnUse"><circle cx="5.5" cy="5.5" r="2" fill="#21212b" stroke="white" stroke-width="0.9"/></pattern>';
+          svg.prepend(defs);
+          for (const [key, overlay] of Object.entries(overlays)) {
+            const group = document.createElementNS(ns, 'g');
+            group.setAttribute('aria-hidden', 'true');
+            group.style.pointerEvents = 'none';
+            for (const path of paths) {
+              const value = data.demographics[path.dataset.tract]?.[key];
+              if (value == null || value < overlay.threshold) continue;
+              const mark = document.createElementNS(ns, 'path');
+              mark.setAttribute('d', path.getAttribute('d'));
+              mark.style.fill = 'url(#overlay-' + overlay.pattern + ')';
+              mark.style.stroke = 'none';
+              group.append(mark);
+            }
+            svg.append(group);
+            patterns[key] = group;
+          }
         }
-      });
-      // Where students most depend on the bus (only once stops are matched to census tracts).
-      if (d.neighborhoods && pm && pm.neighborhoods && all && all.neighborhoods) {
-        $('neighborhoods').hidden = false;
-        const models = all.neighborhoods.models || {};
-        const rows = Object.keys(all.neighborhoods.groups).map(key => {
-          const g = (v, part) => v && v.neighborhoods.groups[key] ? v.neighborhoods.groups[key][part] : null;
-          const pct = x => x ? `${Math.round(x.pct)}% (${x.display})` : '—';
-          return {label: all.neighborhoods.groups[key].label,
-                  am: `${pct(g(d, 'high'))} vs. ${pct(g(d, 'rest'))}`,
-                  pm: `${pct(g(pm, 'high'))} vs. ${pct(g(pm, 'rest'))}`,
-                  gap: g(all, 'gap') ? g(all, 'gap').display : '—',
-                  model: models[key] ? models[key].display : '—'};
-        });
-        table($('need-table'), [
-          {key: 'label', label: 'Higher-need tracts', wrap: true},
-          {key: 'am', label: 'Morning: higher-need vs. rest', wrap: true},
-          {key: 'pm', label: 'Afternoon: higher-need vs. rest', wrap: true},
-          {key: 'gap', label: 'Gap, both commutes', wrap: true},
-          {key: 'model', label: 'Odds ratio, same route and time', wrap: true}], () => rows.slice());
-        const nc = d.neighborhoods.groups.no_car;
-        if (nc) { setStat('nb_am_nocar_high', Math.round(nc.high.pct) + '%'); setStat('nb_am_nocar_rest', Math.round(nc.rest.pct) + '%');
-          setStat('nb_am_nocar_gap', nc.gap.display); }
-        if (models.no_car) setStat('nb_nocar_or', models.no_car.display);
-        if (d.scope && d.scope.income_cuts) setStat('nb_cuts', d.scope.income_cuts.map(c => '$' + fmtN(c)).join(', '));
+        for (const path of paths) {
+          const id = path.dataset.tract;
+          if (hoverable) {   // on touch screens a tap selects; hover previews only with a mouse
+            path.addEventListener('mouseenter', () => preview(id));
+            path.addEventListener('mouseleave', () => preview([...selected].at(-1) || ''));
+          }
+          path.addEventListener('focus', () => preview(id));
+          path.addEventListener('click', () => choose(id));
+          path.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(id); } });
+        }
+        panels.set(layer, {node, paths, legend, patterns});
       }
-      if (d.scope && d.scope.city_only) {
-        const sc = d.scope, note = $('scope-note');
-        note.hidden = false;
-        note.textContent = `City only: the results use the ${fmtN(sc.stops_kept)} timepoint stops inside Baltimore City (${fmtN(sc.arrivals_kept)} of ${fmtN(sc.arrivals_before)} arrivals with a known outcome). Stops outside the city line, in Baltimore County and beyond, are left out.`;
-      }
-      // Outcome breakdown for each view: a 100% strip plus one line per outcome.
-      [['all', all], ['am', d], ['pm', pm]].forEach(([key, v]) => {
-        drawBreakdown(key, v && v.breakdown);
-        drawFunnel(key, v && v.funnel);
-      });
-      if (pm) {
-        setStat('pm_canceled_or_late', pm.display.canceled_or_late);
-        setStat('pm_on_time', pm.display.on_time);
-        setStat('on_time_3_to_4', pm.display.on_time_3_to_4);
-        setStat('on_time_2', pm.display.on_time_2);
-        setStat('pm_arrivals', fmtN(pm.scheduled_arrivals));
-        setStat('afternoons', String(pm.school_afternoons));
-        setStat('pm_range', `Data: ${pm.school_afternoons} school afternoons, ${pm.first_date} to ${pm.last_date}.`);
-      }
-    })
-    .catch(() => {});
-
-  // City map: census tracts colored by failure rate, with a hover card for each.
-  const BINS = [[30, '#FFF1CC', 'Under 30%'], [40, '#FFB81C', '30 to 40%'], [50, '#EE7D8B', '40 to 50%'],
-                [60, '#C8102E', '50 to 60%'], [Infinity, '#111111', '60% or more']];
-  const NO_DATA = '#E3E3E3';
-  const colorFor = v => (BINS.find(b => v < b[0]) || BINS[BINS.length - 1])[1];
-  Promise.all([
-    fetch('./data/school-commute/city_tracts.geojson', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error(); return r.json(); }),
-    fetch('./data/school-commute/tract_stats.json', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error(); return r.json(); })
-  ]).then(([geo, ts]) => {
-    $('city-map').hidden = false;
-    setStat('map_min', String(ts.min_arrivals));
-    const svg = $('map-svg'), tip = $('map-tip'), NS = 'http://www.w3.org/2000/svg';
-    // Simple flat projection: longitude shrunk by cos(latitude) so the city keeps its shape.
-    const rings = f => f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
-    let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
-    geo.features.forEach(f => rings(f).forEach(r => r.forEach(([x, y]) => {
-      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
-    const k = Math.cos((y0 + y1) / 2 * Math.PI / 180), W = 1000, scale = W / ((x1 - x0) * k), H = (y1 - y0) * scale;
-    svg.setAttribute('viewBox', `0 0 ${W} ${H.toFixed(0)}`);
-    const pt = ([x, y]) => `${((x - x0) * k * scale).toFixed(1)},${((y1 - y) * scale).toFixed(1)}`;
-    const paths = geo.features.map(f => {
-      const p = document.createElementNS(NS, 'path');
-      p.setAttribute('d', rings(f).map(r => 'M' + r.map(pt).join('L') + 'Z').join(''));
-      p.setAttribute('tabindex', '0');
-      p._f = f; svg.append(p); return p;
-    });
-    let view = 'all';
-    const money = v => v == null ? 'not reported' : '$' + fmtN(Math.round(v));
-    const card = f => {
-      const pr = f.properties, st = (ts.tracts[pr.GEOID] || {})[view];
-      const head = `<b>${pr.neighborhood || pr.name}</b><br>${pr.neighborhood ? `<small>${pr.name}</small><br>` : ''}Median household income: ${money(pr.median_household_income)}<br>` +
-                   `Below poverty line: ${pr.poverty_rate == null ? 'not reported' : pr.poverty_rate.toFixed(0) + '%'}<br>` +
-                   `Households with no car: ${pr.pct_no_vehicle == null ? 'not reported' : pr.pct_no_vehicle.toFixed(0) + '%'}<br>` +
-                   `Residents age 5 to 17: ${pr.pct_school_age == null ? 'not reported' : pr.pct_school_age.toFixed(0) + '%'}<hr style="border-color:#444">`;
-      if (!st) return head + 'No timepoint stops measured here.';
-      const body = `<span class="big">${st.pct_failed.toFixed(0)}%</span> canceled or 7+ min late<br>` +
-        `On time: ${st.pct_on_time.toFixed(0)}% · Canceled: ${st.pct_canceled.toFixed(0)}%<br>` +
-        `Average minutes late (buses that ran): ${st.avg_delay_min == null ? '—' : st.avg_delay_min.toFixed(1)}<br>` +
-        `${fmtN(st.arrivals)} arrivals at ${st.stops} stop${st.stops === 1 ? '' : 's'}`;
-      return head + body + (st.enough_data ? '' : '<br><i>Too few arrivals to rate fairly.</i>');
-    };
-    function paint(){
-      paths.forEach(p => {
-        const st = (ts.tracts[p._f.properties.GEOID] || {})[view];
-        p.setAttribute('fill', st && st.enough_data ? colorFor(st.pct_failed) : NO_DATA);
-        p.setAttribute('aria-label', (p._f.properties.neighborhood || p._f.properties.name) + (st ? `: ${st.pct_failed.toFixed(0)}% canceled or 7+ minutes late` : ': no data'));
-      });
+      maps.append(panels.get(layer).node);
     }
-    function show(p, ev){
-      paths.forEach(q => q.classList.toggle('on', q === p));
-      tip.innerHTML = card(p._f); tip.hidden = false;
-      const box = svg.parentElement.getBoundingClientRect();
-      const r = ev && ev.clientX != null ? {x: ev.clientX, y: ev.clientY} : (b => ({x: b.left + b.width / 2, y: b.top + b.height / 2}))(p.getBoundingClientRect());
-      let left = r.x - box.left + 14, top = r.y - box.top + 14;
-      if (left + 290 > box.width) left = Math.max(4, r.x - box.left - 300);
-      if (top + tip.offsetHeight > box.height) top = Math.max(4, r.y - box.top - tip.offsetHeight - 14);
-      tip.style.left = left + 'px'; tip.style.top = top + 'px';
-    }
-    paths.forEach(p => {
-      p.addEventListener('mousemove', e => show(p, e));
-      p.addEventListener('click', e => show(p, e));
-      p.addEventListener('focus', () => show(p));
-    });
-    svg.addEventListener('mouseleave', () => { tip.hidden = true; paths.forEach(q => q.classList.remove('on')); });
-    const legend = $('map-legend');
-    [...BINS.map(b => [b[1], b[2]]), [NO_DATA, 'Too little data']].forEach(([c, t]) => {
-      const li = el('li'), sw = el('span'); sw.style.background = c; li.append(sw, document.createTextNode(t)); legend.append(li);
-    });
-    const mt = [...document.querySelectorAll('#map-tabs button')];
-    mt.forEach((b, i) => {
-      const pick = t => { mt.forEach(x => { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; });
-                          view = t.dataset.view; paint(); tip.hidden = true; };
-      b.addEventListener('click', () => pick(b));
-      b.addEventListener('keydown', e => { const st = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if (st) { const n = mt[(i + st + mt.length) % mt.length]; n.focus(); pick(n); } });
-    });
-    paint();
-  }).catch(() => {});
-
-  // Link to the full-page neighborhood map, shown only if that page exists.
-  fetch('./baltimore-city-map.html', {method: 'HEAD', cache: 'no-store'})
-    .then(r => { if (r.ok) { $('full-map-link').hidden = false; $('map-colab-link').hidden = false; } }).catch(() => {});
-
-  // Overall / Morning / Afternoon buttons: show one view at a time.
-  const tabs = [...document.querySelectorAll('#claim .pc-tabs [role="tab"]')];
-  function select(tab){
-    tabs.forEach(t => {
-      const on = t === tab;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      $(t.getAttribute('aria-controls')).hidden = !on;
-    });
   }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(t));
-    t.addEventListener('keydown', e => {  // arrow keys move between buttons
-      const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (!step) return;
-      const next = tabs[(i + step + tabs.length) % tabs.length];
-      next.focus(); select(next);
-    });
-  });
-
-  // Sortable table that shows PREVIEW rows, with a "Show all" button below.
-  const PREVIEW = 8;
-  function table(target, cols, rows, defaultSort){
-    let sortKey = defaultSort || null, asc = false, expanded = false;
-    const more = el('button', undefined, 'sc-more');
-    more.type = 'button';
-    more.addEventListener('click', () => { expanded = !expanded; render(); });
-    target.closest('.sc-table-wrap').after(more);
-    function render(){
-      target.textContent = '';
-      const thead = el('thead'), tr = el('tr');
-      cols.forEach(c => {
-        const th = el('th', c.label);
-        if (c.key === sortKey) th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
-        th.addEventListener('click', () => { asc = sortKey === c.key ? !asc : false; sortKey = c.key; render(); });
-        tr.append(th);
-      });
-      thead.append(tr); target.append(thead);
-      const tbody = el('tbody');
-      const data = rows();
-      if (sortKey) data.sort((a, b) => { const x = a[sortKey] ?? -Infinity, y = b[sortKey] ?? -Infinity;
-        const r = x > y ? 1 : x < y ? -1 : 0; return asc ? r : -r; });
-      const total = data.length;
-      more.hidden = total <= PREVIEW;
-      more.textContent = expanded ? 'Show fewer' : `Show all ${total} rows ▾`;
-      more.setAttribute('aria-expanded', String(expanded));
-      if (!expanded) data.splice(PREVIEW);
-      data.forEach(r => { const row = el('tr'); cols.forEach(c => { const td = el('td', undefined, c.wrap ? 'wrap' : '');
-        if (c.bar) { const v = r[c.key]; if (v != null) { const b = el('span', undefined, 'bar'); b.style.width = Math.max(2, v) + 'px'; td.append(b); } td.append(document.createTextNode(fmtPct(v))); }
-        else td.textContent = c.fmt ? c.fmt(r[c.key], r) : (r[c.key] ?? '—');
-        row.append(td); }); tbody.append(row); });
-      if (!total) { const row = el('tr'); const td = el('td', 'No rows match.'); td.colSpan = cols.length; row.append(td); tbody.append(row); }
-      target.append(tbody);
+  function redraw() {
+    for (const [layer, panel] of panels) {
+      const combined = layer === 'combined';
+      const showColor = !combined || activeLayers.has('service');
+      const measure = combined ? 'service' : layer;
+      const {edges, missing} = layers[measure];
+      const bins = ['Under ' + edges[0] + '%', ...edges.slice(1).map((n, i) => edges[i] + '–<' + n + '%'), edges.at(-1) + '% or more', missing];
+      panel.legend.innerHTML = showColor ? (combined ? '<span><strong>Color · canceled or >7 min late</strong></span>' : '') +
+        bins.map((t, i) => '<span><i class="swatch" style="background:' + (colors[i] || gray) + '"></i>' + t + '</span>').join('') : '';
+      for (const [key, group] of Object.entries(panel.patterns)) {
+        group.style.display = activeLayers.has(key) ? '' : 'none';
+        if (activeLayers.has(key)) panel.legend.insertAdjacentHTML('beforeend', '<span><i class="swatch overlay-' + overlays[key].pattern + '"></i>' + overlays[key].label + '</span>');
+      }
+      for (const path of panel.paths) {
+        const id = path.dataset.tract, m = data[windowKey].tracts[id];
+        const value = measure === 'service' ? (m?.n >= 20 ? m.failed : null) : data.demographics[id]?.[measure];
+        path.style.fill = !showColor ? '#f1ece5' : value == null ? gray : colors[edges.filter(e => value >= e).length];
+      }
     }
-    render();
-    return render;
+    renderSelection(); comparison(); tract(focused);
   }
-
-  // 2. Routes, drive-pasts and stop behavior: written by the tracker
-  // (scripts/school_commute_watch.py) after every commute window.
-  fetch('./data/school-commute/summary.json', {cache: 'no-store'})
-    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-    .then(s => {
-      const rerender = table($('routes'), [
-        {key: 'route_name', label: 'Route'},
-        {key: 'scheduled_trips', label: 'Trips scheduled', fmt: fmtN},
-        {key: 'pct_on_time', label: 'On time', fmt: fmtPct},
-        {key: 'pct_failed_15min_or_missing', label: 'Over 15 min late / canceled / no record', bar: true},
-        {key: 'trips_canceled_by_mta', label: 'Canceled trips', fmt: fmtN},
-        {key: 'pct_drove_past', label: 'Drove past stops', fmt: fmtPct}],
-        () => {
-          const q = $('route-q').value.trim().toLowerCase();
-          return s.routes.filter(r => (r.measured_stop_events + r.canceled_by_mta + r.no_realtime_record) >= 20 &&
-            (!q || String(r.route_name).toLowerCase().includes(q)));
-        }, 'pct_failed_15min_or_missing');
-      $('route-q').addEventListener('input', rerender);
-
-      table($('passes'), [
-        {key: 'stop_name', label: 'Stop', wrap: true, fmt: (v, r) => v || r.stop_id},
-        {key: 'routes', label: 'Routes', wrap: true, fmt: v => (v || []).join(', ')},
-        {key: 'pct_drove_past', label: 'Drove past', bar: true},
-        {key: 'drove_past', label: 'Times', fmt: fmtN},
-        {key: 'stop_visits_observed', label: 'Bus visits', fmt: fmtN}],
-        () => (s.stops_most_driven_past_100 || []).slice(0, 25), 'pct_drove_past');
-
-      $('report-updated').textContent = `Route and stop tables: ${s.school_windows_counted} school commute windows, last updated ` +
-        new Date(s.generated_utc).toLocaleString('en-US', {timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'}) + ' (Baltimore time).';
-    })
-    .catch(() => { $('report-updated').textContent = 'Route and stop results could not be loaded.'; });
+  document.querySelectorAll('#city-map [data-layout]').forEach(b => b.addEventListener('click', () => {
+    layout = b.dataset.layout;
+    document.querySelectorAll('#city-map [data-layout]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    buildMaps(); redraw();
+  }));
+  document.querySelectorAll('#city-map [data-layer]').forEach(b => b.addEventListener('click', () => {
+    const layer = b.dataset.layer;
+    if (activeLayers.has(layer) && activeLayers.size === 1) return;
+    if (activeLayers.has(layer)) activeLayers.delete(layer); else activeLayers.add(layer);
+    b.setAttribute('aria-pressed', String(activeLayers.has(layer)));
+    buildMaps(); redraw();
+  }));
+  document.querySelectorAll('#city-map [data-window]').forEach(b => b.addEventListener('click', () => {
+    windowKey = b.dataset.window;
+    document.querySelectorAll('#city-map [data-window]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    redraw();
+  }));
+  select.addEventListener('change', () => { if (selected.has(select.value)) preview(select.value); else choose(select.value); select.value = ''; });
+  $('clear-selected').addEventListener('click', () => { selected.clear(); preview(''); comparison(); });
+  buildMaps(); redraw();
+  if (location.hash === '#city-map') $('city-map').scrollIntoView();
 })();
 </script>
 </body></html>

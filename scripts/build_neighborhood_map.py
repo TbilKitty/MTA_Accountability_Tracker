@@ -1,15 +1,21 @@
-"""Rebuild docs/baltimore-city-map.html from the Project C Colab notebook.
+"""Rebuild the neighborhood map on the Project C page from the Colab notebook.
 
 Runs every code box of notebooks/Baltimore_City_MTA_Map_Colab.ipynb, with
 USE_LATEST switched on and this checkout as the data source, so the website map
 uses every school day collected so far and the same code as the Colab. The
 in-Colab preview and the published-page check are skipped. If anything fails,
-the existing page is left as it is.
+the existing map files are left as they are.
+
+The notebook writes a standalone map page. The website shows the map inside
+docs/index.html instead, so this script keeps two pieces of that page:
+  docs/data/school-commute/neighborhood_map.json  (the map data and claim figures)
+  docs/data/school-commute/neighborhood_map.svg   (the drawn neighborhood shapes)
+docs/baltimore-city-map.html is now only a redirect to the map section.
 """
 import json
+import re
 import os
 from pathlib import Path
-import shutil
 import tempfile
 
 import matplotlib
@@ -31,8 +37,15 @@ names = {"display": lambda *args, **kwargs: None, "__name__": "__main__"}
 for number, box in enumerate(boxes, 1):
     exec(compile(box, f"notebook code box {number}", "exec"), names)
 
-page = work / "Baltimore_City_MTA_Reliability_Map.html"
-target = repo / "docs/baltimore-city-map.html"
-shutil.copyfile(page, target.with_suffix(".tmp"))
-target.with_suffix(".tmp").replace(target)
-print(f"Updated {target.relative_to(repo)} through {names['payload']['dates']['last']}")
+page = (work / "Baltimore_City_MTA_Reliability_Map.html").read_text()
+data = re.search(r'<script id="data" type="application/json">(.*?)</script>', page, re.S).group(1)
+json.loads(data)                          # must be valid JSON
+maps = page[page.index('id="maps"'):]
+svg = maps[maps.index("<svg"):maps.index("</svg>") + len("</svg>")]
+svg = svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ', 1) if "xmlns=" not in svg[:200] else svg
+out = repo / "docs/data/school-commute"
+for name, text in [("neighborhood_map.json", data), ("neighborhood_map.svg", svg)]:
+    tmp = out / (name + ".tmp")
+    tmp.write_text(text)
+    tmp.replace(out / name)
+print(f"Updated the map data and shapes through {names['payload']['dates']['last']}")
