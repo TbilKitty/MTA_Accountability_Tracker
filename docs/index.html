@@ -84,6 +84,7 @@ table.sc td.wrap{white-space:normal;min-width:220px}
 .pc-map-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;font-size:.86rem}
 .pc-map-legend li{display:flex;align-items:center;gap:6px}
 .pc-map-legend span{width:16px;height:16px;border-radius:3px;border:1px solid #bbb}
+.pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
 .pc-more{margin:22px 0 0;padding:18px 0 0;border-top:4px solid var(--md-black)}
 .pc-more h3{margin:0 0 10px;color:var(--md-black);font-size:1.15rem}
 .pc-more .pc-figure{margin:0 0 14px}
@@ -271,22 +272,26 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
     <p class="pc-note">Gray tracts had fewer than <span data-stat="map_min">100</span> bus arrivals with a known outcome, too few to rate fairly. Many have no timepoint stop. Income and poverty: American Community Survey, 2019 to 2023. Average minutes late counts buses that ran (early buses count as negative).</p>
   </section>
 
-  <!-- 1d. POORER VS. WEALTHIER NEIGHBORHOODS (shown once stop_areas.csv exists) -->
+  <!-- 1d. WHERE STUDENTS MOST DEPEND ON THE BUS (shown once stop_areas.csv exists) -->
   <section class="pc-section" id="neighborhoods" hidden>
-    <h2>Poorer and wealthier neighborhoods</h2>
-    <p>Students from lower-income families are more likely to depend on public buses. Each stop was matched to its census tract, and each tract to its median household income and poverty rate (American Community Survey, 2019 to 2023). The Census Bureau calls a tract with 20% or more of residents below the poverty line a <strong>poverty area</strong>.</p>
-    <div class="pc-stats">
-      <div class="pc-stat"><div class="num" data-stat="nb_am_high">—</div><div class="lbl">of morning buses canceled or 7+ min late at stops in poverty areas (<span data-stat="nb_am_high_ci">—</span>)</div></div>
-      <div class="pc-stat"><div class="num neutral" data-stat="nb_am_low">—</div><div class="lbl">at stops in other city tracts (<span data-stat="nb_am_low_ci">—</span>)</div></div>
-      <div class="pc-stat"><div class="num" data-stat="nb_pm_high">—</div><div class="lbl">of afternoon buses canceled or 7+ min late at stops in poverty areas (<span data-stat="nb_pm_high_ci">—</span>)</div></div>
-      <div class="pc-stat"><div class="num neutral" data-stat="nb_pm_low">—</div><div class="lbl">at stops in other city tracts (<span data-stat="nb_pm_low_ci">—</span>)</div></div>
-    </div>
+    <h2>Where students most depend on the bus</h2>
+    <p>Students are most likely to need MTA buses where families are poorer, fewer households have a car, and more school-age children live. Each stop was matched to its census tract, and each tract to three Census measures (American Community Survey, 2019 to 2023):</p>
+    <ul>
+      <li><strong>Poverty:</strong> the share of residents below the poverty line. The Census Bureau calls a tract at 20% or more a <strong>poverty area</strong>.</li>
+      <li><strong>No car:</strong> the share of households with no vehicle. Tracts above the city median count as "more car-free homes".</li>
+      <li><strong>School-age children:</strong> the share of residents age 5 to 17. Tracts above the city median count as "more school-age kids".</li>
+    </ul>
+    <figure class="pc-figure">
+      <img src="./data/school-commute/project_c_need.png" alt="Share of buses canceled or 7+ minutes late in higher-need tracts compared with the rest of the city, morning and afternoon, with 95% confidence intervals" loading="lazy"/>
+      <figcaption>Red: higher-need tracts. Gold: the rest of the city. Bars: 95% confidence intervals from resampling whole census tracts.</figcaption>
+    </figure>
+    <div class="sc-table-wrap"><table class="sc" id="need-table"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
+    <p><strong>A more careful test.</strong> Higher-need and lower-need areas are served by different routes at different times, so a raw comparison can mislead. A <strong>logistic regression</strong> compares stops <em>on the same route, in the same commute and half hour</em>. The <strong>odds ratio</strong> reads like this: 1 means no difference, above 1 means buses fail more often in the higher-need tracts, and below 1 means less often. If the 95% interval includes 1, the data cannot tell the groups apart.</p>
     <figure class="pc-figure">
       <img src="./data/school-commute/project_c_neighborhoods.png" alt="Share of buses canceled or 7+ minutes late by neighborhood income quarter, morning and afternoon" loading="lazy"/>
-      <figcaption>City tracts split into four equal groups by median household income (cut points: <span data-stat="nb_cuts">—</span>).</figcaption>
+      <figcaption>City tracts with bus stops, split into four equal groups by median household income (cut points: <span data-stat="nb_cuts">—</span>).</figcaption>
     </figure>
-    <p><strong>A more careful comparison.</strong> Poorer and wealthier areas are served by different routes at different times, so a simple comparison can mislead. A <strong>logistic regression</strong> compares stops <em>on the same route, in the same commute and half hour</em>. Its <strong>odds ratio</strong> for a stop being in a poverty area is <span data-stat="nb_model">—</span>. An odds ratio of 1 means no difference, and above 1 means buses fail more often in poverty areas.</p>
-    <p class="pc-note">Limits: this compares neighborhoods, not individual riders. We cannot tell whether the people waiting at a stop are poor (the <strong>ecological fallacy</strong>). Income figures are Census estimates with their own margins of error, and a bus route crosses many tracts.</p>
+    <p class="pc-note">Limits: these are neighborhood averages, not individual riders. We cannot tell whether the people waiting at a given stop are poor, car-free or students (the <strong>ecological fallacy</strong>). Census figures are estimates with their own margins of error, and a bus route crosses many tracts.</p>
   </section>
 
   <!-- 2. THE BIGGER PICTURE (supporting context) -->
@@ -343,6 +348,20 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
       <li>Arrival times are estimates from periodic feed reports. Their precision depends on the time between usable updates.</li>
       <li>The results cover the school days collected so far, not a full school year.</li>
     </ul>
+
+    <h3 id="sources">Sources</h3>
+    <ol class="pc-sources">
+      <li>Maryland Transit Administration. (2026). <em>Local bus GTFS schedule</em> [Data set]. https://feeds.mta.maryland.gov/gtfs/local-bus. Listed on MTA Developer Resources: <a href="https://www.mta.maryland.gov/developer-resources">https://www.mta.maryland.gov/developer-resources</a></li>
+      <li>Maryland Transit Administration. (2026). <em>Real-time vehicle positions and trip updates (GTFS-Realtime)</em>, provided through Swiftly [Data feed], collected by the author every 30 seconds during school commute windows, Oct. 30 to present. Listed on MTA Developer Resources (above).</li>
+      <li>Duvall, A. (2026). <em>MTA Accountability Tracker: school commute records</em> [Data set and code]. GitHub. <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker">https://github.com/TbilKitty/MTA_Accountability_Tracker</a>. Analysis notebook: <a href="https://colab.research.google.com/drive/1upJj91tZ2zDdIQ1OlcAPLTKLqvwVj1p-?usp=sharing">Google Colab</a>.</li>
+      <li>U.S. Census Bureau. (2023). <em>TIGER/Line shapefiles: Census tracts, Maryland</em> [Data set]. <a href="https://www2.census.gov/geo/tiger/TIGER2023/TRACT/">https://www2.census.gov/geo/tiger/TIGER2023/TRACT/</a></li>
+      <li>U.S. Census Bureau. (2024). <em>American Community Survey 5-year estimates, 2019–2023</em>: Tables B19013 (median household income), B17001 (poverty status), B25044 (vehicles available), B09001 (population under 18 by age) and B01003 (total population) [Data set]. <a href="https://api.census.gov/data/2023/acs/acs5">https://api.census.gov/data/2023/acs/acs5</a></li>
+      <li>Bishaw, A. (2014). <em>Changes in areas with concentrated poverty: 2000 to 2010</em> (ACS-27). U.S. Census Bureau. (Definition of a poverty area: a tract where 20% or more of residents are below the poverty line.) <a href="https://www.census.gov/library/publications/2014/acs/acs-27.html">https://www.census.gov/library/publications/2014/acs/acs-27.html</a></li>
+      <li>Neighborhood names: City of Baltimore neighborhood boundaries (Open Baltimore) or Baltimore Neighborhood Indicators Alliance Community Statistical Areas, via ArcGIS Online. <span id="hood-source">The exact layer used is recorded in the repository at data/reference/neighborhood_source.txt.</span></li>
+      <li>Baltimore City Public Schools. School hours vary by school; see each school's page at <a href="https://www.baltimorecityschools.org">https://www.baltimorecityschools.org</a>. The 8:00 to 9:00 a.m. and 3:00 to 4:00 p.m. windows used here are the author's reference windows, not official bell times.</li>
+      <li>Efron, B., &amp; Tibshirani, R. J. (1993). <em>An introduction to the bootstrap</em>. Chapman &amp; Hall. (Method for the confidence intervals; whole school days or census tracts are resampled.)</li>
+      <li>Software: pandas, Matplotlib, statsmodels (Seabold &amp; Perktold, 2010) and GeoPandas, in Python.</li>
+    </ol>
   </section>
 
 </main>
@@ -439,14 +458,25 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
             setStat('pm_minus_am_days', `${st.pm_minus_am.days_b_worse} of ${st.pm_minus_am.days}`); }
         }
       });
-      // Poorer vs. wealthier neighborhoods (only once stops are matched to census tracts).
-      if (d.neighborhoods && pm && pm.neighborhoods) {
+      // Where students most depend on the bus (only once stops are matched to census tracts).
+      if (d.neighborhoods && pm && pm.neighborhoods && all && all.neighborhoods) {
         $('neighborhoods').hidden = false;
-        [['am', d.neighborhoods], ['pm', pm.neighborhoods]].forEach(([k, n]) => {
-          setStat(`nb_${k}_high`, Math.round(n.high_poverty.pct) + '%'); setStat(`nb_${k}_high_ci`, '95% CI ' + n.high_poverty.display);
-          setStat(`nb_${k}_low`, Math.round(n.lower_poverty.pct) + '%'); setStat(`nb_${k}_low_ci`, '95% CI ' + n.lower_poverty.display);
+        const models = all.neighborhoods.models || {};
+        const rows = Object.keys(all.neighborhoods.groups).map(key => {
+          const g = (v, part) => v && v.neighborhoods.groups[key] ? v.neighborhoods.groups[key][part] : null;
+          const pct = x => x ? `${Math.round(x.pct)}% (${x.display})` : '—';
+          return {label: all.neighborhoods.groups[key].label,
+                  am: `${pct(g(d, 'high'))} vs. ${pct(g(d, 'rest'))}`,
+                  pm: `${pct(g(pm, 'high'))} vs. ${pct(g(pm, 'rest'))}`,
+                  gap: g(all, 'gap') ? g(all, 'gap').display : '—',
+                  model: models[key] ? models[key].display : '—'};
         });
-        if (all && all.neighborhoods && all.neighborhoods.model) setStat('nb_model', all.neighborhoods.model.display);
+        table($('need-table'), [
+          {key: 'label', label: 'Higher-need tracts', wrap: true},
+          {key: 'am', label: 'Morning: higher-need vs. rest', wrap: true},
+          {key: 'pm', label: 'Afternoon: higher-need vs. rest', wrap: true},
+          {key: 'gap', label: 'Gap, both commutes', wrap: true},
+          {key: 'model', label: 'Odds ratio, same route and time', wrap: true}], () => rows.slice());
         if (d.scope && d.scope.income_cuts) setStat('nb_cuts', d.scope.income_cuts.map(c => '$' + fmtN(c)).join(', '));
       }
       if (d.scope && d.scope.city_only) {
@@ -502,7 +532,9 @@ table.sc th{background:var(--md-black);color:var(--md-gold)}
     const card = f => {
       const pr = f.properties, st = (ts.tracts[pr.GEOID] || {})[view];
       const head = `<b>${pr.neighborhood || pr.name}</b><br>${pr.neighborhood ? `<small>${pr.name}</small><br>` : ''}Median household income: ${money(pr.median_household_income)}<br>` +
-                   `Below poverty line: ${pr.poverty_rate == null ? 'not reported' : pr.poverty_rate.toFixed(0) + '%'}<hr style="border-color:#444">`;
+                   `Below poverty line: ${pr.poverty_rate == null ? 'not reported' : pr.poverty_rate.toFixed(0) + '%'}<br>` +
+                   `Households with no car: ${pr.pct_no_vehicle == null ? 'not reported' : pr.pct_no_vehicle.toFixed(0) + '%'}<br>` +
+                   `Residents age 5 to 17: ${pr.pct_school_age == null ? 'not reported' : pr.pct_school_age.toFixed(0) + '%'}<hr style="border-color:#444">`;
       if (!st) return head + 'No timepoint stops measured here.';
       const body = `<span class="big">${st.pct_failed.toFixed(0)}%</span> canceled or 7+ min late<br>` +
         `On time: ${st.pct_on_time.toFixed(0)}% · Canceled: ${st.pct_canceled.toFixed(0)}%<br>` +

@@ -78,6 +78,7 @@ def load_raw():
 
 STOP_AREAS = ROOT / "data" / "reference" / "stop_areas.csv"
 INCOME_QUARTERS = ["Lowest income", "Lower middle", "Upper middle", "Highest income"]
+GROUPS_CUTS = {}  # city medians for the no-car and school-age comparisons, set by load_stop_areas
 
 
 def load_stop_areas():
@@ -91,6 +92,10 @@ def load_stop_areas():
     cuts = city["median_household_income"].quantile([0.25, 0.5, 0.75]).tolist()
     a["income_quarter"] = pd.cut(a["median_household_income"], [-np.inf, *cuts, np.inf], labels=INCOME_QUARTERS)
     a.attrs["income_cuts"] = cuts
+    # "High" no-car and school-age tracts: above the median of city tracts with stops.
+    for col in ("pct_no_vehicle", "pct_school_age"):
+        if col in a.columns:
+            GROUPS_CUTS[col] = float(city[col].median())
     return a
 
 
@@ -428,39 +433,96 @@ def strength(known, window):
 POVERTY_AREA = 20  # Census Bureau: a "poverty area" is a tract where 20%+ live below poverty
 
 
+def need_groups(k):
+    """Ways to pick out neighborhoods where students most depend on the bus.
+    Each returns a True/False flag per arrival (True = the higher-need tracts)."""
+    groups = {"poverty": ("Poverty areas (20%+ below the poverty line)", k["poverty_rate"] >= POVERTY_AREA)}
+    if "pct_no_vehicle" in GROUPS_CUTS:
+        groups["no_car"] = (f"More households without a car (above the city median, {GROUPS_CUTS['pct_no_vehicle']:.0f}%)",
+                            k["pct_no_vehicle"] >= GROUPS_CUTS["pct_no_vehicle"])
+    if "pct_school_age" in GROUPS_CUTS:
+        groups["kids"] = (f"More school-age children (above the city median, {GROUPS_CUTS['pct_school_age']:.0f}% of residents)",
+                          k["pct_school_age"] >= GROUPS_CUTS["pct_school_age"])
+    if len(groups) == 3:  # all three at once: where students most likely ride the bus
+        groups["all_three"] = ("All three: poverty area, more car-free homes and more school-age kids",
+                               groups["poverty"][1] & groups["no_car"][1] & groups["kids"][1])
+    return groups
+
+
+def tract_totals(k):
+    return k.groupby("tract_geoid")["failed"].agg(["sum", "count"])
+
+
+def boot_groups(hi, lo, rng_seed=SEED):
+    """Compare two sets of neighborhoods, resampling whole census tracts.
+
+    Here the thing that differs between the groups is the neighborhood, so the
+    honest unit of chance is the tract: stops in one tract share routes and
+    streets. (Resampling single buses or days would make the intervals far too
+    narrow and could 'find' a gap that is just a few unusual tracts.)"""
+    rng = np.random.default_rng(rng_seed)
+    def sims(d):
+        idx = rng.integers(0, len(d), (BOOT_N, len(d)))
+        return d["sum"].values[idx].sum(1) / d["count"].values[idx].sum(1) * 100
+    s_hi, s_lo = sims(hi), sims(lo)
+    rate = lambda d: d["sum"].sum() / d["count"].sum() * 100
+    part = lambda d, sm: {"pct": round(float(rate(d)), 1), "lo": round(float(np.percentile(sm, 2.5)), 1),
+                          "hi": round(float(np.percentile(sm, 97.5)), 1),
+                          "display": f"{np.percentile(sm, 2.5):.0f}% to {np.percentile(sm, 97.5):.0f}%"}
+    diff = rate(hi) - rate(lo)
+    lo_d, hi_d = np.percentile(s_hi - s_lo, [2.5, 97.5])
+    return part(hi, s_hi), part(lo, s_lo), {"diff": round(float(diff), 1), "lo": round(float(lo_d), 1),
+                                            "hi": round(float(hi_d), 1),
+                                            "display": f"{diff:+.0f} points (95% CI {lo_d:+.0f} to {hi_d:+.0f})"}
+
+
 def neighborhoods(known):
-    """Failure rate at stops in high-poverty tracts vs. the rest of the city,
+    """Failure rate in higher-need tracts vs. the rest of the city (95% intervals),
     plus by income quarter (four equal-sized groups of city tracts)."""
-    k = known.dropna(subset=["poverty_rate"])
-    high = k["poverty_rate"] >= POVERTY_AREA
-    hi_d, lo_d = day_totals(k[high], k.loc[high, "failed"]), day_totals(k[~high], k.loc[~high, "failed"])
-    out = {"high_poverty": {**boot_pct(hi_d), "arrivals": int(high.sum()), "stops": int(k.loc[high, "stop_id"].nunique())},
-           "lower_poverty": {**boot_pct(lo_d), "arrivals": int((~high).sum()), "stops": int(k.loc[~high, "stop_id"].nunique())},
-           "high_minus_lower": boot_diff(lo_d, hi_d)}
+    need = [c for c in ("poverty_rate", "pct_no_vehicle", "pct_school_age") if c in known.columns]
+    k = known.dropna(subset=need)
+    out = {"groups": {}, "cuts": {c: round(v, 1) for c, v in GROUPS_CUTS.items()}}
+    for key, (label, high) in need_groups(k).items():
+        if high.sum() < 1000 or (~high).sum() < 1000:
+            continue  # too few arrivals for a fair comparison
+        h, r, gap = boot_groups(tract_totals(k[high]), tract_totals(k[~high]))
+        out["groups"][key] = {"label": label,
+                              "high": {**h, "arrivals": int(high.sum()), "stops": int(k.loc[high, "stop_id"].nunique()),
+                                       "tracts": int(k.loc[high, "tract_geoid"].nunique())},
+                              "rest": {**r, "arrivals": int((~high).sum()), "stops": int(k.loc[~high, "stop_id"].nunique()),
+                                       "tracts": int(k.loc[~high, "tract_geoid"].nunique())},
+                              "gap": gap}
     q = k.dropna(subset=["income_quarter"])
     out["by_income_quarter"] = []
     for name in INCOME_QUARTERS:
         g = q[q["income_quarter"] == name]
         if len(g):
-            out["by_income_quarter"].append({"group": name, "arrivals": int(len(g)),
-                                             **boot_pct(day_totals(g, g["failed"]))})
+            h, _, _ = boot_groups(tract_totals(g), tract_totals(g))
+            out["by_income_quarter"].append({"group": name, "arrivals": int(len(g)), **h})
     return out
 
 
 def model(known):
-    """Logistic regression: is a bus in a high-poverty tract more likely to fail
-    once we compare stops on the same route, at the same commute and half hour?
-    Standard errors are clustered by school day (same reason as the bootstrap)."""
+    """Logistic regression for each higher-need group: are buses there more likely
+    to fail once we compare stops on the same route, in the same commute and half
+    hour? Standard errors are clustered by census tract."""
     import statsmodels.formula.api as smf
-    k = known.dropna(subset=["poverty_rate"]).assign(
-        y=lambda x: x["failed"].astype(int),
-        high_poverty=lambda x: (x["poverty_rate"] >= POVERTY_AREA).astype(int))
-    fit = smf.logit("y ~ high_poverty + C(route_name) + C(window) + C(half_hour)", data=k).fit(
-        disp=0, maxiter=200, cov_type="cluster", cov_kwds={"groups": pd.factorize(k["service_date"])[0]})
-    or_, (lo, hi) = np.exp(fit.params["high_poverty"]), np.exp(fit.conf_int().loc["high_poverty"])
-    return {"odds_ratio": round(float(or_), 2), "lo": round(float(lo), 2), "hi": round(float(hi), 2),
-            "p_value": float(fit.pvalues["high_poverty"]), "arrivals": int(len(k)),
-            "display": f"{or_:.2f} (95% CI {lo:.2f} to {hi:.2f})"}
+    need = [c for c in ("poverty_rate", "pct_no_vehicle", "pct_school_age") if c in known.columns]
+    k = known.dropna(subset=need).assign(y=lambda x: x["failed"].astype(int))
+    out = {}
+    for key, (label, high) in need_groups(k).items():
+        d = k.assign(high=high.astype(int))
+        if d["high"].sum() < 1000:
+            continue
+        fit = smf.logit("y ~ high + C(route_name) + C(window) + C(half_hour)", data=d).fit(
+            disp=0, maxiter=200, cov_type="cluster",
+            # Clustered by census tract: the neighborhood is what differs between the groups.
+            cov_kwds={"groups": pd.factorize(d["tract_geoid"])[0]})
+        or_, (lo, hi) = np.exp(fit.params["high"]), np.exp(fit.conf_int().loc["high"])
+        out[key] = {"label": label, "odds_ratio": round(float(or_), 2), "lo": round(float(lo), 2),
+                    "hi": round(float(hi), 2), "p_value": float(fit.pvalues["high"]),
+                    "display": f"{or_:.2f} (95% CI {lo:.2f} to {hi:.2f})"}
+    return out
 
 
 def draw_strength(rows_by_view, folder):
@@ -480,6 +542,36 @@ def draw_strength(rows_by_view, folder):
                  fontsize=13, fontweight="bold", loc="left", color=BLACK)
     plt.tight_layout()
     save(fig, folder / "project_c_strength.png")
+
+
+def draw_need(nb_am, nb_pm, folder):
+    """Higher-need neighborhoods vs. the rest of the city, morning and afternoon:
+    a dot for each rate with its 95% interval."""
+    keys = [k for k in ("poverty", "no_car", "kids", "all_three") if k in nb_am["groups"] and k in nb_pm["groups"]]
+    short = {"poverty": "Poverty areas", "no_car": "More car-free homes", "kids": "More school-age kids",
+             "all_three": "All three at once"}
+    fig, axes = plt.subplots(1, 2, figsize=(11, 1.2 + 0.9 * len(keys)), sharey=True)
+    for ax, nb, title in [(axes[0], nb_am, "Morning"), (axes[1], nb_pm, "Afternoon")]:
+        for i, key in enumerate(keys[::-1]):
+            g = nb["groups"][key]
+            for off, part, color, lab in [(0.15, "high", RED, "Higher-need tracts"), (-0.15, "rest", GOLD, "Rest of the city")]:
+                v = g[part]
+                ax.plot([v["lo"], v["hi"]], [i + off] * 2, color=BLACK, linewidth=2)
+                ax.plot(v["pct"], i + off, "o", color=color, markeredgecolor=BLACK, markersize=9,
+                        label=lab if i == 0 else None)
+                ax.text(v["hi"] + 1, i + off, f"{v['pct']:.0f}%", va="center", fontsize=9)
+        ax.set_yticks(range(len(keys)), [short[k] for k in keys[::-1]])
+        ax.set_xlim(0, 75)
+        ax.set_title(title, loc="left", fontweight="bold")
+        ax.set_xlabel("% canceled or 7+ min late (95% CI)")
+        style(ax)
+    axes[1].legend(frameon=False, loc="upper left", bbox_to_anchor=(1.0, 1.0))
+    fig.suptitle("Do buses fail more where students most depend on them?", x=0.01, ha="left",
+                 fontsize=13, fontweight="bold")
+    fig.text(0.01, 0.0, "Tracts compared by poverty rate (20%+ = Census poverty area), share of households with no "
+             "vehicle and share of residents age 5-17 (ACS 2019-2023).", fontsize=8.5, color="#555555")
+    plt.tight_layout(rect=(0, 0.04, 1, 0.95))
+    save(fig, folder / "project_c_need.png")
 
 
 def draw_neighborhoods(nb_am, nb_pm, folder):
@@ -503,7 +595,7 @@ def draw_neighborhoods(nb_am, nb_pm, folder):
     ax.set_title("Stops in poorer and wealthier Baltimore neighborhoods", fontsize=13, fontweight="bold",
                  loc="left", color=BLACK)
     fig.text(0.01, 0.01, "Neighborhood = census tract of the stop. Income: ACS 2019-2023 median household income. "
-             "Bars: 95% confidence intervals (resampling school days).", fontsize=8.5, color="#555555")
+             "Bars: 95% confidence intervals (resampling census tracts).", fontsize=8.5, color="#555555")
     plt.tight_layout(rect=(0, 0.05, 1, 1))
     save(fig, folder / "project_c_neighborhoods.png")
 
@@ -587,7 +679,7 @@ def measure(rows, window, stops, folder):
     if "poverty_rate" in known.columns:
         stats["neighborhoods"] = neighborhoods(known)
         if window == "all":
-            stats["neighborhoods"]["model"] = model(known)
+            stats["neighborhoods"]["models"] = model(known)
     return stats, table
 
 
@@ -602,8 +694,9 @@ def main(out):
     if areas is not None:
         rows["stop_id"] = rows["stop_id"].astype(str)
         before_stops, before_known = rows["stop_id"].nunique(), len(known_rows(rows))
-        rows = rows.merge(areas[["stop_id", "in_baltimore_city", "tract_geoid", "median_household_income",
-                                 "poverty_rate", "income_quarter"]], on="stop_id", how="left")
+        keep = ["stop_id", "in_baltimore_city", "tract_geoid", "median_household_income", "poverty_rate",
+                "income_quarter"] + [c for c in ("pct_no_vehicle", "pct_school_age") if c in areas.columns]
+        rows = rows.merge(areas[keep], on="stop_id", how="left")
         rows = rows[rows["in_baltimore_city"].fillna(False).astype(bool)].copy()
         if stops is not None:
             stops = stops[stops["stop_id"].astype(str).isin(rows["stop_id"])]
@@ -637,6 +730,7 @@ def main(out):
                        ("Afternoon", pm["strength"]["failed_ci"])], folder)
         if "neighborhoods" in stats:
             draw_neighborhoods(stats["neighborhoods"], pm["neighborhoods"], folder)
+            draw_need(stats["neighborhoods"], pm["neighborhoods"], folder)
 
     stats["scope"] = scope
     if scope["city_only"]:  # per-tract numbers for the hover map
