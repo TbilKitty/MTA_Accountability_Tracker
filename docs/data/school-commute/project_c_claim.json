@@ -3,160 +3,160 @@
     "on_time": {
       "label": "On time",
       "color": "#FFB81C",
-      "count": 56101,
-      "pct": 62.9,
-      "display": "63%"
+      "count": 40244,
+      "pct": 61.9,
+      "display": "62%"
     },
     "early": {
       "label": "Early (2+ min)",
       "color": "#C9C9C9",
-      "count": 5860,
-      "pct": 6.6,
-      "display": "7%"
+      "count": 3958,
+      "pct": 6.1,
+      "display": "6%"
     },
     "late": {
       "label": "Late (7 to 15 min)",
       "color": "#EE7D8B",
-      "count": 12329,
-      "pct": 13.8,
+      "count": 9429,
+      "pct": 14.5,
       "display": "14%"
     },
     "severely_late": {
       "label": "Very late (15+ min)",
       "color": "#C8102E",
-      "count": 3220,
-      "pct": 3.6,
+      "count": 2576,
+      "pct": 4.0,
       "display": "4%"
     },
     "canceled": {
       "label": "Canceled",
       "color": "#111111",
-      "count": 11619,
-      "pct": 13.0,
-      "display": "13%"
+      "count": 8826,
+      "pct": 13.6,
+      "display": "14%"
     }
   },
   "school_mornings": 14,
   "first_date": "2026-10-30",
   "last_date": "2026-11-20",
-  "scheduled_arrivals": 89129,
-  "pct_on_time": 62.9,
-  "pct_canceled_or_late": 30.5,
+  "scheduled_arrivals": 65033,
+  "pct_on_time": 61.9,
+  "pct_canceled_or_late": 32.0,
   "pct_on_time_by_half_hour": {
-    "6:00": 75.2,
-    "6:30": 72.2,
-    "7:00": 67.9,
-    "7:30": 60.2,
-    "8:00": 54.6,
-    "8:30": 53.7,
-    "9:00": 57.7
+    "6:00": 75.8,
+    "6:30": 72.7,
+    "7:00": 67.0,
+    "7:30": 59.3,
+    "8:00": 52.3,
+    "8:30": 51.7,
+    "9:00": 56.0
   },
   "display": {
-    "canceled_or_late": "30%",
-    "on_time": "63%",
-    "on_time_8_to_9": "54%",
-    "on_time_6": "75%"
+    "canceled_or_late": "32%",
+    "on_time": "62%",
+    "on_time_8_to_9": "52%",
+    "on_time_6": "76%"
   },
   "funnel": {
-    "scheduled": 109839,
+    "scheduled": 78988,
     "steps": [
       {
         "key": "canceled",
         "label": "Canceled by MTA",
-        "count": 11619,
-        "pct": 10.6
+        "count": 8826,
+        "pct": 11.2
       },
       {
         "key": "missing",
         "label": "Never showed up in MTA's live data",
-        "count": 928,
-        "pct": 0.8
+        "count": 695,
+        "pct": 0.9
       },
       {
         "key": "skipped",
         "label": "Stop skipped (flagged by MTA)",
-        "count": 1136,
-        "pct": 1.0
+        "count": 1055,
+        "pct": 1.3
       },
       {
         "key": "late",
         "label": "Late by more than 7 minutes",
-        "count": 15549,
-        "pct": 14.2
+        "count": 12005,
+        "pct": 15.2
       },
       {
         "key": "early",
         "label": "Left more than 2 minutes early",
-        "count": 5860,
-        "pct": 5.3
+        "count": 3958,
+        "pct": 5.0
       },
       {
         "key": "unverified",
         "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-        "count": 18646,
-        "pct": 17.0
+        "count": 12205,
+        "pct": 15.5
       }
     ],
-    "on_time": 56101,
-    "pct_on_time": 51.1,
+    "on_time": 40244,
+    "pct_on_time": 50.9,
     "display_on_time": "51%"
   },
   "drive_pasts": {
-    "visits": 659472,
-    "drove_past": 210252,
-    "pct_drove_past": 31.9,
-    "display": "32%"
+    "visits": 91511,
+    "drove_past": 14014,
+    "pct_drove_past": 15.3,
+    "display": "15%"
   },
   "by_day": {
-    "best_pct": 21.8,
-    "worst_pct": 38.9,
+    "best_pct": 23.3,
+    "worst_pct": 41.9,
     "display": {
-      "best": "22%",
-      "worst": "39%"
+      "best": "23%",
+      "worst": "42%"
     }
   },
   "regular_buses": {
-    "buses": 2052,
+    "buses": 1522,
     "min_days": 8,
-    "pct_on_time_every_day": 4.0,
-    "pct_failed_1_in_5_days": 70.9,
+    "pct_on_time_every_day": 3.5,
+    "pct_failed_1_in_5_days": 74.2,
     "display": {
-      "on_time_every_day": "4%",
-      "failed_1_in_5_days": "71%"
+      "on_time_every_day": "3%",
+      "failed_1_in_5_days": "74%"
     }
   },
   "lateness": {
-    "median_min": 10.4,
-    "p90_min": 18.7,
+    "median_min": 10.6,
+    "p90_min": 19.1,
     "display": {
-      "median": "10",
+      "median": "11",
       "p90": "19"
     }
   },
   "worst_routes": {
-    "routes_ranked": 63,
+    "routes_ranked": 50,
     "routes_40_plus": 8,
     "min_arrivals": 200,
     "top": [
       {
         "route": "120",
-        "pct_failed": 48.2
-      },
-      {
-        "route": "150",
-        "pct_failed": 47.7
-      },
-      {
-        "route": "CityLink LIME",
-        "pct_failed": 46.3
+        "pct_failed": 58.5
       },
       {
         "route": "40",
-        "pct_failed": 45.4
+        "pct_failed": 55.2
+      },
+      {
+        "route": "CityLink LIME",
+        "pct_failed": 49.1
       },
       {
         "route": "26",
-        "pct_failed": 44.6
+        "pct_failed": 45.1
+      },
+      {
+        "route": "CityLink RED",
+        "pct_failed": 43.8
       },
       {
         "route": "CityLink GOLD",
@@ -164,201 +164,347 @@
       },
       {
         "route": "CityLink BLUE",
-        "pct_failed": 42.4
-      },
-      {
-        "route": "CityLink RED",
-        "pct_failed": 42.3
+        "pct_failed": 43.2
       },
       {
         "route": "CityLink NAVY",
-        "pct_failed": 38.8
+        "pct_failed": 41.4
       },
       {
-        "route": "70",
-        "pct_failed": 37.6
+        "route": "CityLink BROWN",
+        "pct_failed": 39.9
+      },
+      {
+        "route": "56",
+        "pct_failed": 37.5
       }
     ]
   },
   "strength": {
     "failed_ci": {
-      "pct": 30.5,
-      "lo": 28.0,
-      "hi": 32.9,
-      "display": "28% to 33%"
+      "pct": 32.0,
+      "lo": 29.6,
+      "hi": 34.4,
+      "display": "30% to 34%"
     },
     "on_time_ci": {
-      "pct": 62.9,
-      "lo": 59.9,
-      "hi": 65.8,
-      "display": "60% to 66%"
+      "pct": 61.9,
+      "lo": 59.3,
+      "hi": 64.4,
+      "display": "59% to 64%"
     },
     "consistency": {
       "blocks": 92,
       "bar_pct": 20,
       "pct_blocks_at_or_above": 78.3,
-      "lowest_block_pct": 10.1,
+      "lowest_block_pct": 9.7,
       "display": "78%"
     },
     "bell_on_time_ci": {
-      "pct": 54.2,
-      "lo": 51.0,
-      "hi": 57.2,
-      "display": "51% to 57%"
+      "pct": 52.0,
+      "lo": 48.8,
+      "hi": 55.3,
+      "display": "49% to 55%"
     }
   },
-  "pct_on_time_8_to_9": 54.2,
+  "neighborhoods": {
+    "groups": {
+      "poverty": {
+        "label": "Poverty areas (20%+ below the poverty line)",
+        "high": {
+          "pct": 33.5,
+          "lo": 31.2,
+          "hi": 35.6,
+          "display": "31% to 36%",
+          "arrivals": 31870,
+          "stops": 186,
+          "tracts": 63
+        },
+        "rest": {
+          "pct": 30.6,
+          "lo": 28.6,
+          "hi": 32.2,
+          "display": "29% to 32%",
+          "arrivals": 33163,
+          "stops": 181,
+          "tracts": 68
+        },
+        "gap": {
+          "diff": 2.9,
+          "lo": 0.1,
+          "hi": 5.9,
+          "display": "+3 points (95% CI +0 to +6)"
+        }
+      },
+      "no_car": {
+        "label": "More households without a car (above the city median, 27%)",
+        "high": {
+          "pct": 33.7,
+          "lo": 32.1,
+          "hi": 35.2,
+          "display": "32% to 35%",
+          "arrivals": 41048,
+          "stops": 211,
+          "tracts": 65
+        },
+        "rest": {
+          "pct": 29.3,
+          "lo": 27.4,
+          "hi": 31.2,
+          "display": "27% to 31%",
+          "arrivals": 23985,
+          "stops": 156,
+          "tracts": 66
+        },
+        "gap": {
+          "diff": 4.4,
+          "lo": 1.9,
+          "hi": 6.9,
+          "display": "+4 points (95% CI +2 to +7)"
+        }
+      },
+      "kids": {
+        "label": "More school-age children (above the city median, 15% of residents)",
+        "high": {
+          "pct": 31.6,
+          "lo": 29.7,
+          "hi": 33.6,
+          "display": "30% to 34%",
+          "arrivals": 30531,
+          "stops": 180,
+          "tracts": 65
+        },
+        "rest": {
+          "pct": 32.4,
+          "lo": 30.2,
+          "hi": 34.2,
+          "display": "30% to 34%",
+          "arrivals": 34502,
+          "stops": 187,
+          "tracts": 66
+        },
+        "gap": {
+          "diff": -0.8,
+          "lo": -3.5,
+          "hi": 2.2,
+          "display": "-1 points (95% CI -3 to +2)"
+        }
+      },
+      "all_three": {
+        "label": "All three: poverty area, more car-free homes and more school-age kids",
+        "high": {
+          "pct": 34.5,
+          "lo": 32.3,
+          "hi": 37.2,
+          "display": "32% to 37%",
+          "arrivals": 14004,
+          "stops": 76,
+          "tracts": 22
+        },
+        "rest": {
+          "pct": 31.4,
+          "lo": 29.7,
+          "hi": 32.9,
+          "display": "30% to 33%",
+          "arrivals": 51029,
+          "stops": 291,
+          "tracts": 109
+        },
+        "gap": {
+          "diff": 3.1,
+          "lo": 0.5,
+          "hi": 6.3,
+          "display": "+3 points (95% CI +1 to +6)"
+        }
+      }
+    },
+    "cuts": {
+      "pct_no_vehicle": 27.2,
+      "pct_school_age": 14.8
+    },
+    "by_income_quarter": [
+      {
+        "group": "Lowest income",
+        "arrivals": 15157,
+        "pct": 32.8,
+        "lo": 29.8,
+        "hi": 35.9,
+        "display": "30% to 36%"
+      },
+      {
+        "group": "Lower middle",
+        "arrivals": 18577,
+        "pct": 32.8,
+        "lo": 29.9,
+        "hi": 35.6,
+        "display": "30% to 36%"
+      },
+      {
+        "group": "Upper middle",
+        "arrivals": 22110,
+        "pct": 31.3,
+        "lo": 28.6,
+        "hi": 33.0,
+        "display": "29% to 33%"
+      },
+      {
+        "group": "Highest income",
+        "arrivals": 9031,
+        "pct": 30.8,
+        "lo": 27.8,
+        "hi": 33.8,
+        "display": "28% to 34%"
+      }
+    ]
+  },
+  "pct_on_time_8_to_9": 52.0,
   "afternoon": {
     "breakdown": {
       "on_time": {
         "label": "On time",
         "color": "#FFB81C",
-        "count": 38364,
-        "pct": 45.1,
-        "display": "45%"
+        "count": 27686,
+        "pct": 43.6,
+        "display": "44%"
       },
       "early": {
         "label": "Early (2+ min)",
         "color": "#C9C9C9",
-        "count": 4935,
+        "count": 3693,
         "pct": 5.8,
         "display": "6%"
       },
       "late": {
         "label": "Late (7 to 15 min)",
         "color": "#EE7D8B",
-        "count": 14308,
-        "pct": 16.8,
-        "display": "17%"
+        "count": 11269,
+        "pct": 17.7,
+        "display": "18%"
       },
       "severely_late": {
         "label": "Very late (15+ min)",
         "color": "#C8102E",
-        "count": 7072,
-        "pct": 8.3,
-        "display": "8%"
+        "count": 5582,
+        "pct": 8.8,
+        "display": "9%"
       },
       "canceled": {
         "label": "Canceled",
         "color": "#111111",
-        "count": 20342,
-        "pct": 23.9,
+        "count": 15329,
+        "pct": 24.1,
         "display": "24%"
       }
     },
     "school_afternoons": 13,
     "first_date": "2026-11-02",
     "last_date": "2026-11-20",
-    "scheduled_arrivals": 85021,
-    "pct_on_time": 45.1,
-    "pct_canceled_or_late": 49.1,
+    "scheduled_arrivals": 63559,
+    "pct_on_time": 43.6,
+    "pct_canceled_or_late": 50.6,
     "pct_on_time_by_half_hour": {
-      "2:00": 56.4,
-      "2:30": 46.4,
-      "3:00": 47.3,
-      "3:30": 44.2,
-      "4:00": 42.9,
-      "4:30": 42.1,
-      "5:00": 42.5
+      "2:00": 54.6,
+      "2:30": 43.9,
+      "3:00": 45.6,
+      "3:30": 42.8,
+      "4:00": 41.9,
+      "4:30": 40.8,
+      "5:00": 40.9
     },
     "display": {
-      "canceled_or_late": "49%",
-      "on_time": "45%",
-      "on_time_3_to_4": "46%",
-      "on_time_2": "56%"
+      "canceled_or_late": "51%",
+      "on_time": "44%",
+      "on_time_3_to_4": "44%",
+      "on_time_2": "55%"
     },
     "funnel": {
-      "scheduled": 106054,
+      "scheduled": 77805,
       "steps": [
         {
           "key": "canceled",
           "label": "Canceled by MTA",
-          "count": 20342,
-          "pct": 19.2
+          "count": 15329,
+          "pct": 19.7
         },
         {
           "key": "missing",
           "label": "Never showed up in MTA's live data",
-          "count": 1179,
+          "count": 867,
           "pct": 1.1
         },
         {
           "key": "skipped",
           "label": "Stop skipped (flagged by MTA)",
-          "count": 1185,
-          "pct": 1.1
+          "count": 1104,
+          "pct": 1.4
         },
         {
           "key": "late",
           "label": "Late by more than 7 minutes",
-          "count": 21380,
-          "pct": 20.2
+          "count": 16851,
+          "pct": 21.7
         },
         {
           "key": "early",
           "label": "Left more than 2 minutes early",
-          "count": 4935,
+          "count": 3693,
           "pct": 4.7
         },
         {
           "key": "unverified",
           "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-          "count": 18669,
-          "pct": 17.6
+          "count": 12275,
+          "pct": 15.8
         }
       ],
-      "on_time": 38364,
-      "pct_on_time": 36.2,
+      "on_time": 27686,
+      "pct_on_time": 35.6,
       "display_on_time": "36%"
     },
     "drive_pasts": {
-      "visits": 604805,
-      "drove_past": 155286,
-      "pct_drove_past": 25.7,
-      "display": "26%"
+      "visits": 87492,
+      "drove_past": 10538,
+      "pct_drove_past": 12.0,
+      "display": "12%"
     },
     "by_day": {
-      "best_pct": 36.3,
-      "worst_pct": 62.3,
+      "best_pct": 38.0,
+      "worst_pct": 62.2,
       "display": {
-        "best": "36%",
+        "best": "38%",
         "worst": "62%"
       }
     },
     "regular_buses": {
-      "buses": 2141,
+      "buses": 1638,
       "min_days": 8,
-      "pct_on_time_every_day": 2.2,
-      "pct_failed_1_in_5_days": 76.1,
+      "pct_on_time_every_day": 1.8,
+      "pct_failed_1_in_5_days": 77.2,
       "display": {
         "on_time_every_day": "2%",
-        "failed_1_in_5_days": "76%"
+        "failed_1_in_5_days": "77%"
       }
     },
     "lateness": {
-      "median_min": 12.1,
-      "p90_min": 22.8,
+      "median_min": 12.2,
+      "p90_min": 22.6,
       "display": {
         "median": "12",
         "p90": "23"
       }
     },
     "worst_routes": {
-      "routes_ranked": 61,
-      "routes_40_plus": 47,
+      "routes_ranked": 49,
+      "routes_40_plus": 40,
       "min_arrivals": 200,
       "top": [
         {
           "route": "53",
-          "pct_failed": 64.4
+          "pct_failed": 64.6
         },
         {
           "route": "CityLink RED",
-          "pct_failed": 63.0
-        },
-        {
-          "route": "70",
-          "pct_failed": 61.3
+          "pct_failed": 62.9
         },
         {
           "route": "82",
@@ -370,7 +516,11 @@
         },
         {
           "route": "CityLink BLUE",
-          "pct_failed": 58.5
+          "pct_failed": 59.7
+        },
+        {
+          "route": "77",
+          "pct_failed": 59.0
         },
         {
           "route": "95",
@@ -381,203 +531,365 @@
           "pct_failed": 57.6
         },
         {
-          "route": "34",
-          "pct_failed": 57.3
+          "route": "26",
+          "pct_failed": 56.2
         },
         {
-          "route": "92",
-          "pct_failed": 57.0
+          "route": "CityLink GOLD",
+          "pct_failed": 56.1
         }
       ]
     },
     "strength": {
       "failed_ci": {
-        "pct": 49.1,
-        "lo": 45.7,
-        "hi": 52.5,
-        "display": "46% to 53%"
+        "pct": 50.6,
+        "lo": 47.1,
+        "hi": 54.1,
+        "display": "47% to 54%"
       },
       "on_time_ci": {
-        "pct": 45.1,
-        "lo": 42.1,
-        "hi": 48.0,
-        "display": "42% to 48%"
+        "pct": 43.6,
+        "lo": 40.7,
+        "hi": 46.5,
+        "display": "41% to 47%"
       },
       "consistency": {
         "blocks": 91,
         "bar_pct": 20,
         "pct_blocks_at_or_above": 100.0,
-        "lowest_block_pct": 26.3,
+        "lowest_block_pct": 29.6,
         "display": "100%"
       },
       "bell_on_time_ci": {
-        "pct": 45.7,
-        "lo": 42.9,
-        "hi": 48.3,
-        "display": "43% to 48%"
+        "pct": 44.2,
+        "lo": 41.5,
+        "hi": 46.8,
+        "display": "41% to 47%"
       }
     },
-    "pct_on_time_3_to_4": 45.7
+    "neighborhoods": {
+      "groups": {
+        "poverty": {
+          "label": "Poverty areas (20%+ below the poverty line)",
+          "high": {
+            "pct": 51.0,
+            "lo": 49.3,
+            "hi": 52.8,
+            "display": "49% to 53%",
+            "arrivals": 30985,
+            "stops": 198,
+            "tracts": 67
+          },
+          "rest": {
+            "pct": 50.3,
+            "lo": 48.5,
+            "hi": 52.7,
+            "display": "48% to 53%",
+            "arrivals": 32574,
+            "stops": 208,
+            "tracts": 70
+          },
+          "gap": {
+            "diff": 0.7,
+            "lo": -2.4,
+            "hi": 3.2,
+            "display": "+1 points (95% CI -2 to +3)"
+          }
+        },
+        "no_car": {
+          "label": "More households without a car (above the city median, 27%)",
+          "high": {
+            "pct": 50.0,
+            "lo": 48.8,
+            "hi": 51.8,
+            "display": "49% to 52%",
+            "arrivals": 39748,
+            "stops": 231,
+            "tracts": 70
+          },
+          "rest": {
+            "pct": 51.6,
+            "lo": 49.2,
+            "hi": 53.9,
+            "display": "49% to 54%",
+            "arrivals": 23811,
+            "stops": 175,
+            "tracts": 67
+          },
+          "gap": {
+            "diff": -1.6,
+            "lo": -4.3,
+            "hi": 1.4,
+            "display": "-2 points (95% CI -4 to +1)"
+          }
+        },
+        "kids": {
+          "label": "More school-age children (above the city median, 15% of residents)",
+          "high": {
+            "pct": 50.9,
+            "lo": 49.3,
+            "hi": 52.8,
+            "display": "49% to 53%",
+            "arrivals": 30142,
+            "stops": 200,
+            "tracts": 67
+          },
+          "rest": {
+            "pct": 50.3,
+            "lo": 48.7,
+            "hi": 52.8,
+            "display": "49% to 53%",
+            "arrivals": 33417,
+            "stops": 206,
+            "tracts": 70
+          },
+          "gap": {
+            "diff": 0.6,
+            "lo": -2.3,
+            "hi": 3.0,
+            "display": "+1 points (95% CI -2 to +3)"
+          }
+        },
+        "all_three": {
+          "label": "All three: poverty area, more car-free homes and more school-age kids",
+          "high": {
+            "pct": 50.5,
+            "lo": 48.6,
+            "hi": 52.9,
+            "display": "49% to 53%",
+            "arrivals": 13753,
+            "stops": 82,
+            "tracts": 24
+          },
+          "rest": {
+            "pct": 50.7,
+            "lo": 49.2,
+            "hi": 52.4,
+            "display": "49% to 52%",
+            "arrivals": 49806,
+            "stops": 324,
+            "tracts": 113
+          },
+          "gap": {
+            "diff": -0.2,
+            "lo": -2.8,
+            "hi": 2.7,
+            "display": "-0 points (95% CI -3 to +3)"
+          }
+        }
+      },
+      "cuts": {
+        "pct_no_vehicle": 27.2,
+        "pct_school_age": 14.8
+      },
+      "by_income_quarter": [
+        {
+          "group": "Lowest income",
+          "arrivals": 14437,
+          "pct": 51.3,
+          "lo": 49.1,
+          "hi": 54.0,
+          "display": "49% to 54%"
+        },
+        {
+          "group": "Lower middle",
+          "arrivals": 18305,
+          "pct": 50.6,
+          "lo": 48.6,
+          "hi": 52.9,
+          "display": "49% to 53%"
+        },
+        {
+          "group": "Upper middle",
+          "arrivals": 21252,
+          "pct": 49.5,
+          "lo": 47.0,
+          "hi": 53.0,
+          "display": "47% to 53%"
+        },
+        {
+          "group": "Highest income",
+          "arrivals": 9388,
+          "pct": 52.0,
+          "lo": 48.9,
+          "hi": 54.9,
+          "display": "49% to 55%"
+        }
+      ]
+    },
+    "pct_on_time_3_to_4": 44.2
   },
   "overall": {
     "breakdown": {
       "on_time": {
         "label": "On time",
         "color": "#FFB81C",
-        "count": 94465,
-        "pct": 54.2,
-        "display": "54%"
+        "count": 67930,
+        "pct": 52.8,
+        "display": "53%"
       },
       "early": {
         "label": "Early (2+ min)",
         "color": "#C9C9C9",
-        "count": 10795,
-        "pct": 6.2,
+        "count": 7651,
+        "pct": 5.9,
         "display": "6%"
       },
       "late": {
         "label": "Late (7 to 15 min)",
         "color": "#EE7D8B",
-        "count": 26637,
-        "pct": 15.3,
-        "display": "15%"
+        "count": 20698,
+        "pct": 16.1,
+        "display": "16%"
       },
       "severely_late": {
         "label": "Very late (15+ min)",
         "color": "#C8102E",
-        "count": 10292,
-        "pct": 5.9,
+        "count": 8158,
+        "pct": 6.3,
         "display": "6%"
       },
       "canceled": {
         "label": "Canceled",
         "color": "#111111",
-        "count": 31961,
-        "pct": 18.4,
-        "display": "18%"
+        "count": 24155,
+        "pct": 18.8,
+        "display": "19%"
       }
     },
     "school_days": 14,
     "first_date": "2026-10-30",
     "last_date": "2026-11-20",
-    "scheduled_arrivals": 174150,
-    "pct_on_time": 54.2,
-    "pct_canceled_or_late": 39.6,
+    "scheduled_arrivals": 128592,
+    "pct_on_time": 52.8,
+    "pct_canceled_or_late": 41.2,
     "pct_on_time_by_half_hour": {
-      "6:00 AM": 75.2,
-      "6:30 AM": 72.2,
-      "7:00 AM": 67.9,
-      "7:30 AM": 60.2,
-      "8:00 AM": 54.6,
-      "8:30 AM": 53.7,
-      "9:00 AM": 57.7,
-      "2:00 PM": 56.4,
-      "2:30 PM": 46.4,
-      "3:00 PM": 47.3,
-      "3:30 PM": 44.2,
-      "4:00 PM": 42.9,
-      "4:30 PM": 42.1,
-      "5:00 PM": 42.5
+      "6:00 AM": 75.8,
+      "6:30 AM": 72.7,
+      "7:00 AM": 67.0,
+      "7:30 AM": 59.3,
+      "8:00 AM": 52.3,
+      "8:30 AM": 51.7,
+      "9:00 AM": 56.0,
+      "2:00 PM": 54.6,
+      "2:30 PM": 43.9,
+      "3:00 PM": 45.6,
+      "3:30 PM": 42.8,
+      "4:00 PM": 41.9,
+      "4:30 PM": 40.8,
+      "5:00 PM": 40.9
     },
     "display": {
-      "canceled_or_late": "40%",
-      "on_time": "54%"
+      "canceled_or_late": "41%",
+      "on_time": "53%"
     },
     "funnel": {
-      "scheduled": 215893,
+      "scheduled": 156793,
       "steps": [
         {
           "key": "canceled",
           "label": "Canceled by MTA",
-          "count": 31961,
-          "pct": 14.8
+          "count": 24155,
+          "pct": 15.4
         },
         {
           "key": "missing",
           "label": "Never showed up in MTA's live data",
-          "count": 2107,
+          "count": 1562,
           "pct": 1.0
         },
         {
           "key": "skipped",
           "label": "Stop skipped (flagged by MTA)",
-          "count": 2321,
-          "pct": 1.1
+          "count": 2159,
+          "pct": 1.4
         },
         {
           "key": "late",
           "label": "Late by more than 7 minutes",
-          "count": 36929,
-          "pct": 17.1
+          "count": 28856,
+          "pct": 18.4
         },
         {
           "key": "early",
           "label": "Left more than 2 minutes early",
-          "count": 10795,
-          "pct": 5.0
+          "count": 7651,
+          "pct": 4.9
         },
         {
           "key": "unverified",
           "label": "Couldn't confirm the time (GPS gap or fuzzy estimate)",
-          "count": 37315,
-          "pct": 17.3
+          "count": 24480,
+          "pct": 15.6
         }
       ],
-      "on_time": 94465,
-      "pct_on_time": 43.8,
-      "display_on_time": "44%"
+      "on_time": 67930,
+      "pct_on_time": 43.3,
+      "display_on_time": "43%"
     },
     "drive_pasts": {
-      "visits": 1264277,
-      "drove_past": 365538,
-      "pct_drove_past": 28.9,
-      "display": "29%"
+      "visits": 179003,
+      "drove_past": 24552,
+      "pct_drove_past": 13.7,
+      "display": "14%"
     },
     "by_day": {
-      "best_pct": 21.8,
-      "worst_pct": 62.3,
+      "best_pct": 23.3,
+      "worst_pct": 62.2,
       "display": {
-        "best": "22%",
+        "best": "23%",
         "worst": "62%"
       }
     },
     "regular_buses": {
-      "buses": 4193,
+      "buses": 3160,
       "min_days": 8,
-      "pct_on_time_every_day": 3.1,
-      "pct_failed_1_in_5_days": 73.6,
+      "pct_on_time_every_day": 2.6,
+      "pct_failed_1_in_5_days": 75.8,
       "display": {
         "on_time_every_day": "3%",
-        "failed_1_in_5_days": "74%"
+        "failed_1_in_5_days": "76%"
       }
     },
     "lateness": {
-      "median_min": 11.2,
-      "p90_min": 21.2,
+      "median_min": 11.4,
+      "p90_min": 21.1,
       "display": {
         "median": "11",
         "p90": "21"
       }
     },
     "worst_routes": {
-      "routes_ranked": 62,
-      "routes_40_plus": 22,
+      "routes_ranked": 51,
+      "routes_40_plus": 21,
       "min_arrivals": 400,
       "top": [
         {
           "route": "CityLink RED",
-          "pct_failed": 52.5
+          "pct_failed": 53.3
         },
         {
-          "route": "26",
-          "pct_failed": 50.7
+          "route": "40",
+          "pct_failed": 51.8
         },
         {
           "route": "CityLink BLUE",
-          "pct_failed": 50.7
+          "pct_failed": 51.8
         },
         {
           "route": "CityLink LIME",
+          "pct_failed": 51.6
+        },
+        {
+          "route": "26",
+          "pct_failed": 50.9
+        },
+        {
+          "route": "53",
+          "pct_failed": 50.1
+        },
+        {
+          "route": "120",
           "pct_failed": 50.0
         },
         {
@@ -585,59 +897,240 @@
           "pct_failed": 49.9
         },
         {
-          "route": "53",
-          "pct_failed": 49.0
-        },
-        {
-          "route": "70",
-          "pct_failed": 48.3
-        },
-        {
-          "route": "40",
-          "pct_failed": 45.2
+          "route": "CityLink ORANGE",
+          "pct_failed": 45.1
         },
         {
           "route": "94",
           "pct_failed": 45.1
-        },
-        {
-          "route": "CityLink ORANGE",
-          "pct_failed": 44.7
         }
       ]
     },
     "strength": {
       "failed_ci": {
-        "pct": 39.6,
-        "lo": 37.0,
-        "hi": 42.1,
-        "display": "37% to 42%"
+        "pct": 41.2,
+        "lo": 38.6,
+        "hi": 43.6,
+        "display": "39% to 44%"
       },
       "on_time_ci": {
-        "pct": 54.2,
-        "lo": 51.8,
-        "hi": 56.7,
-        "display": "52% to 57%"
+        "pct": 52.8,
+        "lo": 50.6,
+        "hi": 55.1,
+        "display": "51% to 55%"
       },
       "consistency": {
         "blocks": 183,
         "bar_pct": 20,
         "pct_blocks_at_or_above": 89.1,
-        "lowest_block_pct": 10.1,
+        "lowest_block_pct": 9.7,
         "display": "89%"
       },
       "pm_minus_am": {
-        "diff": 18.6,
-        "lo": 16.0,
-        "hi": 21.4,
+        "diff": 18.7,
+        "lo": 15.9,
+        "hi": 21.6,
         "days": 13,
         "days_b_worse": 13,
-        "display": "+19 points (95% CI +16 to +21)"
+        "display": "+19 points (95% CI +16 to +22)"
+      }
+    },
+    "neighborhoods": {
+      "groups": {
+        "poverty": {
+          "label": "Poverty areas (20%+ below the poverty line)",
+          "high": {
+            "pct": 42.1,
+            "lo": 40.5,
+            "hi": 43.8,
+            "display": "40% to 44%",
+            "arrivals": 62855,
+            "stops": 209,
+            "tracts": 67
+          },
+          "rest": {
+            "pct": 40.4,
+            "lo": 39.0,
+            "hi": 41.6,
+            "display": "39% to 42%",
+            "arrivals": 65737,
+            "stops": 218,
+            "tracts": 71
+          },
+          "gap": {
+            "diff": 1.7,
+            "lo": -0.4,
+            "hi": 3.8,
+            "display": "+2 points (95% CI -0 to +4)"
+          }
+        },
+        "no_car": {
+          "label": "More households without a car (above the city median, 27%)",
+          "high": {
+            "pct": 41.7,
+            "lo": 40.5,
+            "hi": 43.3,
+            "display": "41% to 43%",
+            "arrivals": 80796,
+            "stops": 242,
+            "tracts": 70
+          },
+          "rest": {
+            "pct": 40.4,
+            "lo": 38.6,
+            "hi": 42.2,
+            "display": "39% to 42%",
+            "arrivals": 47796,
+            "stops": 185,
+            "tracts": 68
+          },
+          "gap": {
+            "diff": 1.3,
+            "lo": -0.9,
+            "hi": 3.6,
+            "display": "+1 points (95% CI -1 to +4)"
+          }
+        },
+        "kids": {
+          "label": "More school-age children (above the city median, 15% of residents)",
+          "high": {
+            "pct": 41.2,
+            "lo": 39.7,
+            "hi": 42.8,
+            "display": "40% to 43%",
+            "arrivals": 60673,
+            "stops": 214,
+            "tracts": 68
+          },
+          "rest": {
+            "pct": 41.2,
+            "lo": 39.8,
+            "hi": 42.9,
+            "display": "40% to 43%",
+            "arrivals": 67919,
+            "stops": 213,
+            "tracts": 70
+          },
+          "gap": {
+            "diff": 0.0,
+            "lo": -2.3,
+            "hi": 2.1,
+            "display": "+0 points (95% CI -2 to +2)"
+          }
+        },
+        "all_three": {
+          "label": "All three: poverty area, more car-free homes and more school-age kids",
+          "high": {
+            "pct": 42.4,
+            "lo": 40.8,
+            "hi": 44.7,
+            "display": "41% to 45%",
+            "arrivals": 27757,
+            "stops": 88,
+            "tracts": 24
+          },
+          "rest": {
+            "pct": 40.9,
+            "lo": 39.7,
+            "hi": 42.2,
+            "display": "40% to 42%",
+            "arrivals": 100835,
+            "stops": 339,
+            "tracts": 114
+          },
+          "gap": {
+            "diff": 1.5,
+            "lo": -0.7,
+            "hi": 4.2,
+            "display": "+1 points (95% CI -1 to +4)"
+          }
+        }
+      },
+      "cuts": {
+        "pct_no_vehicle": 27.2,
+        "pct_school_age": 14.8
+      },
+      "by_income_quarter": [
+        {
+          "group": "Lowest income",
+          "arrivals": 29594,
+          "pct": 41.8,
+          "lo": 39.3,
+          "hi": 44.6,
+          "display": "39% to 45%"
+        },
+        {
+          "group": "Lower middle",
+          "arrivals": 36882,
+          "pct": 41.6,
+          "lo": 39.7,
+          "hi": 43.8,
+          "display": "40% to 44%"
+        },
+        {
+          "group": "Upper middle",
+          "arrivals": 43362,
+          "pct": 40.2,
+          "lo": 38.2,
+          "hi": 42.1,
+          "display": "38% to 42%"
+        },
+        {
+          "group": "Highest income",
+          "arrivals": 18419,
+          "pct": 41.6,
+          "lo": 39.3,
+          "hi": 43.7,
+          "display": "39% to 44%"
+        }
+      ],
+      "models": {
+        "poverty": {
+          "label": "Poverty areas (20%+ below the poverty line)",
+          "odds_ratio": 0.96,
+          "lo": 0.89,
+          "hi": 1.04,
+          "p_value": 0.35949245673466224,
+          "display": "0.96 (95% CI 0.89 to 1.04)"
+        },
+        "no_car": {
+          "label": "More households without a car (above the city median, 27%)",
+          "odds_ratio": 1.02,
+          "lo": 0.93,
+          "hi": 1.12,
+          "p_value": 0.6487895422947974,
+          "display": "1.02 (95% CI 0.93 to 1.12)"
+        },
+        "kids": {
+          "label": "More school-age children (above the city median, 15% of residents)",
+          "odds_ratio": 0.98,
+          "lo": 0.91,
+          "hi": 1.05,
+          "p_value": 0.5365381362970307,
+          "display": "0.98 (95% CI 0.91 to 1.05)"
+        },
+        "all_three": {
+          "label": "All three: poverty area, more car-free homes and more school-age kids",
+          "odds_ratio": 0.95,
+          "lo": 0.87,
+          "hi": 1.03,
+          "p_value": 0.20526824417395484,
+          "display": "0.95 (95% CI 0.87 to 1.03)"
+        }
       }
     }
   },
   "scope": {
-    "city_only": false
+    "city_only": true,
+    "stops_kept": 434,
+    "stops_before": 615,
+    "arrivals_kept": 128592,
+    "arrivals_before": 174150,
+    "income_cuts": [
+      43227,
+      60313,
+      79113
+    ]
   },
   "school_days": 14
 }
