@@ -1,29 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Morning MTA bus disruptions and poverty in Baltimore City | Project C</title>
+<title>Findings &amp; Map: morning MTA bus disruptions and poverty in Baltimore City | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
+<link href="./project-c.css" rel="stylesheet"/>
 <style>
-.hero.pc-hero:not(.calculator-hero){min-height:0}
-.pc-hero .hero-inner{padding-block:clamp(2.5rem,5vw,4.25rem)}
-.pc-hero .hero-inner h1{font-size:clamp(2rem,4.6vw,3.8rem);max-width:22ch}
-.pc-wrap{width:min(1060px,100%);margin:0 auto;padding:30px 16px 60px}
-.pc-section{margin:0 0 28px}
-.pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
-.pc-section h3{color:var(--navy);margin:22px 0 6px;font-size:1.1rem}
-.pc-section p,.pc-section li{line-height:1.7;color:#243b52}
-.pc-claim{font-size:1.15rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 14px}
-.pc-support{border-left:5px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 14px}
-.pc-note{font-size:.92rem;color:#4a5a6c}
-.pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
-.pc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table.pc-table{border-collapse:collapse;width:100%;font-size:.93rem;font-variant-numeric:tabular-nums}
-table.pc-table caption{text-align:left;font-size:.9rem;color:#4a5a6c;padding:0 0 8px}
-table.pc-table th,table.pc-table td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line)}
-table.pc-table thead th{background:#f3efe4;color:var(--navy)}
-table.pc-table td.num{text-align:right;white-space:nowrap}
-.pc-callout{background:#fff8e8;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;padding:16px 20px}
-.pc-callout h2{font-size:1.3rem}.pc-callout p{margin:.5em 0}
-.pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
 /* Interactive neighborhood map (moved here from the separate map page). */
 #city-map button{color:var(--navy);padding:.4em 1em;border:2px solid var(--navy);background:#fff;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;min-height:40px}
 #city-map button[aria-pressed=true]{background:var(--navy);color:#fff}
@@ -49,6 +29,7 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
 #city-map .metrics div{border-left:3px solid var(--gold);padding-left:9px}
 #city-map .metrics dt{font-size:.83rem;color:#3f5167}
 #city-map .metrics dd{margin:0;font:700 1.3rem/1.3 'Libre Baskerville',Georgia,serif;color:var(--navy)}
+#city-map .metrics small{display:block;font-size:.78rem;line-height:1.35;color:#4a5a6c}
 #city-map .counts{padding-top:8px;font-size:.88rem}#city-map small{display:block}
 #city-map .comparison-scroll{overflow-x:auto}
 #city-map .comparison-scroll table{width:100%;border-collapse:collapse;font-size:.9rem}
@@ -58,6 +39,15 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
 #city-map .map-loading{padding:40px 0;text-align:center;color:#4a5a6c}
 </style></head>
 <body>
+
+<nav class="site-nav pc-nav" aria-label="Project C pages">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>Project C · MTA school commute tracker</a>
+  <div class="pc-tabs">
+    <a href="./" aria-current="page">Findings &amp; Map</a>
+    <a href="./routes.html">Explore Routes &amp; Stops</a>
+    <a href="./accountability.html">MTA Accountability</a>
+  </div>
+</nav>
 
 <header class="hero pc-hero"><div class="hero-inner">
   <div class="eyebrow">Project C · Data Science for Lawyers</div>
@@ -88,35 +78,67 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
     <div class="pc-controls"><label for="tract-select" class="lbl">Add a neighborhood</label><select id="tract-select"><option value="">Select a neighborhood</option></select><button id="clear-selected" type="button">Clear selected</button></div>
     <div class="maps combined" id="maps"><p class="map-loading">Loading the map…</p></div>
     <p id="overlay-note" class="pc-note"></p>
+    <details class="pc-how" open>
+      <summary>How to read this map</summary>
+      <dl class="pc-defs">
+        <dt>Commute</dt>
+        <dd>Morning counts buses scheduled at a stop from 6:00 to 9:30 a.m. on school days, Afternoon from 2:00 to 5:30 p.m., and Both combines the two.</dd>
+        <dt>Color, bus reliability layer</dt>
+        <dd>The disruption rate at the neighborhood’s timepoint stops: the share of classified stop events canceled or more than 7 minutes late, from pale gold (under 30%) to black (60% or more). Gray means fewer than 20 classified events, too few to rate, or no timepoint stops.</dd>
+        <dt>Poverty</dt>
+        <dd>An estimate of the share of the neighborhood’s residents whose household income is below the federal poverty threshold. In the side-by-side view its own map uses the same five colors (under 10% to 40% or more); gray means no estimate.</dd>
+        <dt>Vehicle access</dt>
+        <dd>An estimate of the share of the neighborhood’s households that have no car, van or truck available. In the side-by-side view its own map uses the same five colors (under 10% to 40% or more); gray means no estimate.</dd>
+        <dt>Stripes and dots (combined map)</dt>
+        <dd>Stripes mark neighborhoods where an estimated 30% or more of residents are below the poverty threshold; dots mark those where 40% or more of households have no vehicle.</dd>
+        <dt>About the estimates</dt>
+        <dd>Poverty and vehicle figures come from Census survey estimates for tracts (ACS 2020–2024), shared out to neighborhoods by area, so they are approximate and describe everyone living there, not the people riding the bus.</dd>
+      </dl>
+    </details>
     <div class="pc-panels">
       <div class="pc-box" aria-live="polite"><h3 id="tract-title">Citywide</h3><div id="tract"></div></div>
       <div class="pc-box"><h3>Selected neighborhoods</h3><div class="comparison-scroll" id="comparison">Select neighborhoods on the map to compare their figures.</div></div>
     </div>
+    <p class="pc-note">For figures by bus route and stop, including missing vehicle records and possible drive-pasts, see <a href="./routes.html">Explore Routes &amp; Stops</a>.</p>
   </section>
 
-  <!-- 3. ONE EVIDENCE TABLE -->
+  <!-- 3. ONE EVIDENCE TABLE. Rows, gap directions, the worked example and the matched-comparison
+       sentence are rewritten from neighborhood_map.json; the text here is the Oct 30 to Nov 20 snapshot. -->
   <section class="pc-section" id="evidence">
     <h2>Evidence: morning and afternoon, by tract group</h2>
+    <p class="pc-note">Each percentage is a <strong>disruption rate</strong>: the share of classified stop events that were canceled or more than 7 minutes late.</p>
     <div class="pc-scroll"><table class="pc-table">
-      <caption>Share of classified stop events canceled or more than 7 minutes late, <span id="evidence-dates">October 30 – November 20, 2026</span></caption>
-      <thead><tr><th scope="col">Tract comparison</th><th scope="col">Commute</th><th scope="col">Highest quarter</th><th scope="col">Lowest quarter</th><th scope="col">Difference</th><th scope="col">Same route and school date</th></tr></thead>
+      <caption>Disruption rate at Baltimore City bus stops, <span id="evidence-dates">October 30 – November 20, 2026</span></caption>
+      <thead><tr><th scope="col">Tracts ranked by</th><th scope="col">Commute</th><th scope="col" class="num">Highest 25% of tracts</th><th scope="col" class="num">Lowest 25% of tracts</th><th scope="col" class="num">Gap between groups</th><th scope="col" class="num">Gap on the same routes and dates</th></tr></thead>
       <tbody id="evidence-rows">
-        <tr><th scope="row" rowspan="2">Poverty rate</th><td>Morning</td><td class="num">34.0%</td><td class="num">28.0%</td><td class="num">+6.0 pts</td><td class="num">+3.1 pts</td></tr>
-        <tr><td>Afternoon</td><td class="num">51.0%</td><td class="num">53.7%</td><td class="num">−2.8 pts</td><td class="num">−3.1 pts</td></tr>
-        <tr><th scope="row" rowspan="2">Households without a vehicle</th><td>Morning</td><td class="num">35.6%</td><td class="num">27.9%</td><td class="num">+7.6 pts</td><td class="num">+3.7 pts</td></tr>
-        <tr><td>Afternoon</td><td class="num">51.1%</td><td class="num">50.1%</td><td class="num">+1.0 pts</td><td class="num">−0.7 pts</td></tr>
+        <tr><th scope="row" rowspan="2">Poverty rate</th><td>Morning</td><td class="num">34.0%</td><td class="num">28.0%</td><td class="num">6.0 points higher</td><td class="num">3.1 points higher</td></tr>
+        <tr><td>Afternoon</td><td class="num">51.0%</td><td class="num">53.7%</td><td class="num">2.8 points lower</td><td class="num">3.1 points lower</td></tr>
+        <tr><th scope="row" rowspan="2">Households without a vehicle</th><td>Morning</td><td class="num">35.6%</td><td class="num">27.9%</td><td class="num">7.6 points higher</td><td class="num">3.7 points higher</td></tr>
+        <tr><td>Afternoon</td><td class="num">51.1%</td><td class="num">50.1%</td><td class="num">1.0 points higher</td><td class="num">0.7 points lower</td></tr>
       </tbody>
     </table></div>
+    <p class="pc-note">“Higher” or “lower” always describes the highest 25% of tracts compared with the lowest 25%.</p>
+    <p><strong>Worked example.</strong> <span id="worked-example">34.0% versus 28.0% is a gap of 6.0 percentage points, or about six more disruptions per 100 classified stop events.</span></p>
     <p id="evidence-note">The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted slightly less often than in the lowest-poverty tracts.</p>
-    <p><strong>Same route and school date.</strong> <span id="gap-text">On the same routes and school dates, cancellations and delays over seven minutes were 3.1 percentage points more common at stops in the highest-poverty tracts than in the lowest-poverty tracts.</span></p>
+    <details class="pc-how" open>
+      <summary>How to read this table</summary>
+      <dl class="pc-defs">
+        <dt>Highest 25% and lowest 25% of tracts</dt>
+        <dd>Baltimore City census tracts are ranked twice, once by poverty rate and once by the share of households without a vehicle; these columns show the disruption rate at bus stops in the top quarter and the bottom quarter of each ranking.</dd>
+        <dt>Classified stop event</dt>
+        <dd>One scheduled bus trip at one timepoint stop whose outcome the tracker could determine: on time (2 minutes early to 7 minutes late), more than 2 minutes early, more than 7 minutes late, or canceled in MTA’s feed. Missing vehicle records, skipped stops, untracked periods and timings the tracker could not pin down are left out. One bus trip passes several stops, so it can add several events.</dd>
+        <dt>Gap between groups</dt>
+        <dd>The highest-25% rate minus the lowest-25% rate, in percentage points, across all classified events in that commute.</dd>
+        <dt>Gap on the same routes and dates</dt>
+        <dd>This compares stops in the two groups on the same bus route and school date, within the same commute window. <span id="gap-text">For morning poverty, the gap is 6.0 points across all classified events and 3.1 points in that matched comparison.</span></dd>
+        <dt>Rounding</dt>
+        <dd>Gaps are computed from unrounded rates, so subtracting the rates shown can differ from the gap by 0.1 point.</dd>
+      </dl>
+    </details>
   </section>
 
-  <!-- 3b. POLICY CALLOUT -->
-  <aside class="pc-section pc-callout" id="measure-next" aria-labelledby="measure-next-title">
-    <h2 id="measure-next-title">What Baltimore could measure next</h2>
-    <p>Maryland law requires fare-free transit for eligible Baltimore City public school students for covered activities between 5 a.m. and 8 p.m. The statute sets no punctuality or school-arrival standard. This tracker measures disruptions at bus stops, leaving open how often those disruptions make students late to class. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Md. Code Ann., Transp. § 7–710(a)(1), (b)(1), and (c)</a></p>
-    <p>MTA and City Schools could report three things together: whether scheduled buses ran, whether they served key school-route stops on time, and whether students reached school before the first bell. WMATA reports missed trips separately from punctuality. New York City requires reporting on whether a reported school-bus delay prevented arrival at school. Baltimore could adapt both approaches to see which bus disruptions affect access to class. <span class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://intro.nyc/local-laws/2019-34">NYC Administrative Code § 21-994</a></span></p>
-  </aside>
+  <!-- 3b. Link to the accountability page (the law and reporting material lives there now). -->
+  <p class="pc-section pc-next" id="measure-next"><a href="./accountability.html">See what MTA and City Schools could measure, disclose, and change.</a></p>
 
   <!-- 4. BRIEF METHODS AND SOURCES -->
   <section class="pc-section" id="methods">
@@ -137,11 +159,6 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       <li>U.S. Census Bureau. <em>American Community Survey 5-year estimates, 2020–2024</em>: <a href="https://data.census.gov/table/ACSDT5Y2024.B17001">B17001, poverty status</a>; <a href="https://data.census.gov/table/ACSDT5Y2024.B08201">B08201, vehicles available</a>.</li>
       <li>U.S. Census Bureau. <em>TIGER/Line shapefiles, 2024: Maryland census tracts</em>. <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract">https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract</a></li>
       <li>City of Baltimore. <em>CityView neighborhood boundaries</em>. <a href="https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer">https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer</a></li>
-      <li>Md. Code Ann., Transp. § 7–710. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf</a>; COMAR 11.06.05, Baltimore City student transit. <a href="https://regs.maryland.gov/us/md/exec/comar/11.06.05">https://regs.maryland.gov/us/md/exec/comar/11.06.05</a></li>
-      <li>Washington Metropolitan Area Transit Authority. (2025). <em>Service Excellence Report FY25 measure definitions</em>. <a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf</a></li>
-      <li>N.Y.C. Admin. Code § 21-994, <em>Reporting on school bus delays</em> (added by Local Law 34 of 2019): the Department of Education reports each vendor-reported school-bus delay, including “whether or not the delay resulted in the failure to arrive at school.” <a href="https://intro.nyc/local-laws/2019-34">https://intro.nyc/local-laws/2019-34</a></li>
-      <li>City of New York, Office of Pupil Transportation. <em>Bus breakdown and delays</em> [Data set]. NYC Open Data. <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">https://catalog.data.gov/dataset/bus-breakdown-and-delays</a></li>
-      <li>Baltimore City Public Schools. <em>2026–27 student transit program</em>. <a href="https://www.baltimorecityschools.org/article/3080724">https://www.baltimorecityschools.org/article/3080724</a></li>
     </ol>
   </section>
 
@@ -164,7 +181,6 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
   }
   const $ = id => document.getElementById(id);
   const pct = v => v == null ? '—' : v.toFixed(1) + '%';
-  const pts = v => v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + ' pts';
   const dateLabel = iso => new Intl.DateTimeFormat('en-US', {month:'long', day:'numeric', year:'numeric', timeZone:'UTC'}).format(new Date(iso + 'T00:00:00Z'));
   const sameYear = data.dates.first.slice(0, 4) === data.dates.last.slice(0, 4);
   const dates = (sameYear ? dateLabel(data.dates.first).replace(/, \d{4}$/, '') : dateLabel(data.dates.first)) + ' – ' + dateLabel(data.dates.last);
@@ -191,23 +207,30 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       pct(veh.am.low) + ' in those with the lowest share.';
   }
 
-  // ---- 3. Evidence table (morning and afternoon for both comparisons).
+  // ---- 3. Evidence table (morning and afternoon for both comparisons). Gaps use unrounded rates.
+  const gapWords = v => v == null ? '—' : Math.abs(v) < 0.05 ? 'no gap' : Math.abs(v).toFixed(1) + ' points ' + (v > 0 ? 'higher' : 'lower');
   const rows = [];
   for (const [label, eq] of [['Poverty rate', pov], ['Households without a vehicle', veh]]) {
     ['am', 'pm'].forEach((w, i) => {
       const g = eq[w], d = g.high != null && g.low != null ? g.high - g.low : null;
       rows.push('<tr>' + (i === 0 ? '<th scope="row" rowspan="2">' + label + '</th>' : '') + '<td>' + (w === 'am' ? 'Morning' : 'Afternoon') +
-        '</td><td class="num">' + pct(g.high) + '</td><td class="num">' + pct(g.low) + '</td><td class="num">' + pts(d) +
-        '</td><td class="num">' + pts(eq['matched_' + w]) + '</td></tr>');
+        '</td><td class="num">' + pct(g.high) + '</td><td class="num">' + pct(g.low) + '</td><td class="num">' + gapWords(d) +
+        '</td><td class="num">' + gapWords(eq['matched_' + w]) + '</td></tr>');
     });
   }
   $('evidence-rows').innerHTML = rows.join('');
   const amSign = Math.sign(pov.am.high - pov.am.low), pmSign = Math.sign(pov.pm.high - pov.pm.low);
-  const mg = pov.matched_am;
-  if (mg != null) $('gap-text').textContent = Math.abs(mg) < 0.05
-    ? 'On the same routes and school dates, cancellations and delays over seven minutes were about equally common at stops in the highest-poverty and lowest-poverty tracts.'
-    : 'On the same routes and school dates, cancellations and delays over seven minutes were ' + Math.abs(mg).toFixed(1) + ' percentage points ' + (mg > 0 ? 'more' : 'less') +
-      ' common at stops in the highest-poverty tracts than in the lowest-poverty tracts.';
+  const amGap = pov.am.high - pov.am.low, mg = pov.matched_am;
+  const spelled = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  const per100 = Math.round(Math.abs(amGap));
+  $('worked-example').textContent = pct(pov.am.high) + ' versus ' + pct(pov.am.low) + ' is a gap of ' + Math.abs(amGap).toFixed(1) +
+    ' percentage points, or about ' + (spelled[per100] || per100) + ' ' + (amGap >= 0 ? 'more' : 'fewer') + ' disruptions per 100 classified stop events.';
+  if (mg != null) {
+    // Plain "6.0 points" when both gaps point the usual way (highest quarter higher); otherwise say the direction.
+    const plain = amGap >= 0 && (mg >= 0 || Math.abs(mg) < 0.05);
+    const say = v => plain ? Math.abs(v).toFixed(1) + ' points' : gapWords(v);
+    $('gap-text').textContent = 'For morning poverty, the gap is ' + say(amGap) + ' across all classified events and ' + say(mg) + ' in that matched comparison.';
+  }
   $('evidence-note').textContent = amSign && pmSign && amSign !== pmSign
     ? 'The poverty gap reversed in the afternoon: buses at stops in the highest-poverty tracts were disrupted ' + (pmSign < 0 ? 'less' : 'more') + ' often than in the lowest-poverty tracts (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').'
     : 'In the afternoon the poverty gap ran in the same direction as in the morning (' + pct(pov.pm.high) + ' vs. ' + pct(pov.pm.low) + ').';
@@ -220,20 +243,20 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
   const select = $('tract-select');
   const colors = ['#FFF1CC','#FFB81C','#EE7D8B','#C8102E','#111111'];
   const layers = {
-    service: {edges:[30,40,50,60], missing:'Fewer than 20 classified events or no data'},
-    vehicles: {edges:[10,20,30,40], missing:'No estimate'},
-    poverty: {edges:[10,20,30,40], missing:'No estimate'}
+    service: {edges:[30,40,50,60], missing:'Gray · fewer than 20 classified events, or no timepoint stops', title:'Color · disruption rate (canceled or >7 min late)'},
+    vehicles: {edges:[10,20,30,40], missing:'Gray · no estimate', title:'Color · estimated households without a vehicle'},
+    poverty: {edges:[10,20,30,40], missing:'Gray · no estimate', title:'Color · estimated residents below poverty'}
   };
   const activeLayers = new Set(['service', 'vehicles', 'poverty']);
   let layout = 'combined';
   const overlays = {
-    poverty: {pattern:'stripes', threshold:30, label:'Stripes · 30% or more of people below the poverty threshold'},
-    vehicles: {pattern:'dots', threshold:40, label:'Dots · 40% or more of households without a vehicle'}
+    poverty: {pattern:'stripes', threshold:30, label:'Stripes · an estimated 30% or more of residents below the poverty threshold'},
+    vehicles: {pattern:'dots', threshold:40, label:'Dots · an estimated 40% or more of households without a vehicle'}
   };
   const layerNames = {service:'Bus reliability', vehicles:'Households without a vehicle', poverty:'People below the poverty threshold'};
   const gray = '#d9d3d2';
   const number = new Intl.NumberFormat('en-US');
-  const timing = v => { if (v == null) return '—'; const m = Math.abs(v).toFixed(1); return m === '0.0' ? '0.0 min' : m + (v > 0 ? ' min late' : ' min early'); };
+  const timing = v => { if (v == null) return '—'; const m = Math.abs(v).toFixed(1); return m === '0.0' ? 'on schedule on average' : m + (v > 0 ? ' minutes late' : ' minutes early') + ' on average'; };
   const tractName = id => data.names[id];
   const windowName = {all:'both commutes', am:'morning commute', pm:'afternoon commute'};
   let windowKey = 'am';
@@ -244,12 +267,16 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
 
   function metrics(m) {
     if (!m) return '<p>No scheduled stop events here in this window.</p>';
-    const values = [['Canceled or >7 min late', pct(m.failed)], ['On time among classified', pct(m.on)],
-      ['Average vs. schedule', timing(m.avg)], ['Classified events', number.format(m.n)]];
-    return '<dl class="metrics">' + values.map(([l, v]) => '<div><dt>' + l + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>' +
-      '<p class="counts">' + number.format(m.cancel) + ' canceled · ' + number.format(m.late) + ' >7 min late · ' +
-      number.format(m.early) + ' >2 min early · ' + number.format(m.skipped) + ' skipped · ' +
-      number.format(m.missing) + ' missing vehicle records · ' + number.format(m.unclassified) + ' unclassified</p>';
+    const onCount = Math.round(m.on * m.n / 100);
+    const values = [
+      ['Disruption rate', pct(m.failed), number.format(m.cancel + m.late) + ' of ' + number.format(m.n) + ' classified stop events canceled or >7 min late'],
+      ['On time', pct(m.on), number.format(onCount) + ' of ' + number.format(m.n) + ' classified events within 2 min early to 7 min late'],
+      ['Average timing', timing(m.avg), 'buses that ran; early buses count as negative minutes'],
+      ['Classified stop events', number.format(m.n), 'one scheduled trip at one timepoint stop, with a known outcome']];
+    return '<dl class="metrics">' + values.map(([l, v, d]) => '<div><dt>' + l + '</dt><dd>' + v + '</dd><small>' + d + '</small></div>').join('') + '</dl>' +
+      '<p class="counts">In the rate: ' + number.format(m.cancel) + ' canceled · ' + number.format(m.late) + ' >7 min late · ' +
+      number.format(m.early) + ' >2 min early. Left out: ' + number.format(m.missing) + ' missing vehicle records · ' + number.format(m.skipped) + ' skipped · ' +
+      number.format(m.unclassified) + ' timings the tracker could not pin down.</p>';
   }
   function tract(id) {
     const title = $('tract-title'), panel = $('tract');
@@ -262,8 +289,8 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
     const m = data[windowKey].tracts[id];
     const {poverty, vehicles} = data.demographics[id] || {};
     panel.innerHTML = metrics(m) + (m && m.n < 20 ? '<p><small>Small sample: shown for context and left unshaded on the map.</small></p>' : '') +
-      '<dl class="metrics" style="margin-top:12px"><div><dt>Households without a vehicle</dt><dd>' + pct(vehicles) + '</dd></div>' +
-      '<div><dt>People below poverty</dt><dd>' + pct(poverty) + '</dd></div></dl><p><small>Approximate neighborhood estimates from the 2020–2024 ACS.</small></p>';
+      '<dl class="metrics" style="margin-top:12px"><div><dt>Households without a vehicle</dt><dd>' + pct(vehicles) + '</dd><small>estimated share of households with no car, van or truck</small></div>' +
+      '<div><dt>Residents below poverty</dt><dd>' + pct(poverty) + '</dd><small>estimated share of residents below the federal poverty threshold</small></div></dl><p><small>Approximate neighborhood estimates from the 2020–2024 ACS.</small></p>';
   }
   function renderSelection() {
     for (const panel of panels.values()) for (const path of panel.paths) {
@@ -279,7 +306,7 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
     if (!selected.size) { target.textContent = 'Select neighborhoods on the map to compare their figures.'; return; }
     const table = document.createElement('table');
     const head = table.createTHead().insertRow();
-    for (const label of ['Neighborhood', 'Canceled or >7 min late', 'Without a vehicle', 'Below poverty', 'Events', '']) {
+    for (const label of ['Neighborhood', 'Disruption rate', 'Households without a vehicle (est.)', 'Residents below poverty (est.)', 'Classified events', '']) {
       const th = document.createElement('th'); th.scope = 'col'; th.textContent = label; head.append(th);
     }
     const body = table.createTBody();
@@ -363,9 +390,9 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       const combined = layer === 'combined';
       const showColor = !combined || activeLayers.has('service');
       const measure = combined ? 'service' : layer;
-      const {edges, missing} = layers[measure];
+      const {edges, missing, title} = layers[measure];
       const bins = ['Under ' + edges[0] + '%', ...edges.slice(1).map((n, i) => edges[i] + '–<' + n + '%'), edges.at(-1) + '% or more', missing];
-      panel.legend.innerHTML = showColor ? (combined ? '<span><strong>Color · canceled or >7 min late</strong></span>' : '') +
+      panel.legend.innerHTML = showColor ? '<span><strong>' + title + '</strong></span>' +
         bins.map((t, i) => '<span><i class="swatch" style="background:' + (colors[i] || gray) + '"></i>' + t + '</span>').join('') : '';
       for (const [key, group] of Object.entries(panel.patterns)) {
         group.style.display = activeLayers.has(key) ? '' : 'none';
