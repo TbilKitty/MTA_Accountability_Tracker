@@ -1,0 +1,90 @@
+/* Project C pages (Findings & Map, Explore Routes & Stops, MTA Accountability).
+   Loaded after baltimore-theme.css; the standalone UBalt copies inline both files. */
+.hero.pc-hero:not(.calculator-hero){min-height:0}
+.pc-hero .hero-inner{padding-block:clamp(2.5rem,5vw,4.25rem)}
+.pc-hero .hero-inner h1{font-size:clamp(2rem,4.6vw,3.8rem);max-width:22ch}
+.pc-wrap{width:min(1060px,100%);margin:0 auto;padding:30px 16px 60px}
+.pc-section{margin:0 0 28px}
+.pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
+.pc-section h3{color:var(--navy);margin:22px 0 6px;font-size:1.1rem}
+.pc-section p,.pc-section li{line-height:1.7;color:#243b52}
+.pc-claim{font-size:1.15rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 14px}
+.pc-support{border-left:5px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 14px}
+.pc-note{font-size:.92rem;color:#4a5a6c}
+.pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
+.pc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.pc-table{border-collapse:collapse;width:100%;font-size:.93rem;font-variant-numeric:tabular-nums}
+table.pc-table caption{text-align:left;font-size:.9rem;color:#4a5a6c;padding:0 0 8px}
+table.pc-table th,table.pc-table td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+table.pc-table thead th{background:#f3efe4;color:var(--navy)}
+table.pc-table td.num,table.pc-table th.num{text-align:right;white-space:nowrap}
+.pc-callout{background:#fff8e8;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;padding:16px 20px}
+.pc-callout h2{font-size:1.3rem}.pc-callout p{margin:.5em 0}
+.pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
+.pc-next{font-weight:600;border-left:5px solid var(--gold);padding:6px 0 6px 16px}
+
+/* Shared navigation bar: always visible, current page marked. */
+.site-nav.pc-nav{position:sticky;top:0;z-index:20;padding-top:10px;padding-bottom:10px;gap:10px 20px}
+.pc-nav .brand{text-decoration:none}
+.pc-tabs{display:flex;gap:6px;flex-wrap:wrap;font-size:.93rem}
+.pc-tabs a{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:44px;padding:6px 14px;border-radius:10px;border:2px solid transparent;color:#fff;font-weight:700;text-decoration:none;line-height:1.25}
+.pc-tabs a:hover{color:#ffd97b;text-decoration:none;border-color:rgba(255,196,78,.55)}
+.pc-tabs a[aria-current=page]{background:var(--gold);color:#092644;border-color:var(--gold)}
+.pc-tabs a[aria-current=page]:hover{color:#092644}
+.pc-tabs a:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:720px){
+  .site-nav.pc-nav{padding:8px 10px;flex-direction:column;align-items:stretch}
+  .pc-nav .brand{font-size:.92rem;text-align:center}
+  .pc-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;font-size:.8rem}
+  .pc-tabs a{padding:5px 6px;min-height:46px}
+}
+html{scroll-padding-top:120px}
+
+/* Controls shared by the map and the route explorer. */
+.pc-controls{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center}
+.pc-controls .lbl{font-size:.85rem;font-weight:700;color:#3f5167;margin-right:4px}
+.pc-btn,.pc-controls button{color:var(--navy);padding:.4em 1em;border:2px solid var(--navy);background:#fff;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;min-height:40px}
+.pc-controls button[aria-pressed=true]{background:var(--navy);color:#fff}
+.pc-controls select,.pc-controls input[type=search]{font:inherit;max-width:100%;padding:.4em .6em;border:1px solid #c9ccd0;border-radius:8px;min-height:40px;background:#fff}
+.pc-controls input[type=search]{min-width:min(100%,240px)}
+
+/* Route and stop explorer. */
+.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0 4px}
+.pc-stats div{border-left:3px solid var(--gold);padding-left:10px}
+.pc-stats dt{font-size:.83rem;color:#3f5167}
+.pc-stats dd{margin:0;font:700 1.35rem/1.3 'Libre Baskerville',Georgia,serif;color:var(--navy)}
+.pc-stats dd small{display:block;font:500 .78rem/1.4 'DM Sans',system-ui,sans-serif;color:#4a5a6c}
+table.pc-table.explore{font-size:.86rem}
+table.pc-table.explore th,table.pc-table.explore td{padding:.5rem .45rem}
+table.pc-table.explore td{white-space:nowrap}
+table.pc-table.explore td.wrap{white-space:normal;min-width:11rem}
+table.pc-table.explore th:first-child,table.pc-table.explore td:first-child{position:sticky;left:0;z-index:1;background:#fff;box-shadow:1px 0 0 var(--line)}
+table.pc-table.explore thead th:first-child{background:#f3efe4}
+table.pc-table.explore tr.is-selected,table.pc-table.explore tr.is-selected td:first-child{background:#fff4d6}
+table.pc-table.explore tr.small td{color:#5f6b78}
+table.pc-table.explore tr.small td.rate{font-style:italic}
+.pc-route-btn{background:none;border:0;padding:0;font:inherit;font-weight:700;color:#155e87;text-decoration:underline;cursor:pointer;text-align:left}
+.pc-flag{display:inline-block;font-size:.76rem;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.pc-flag.small{background:#ececec;color:#3d4650;border:1px dashed #8a939c}
+.pc-flag.recurring{background:#fde3e6;color:#8c0b20}
+.pc-flag.limited{background:#fff1cc;color:#6b4b00}
+.pc-sub{display:block;font-size:.78rem;color:#4a5a6c}
+.pc-more{margin-top:10px}
+.pc-defs dt{font-weight:700;color:var(--navy);margin-top:12px}
+.pc-defs dd{margin:2px 0 0 0;line-height:1.65;color:#243b52}
+
+/* Accountability page. */
+.pc-qnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;padding:0;list-style:none}
+.pc-qnav a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
+.pc-q{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:#87351d;margin:0 0 4px}
+.pc-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:14px;margin:14px 0 18px}
+.pc-compare article{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fffefa}
+.pc-compare h4{margin:0 0 6px;color:var(--navy);font-size:1rem}
+.pc-compare p{margin:.35em 0;font-size:.93rem}
+.pc-figure{font:700 1.2rem/1.3 'Libre Baskerville',Georgia,serif;color:var(--navy)}
+.pc-proposal{background:#fffdf6;border:2px solid var(--navy);border-radius:14px;padding:18px 22px;margin:16px 0}
+.pc-proposal h3{margin-top:0;font-family:'Libre Baskerville',Georgia,serif;font-size:1.25rem}
+.pc-proposal .pc-label{display:inline-block;background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:6px;margin:0 0 10px}
+.pc-proposal .statute p{font-family:Georgia,serif;margin:.6em 0}
+.pc-proposal .statute .i1{padding-left:1.6em}
+.pc-proposal .pc-tie{border-top:1px solid var(--line);padding-top:10px;margin-top:14px;font-weight:600;color:var(--navy)}

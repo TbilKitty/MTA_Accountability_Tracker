@@ -10,6 +10,8 @@ The notebook writes a standalone map page. The website shows the map inside
 docs/index.html instead, so this script keeps two pieces of that page:
   docs/data/school-commute/neighborhood_map.json  (the map data and claim figures)
   docs/data/school-commute/neighborhood_map.svg   (the drawn neighborhood shapes)
+and the notebook's route and stop tables (Boxes 22-23) for docs/routes.html:
+  docs/data/school-commute/routes_stops.json
 docs/baltimore-city-map.html is now only a redirect to the map section.
 """
 import json
@@ -44,7 +46,9 @@ maps = page[page.index('id="maps"'):]
 svg = maps[maps.index("<svg"):maps.index("</svg>") + len("</svg>")]
 svg = svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ', 1) if "xmlns=" not in svg[:200] else svg
 out = repo / "docs/data/school-commute"
-for name, text in [("neighborhood_map.json", data), ("neighborhood_map.svg", svg)]:
+routes = (work / "Baltimore_City_MTA_Routes_Stops.json").read_text()
+json.loads(routes)                        # must be valid JSON
+for name, text in [("neighborhood_map.json", data), ("neighborhood_map.svg", svg), ("routes_stops.json", routes)]:
     tmp = out / (name + ".tmp")
     tmp.write_text(text)
     tmp.replace(out / name)

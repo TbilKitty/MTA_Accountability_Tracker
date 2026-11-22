@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
+<title>MTA Accountability: what MTA and City Schools could measure, disclose, and change | Project C</title>
+<link href="./baltimore-theme.css" rel="stylesheet"/>
+<link href="./project-c.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="site-nav pc-nav" aria-label="Project C pages">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>Project C · MTA school commute tracker</a>
+  <div class="pc-tabs">
+    <a href="./">Findings &amp; Map</a>
+    <a href="./routes.html">Explore Routes &amp; Stops</a>
+    <a href="./accountability.html" aria-current="page">MTA Accountability</a>
+  </div>
+</nav>
+
+<header class="hero pc-hero"><div class="hero-inner">
+  <div class="eyebrow">Project C · Data Science for Lawyers</div>
+  <h1>What MTA and City Schools could measure, disclose, and change</h1>
+  <div class="gold-line"></div>
+  <p>Maryland requires fare-free transit for eligible Baltimore City students, but no one is required to report whether that service gets them to school on time. This page asks four questions about closing that gap.</p>
+</div></header>
+
+<main class="pc-wrap">
+
+  <ul class="pc-qnav" aria-label="Questions on this page">
+    <li><a href="#required">1. What is required today?</a></li>
+    <li><a href="#evidence">2. What does our evidence show?</a></li>
+    <li><a href="#records">3. What records would help?</a></li>
+    <li><a href="#change">4. What could change?</a></li>
+  </ul>
+
+  <!-- 1. WHAT IS REQUIRED TODAY -->
+  <section class="pc-section" id="required">
+    <p class="pc-q">Question 1</p>
+    <h2>What is required today?</h2>
+    <h3>The student transit statute: fare-free rides, no arrival standard</h3>
+    <p>Maryland Transportation § 7–710 requires MTA to provide rides on its transit vehicles to eligible Baltimore City public school students (§ 7–710(a)(1)). The service covers school-related and educational extracurricular activities, on and off campus, between 5 a.m. and 8 p.m. (§ 7–710(b)(1)). MTA may not collect fees or reimbursement for these rides (§ 7–710(c)), which is what makes them fare-free. MTA, City Schools and the Mayor’s Office of Employment Development set student eligibility by regulation (§ 7–710(d); COMAR 11.06.05). The same section also covers Baltimore City YouthWorks summer job participants.</p>
+    <p><strong>The statute sets no arrival-before-the-bell standard.</strong> It does not set a punctuality target for the buses students ride, and it does not require MTA or City Schools to report how well that service gets students to school. Its last subsection is (d).</p>
+    <h3>MTA’s own punctuality measure, a separate thing</h3>
+    <p>MTA counts a local bus as on time when it reaches a scheduled timepoint from two minutes early to seven minutes late, and it sets an 80% on-time goal for core bus service. This is an agency performance measure, not a requirement of § 7–710. It describes buses at timepoints across the whole network, not students getting to school. The tracker uses the same two-early, seven-late window.</p>
+    <p class="pc-note"><a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Maryland Transportation § 7–710</a> · <a href="https://www.mta.maryland.gov/performance-improvement">MTA performance measures</a></p>
+  </section>
+
+  <!-- 2. WHAT DOES OUR EVIDENCE SHOW. The sentence is refreshed from neighborhood_map.json (same data as the Findings & Map page). -->
+  <section class="pc-section" id="evidence">
+    <p class="pc-q">Question 2</p>
+    <h2>What does our evidence show?</h2>
+    <p class="pc-claim" id="gap-sentence">On the same routes and school dates, morning MTA bus stop events in Baltimore City’s highest-poverty census tracts were canceled or more than seven minutes late 3.1 percentage points more often than in the lowest-poverty tracts (October 30 – November 20, 2026).</p>
+    <p>The tracker observes bus stop events: whether a scheduled bus reached a timepoint stop, how early or late, and whether MTA’s feed marked the trip canceled. It cannot see riders. It cannot establish that any student was late, that instruction was missed, or that the law was violated, and § 7–710 sets no punctuality standard to violate.</p>
+    <p><a href="./#evidence">See the evidence table</a> · <a href="./routes.html">Explore routes and stops</a></p>
+  </section>
+
+  <!-- 3. WHAT RECORDS WOULD HELP -->
+  <section class="pc-section" id="records">
+    <p class="pc-q">Question 3</p>
+    <h2>What records would help?</h2>
+    <p>These are records worth requesting from MTA and Baltimore City Public Schools. Some may not exist in this form, and some may be withheld or released only in aggregate, so they are listed as records to seek, not records that are known to exist.</p>
+    <div class="pc-scroll"><table class="pc-table">
+      <thead><tr><th scope="col">Record to seek</th><th scope="col">From</th><th scope="col">The gap it would fill</th></tr></thead>
+      <tbody>
+        <tr><td>The current student transportation agreement, with any amendments</td><td>MTA and City Schools</td><td>Shows what each agency has agreed to provide and pay for beyond the statute’s fare-free requirement, and whether the agreement says anything about service on school-serving routes.</td></tr>
+        <tr><td>Any service or reporting commitments made under that agreement or elsewhere</td><td>MTA and City Schools</td><td>Shows whether a punctuality, service-level or reporting promise already exists, who made it, and who is supposed to receive the reports.</td></tr>
+        <tr><td>Scheduled versus operated trips on school-serving routes, by date and commute</td><td>MTA</td><td>Separates trips that never ran from buses that ran late. The tracker infers this from a public feed in which a missed trip and a bus with failed tracking equipment look the same.</td></tr>
+        <tr><td>Cancellation reasons for those trips</td><td>MTA</td><td>Shows why trips were canceled (for example, staffing, vehicle breakdowns or detours), which points to who could fix the problem. The public feed gives no reason.</td></tr>
+        <tr><td>Any existing aggregate data on transportation-related tardiness</td><td>City Schools</td><td>Links bus disruptions to the outcome that matters, students reaching class before the bell, which the tracker cannot observe.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 4. WHAT COULD BALTIMORE DO -->
+  <section class="pc-section" id="change">
+    <p class="pc-q">Question 4</p>
+    <h2>What could Baltimore do with those records?</h2>
+    <p>MTA and City Schools could publish a <strong>joint school-commute scorecard</strong> for the routes, trips and stops students use, separately for the morning and afternoon:</p>
+    <ul>
+      <li><strong>Trips that ran:</strong> the share of scheduled trips that operated, with canceled trips reported separately from punctuality.</li>
+      <li><strong>Punctuality at key stops:</strong> the share of buses that served key school-route stops within MTA’s on-time window.</li>
+      <li><strong>Arrival before the bell:</strong> the share of observed school trips that reached school before the first bell, if that outcome can be measured.</li>
+      <li><strong>Follow-up on recurring problems:</strong> for routes with recurring disruptions, who is responsible for the corrective action and when performance will be reviewed again.</li>
+    </ul>
+    <p>WMATA is a model for reporting missed trips separately from punctuality. New York City is a model for recording whether a delay prevented a student from arriving at school.</p>
+
+    <h3 id="measure">What other systems measure</h3>
+    <div class="pc-compare">
+      <article>
+        <h4>New York City school buses</h4>
+        <p>N.Y.C. Admin. Code § 21-994 requires the Department of Education to report each school bus route delay reported by bus vendors, including its length, cause, vendor, school, and “whether or not the delay resulted in the failure to arrive at school.”</p>
+        <p class="pc-note">Applies to school buses, not public transit.</p>
+      </article>
+      <article>
+        <h4>WMATA (Metrobus)</h4>
+        <p>Reports on-time performance (2 minutes early to 7 minutes late at timepoints, counting only service delivered) separately from the share of scheduled trips delivered.</p>
+        <p><span class="pc-figure">75.7%</span> on time and <span class="pc-figure">97.4%</span> of scheduled service delivered: published FY 2025 systemwide results (July 2024 – June 2025).</p>
+      </article>
+      <article>
+        <h4>Boston Public Schools</h4>
+        <p>Measures on-time performance as the share of school bus routes that reach school before the bell in the morning, and before the scheduled departure time in the afternoon.</p>
+        <p class="pc-note">2025–26 school year through April: 90.7% of morning routes and 85.1% of afternoon routes on time. These are district school buses, not MBTA service.</p>
+      </article>
+      <article>
+        <h4>Maryland MTA (bus)</h4>
+        <p>Reports on-time performance against an 80% goal for core bus service.</p>
+        <p><span class="pc-figure">73%</span> of bus service on time: published FY 2025 systemwide result. No arrival-before-the-bell measure is reported.</p>
+        <p class="pc-note">MTA’s own page defines on time as two minutes early to seven minutes late; the legislative budget analysis that reports the 73% describes it as generally within 10 minutes of schedule.</p>
+      </article>
+    </div>
+    <p class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://www.wmata.com/about/board/meetings/board-pdfs/upload/3B-FY2025-Annual-Service-Excellence-Report.pdf">WMATA FY 2025 Service Excellence Report</a> · <a href="https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-39032">NYC Administrative Code § 21-994</a> · <a href="https://resources.finalsite.net/images/v1778088244/bostonpublicschoolsorg/q9pnlcciqy7seww9kc8l/TransportationOnTimePerformanceMay2026.pdf">Boston Public Schools on-time performance</a> · <a href="https://mgaleg.maryland.gov/pubs/budgetfiscal/2027fy-budget-docs-operating-J00H01-MDOT-Maryland-Transit-Administration.pdf">Maryland MTA FY 2025 on-time performance</a></p>
+
+    <aside class="pc-proposal" id="maryland-could-require" aria-labelledby="mcr-title">
+      <h3 id="mcr-title">What Maryland could require</h3>
+      <p class="pc-label">Proposed language · not current law</p>
+      <p>Proposed new subsection (e) of Maryland Transportation § 7–710:</p>
+      <div class="statute">
+        <p>(e)(1) The Administration, in coordination with Baltimore City Public Schools, shall publish a quarterly report on transit service used to transport eligible students to and from school. The Administration and the school system shall jointly identify the routes, trips, and stops covered by the report.</p>
+        <p>(2) The report shall include, separately for morning and afternoon school travel:</p>
+        <p class="i1">(i) The number of scheduled trips, the number that operated, and the number that were canceled or did not operate, with missing data reported separately.</p>
+        <p class="i1">(ii) The percentage of observed buses that served identified school-route stops within the published on-time window, with early departures and late arrivals reported separately.</p>
+        <p class="i1">(iii) The percentage of observed student journeys that reached school before the first bell, where reliable data are available, together with the number of journeys observed and any known gaps in coverage.</p>
+        <p>(3) The Administration and the school system shall jointly establish and publish performance targets for the measures in paragraph (2). If a target is missed, the next report shall identify the affected routes or schools, the corrective action, the entity responsible for carrying it out, and the date progress will be reviewed.</p>
+        <p>(4) Any student outcome data published under this subsection shall be aggregated and subject to safeguards that prevent identification of individual students.</p>
+      </div>
+      <p class="pc-tie">The tracker can show where buses were late or canceled. This proposal would require MTA and City Schools to show whether the service ran as planned and whether students reached class before the bell.</p>
+    </aside>
+  </section>
+
+  <section class="pc-section" id="sources">
+    <h2>Sources</h2>
+    <ol class="pc-sources">
+      <li>Md. Code Ann., Transp. § 7–710. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf</a>; COMAR 11.06.05, Baltimore City student transit. <a href="https://regs.maryland.gov/us/md/exec/comar/11.06.05">https://regs.maryland.gov/us/md/exec/comar/11.06.05</a></li>
+      <li>Maryland Transit Administration. <em>Performance improvement</em> (local bus on time: two minutes early to seven minutes late; core bus goal 80%). <a href="https://www.mta.maryland.gov/performance-improvement">https://www.mta.maryland.gov/performance-improvement</a></li>
+      <li>Maryland Department of Legislative Services. (2026). <em>Analysis of the FY 2027 Maryland executive budget: J00H01, MDOT Maryland Transit Administration</em>, p. 9 (“Bus service had the lowest on-time performance in fiscal 2025, with only 73% of service being provided on-time”). <a href="https://mgaleg.maryland.gov/pubs/budgetfiscal/2027fy-budget-docs-operating-J00H01-MDOT-Maryland-Transit-Administration.pdf">https://mgaleg.maryland.gov/pubs/budgetfiscal/2027fy-budget-docs-operating-J00H01-MDOT-Maryland-Transit-Administration.pdf</a></li>
+      <li>Washington Metropolitan Area Transit Authority. (2025). <em>Service Excellence Report appendix: performance measure definitions</em> (last reviewed August 28, 2025). <a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf</a></li>
+      <li>Washington Metropolitan Area Transit Authority. (2025, September 11). <em>FY2025 Q1–Q4 Service Excellence Report</em> (Metrobus on-time performance 75.7%; 97.4% of scheduled bus service delivered). <a href="https://www.wmata.com/about/board/meetings/board-pdfs/upload/3B-FY2025-Annual-Service-Excellence-Report.pdf">https://www.wmata.com/about/board/meetings/board-pdfs/upload/3B-FY2025-Annual-Service-Excellence-Report.pdf</a></li>
+      <li>N.Y.C. Admin. Code § 21-994, <em>Reporting on school bus delays</em> (added by Local Law 34 of 2019). <a href="https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-39032">https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-39032</a>; enacted text: <a href="https://intro.nyc/local-laws/2019-34">https://intro.nyc/local-laws/2019-34</a></li>
+      <li>City of New York, Office of Pupil Transportation. <em>Bus breakdown and delays</em> [Data set]. NYC Open Data. <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">https://catalog.data.gov/dataset/bus-breakdown-and-delays</a></li>
+      <li>Boston Public Schools, Department of Transportation. (2026, May 6). <em>Transportation on-time performance</em> [Memo to the School Committee]. <a href="https://resources.finalsite.net/images/v1778088244/bostonpublicschoolsorg/q9pnlcciqy7seww9kc8l/TransportationOnTimePerformanceMay2026.pdf">https://resources.finalsite.net/images/v1778088244/bostonpublicschoolsorg/q9pnlcciqy7seww9kc8l/TransportationOnTimePerformanceMay2026.pdf</a></li>
+      <li>Baltimore City Public Schools. <em>2026–27 student transit program</em>. <a href="https://www.baltimorecityschools.org/article/3080724">https://www.baltimorecityschools.org/article/3080724</a></li>
+    </ol>
+  </section>
+
+</main>
+<footer class="foot"><strong>Project C</strong><p>Independent course project using MDOT MTA schedule and real-time feeds.</p></footer>
+<footer class="site-footer">Header photo by <a href="https://commons.wikimedia.org/wiki/File:Baltimore-inner-harbor-sunset-2017-panorama.jpg">Veggies, “Baltimore Inner Harbor at sunset,” July 29, 2017</a>. Wikimedia Commons, used with attribution.</footer>
+
+<script>
+(async () => {
+  // Keep the evidence sentence in step with the Findings & Map page (same data file).
+  const SOURCES = ['./data/school-commute/'];
+  const fresh = '?v=' + Date.now();
+  let data = null;
+  for (const base of SOURCES) {
+    try { const r = await fetch(base + 'neighborhood_map.json' + fresh); if (r.ok) { data = await r.json(); break; } } catch (e) {}
+  }
+  if (!data) return;                       // keep the sentence written in the page
+  const pov = data.equity.poverty, m = pov.matched_am;
+  if (m == null) return;
+  const label = (iso, year) => new Intl.DateTimeFormat('en-US', {month:'long', day:'numeric', ...(year ? {year:'numeric'} : {}), timeZone:'UTC'}).format(new Date(iso + 'T00:00:00Z'));
+  const dates = label(data.dates.first, data.dates.first.slice(0, 4) !== data.dates.last.slice(0, 4)) + ' – ' + label(data.dates.last, true);
+  document.getElementById('gap-sentence').textContent = Math.abs(m) < 0.05
+    ? 'On the same routes and school dates, morning MTA bus stop events in Baltimore City’s highest-poverty and lowest-poverty census tracts were canceled or more than seven minutes late about equally often (' + dates + ').'
+    : 'On the same routes and school dates, morning MTA bus stop events in Baltimore City’s highest-poverty census tracts were canceled or more than seven minutes late ' +
+      Math.abs(m).toFixed(1) + ' percentage points ' + (m > 0 ? 'more' : 'less') + ' often than in the lowest-poverty tracts (' + dates + ').';
+})();
+</script>
+</body></html>

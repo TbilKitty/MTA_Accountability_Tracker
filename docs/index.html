@@ -1,29 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Morning MTA bus disruptions and poverty in Baltimore City | Project C</title>
+<title>Findings &amp; Map: morning MTA bus disruptions and poverty in Baltimore City | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
+<link href="./project-c.css" rel="stylesheet"/>
 <style>
-.hero.pc-hero:not(.calculator-hero){min-height:0}
-.pc-hero .hero-inner{padding-block:clamp(2.5rem,5vw,4.25rem)}
-.pc-hero .hero-inner h1{font-size:clamp(2rem,4.6vw,3.8rem);max-width:22ch}
-.pc-wrap{width:min(1060px,100%);margin:0 auto;padding:30px 16px 60px}
-.pc-section{margin:0 0 28px}
-.pc-section h2{font-family:'Libre Baskerville',Georgia,serif;color:var(--navy);margin:0 0 10px}
-.pc-section h3{color:var(--navy);margin:22px 0 6px;font-size:1.1rem}
-.pc-section p,.pc-section li{line-height:1.7;color:#243b52}
-.pc-claim{font-size:1.15rem;font-weight:600;color:var(--navy);border-left:5px solid var(--brick);padding:6px 0 6px 16px;margin:12px 0 14px}
-.pc-support{border-left:5px solid var(--gold);padding:4px 0 4px 16px;margin:0 0 14px}
-.pc-note{font-size:.92rem;color:#4a5a6c}
-.pc-colab{display:inline-block;padding:10px 18px;border-radius:8px;background:var(--navy);color:#fff;font-weight:600;text-decoration:none}.pc-colab:hover{opacity:.9}
-.pc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table.pc-table{border-collapse:collapse;width:100%;font-size:.93rem;font-variant-numeric:tabular-nums}
-table.pc-table caption{text-align:left;font-size:.9rem;color:#4a5a6c;padding:0 0 8px}
-table.pc-table th,table.pc-table td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line)}
-table.pc-table thead th{background:#f3efe4;color:var(--navy)}
-table.pc-table td.num{text-align:right;white-space:nowrap}
-.pc-callout{background:#fff8e8;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;padding:16px 20px}
-.pc-callout h2{font-size:1.3rem}.pc-callout p{margin:.5em 0}
-.pc-sources li{margin:0 0 8px;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
 /* Interactive neighborhood map (moved here from the separate map page). */
 #city-map button{color:var(--navy);padding:.4em 1em;border:2px solid var(--navy);background:#fff;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;min-height:40px}
 #city-map button[aria-pressed=true]{background:var(--navy);color:#fff}
@@ -59,6 +39,15 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
 </style></head>
 <body>
 
+<nav class="site-nav pc-nav" aria-label="Project C pages">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>Project C · MTA school commute tracker</a>
+  <div class="pc-tabs">
+    <a href="./" aria-current="page">Findings &amp; Map</a>
+    <a href="./routes.html">Explore Routes &amp; Stops</a>
+    <a href="./accountability.html">MTA Accountability</a>
+  </div>
+</nav>
+
 <header class="hero pc-hero"><div class="hero-inner">
   <div class="eyebrow">Project C · Data Science for Lawyers</div>
   <h1>How reliable are MTA buses during Baltimore school commutes?</h1>
@@ -92,6 +81,7 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       <div class="pc-box" aria-live="polite"><h3 id="tract-title">Citywide</h3><div id="tract"></div></div>
       <div class="pc-box"><h3>Selected neighborhoods</h3><div class="comparison-scroll" id="comparison">Select neighborhoods on the map to compare their figures.</div></div>
     </div>
+    <p class="pc-note">For figures by bus route and stop, including missing vehicle records and possible drive-pasts, see <a href="./routes.html">Explore Routes &amp; Stops</a>.</p>
   </section>
 
   <!-- 3. ONE EVIDENCE TABLE -->
@@ -111,12 +101,8 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
     <p><strong>Same route and school date.</strong> <span id="gap-text">On the same routes and school dates, cancellations and delays over seven minutes were 3.1 percentage points more common at stops in the highest-poverty tracts than in the lowest-poverty tracts.</span></p>
   </section>
 
-  <!-- 3b. POLICY CALLOUT -->
-  <aside class="pc-section pc-callout" id="measure-next" aria-labelledby="measure-next-title">
-    <h2 id="measure-next-title">What Baltimore could measure next</h2>
-    <p>Maryland law requires fare-free transit for eligible Baltimore City public school students for covered activities between 5 a.m. and 8 p.m. The statute sets no punctuality or school-arrival standard. This tracker measures disruptions at bus stops, leaving open how often those disruptions make students late to class. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">Md. Code Ann., Transp. § 7–710(a)(1), (b)(1), and (c)</a></p>
-    <p>MTA and City Schools could report three things together: whether scheduled buses ran, whether they served key school-route stops on time, and whether students reached school before the first bell. WMATA reports missed trips separately from punctuality. New York City requires reporting on whether a reported school-bus delay prevented arrival at school. Baltimore could adapt both approaches to see which bus disruptions affect access to class. <span class="pc-note"><a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">WMATA metric definitions</a> · <a href="https://intro.nyc/local-laws/2019-34">NYC Administrative Code § 21-994</a></span></p>
-  </aside>
+  <!-- 3b. Link to the accountability page (the law and reporting material lives there now). -->
+  <p class="pc-section pc-next" id="measure-next"><a href="./accountability.html">See what MTA and City Schools could measure, disclose, and change.</a></p>
 
   <!-- 4. BRIEF METHODS AND SOURCES -->
   <section class="pc-section" id="methods">
@@ -137,11 +123,6 @@ table.pc-table td.num{text-align:right;white-space:nowrap}
       <li>U.S. Census Bureau. <em>American Community Survey 5-year estimates, 2020–2024</em>: <a href="https://data.census.gov/table/ACSDT5Y2024.B17001">B17001, poverty status</a>; <a href="https://data.census.gov/table/ACSDT5Y2024.B08201">B08201, vehicles available</a>.</li>
       <li>U.S. Census Bureau. <em>TIGER/Line shapefiles, 2024: Maryland census tracts</em>. <a href="https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract">https://catalog.data.gov/dataset/tiger-line-shapefile-2024-state-maryland-md-census-tract</a></li>
       <li>City of Baltimore. <em>CityView neighborhood boundaries</em>. <a href="https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer">https://baltegis.baltimorecity.gov/server/rest/services/CityView/Neighborhoods/FeatureServer</a></li>
-      <li>Md. Code Ann., Transp. § 7–710. <a href="https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf">https://mgaleg.maryland.gov/2026RS/Statute_Web/gtr/7-710.pdf</a>; COMAR 11.06.05, Baltimore City student transit. <a href="https://regs.maryland.gov/us/md/exec/comar/11.06.05">https://regs.maryland.gov/us/md/exec/comar/11.06.05</a></li>
-      <li>Washington Metropolitan Area Transit Authority. (2025). <em>Service Excellence Report FY25 measure definitions</em>. <a href="https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf">https://wmata.com/about/records/upload/SER-FY25-Measure-Definitions.pdf</a></li>
-      <li>N.Y.C. Admin. Code § 21-994, <em>Reporting on school bus delays</em> (added by Local Law 34 of 2019): the Department of Education reports each vendor-reported school-bus delay, including “whether or not the delay resulted in the failure to arrive at school.” <a href="https://intro.nyc/local-laws/2019-34">https://intro.nyc/local-laws/2019-34</a></li>
-      <li>City of New York, Office of Pupil Transportation. <em>Bus breakdown and delays</em> [Data set]. NYC Open Data. <a href="https://catalog.data.gov/dataset/bus-breakdown-and-delays">https://catalog.data.gov/dataset/bus-breakdown-and-delays</a></li>
-      <li>Baltimore City Public Schools. <em>2026–27 student transit program</em>. <a href="https://www.baltimorecityschools.org/article/3080724">https://www.baltimorecityschools.org/article/3080724</a></li>
     </ol>
   </section>
 

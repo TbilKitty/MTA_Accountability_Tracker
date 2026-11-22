@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
+<title>Explore Routes &amp; Stops: MTA school commute reliability in Baltimore City | Project C</title>
+<link href="./baltimore-theme.css" rel="stylesheet"/>
+<link href="./project-c.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="site-nav pc-nav" aria-label="Project C pages">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span>Project C · MTA school commute tracker</a>
+  <div class="pc-tabs">
+    <a href="./">Findings &amp; Map</a>
+    <a href="./routes.html" aria-current="page">Explore Routes &amp; Stops</a>
+    <a href="./accountability.html">MTA Accountability</a>
+  </div>
+</nav>
+
+<header class="hero pc-hero"><div class="hero-inner">
+  <div class="eyebrow">Project C · Data Science for Lawyers</div>
+  <h1>Explore routes and stops</h1>
+  <div class="gold-line"></div>
+  <p>Pick a bus route to see the Baltimore City stops it serves, and how often scheduled buses there were canceled or more than seven minutes late during the school commutes.</p>
+</div></header>
+
+<main class="pc-wrap">
+
+  <!-- 1. CONTROLS AND CITYWIDE TOTALS. Every figure is filled in from routes_stops.json, which the
+       Colab notebook writes from the same Baltimore City stop events as the map. -->
+  <section class="pc-section" id="explore">
+    <h2>Choose a commute and a route</h2>
+    <p class="pc-note" id="rs-dates">Loading the route and stop records…</p>
+    <div class="pc-controls" role="group" aria-label="Commute window"><span class="lbl">Commute</span><button type="button" data-window="am" aria-pressed="true">Morning</button><button type="button" data-window="pm" aria-pressed="false">Afternoon</button><button type="button" data-window="all" aria-pressed="false">Both</button></div>
+    <div class="pc-controls"><label class="lbl" for="route-select">Route</label><select id="route-select"><option value="">All routes</option></select></div>
+    <dl class="pc-stats" id="rs-summary" aria-live="polite"></dl>
+    <p class="pc-note">These figures cover the same Baltimore City stop events as the <a href="./#city-map">neighborhood map</a>, so the citywide share here matches the map’s citywide figure for the same commute.</p>
+  </section>
+
+  <!-- 2. ROUTE TABLE -->
+  <section class="pc-section" id="routes">
+    <h2>Routes</h2>
+    <div class="pc-controls"><label class="lbl" for="route-q">Find a route</label><input type="search" id="route-q" placeholder="e.g. CityLink Blue, 22" autocomplete="off"/>
+      <label class="lbl" for="route-sort">Sort by</label><select id="route-sort"><option value="failed">Share canceled or &gt;7 min late</option><option value="n">Most stop events</option><option value="trips_canceled">Most whole trips canceled</option><option value="missing">Most missing vehicle records</option><option value="name">Route name</option></select></div>
+        <p class="pc-note">Select a route name to list its stops. Routes with fewer than <span class="small-n">20</span> classified stop events are flagged as small samples and listed last.</p>
+<div class="pc-scroll"><table class="pc-table explore" id="route-table">
+      <thead><tr><th scope="col">Route</th><th scope="col" class="num">Scheduled trips</th><th scope="col" class="num">Whole trips canceled</th><th scope="col" class="num">Classified stop events</th><th scope="col" class="num">Canceled or &gt;7 min late</th><th scope="col" class="num">Monitoring coverage</th><th scope="col" class="num">Missing vehicle records</th><th scope="col" class="num">Possible drive-pasts</th><th scope="col">Sample</th></tr></thead>
+      <tbody><tr><td colspan="9">Loading…</td></tr></tbody>
+    </table></div>
+    <button type="button" class="pc-btn pc-more" id="route-more" hidden>Show all routes</button>
+  </section>
+
+  <!-- 3. STOP TABLE -->
+  <section class="pc-section" id="stops">
+    <h2 id="stops-title">Stops</h2>
+    <p class="pc-note" id="stops-intro">Showing timepoint stops on every route. Choose a route above to narrow the list.</p>
+    <div class="pc-controls"><label class="lbl" for="stop-q">Find a stop</label><input type="search" id="stop-q" placeholder="e.g. North Ave, Mondawmin" autocomplete="off"/>
+      <button type="button" class="pc-btn" id="route-clear" hidden>Show all routes</button></div>
+        <p class="pc-note">A stop-level event is one scheduled bus trip at one stop. A single canceled trip appears as a canceled event at every timepoint stop it would have served.</p>
+<div class="pc-scroll"><table class="pc-table explore" id="stop-table">
+      <thead><tr><th scope="col">Stop</th><th scope="col">Route</th><th scope="col" class="num">Classified stop events</th><th scope="col" class="num">Canceled or &gt;7 min late</th><th scope="col" class="num">School dates mostly disrupted</th><th scope="col" class="num">Monitoring coverage</th><th scope="col" class="num">Missing vehicle records</th><th scope="col" class="num">Possible drive-pasts</th><th scope="col">Sample</th></tr></thead>
+      <tbody><tr><td colspan="9">Loading…</td></tr></tbody>
+    </table></div>
+    <button type="button" class="pc-btn pc-more" id="stop-more" hidden>Show all stops</button>
+  </section>
+
+  <!-- 4. WHAT THE TRACKER CAN OBSERVE -->
+  <section class="pc-section" id="observe">
+    <h2>What the tracker can and cannot observe</h2>
+    <p>The tracker reads MTA’s public real-time feed about every 30 seconds during the morning (6:00 to 9:30 a.m.) and afternoon (2:00 to 5:30 p.m.) school commutes and compares it with the published schedule. It sees buses, not riders: it cannot tell who was waiting at a stop, whether a student missed a bus, or whether anyone reached school late.</p>
+    <dl class="pc-defs">
+      <dt>Stop event and missed trip</dt>
+      <dd>A <strong>stop event</strong> is one scheduled trip at one timepoint stop (a stop with a published time). One bus trip passes several timepoints, so it adds several stop events. When MTA cancels a whole trip, each of its stops records a canceled event. The <strong>Whole trips canceled</strong> column counts trips instead: trips on which every Baltimore City timepoint stop was canceled. Read a stop’s canceled events as “the scheduled bus did not come to this stop,” not as separate missed trips.</dd>
+      <dt>Canceled or more than 7 minutes late</dt>
+      <dd>The share of <strong>classified</strong> stop events that MTA’s feed marked canceled or that reached the stop more than 7 minutes after the scheduled time. Classified events have a usable timing estimate or a feed-flagged cancellation. On time means 2 minutes early to 7 minutes late, MTA’s own on-time window.</dd>
+      <dt>Monitoring coverage</dt>
+      <dd>The share of scheduled stop events the tracker was watching, meaning the feed was working and the trip fell inside the commute window. Events the tracker was not watching are left out of every rate.</dd>
+      <dt>Missing vehicle records</dt>
+      <dd>Scheduled trips that never appeared in the real-time feed. That can be a missed trip or a bus whose tracking equipment failed, and the two look the same. Because the tracker cannot tell which, these are shown separately and are not counted in the canceled-or-late share.</dd>
+      <dt>Possible drive-pasts</dt>
+      <dd>Inferred, not reported by MTA. Between two position reports that bracket a stop (normally about 30 seconds apart), the bus averaged at least 15 mph, faster when the reports are farther apart, and the feed never showed it stopped there. A bus may pass a stop legitimately when nobody is waiting and no one asks to get off, and the tracker cannot see riders, so these are possible drive-pasts only. Visits the tracker could not judge (slow traffic, long gaps between reports) are left out of the count, not counted as stops. These records start on <span id="dp-start">November 2</span>.</dd>
+      <dt>Small samples and recurring patterns</dt>
+      <dd>A rate based on fewer than <span class="small-n">20</span> classified events is flagged <span class="pc-flag small">Small sample</span> and shown in gray italics, because a few late buses can swing it. <strong>School dates mostly disrupted</strong> counts the observed school dates on which half or more of that stop’s classified events were canceled or more than 7 minutes late. A stop is flagged <span class="pc-flag recurring">Recurring</span> when it has at least <span class="small-n">20</span> classified events, was observed on at least 5 school dates, and was mostly disrupted on at least half of them. A stop observed on fewer than 5 school dates is flagged <span class="pc-flag limited">Few school dates</span>.</dd>
+    </dl>
+  </section>
+
+  <section class="pc-section" id="rs-sources">
+    <h2>Sources</h2>
+    <ol class="pc-sources">
+      <li>Maryland Transit Administration. (2026). <em>Local bus GTFS schedule and GTFS-Realtime feeds</em> [Data]. <a href="https://www.mta.maryland.gov/developer-resources">https://www.mta.maryland.gov/developer-resources</a></li>
+      <li>Duvall, A. (2026). <em>MTA Accountability Tracker: school commute stop-event records</em> [Data set and code]. <a href="https://github.com/TbilKitty/MTA_Accountability_Tracker/tree/main/data/school-commute-raw">https://github.com/TbilKitty/MTA_Accountability_Tracker</a>. Analysis: <a href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO">Google Colab notebook</a> (Boxes 22 and 23 build these tables).</li>
+      <li>Maryland Transit Administration. <em>Performance improvement</em> (on-time window: two minutes early to seven minutes late). <a href="https://www.mta.maryland.gov/performance-improvement">https://www.mta.maryland.gov/performance-improvement</a></li>
+    </ol>
+  </section>
+
+</main>
+<footer class="foot"><strong>Project C</strong><p>Independent course project using MDOT MTA schedule and real-time feeds.</p></footer>
+<footer class="site-footer">Header photo by <a href="https://commons.wikimedia.org/wiki/File:Baltimore-inner-harbor-sunset-2017-panorama.jpg">Veggies, “Baltimore Inner Harbor at sunset,” July 29, 2017</a>. Wikimedia Commons, used with attribution.</footer>
+
+<script>
+(async () => {
+  // DATA SOURCES (the standalone copy replaces this list with absolute addresses).
+  const SOURCES = ['./data/school-commute/'];
+  const fresh = '?v=' + Date.now();
+  const $ = id => document.getElementById(id);
+  let data = null;
+  for (const base of SOURCES) {
+    try { const r = await fetch(base + 'routes_stops.json' + fresh); if (r.ok) { data = await r.json(); break; } } catch (e) {}
+  }
+  if (!data) { $('rs-dates').textContent = 'The route and stop records could not be loaded.'; return; }
+
+  const number = new Intl.NumberFormat('en-US');
+  const n = v => v == null ? '—' : number.format(v);
+  const pct = v => v == null ? '—' : v.toFixed(1) + '%';
+  const SMALL = data.small_sample;
+  document.querySelectorAll('.small-n').forEach(el => el.textContent = SMALL);
+  const dateLabel = (iso, year) => new Intl.DateTimeFormat('en-US', {month:'long', day:'numeric', ...(year ? {year:'numeric'} : {}), timeZone:'UTC'}).format(new Date(iso + 'T00:00:00Z'));
+  $('rs-dates').textContent = 'Baltimore City timepoint stops, school days ' + dateLabel(data.dates.first, false) + ' – ' + dateLabel(data.dates.last, true) + '.';
+  $('dp-start').textContent = dateLabel(data.drive_past_dates.first, true);
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const names = Object.fromEntries(Object.entries(data.stop_names).map(([k, v]) => [k, esc(v)]));
+  const routeName = Object.fromEntries(data.routes.map(r => [r.id, esc(r.name)]));
+  const label = id => { const v = routeName[id]; return /^\d/.test(v) ? 'Route ' + v : v; };
+  const byName = (a, b) => String(a).localeCompare(String(b), 'en', {numeric: true});
+  const windowWords = {am: 'morning commute', pm: 'afternoon commute', all: 'both commutes'};
+
+  let windowKey = 'am', routeId = '', showAllRoutes = false, showAllStops = false;
+  const select = $('route-select');
+  [...data.routes].sort((a, b) => byName(label(a.id), label(b.id))).forEach(r => select.add(new Option(label(r.id), r.id)));
+
+  function flag(m, withPattern) {
+    if (m.n < SMALL) return '<span class="pc-flag small">Small sample</span><span class="pc-sub">' + n(m.n) + ' classified</span>';
+    if (m.dates < 5) return '<span class="pc-flag limited">Few school dates</span>';
+    if (withPattern && m.dates_disrupted / m.dates >= 0.5) return '<span class="pc-flag recurring">Recurring</span>';
+    return '';
+  }
+  const rateCell = m => '<td class="num rate">' + pct(m.failed) + '<span class="pc-sub">' + n(m.cancel + m.late) + ' of ' + n(m.n) + '</span></td>';
+  const dpCell = m => '<td class="num">' + (m.visits ? pct(m.drive_past_pct) + '<span class="pc-sub">' + n(m.drove_past) + ' of ' + n(m.visits) + ' visits</span>' : '—') + '</td>';
+  // Rank: reliable samples first (by the chosen measure), small samples after them.
+  function ranked(rows, key, nameOf) {
+    return rows.sort((a, b) => ((a.m.n < SMALL) - (b.m.n < SMALL)) ||
+      (key === 'name' ? byName(nameOf(a), nameOf(b)) : ((b.m[key] ?? -1) - (a.m[key] ?? -1)) || byName(nameOf(a), nameOf(b))));
+  }
+
+  function summary() {
+    const m = routeId ? data.routes.find(r => r.id === routeId)[windowKey] : data.city[windowKey];
+    const where = routeId ? label(routeId) : 'Citywide';
+    if (!m) { $('rs-summary').innerHTML = '<div><dt>' + where + '</dt><dd>No scheduled stop events in this commute</dd></div>'; return; }
+    const items = [
+      [where + ', canceled or >7 min late', pct(m.failed), n(m.cancel + m.late) + ' of ' + n(m.n) + ' classified stop events'],
+      ['Whole trips canceled', n(m.trips_canceled), 'of ' + n(m.trips) + ' scheduled trips'],
+      ['Monitoring coverage', pct(m.coverage), n(m.monitored) + ' of ' + n(m.scheduled) + ' scheduled stop events watched'],
+      ['Missing vehicle records', n(m.missing), 'stop events with no real-time record, ' + n(m.trips_missing) + ' whole trips (not in the share)'],
+      ['Possible drive-pasts', pct(m.drive_past_pct), n(m.drove_past) + ' of ' + n(m.visits) + ' observed bus visits']];
+    $('rs-summary').innerHTML = items.map(([t, v, s]) => '<div><dt>' + t + '</dt><dd>' + v + '<small>' + s + '</small></dd></div>').join('');
+  }
+
+  function routes() {
+    const q = $('route-q').value.trim().toLowerCase();
+    const rows = data.routes.filter(r => r[windowKey]).map(r => ({id: r.id, m: r[windowKey]}))
+      .filter(r => !q || label(r.id).toLowerCase().includes(q) || routeName[r.id].toLowerCase().includes(q));
+    ranked(rows, $('route-sort').value, r => label(r.id));
+    const shown = showAllRoutes || q ? rows : rows.slice(0, 15);
+    $('route-table').tBodies[0].innerHTML = shown.length ? shown.map(({id, m}) =>
+      '<tr class="' + (m.n < SMALL ? 'small' : '') + (id === routeId ? ' is-selected' : '') + '"><td><button type="button" class="pc-route-btn" data-route="' + id + '" aria-pressed="' + (id === routeId) + '">' + label(id) + '</button></td>' +
+      '<td class="num">' + n(m.trips) + '</td><td class="num">' + n(m.trips_canceled) + '</td><td class="num">' + n(m.n) + '</td>' + rateCell(m) +
+      '<td class="num">' + pct(m.coverage) + '</td><td class="num">' + n(m.missing) + '<span class="pc-sub">' + n(m.trips_missing) + ' whole trips</span></td>' + dpCell(m) + '<td>' + flag(m, false) + '</td></tr>').join('')
+      : '<tr><td colspan="9">No route matches that search in the ' + windowWords[windowKey] + '.</td></tr>';
+    $('route-more').hidden = showAllRoutes || !!q || rows.length <= 15;
+    $('route-more').textContent = 'Show all ' + rows.length + ' routes';
+  }
+
+  function stopsTable() {
+    const q = $('stop-q').value.trim().toLowerCase();
+    let rows = data.route_stops.filter(p => p[windowKey] && (!routeId || p.route === routeId)).map(p => ({route: p.route, stop: p.stop, m: p[windowKey]}));
+    if (q) rows = rows.filter(r => (names[r.stop] || '').toLowerCase().includes(q) || r.stop === q);
+    ranked(rows, 'failed', r => names[r.stop] || r.stop);
+    const limit = 25, shown = showAllStops || q || routeId ? rows : rows.slice(0, limit);
+    $('stops-title').textContent = routeId ? 'Stops served by ' + label(routeId) : 'Stops on every route';
+    $('stops-intro').textContent = routeId
+      ? rows.length + ' Baltimore City timepoint stops on ' + label(routeId) + ' in the ' + windowWords[windowKey] + ', highest share canceled or late first.'
+      : 'Timepoint stops on every route in the ' + windowWords[windowKey] + ', highest share canceled or late first. A stop served by two routes is listed once per route. Choose a route above to narrow the list.';
+    $('route-clear').hidden = !routeId;
+    $('stop-table').tBodies[0].innerHTML = shown.length ? shown.map(({route, stop, m}) =>
+      '<tr class="' + (m.n < SMALL ? 'small' : '') + '"><td class="wrap">' + (names[stop] || 'Stop ' + stop) + '<span class="pc-sub">Stop ' + stop + '</span></td>' +
+      '<td>' + (routeId ? label(route) : '<button type="button" class="pc-route-btn" data-route="' + route + '">' + label(route) + '</button>') + '</td>' +
+      '<td class="num">' + n(m.n) + '</td>' + rateCell(m) + '<td class="num">' + n(m.dates_disrupted) + ' of ' + n(m.dates) + '</td>' +
+      '<td class="num">' + pct(m.coverage) + '</td><td class="num">' + n(m.missing) + '</td>' + dpCell(m) + '<td>' + flag(m, true) + '</td></tr>').join('')
+      : '<tr><td colspan="9">No stop matches that search' + (routeId ? ' on ' + label(routeId) : '') + ' in the ' + windowWords[windowKey] + '.</td></tr>';
+    $('stop-more').hidden = showAllStops || !!q || !!routeId || rows.length <= limit;
+    $('stop-more').textContent = 'Show all ' + rows.length + ' stops';
+  }
+
+  function render() { summary(); routes(); stopsTable(); }
+  function chooseRoute(id, scroll) {
+    routeId = id; select.value = id; showAllStops = false; render();
+    if (scroll && id) $('stops').scrollIntoView({behavior: 'smooth', block: 'start'});
+    const params = new URLSearchParams(location.search);
+    if (id) params.set('route', data.routes.find(r => r.id === id).name); else params.delete('route');
+    params.set('commute', windowKey);
+    history.replaceState(null, '', location.pathname + '?' + params + location.hash);
+  }
+  document.querySelectorAll('#explore [data-window]').forEach(b => b.addEventListener('click', () => {
+    windowKey = b.dataset.window;
+    document.querySelectorAll('#explore [data-window]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    chooseRoute(routeId, false);
+  }));
+  select.addEventListener('change', () => chooseRoute(select.value, false));
+  document.addEventListener('click', e => { const b = e.target.closest('.pc-route-btn'); if (b) chooseRoute(b.dataset.route === routeId && b.closest('#route-table') ? '' : b.dataset.route, true); });
+  $('route-clear').addEventListener('click', () => chooseRoute('', false));
+  $('route-q').addEventListener('input', routes);
+  $('route-sort').addEventListener('change', routes);
+  $('stop-q').addEventListener('input', stopsTable);
+  $('route-more').addEventListener('click', () => { showAllRoutes = true; routes(); });
+  $('stop-more').addEventListener('click', () => { showAllStops = true; stopsTable(); });
+
+  // Links such as routes.html?route=22&commute=pm open with that route and commute chosen.
+  const params = new URLSearchParams(location.search);
+  if (['am', 'pm', 'all'].includes(params.get('commute'))) {
+    windowKey = params.get('commute');
+    document.querySelectorAll('#explore [data-window]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.window === windowKey)));
+  }
+  const wanted = params.get('route');
+  routeId = wanted ? (data.routes.find(r => r.name.toLowerCase() === wanted.toLowerCase()) || {}).id || '' : '';
+  select.value = routeId;
+  render();
+})();
+</script>
+</body></html>
