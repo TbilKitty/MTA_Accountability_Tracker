@@ -88,3 +88,16 @@ table.pc-table.explore tr.small td.rate{font-style:italic}
 .pc-proposal .statute p{font-family:Georgia,serif;margin:.6em 0}
 .pc-proposal .statute .i1{padding-left:1.6em}
 .pc-proposal .pc-tie{border-top:1px solid var(--line);padding-top:10px;margin-top:14px;font-weight:600;color:var(--navy)}
+
+/* "How to read this" notes: native <details>, so they open with a tap, a click or the keyboard. */
+.pc-how{border:1px solid var(--line);border-radius:10px;background:#fffdf7;padding:4px 14px;margin:12px 0}
+.pc-how summary{cursor:pointer;font-weight:700;color:var(--navy);padding:8px 0;min-height:40px}
+.pc-how summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.pc-how .pc-defs{margin:0 0 10px}
+.pc-how .pc-defs dt{margin-top:8px}
+.pc-kind{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:6px;margin:0 6px 4px 0;vertical-align:middle}
+.pc-kind.tracker{background:#092644;color:#fff}
+.pc-kind.agency{background:#e6eef3;color:#173a55;border:1px solid #9bb3c4}
+.pc-kind.proposed{background:#fff;color:#8c0b20;border:1px dashed #c8102e}
+th .pc-sub{font-weight:500}
+.pc-kind-row{margin:0 0 -4px}

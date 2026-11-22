@@ -19,7 +19,7 @@
   <div class="eyebrow">Project C · Data Science for Lawyers</div>
   <h1>Explore routes and stops</h1>
   <div class="gold-line"></div>
-  <p>Pick a bus route to see the Baltimore City stops it serves, and how often scheduled buses there were canceled or more than seven minutes late during the school commutes.</p>
+  <p>Pick a bus route to see the Baltimore City stops it serves, and its disruption rate: how often scheduled buses there were canceled or more than seven minutes late during the school commutes.</p>
 </div></header>
 
 <main class="pc-wrap">
@@ -30,6 +30,7 @@
     <h2>Choose a commute and a route</h2>
     <p class="pc-note" id="rs-dates">Loading the route and stop records…</p>
     <div class="pc-controls" role="group" aria-label="Commute window"><span class="lbl">Commute</span><button type="button" data-window="am" aria-pressed="true">Morning</button><button type="button" data-window="pm" aria-pressed="false">Afternoon</button><button type="button" data-window="all" aria-pressed="false">Both</button></div>
+    <p class="pc-note">Morning counts buses scheduled from 6:00 to 9:30 a.m. on school days, Afternoon from 2:00 to 5:30 p.m., and Both combines them.</p>
     <div class="pc-controls"><label class="lbl" for="route-select">Route</label><select id="route-select"><option value="">All routes</option></select></div>
     <dl class="pc-stats" id="rs-summary" aria-live="polite"></dl>
     <p class="pc-note">These figures cover the same Baltimore City stop events as the <a href="./#city-map">neighborhood map</a>, so the citywide share here matches the map’s citywide figure for the same commute.</p>
@@ -39,10 +40,21 @@
   <section class="pc-section" id="routes">
     <h2>Routes</h2>
     <div class="pc-controls"><label class="lbl" for="route-q">Find a route</label><input type="search" id="route-q" placeholder="e.g. CityLink Blue, 22" autocomplete="off"/>
-      <label class="lbl" for="route-sort">Sort by</label><select id="route-sort"><option value="failed">Share canceled or &gt;7 min late</option><option value="n">Most stop events</option><option value="trips_canceled">Most whole trips canceled</option><option value="missing">Most missing vehicle records</option><option value="name">Route name</option></select></div>
-        <p class="pc-note">Select a route name to list its stops. Routes with fewer than <span class="small-n">20</span> classified stop events are flagged as small samples and listed last.</p>
-<div class="pc-scroll"><table class="pc-table explore" id="route-table">
-      <thead><tr><th scope="col">Route</th><th scope="col" class="num">Scheduled trips</th><th scope="col" class="num">Whole trips canceled</th><th scope="col" class="num">Classified stop events</th><th scope="col" class="num">Canceled or &gt;7 min late</th><th scope="col" class="num">Monitoring coverage</th><th scope="col" class="num">Missing vehicle records</th><th scope="col" class="num">Possible drive-pasts</th><th scope="col">Sample</th></tr></thead>
+      <label class="lbl" for="route-sort">Sort by</label><select id="route-sort"><option value="failed">Disruption rate</option><option value="n">Most stop events</option><option value="trips_canceled">Most whole trips canceled</option><option value="missing">Most missing vehicle records</option><option value="name">Route name</option></select></div>
+    <p class="pc-note">Select a route name to list its stops. Routes with fewer than <span class="small-n">20</span> classified stop events are flagged as small samples and listed last.</p>
+    <details class="pc-how">
+      <summary>How to read the route table</summary>
+      <dl class="pc-defs">
+        <dt>Scheduled trips and whole trips canceled</dt><dd>These count trips (one bus run on one date); a trip counts as canceled only when every one of its Baltimore City timepoint stops was canceled.</dd>
+        <dt>Classified stop events</dt><dd>These count stop events (one trip at one timepoint stop) with a known outcome: on time, more than 2 minutes early, more than 7 minutes late, or canceled.</dd>
+        <dt>Disruption rate</dt><dd>The share of classified stop events that were canceled or more than 7 minutes late, with the count behind it underneath.</dd>
+        <dt>Monitoring coverage</dt><dd>The share of scheduled stop events the tracker was watching, meaning the real-time feed was working at the time.</dd>
+        <dt>Missing vehicle records</dt><dd>Stop events on trips that never appeared in the real-time feed (a missed trip and broken tracking look the same); they are left out of the disruption rate, and the line underneath counts the whole trips.</dd>
+        <dt>Possible drive-pasts</dt><dd>The share of observed bus visits where position reports suggest the bus passed the stop without stopping; the tracker cannot see whether anyone was waiting.</dd>
+      </dl>
+    </details>
+    <div class="pc-scroll"><table class="pc-table explore" id="route-table">
+      <thead><tr><th scope="col">Route</th><th scope="col" class="num">Scheduled trips<span class="pc-sub">counts trips</span></th><th scope="col" class="num">Whole trips canceled<span class="pc-sub">counts trips</span></th><th scope="col" class="num">Classified stop events<span class="pc-sub">counts stop events</span></th><th scope="col" class="num">Disruption rate<span class="pc-sub">canceled or &gt;7 min late</span></th><th scope="col" class="num">Monitoring coverage<span class="pc-sub">stop events watched</span></th><th scope="col" class="num">Missing vehicle records<span class="pc-sub">counts stop events</span></th><th scope="col" class="num">Possible drive-pasts<span class="pc-sub">of observed bus visits</span></th><th scope="col">Sample</th></tr></thead>
       <tbody><tr><td colspan="9">Loading…</td></tr></tbody>
     </table></div>
     <button type="button" class="pc-btn pc-more" id="route-more" hidden>Show all routes</button>
@@ -54,9 +66,21 @@
     <p class="pc-note" id="stops-intro">Showing timepoint stops on every route. Choose a route above to narrow the list.</p>
     <div class="pc-controls"><label class="lbl" for="stop-q">Find a stop</label><input type="search" id="stop-q" placeholder="e.g. North Ave, Mondawmin" autocomplete="off"/>
       <button type="button" class="pc-btn" id="route-clear" hidden>Show all routes</button></div>
-        <p class="pc-note">A stop-level event is one scheduled bus trip at one stop. A single canceled trip appears as a canceled event at every timepoint stop it would have served.</p>
-<div class="pc-scroll"><table class="pc-table explore" id="stop-table">
-      <thead><tr><th scope="col">Stop</th><th scope="col">Route</th><th scope="col" class="num">Classified stop events</th><th scope="col" class="num">Canceled or &gt;7 min late</th><th scope="col" class="num">School dates mostly disrupted</th><th scope="col" class="num">Monitoring coverage</th><th scope="col" class="num">Missing vehicle records</th><th scope="col" class="num">Possible drive-pasts</th><th scope="col">Sample</th></tr></thead>
+    <p class="pc-note">A stop-level event is one scheduled bus trip at one stop. A single canceled trip appears as a canceled event at every timepoint stop it would have served.</p>
+    <details class="pc-how">
+      <summary>How to read the stop table</summary>
+      <dl class="pc-defs">
+        <dt>Classified stop events</dt><dd>These count stop events at this stop on this route (one trip at the stop, with a known outcome), not whole trips.</dd>
+        <dt>Disruption rate</dt><dd>The share of those events that were canceled or more than 7 minutes late, with the count behind it underneath.</dd>
+        <dt>School dates mostly disrupted</dt><dd>The number of observed school dates on which half or more of the stop’s classified events were canceled or more than 7 minutes late.</dd>
+        <dt>Monitoring coverage</dt><dd>The share of scheduled stop events here that the tracker was watching.</dd>
+        <dt>Missing vehicle records</dt><dd>Stop events here whose trip never appeared in the real-time feed; they are left out of the disruption rate.</dd>
+        <dt>Possible drive-pasts</dt><dd>The share of observed bus visits to this stop where the bus appears to have passed without stopping.</dd>
+        <dt>Sample</dt><dd>“Small sample” means fewer than 20 classified events, so one or two late buses can swing the rate; “Recurring” means the stop was mostly disrupted on at least half of 5 or more observed school dates.</dd>
+      </dl>
+    </details>
+    <div class="pc-scroll"><table class="pc-table explore" id="stop-table">
+      <thead><tr><th scope="col">Stop</th><th scope="col">Route</th><th scope="col" class="num">Classified stop events<span class="pc-sub">counts stop events</span></th><th scope="col" class="num">Disruption rate<span class="pc-sub">canceled or &gt;7 min late</span></th><th scope="col" class="num">School dates mostly disrupted<span class="pc-sub">counts school dates</span></th><th scope="col" class="num">Monitoring coverage<span class="pc-sub">stop events watched</span></th><th scope="col" class="num">Missing vehicle records<span class="pc-sub">counts stop events</span></th><th scope="col" class="num">Possible drive-pasts<span class="pc-sub">of observed bus visits</span></th><th scope="col">Sample</th></tr></thead>
       <tbody><tr><td colspan="9">Loading…</td></tr></tbody>
     </table></div>
     <button type="button" class="pc-btn pc-more" id="stop-more" hidden>Show all stops</button>
@@ -69,7 +93,7 @@
     <dl class="pc-defs">
       <dt>Stop event and missed trip</dt>
       <dd>A <strong>stop event</strong> is one scheduled trip at one timepoint stop (a stop with a published time). One bus trip passes several timepoints, so it adds several stop events. When MTA cancels a whole trip, each of its stops records a canceled event. The <strong>Whole trips canceled</strong> column counts trips instead: trips on which every Baltimore City timepoint stop was canceled. Read a stop’s canceled events as “the scheduled bus did not come to this stop,” not as separate missed trips.</dd>
-      <dt>Canceled or more than 7 minutes late</dt>
+      <dt>Disruption rate (canceled or more than 7 minutes late)</dt>
       <dd>The share of <strong>classified</strong> stop events that MTA’s feed marked canceled or that reached the stop more than 7 minutes after the scheduled time. Classified events have a usable timing estimate or a feed-flagged cancellation. On time means 2 minutes early to 7 minutes late, MTA’s own on-time window.</dd>
       <dt>Monitoring coverage</dt>
       <dd>The share of scheduled stop events the tracker was watching, meaning the feed was working and the trip fell inside the commute window. Events the tracker was not watching are left out of every rate.</dd>
@@ -133,6 +157,7 @@
     return '';
   }
   const rateCell = m => '<td class="num rate">' + pct(m.failed) + '<span class="pc-sub">' + n(m.cancel + m.late) + ' of ' + n(m.n) + '</span></td>';
+  const covCell = m => '<td class="num">' + pct(m.coverage) + '<span class="pc-sub">' + n(m.monitored) + ' of ' + n(m.scheduled) + '</span></td>';
   const dpCell = m => '<td class="num">' + (m.visits ? pct(m.drive_past_pct) + '<span class="pc-sub">' + n(m.drove_past) + ' of ' + n(m.visits) + ' visits</span>' : '—') + '</td>';
   // Rank: reliable samples first (by the chosen measure), small samples after them.
   function ranked(rows, key, nameOf) {
@@ -145,11 +170,11 @@
     const where = routeId ? label(routeId) : 'Citywide';
     if (!m) { $('rs-summary').innerHTML = '<div><dt>' + where + '</dt><dd>No scheduled stop events in this commute</dd></div>'; return; }
     const items = [
-      [where + ', canceled or >7 min late', pct(m.failed), n(m.cancel + m.late) + ' of ' + n(m.n) + ' classified stop events'],
-      ['Whole trips canceled', n(m.trips_canceled), 'of ' + n(m.trips) + ' scheduled trips'],
+      [where + ' disruption rate', pct(m.failed), n(m.cancel + m.late) + ' of ' + n(m.n) + ' classified stop events were canceled or >7 min late'],
+      ['Whole trips canceled', n(m.trips_canceled), 'trips, of ' + n(m.trips) + ' scheduled, with every city stop canceled'],
       ['Monitoring coverage', pct(m.coverage), n(m.monitored) + ' of ' + n(m.scheduled) + ' scheduled stop events watched'],
       ['Missing vehicle records', n(m.missing), 'stop events with no real-time record, ' + n(m.trips_missing) + ' whole trips (not in the share)'],
-      ['Possible drive-pasts', pct(m.drive_past_pct), n(m.drove_past) + ' of ' + n(m.visits) + ' observed bus visits']];
+      ['Possible drive-pasts', pct(m.drive_past_pct), n(m.drove_past) + ' of ' + n(m.visits) + ' observed bus visits; inferred from bus positions']];
     $('rs-summary').innerHTML = items.map(([t, v, s]) => '<div><dt>' + t + '</dt><dd>' + v + '<small>' + s + '</small></dd></div>').join('');
   }
 
@@ -162,7 +187,7 @@
     $('route-table').tBodies[0].innerHTML = shown.length ? shown.map(({id, m}) =>
       '<tr class="' + (m.n < SMALL ? 'small' : '') + (id === routeId ? ' is-selected' : '') + '"><td><button type="button" class="pc-route-btn" data-route="' + id + '" aria-pressed="' + (id === routeId) + '">' + label(id) + '</button></td>' +
       '<td class="num">' + n(m.trips) + '</td><td class="num">' + n(m.trips_canceled) + '</td><td class="num">' + n(m.n) + '</td>' + rateCell(m) +
-      '<td class="num">' + pct(m.coverage) + '</td><td class="num">' + n(m.missing) + '<span class="pc-sub">' + n(m.trips_missing) + ' whole trips</span></td>' + dpCell(m) + '<td>' + flag(m, false) + '</td></tr>').join('')
+      covCell(m) + '<td class="num">' + n(m.missing) + '<span class="pc-sub">' + n(m.trips_missing) + ' whole trips</span></td>' + dpCell(m) + '<td>' + flag(m, false) + '</td></tr>').join('')
       : '<tr><td colspan="9">No route matches that search in the ' + windowWords[windowKey] + '.</td></tr>';
     $('route-more').hidden = showAllRoutes || !!q || rows.length <= 15;
     $('route-more').textContent = 'Show all ' + rows.length + ' routes';
@@ -182,8 +207,8 @@
     $('stop-table').tBodies[0].innerHTML = shown.length ? shown.map(({route, stop, m}) =>
       '<tr class="' + (m.n < SMALL ? 'small' : '') + '"><td class="wrap">' + (names[stop] || 'Stop ' + stop) + '<span class="pc-sub">Stop ' + stop + '</span></td>' +
       '<td>' + (routeId ? label(route) : '<button type="button" class="pc-route-btn" data-route="' + route + '">' + label(route) + '</button>') + '</td>' +
-      '<td class="num">' + n(m.n) + '</td>' + rateCell(m) + '<td class="num">' + n(m.dates_disrupted) + ' of ' + n(m.dates) + '</td>' +
-      '<td class="num">' + pct(m.coverage) + '</td><td class="num">' + n(m.missing) + '</td>' + dpCell(m) + '<td>' + flag(m, true) + '</td></tr>').join('')
+      '<td class="num">' + n(m.n) + '</td>' + rateCell(m) + '<td class="num">' + n(m.dates_disrupted) + ' of ' + n(m.dates) + '<span class="pc-sub">school dates</span></td>' +
+      covCell(m) + '<td class="num">' + n(m.missing) + '</td>' + dpCell(m) + '<td>' + flag(m, true) + '</td></tr>').join('')
       : '<tr><td colspan="9">No stop matches that search' + (routeId ? ' on ' + label(routeId) : '') + ' in the ' + windowWords[windowKey] + '.</td></tr>';
     $('stop-more').hidden = showAllStops || !!q || !!routeId || rows.length <= limit;
     $('stop-more').textContent = 'Show all ' + rows.length + ' stops';
