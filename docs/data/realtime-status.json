@@ -1,14 +1,14 @@
 {
-  "last_success_utc": "2026-11-22T08:15:21+00:00",
+  "last_success_utc": "2026-11-22T08:30:24+00:00",
   "agency": "mta-maryland",
-  "feed_timestamp_utc": "2026-11-22T08:15:21+00:00",
-  "trip_updates_entities": 492,
-  "vehicle_positions_entities": 101,
-  "sampled_prediction_count_this_run": 1309,
+  "feed_timestamp_utc": "2026-11-22T08:30:21+00:00",
+  "trip_updates_entities": 493,
+  "vehicle_positions_entities": 99,
+  "sampled_prediction_count_this_run": 1520,
   "samples_without_computable_delay_this_run": 0,
-  "prediction_samples_last_7_days": 5345907,
-  "predicted_over_5_min_samples_last_7_days": 857151,
-  "predicted_over_15_min_samples_last_7_days": 182493,
+  "prediction_samples_last_7_days": 5347427,
+  "predicted_over_5_min_samples_last_7_days": 857258,
+  "predicted_over_15_min_samples_last_7_days": 182497,
   "published_days": [
     {
       "date_utc": "2026-11-16",
@@ -42,8 +42,8 @@
     },
     {
       "date_utc": "2026-11-22",
-      "records": 20726,
-      "bytes": 1671464
+      "records": 20884,
+      "bytes": 1684410
     }
   ],
   "verified_late_arrivals": null,
@@ -51,150 +51,59 @@
   "methodology": "Forecast observations; delays may be explicit, derived from GTFS stop_times and start_date, or unknown. Same trip/stop may recur across polls. No-show detection is not enabled.",
   "latest_prediction_samples": [
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4224910",
       "route_id": "11658",
       "route_name": "63",
       "stop_id": "14171",
       "event_type": "arrival",
-      "predicted_delay_seconds": 1010,
+      "predicted_delay_seconds": 1037,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:39:10+00:00",
+      "predicted_time_utc": "2026-11-22T08:39:37+00:00",
       "vehicle_seen_in_same_snapshot": true,
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4720",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 939,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:22+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4719",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 935,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:04+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4722",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 930,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:38+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4723",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 925,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:44+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4724",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 919,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:58+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4224910",
       "route_id": "11658",
       "route_name": "63",
       "stop_id": "14219",
       "event_type": "arrival",
-      "predicted_delay_seconds": 918,
+      "predicted_delay_seconds": 947,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:49:26+00:00",
+      "predicted_time_utc": "2026-11-22T08:49:55+00:00",
       "vehicle_seen_in_same_snapshot": true,
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4224910",
       "route_id": "11658",
       "route_name": "63",
       "stop_id": "14170",
       "event_type": "arrival",
-      "predicted_delay_seconds": 909,
+      "predicted_delay_seconds": 937,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:53:19+00:00",
+      "predicted_time_utc": "2026-11-22T08:53:47+00:00",
       "vehicle_seen_in_same_snapshot": true,
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4224910",
       "route_id": "11658",
       "route_name": "63",
       "stop_id": "14257",
       "event_type": "arrival",
-      "predicted_delay_seconds": 908,
+      "predicted_delay_seconds": 936,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:55:08+00:00",
+      "predicted_time_utc": "2026-11-22T08:55:36+00:00",
       "vehicle_seen_in_same_snapshot": true,
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4393",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 904,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:19:04+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "4710",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 889,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:16:27+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -207,20 +116,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4109500",
-      "route_id": "11734",
-      "route_name": "CityLink BLUE",
-      "stop_id": "8391",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 840,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:15:19+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -233,7 +129,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -246,7 +142,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -259,7 +155,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -272,7 +168,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -285,7 +181,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -298,7 +194,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -311,7 +207,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -324,7 +220,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -337,7 +233,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -350,7 +246,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -363,7 +259,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -376,7 +272,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -389,7 +285,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -402,7 +298,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -415,7 +311,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -428,7 +324,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -441,7 +337,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -454,7 +350,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -467,7 +363,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -480,7 +376,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -493,7 +389,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -506,7 +402,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -519,7 +415,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -532,7 +428,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -545,7 +441,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -558,7 +454,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -571,7 +467,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -584,7 +480,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -597,7 +493,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -610,7 +506,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -623,7 +519,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -636,7 +532,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -649,7 +545,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -662,7 +558,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107858",
       "route_id": "14498",
       "route_name": "163",
@@ -675,7 +571,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -688,20 +584,7 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1328",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 665,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:19:33+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107857",
       "route_id": "14498",
       "route_name": "163",
@@ -714,120 +597,237 @@
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1325",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "13686",
       "event_type": "arrival",
-      "predicted_delay_seconds": 660,
+      "predicted_delay_seconds": 600,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:17:55+00:00",
+      "predicted_time_utc": "2026-11-22T08:55:00+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "12671",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 599,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:55:07+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "14173",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 588,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:23:48+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4112177",
+      "route_id": "11741",
+      "route_name": "CityLink PINK",
+      "stop_id": "917",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 587,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:30:36+00:00",
       "vehicle_seen_in_same_snapshot": true,
       "classification": "prediction_only_not_confirmed_arrival"
     },
     {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "506",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 656,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:26:59+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "10567",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 655,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:27:55+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1326",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 654,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:18:37+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1322",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 645,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:16:28+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1329",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 644,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:19:44+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1338",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 623,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:25:17+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
-      "trip_id": "4097042",
-      "route_id": "11659",
-      "route_name": "65",
-      "stop_id": "1331",
-      "event_type": "arrival",
-      "predicted_delay_seconds": 619,
-      "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:20:17+00:00",
-      "vehicle_seen_in_same_snapshot": true,
-      "classification": "prediction_only_not_confirmed_arrival"
-    },
-    {
-      "sampled_at_utc": "2026-11-22T08:15:21+00:00",
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
       "trip_id": "4107933",
       "route_id": "14498",
       "route_name": "163",
       "stop_id": "14171",
       "event_type": "arrival",
-      "predicted_delay_seconds": 619,
+      "predicted_delay_seconds": 584,
       "delay_method": "derived_from_static_schedule",
-      "predicted_time_utc": "2026-11-22T08:54:14+00:00",
+      "predicted_time_utc": "2026-11-22T08:53:39+00:00",
       "vehicle_seen_in_same_snapshot": true,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "14220",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 578,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:25:27+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "11175",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 577,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:17:17+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4112177",
+      "route_id": "11741",
+      "route_name": "CityLink PINK",
+      "stop_id": "12306",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 567,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:31:06+00:00",
+      "vehicle_seen_in_same_snapshot": true,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4112177",
+      "route_id": "11741",
+      "route_name": "CityLink PINK",
+      "stop_id": "919",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 557,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:31:17+00:00",
+      "vehicle_seen_in_same_snapshot": true,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "4909",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 553,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:51:54+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "12592",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 548,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:52:18+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "3310",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 538,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:06:58+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "3317",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 521,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:15:41+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "3340",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 511,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:08:05+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "11435",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 511,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:08:29+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "1261",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 502,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T08:50:35+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "3308",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 498,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:05:22+00:00",
+      "vehicle_seen_in_same_snapshot": false,
+      "classification": "prediction_only_not_confirmed_arrival"
+    },
+    {
+      "sampled_at_utc": "2026-11-22T08:30:24+00:00",
+      "trip_id": "4097932",
+      "route_id": "11665",
+      "route_name": "75",
+      "stop_id": "3309",
+      "event_type": "arrival",
+      "predicted_delay_seconds": 498,
+      "delay_method": "derived_from_static_schedule",
+      "predicted_time_utc": "2026-11-22T09:06:06+00:00",
+      "vehicle_seen_in_same_snapshot": false,
       "classification": "prediction_only_not_confirmed_arrival"
     }
   ]
