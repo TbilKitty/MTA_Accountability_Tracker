@@ -6,6 +6,12 @@ name: Build stop areas (city line and census income)
 
 on:
   workflow_dispatch:
+    inputs:
+      job:
+        description: "stop-areas = rebuild the stop list; bnia = download the official BNIA CSA layers and cited source documents; links = check every outside link on the Project C pages"
+        type: choice
+        options: [stop-areas, bnia, links]
+        default: stop-areas
   push:
     paths:
       - scripts/build_stop_areas.py
@@ -23,13 +29,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install 'geopandas>=1.0,<2' 'pyogrio>=0.9' 'pandas>=2.2,<3' requests 'matplotlib>=3.8,<4' 'statsmodels>=0.14,<1'
-      - run: python scripts/build_stop_areas.py
+      - name: Download the BNIA CSA layers and source documents (job = bnia)
+        if: ${{ inputs.job == 'bnia' }}
+        run: |
+          pip install requests
+          python scripts/fetch_bnia_csa.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reference/bnia data/reference/sources
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Download BNIA CSA layers and source documents"
+          for i in 1 2 3; do git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0; sleep 10; done
+          exit 1
+      - name: Check every outside link on the Project C pages (job = links)
+        if: ${{ inputs.job == 'links' }}
+        run: |
+          pip install requests
+          python scripts/check_links.py
+      - if: ${{ inputs.job != 'bnia' && inputs.job != 'links' }}
+        run: pip install 'geopandas>=1.0,<2' 'pyogrio>=0.9' 'pandas>=2.2,<3' requests 'matplotlib>=3.8,<4' 'statsmodels>=0.14,<1'
+      - if: ${{ inputs.job != 'bnia' && inputs.job != 'links' }}
+        run: python scripts/build_stop_areas.py
         env:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}  # optional; without it Census Reporter is used
       - name: Redraw the Project C charts with the new stop list (city only)
+        if: ${{ inputs.job != 'bnia' && inputs.job != 'links' }}
         run: python scripts/make_claim_chart.py
       - name: Commit the stop list
+        if: ${{ inputs.job != 'bnia' && inputs.job != 'links' }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

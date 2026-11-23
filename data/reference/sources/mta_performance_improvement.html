@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="/img/brand/favicon.ico">
+<!-- CSRF Token -->
+<meta name="csrf-token" content="BUhu5kshvPbiLcM4XSnKE8vxOjQg6OkIU36QgIFj">
+<title>Maryland Transit Administration</title>
+	
+
+<!-- Styles -->
+<!--link href="https://www.mta.maryland.gov/css/libraries/jquery.min.css" rel="stylesheet"-->
+<link href="https://www.mta.maryland.gov/css/libraries/jquery-ui.min.css" rel="stylesheet">
+<link href="https://www.mta.maryland.gov/css/app.css" rel="stylesheet">
+<link href="https://www.mta.maryland.gov/paraia/css/paraia_multi_select.css" rel="stylesheet">
+
+<!-- JS -->
+<script src="https://www.mta.maryland.gov/js/libraries/jquery.min.js"></script>
+<script src="https://www.mta.maryland.gov/js/libraries/jquery-ui.min.js"></script>
+<script src="https://www.mta.maryland.gov/js/libraries/jquery.inputmask.bundle.js"></script>
+<script src="https://www.mta.maryland.gov/js/libraries/moment.min.js"></script>
+<!-- CKEditor -->
+<script src="https://www.mta.maryland.gov/js/vendors/ckeditor/ckeditor.js"></script>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-24046384-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WH4K63');</script>
+<!-- End Google Tag Manager -->  	<link rel = "stylesheet" type = "text/css" href = "https://www.mta.maryland.gov/css/pages/contents.css" />
+	<link rel = "stylesheet" type = "text/css" href = "https://www.mta.maryland.gov/css/pages/performance-improvement.css" />
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+	
+	<style>
+		.bootstrap-datetimepicker-widget.dropdown-menu {
+			width: auto;
+		}
+		.datepicker-days {
+			font-size: 1.4rem;
+		}
+		#routedropdown {
+			min-height: 41px;
+		}
+		.gov-office-image { 
+			margin: 0 1em 1em 0;
+			vertical-align: middle; 
+		}
+		.chart-container {
+			min-height: 350px;
+			padding-bottom: 20px;
+			position: relative;
+		}
+		.btn-otp {
+			padding: 0.45em 2.5em;
+		}		
+		@media (min-width: 992px) {
+			.otp-table {
+				margin-top: 55px;
+			}
+		}
+		#container-day {
+			text-align: center;
+			display: none;
+		}
+		#container-day-table {
+			display: none;
+		}
+		.chartWrapper {
+			position: relative;	
+			margin-bottom: 28px;
+		}
+
+		.chartWrapper > canvas {
+			position: absolute;
+			left: 0;
+			top: 0;
+			pointer-events:none;
+		}
+		.chartAreaWrapper {
+			overflow-x: scroll;
+			position: relative;
+			width: 100%;
+		}
+		/* scrollbar */
+		::-webkit-scrollbar {
+		  width: 10px;
+		  height: 6px;
+		}
+
+		::-webkit-scrollbar-track {
+		  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		  -webkit-border-radius: 10px;
+		  border-radius: 10px;
+		}
+
+		::-webkit-scrollbar-thumb {
+		  -webkit-border-radius: 10px;
+		  border-radius: 10px;
+		  background: rgba(255, 255, 255, 0.3);
+		  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+		}
+
+		::-webkit-scrollbar-thumb:window-inactive {
+		  background: rgba(255, 255, 255, 0.3);
+		}
+		
+		h6 {
+			text-align: center;
+			color: #636363;
+		}
+	</style>
+</head>
+ 				<body class="">
+	
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH4K63" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="app">
+		 
+    <div class='header'>
+  <div class='header-inner container'>
+	  <div class="row">
+		  <div class="mdot-utility-wrapper">
+			  <div class="mdot-inner-wrapper">
+				  <div class="mdot-links">
+					  <ul>
+						  <li><a href="https://www.maryland.gov" target="_blank">Maryland.gov</a></li>
+						  <li><a href="https://www.doit.state.md.us/phonebook/" target="_blank">Phone Directory</a></li>
+						  <li><a href="https://www.maryland.gov/pages/agency_directory.aspx" target="_blank">State Agency</a></li>
+						  <li><a href="https://www.maryland.gov/pages/online_services.aspx" target="_blank">Online Services</a></li>
+						  <li><a href="#" id="translate" class="translate-button">Translate</a></li>
+						  						  	<li><a href="/login">Login</a></li>
+						  					  </ul>
+				  </div>
+				  <div class="search-wrapper">
+					  <form method="GET" action="https://www.maryland.gov/pages/search.aspx">
+						  <input type="hidden" name="name" value="MDOTMTA">
+						  <input type="hidden" name="site" value="gpedakpy1y0">
+						  <div class="form-element">
+							<label for="searchInputBox" class="visually-hidden">Search this site</label>
+						  	<input type="search" id="searchInputBox" name="q" class="mdgov_searchInputBox" value="Search" onblur="if(this.value=='')this.value='Search';" onfocus="if(this.value=='Search')this.value='';">
+						  </div>
+					  </form>
+				  </div>
+				  <div class="social-media-wrapper">
+					  <ul>
+						  <li><a href="https://www.facebook.com/mtamaryland" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i><span class="visually-hidden">MTA Facebook link</span></a></li>
+						  <li><a href="https://twitter.com/mtamaryland" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i><span class="visually-hidden">MTA Twitter link</span></a></li>
+						  <li><a href="https://www.instagram.com/mtamaryland/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i><span class="visually-hidden">MTA Instagram link</span></a></li>
+						  <li><a href="https://www.youtube.com/user/TheMTAMaryland" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><span class="visually-hidden">MTA YouTube link</span></a></li>
+						  <li><a href="https://www.linkedin.com/company/mtamaryland" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i><span class="visually-hidden">MTA LinkedIn link</span></a></li>
+					  </ul>
+				  </div>
+			  </div>
+		  </div>
+		  <div class='brand'>
+			  <div class="logos-wrapper">
+				  <div class="md-brand"><a href="https://www.maryland.gov" target="_blank"><img src="/img/brand/Maryland_Logo_rgb_black_102x75px.svg" alt="State of Maryland"></a></div>
+					<div class="brand-logo"><a href="/"><img src="/img/brand/mdot-logo.png" alt="Maryland Transit Administration"></a></div>
+					<!--<div class="brand-text-name"><a href="/">Maryland Transit Administration</a></div>-->
+			  </div>
+	    </div>
+	  </div>
+  </div>
+	<div class="header-nav">
+		<div class="tripplanner-nav-wrapper">
+	<button id="tripplanner-toggle"><i class="fa fa-map-marker" aria-hidden="true"></i><span class="hide-text">Trip Planner</span></button>
+	<ul class="tripplanner-mobile-nav">
+		<li><a href="/trip-planner"><i class="fa fa-map-marker" aria-hidden="true"></i> Trip Planner</a></li>
+		<li><a href="/realtime"><i class="fa fa-clock-o" aria-hidden="true"></i> Real Time Information</a></li>
+		<li><a href="/schedule"><i class="fa fa-calendar" aria-hidden="true"></i> Routes &amp; Schedules</a></li>
+		<li><a href="/service-alerts"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Service Alerts</a></li>
+	</ul>
+</div>	  <nav class="navbar primary-nav">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- Collapsed Hamburger -->
+            <button type="button" class="navbar-toggle" aria-expanded="false" data-toggle="collapse" data-target="#app-navbar-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="bars">
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+                </span>
+                <span class="text">Menu</span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="app-navbar-collapse">
+            <ul class="nav">
+                                    <li class="login-link"><a href="/login">Login</a></li>
+<li class="has-children"><a href="#">Getting Around</a>
+	<ul class="sublinks">
+		<li class="has-children"><a href="/schedule">Schedules & Routes</a>
+			<ul class="sublinks">
+                                <li><a href="/schedule?type=local-bus">Local Bus</a></li>
+                                <li><a href="/schedule?type=commuter-bus">Commuter Bus</a></li>
+				<li><a href="/schedule?type=marc-train">MARC Train</a></li>
+				<li><a href="/schedule?type=lightrail-link">Light RailLink</a></li>
+                               <li><a href="/schedule?type=metro-subwaylink">Metro SubwayLink</a></li>
+                               <li><a href="/mobility">MobilityLink</a></li>
+			</ul>
+		</li>
+               <li class="has-children"><a href="#">System Information</a>
+			<ul class="sublinks">
+                                <li><a href="/baltimorelink-basics">BaltimoreLink Basics</a></li>
+                                <li><a href="/infrastructure-improvements">Infrastructure Improvements</a></li>
+			</ul>
+		</li>
+               <li class="has-children"><a href="#">Service Development</a>
+			<ul class="sublinks">
+                                <li><a href="/bus-stop-design-guide">Bus Stop Design Guide</a></li>
+                                <li><a href="/bus-stop-rightsizing">Bus Stop Rightsizing Initiative</a></li>
+                                <li><a href="/servicechanges">Service Changes</a></li>  
+			</ul>
+		</li>
+		<li class="has-children"><a href="#">Fares</a>
+			<ul class="sublinks">
+                            <li><a class='' href='/schedule'>Schedules & Routes</a></li>
+                            <li><a class='' href='/regular-fares'>Regular Fares</a></li>
+                            <li><a class='' href='/marc-fares'>MARC Fares</a></li>
+                            <li><a class='' href="/commuterbus-fares">Commuter Bus Fares</a></li>
+                            <li><a class='' href='/special-fare-programs'>Special Fare Programs</a></li>
+                            <li><a class='' href='/pass-store'>Pass Store</a></li>
+                            <li><a class='' href='/transit-maps'>Transit Maps</a></li>
+                            <li><a class='' href='/fare-tariff-policy'>Fare Tariff Policy</a></li>	
+			</ul>
+		</li>
+                <li><a href="/trip-planner">Trip Planner</a></li>
+		<li class="has-children"><a href="#">Pass Store</a>
+			<ul class="sublinks">
+                                <li><a href="/charmpass">CharmPass</a></li>
+				<li><a href="/pass-store">Online Ordering</a></li>
+				<li><a href="/transit-store">Transit Store</a></li>
+				<li><a href="/marc-train-and-commuter-bus-tickets">MARC Train and Commuter Bus Tickets</a></li>
+				<li><a href="/walk-vendors">Walk In Vendors</a></li>
+				<li><a href="http://www.mtacharmcard.com/" target="_blank">CharmCard®</a></li>
+			</ul>
+		</li>
+                <li><a href="/transit-maps">Transit Maps</a></li>
+                <li><a href="/disruptions">Service Disruptions</a></li>
+                <li><a href="/winter-weather">Winter Weather Service Modifications</a></li>
+	</ul>
+</li>
+<li class="has-children"><a href="#">Business</a>
+<ul class="sublinks">
+	<li class="has-children"><a href="/procurements">Procurements</a>
+	<ul class="sublinks">
+		<li><a href="/solicitations">Bids/Solicitations</a></li>
+		<li><a href="/procurement-resources">Procurement Resources</a></li>
+		<li><a href="/procurement-staff-directory">Procurement Staff Directory</a></li>
+	</ul>
+	</li>
+        <li><a href="/advertising">Advertising / Sponsorships</a></li>
+        <li><a href="/mbe-dbe">Minority Disadvantaged Business Enterprise (M/DBE)</a></li>
+        <li><a href="/developer-resources">Developer Resources</a></li>
+        <li><a href="/adopt-a-stop">Adopt-A-Stop</a></li>
+</ul>
+</li>
+<li class="has-children"><a href="#">Community</a>
+<ul class="sublinks">
+	<li><a href="/public-hearings-meetings-updates">Public Hearings, Meetings & Updates</a></li>
+        <li><a href="/mta-community-outreach">MTA Community Outreach</a></li>
+        <li><a href="/youth-transit-council">Youth Transit Council</a></li>
+        <li><a href="/riderlab">Rider Experience Lab</a></li>
+        <!--li><a href="/students-and-youth-programs">Students and Youth Programs</a></li-->
+</ul>
+</li>
+<li class="has-children"><a href="#">Media</a>
+<ul class="sublinks">
+        <li><a href="/brochures-publications">Brochures & Publications</a></li>
+	<li><a href="/forms">Forms</a></li>
+        <li><a href="/mta-commuter-connections">MTA Commuter Connections</a></li>
+</ul>
+</li>
+<li class="has-children"><a href="#">Regional Transit</a>
+<ul class="sublinks">
+        <li><a href="https://rtp.mta.maryland.gov" target="_blank">Regional Transit Plan for Central Maryland</a></li>
+	<li><a href="/regional-transit-links">DC, Virginia, and Pennsylvania Transit Links</a></li>
+	<li><a href="/commuter-programs">Commuter Programs</a></li>
+	<li><a href="/lots">Locally Operated Transit Systems</a></li>
+	<li><a href="/sustainability">Sustainability Program</a></li>
+	<li><a href="/historic-preservation">Historic Preservation</a></li>
+	<li><a href="/transit-projects">Transit Projects & Studies</a></li>
+</ul>
+</li>
+<li class="has-children"><a href="about">About</a>
+<ul class="sublinks">
+	<li><a href="/about">Overview / Management Team</a></li>
+	<li><a href="/strategic-plan">MTA Strategic Plan</a></li>
+	<li><a href="/customer-experience-dashboard">Customer Experience Dashboard</a></li>
+	<li><a href="/performance-improvement">MTA Performance Improvement</a></li>
+	<li><a href="/mta-offices">MTA Departments</a></li>
+	<li><a href="/police">MTA Police</a></li>
+        <li><a href="/lost-and-found">Lost and Found</a></li>
+        <!--li><a href="/elevators-escalators">Elevator and Escalator Status</a></li-->
+	<li><a href="/employment-mta">Employment at MTA</a></li>
+	<li><a href="/mta-policies">MTA Policies</a></li>
+	<li><a href="/contact-mta">Contact MTA</a></li>
+        <li><a href="/accessibility">Accessibility / ADA</a></li>
+</ul>
+
+<li><a href="/thanksgiving-day-service">Thanksgiving Day Service</a></li>
+                            </ul>
+        </div>
+    </div>
+</nav>	</div>
+</div>    <div class="hero">
+	<div class="inner">
+			</div>
+</div>
+ 
+    <!-- Modal for various pages -->
+<div id="eventModal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close">&times;</span>
+			<h3 class="modal-title">Event Details</h3>
+		</div>
+		<div class="modal-body">
+			<p>&nbsp;</p>
+		</div>
+		<div class="modal-footer">
+			<p>&nbsp;</p>
+		</div>
+	</div>
+</div>
+
+<div class='main'>
+  <div class='main-inner'>
+    <div class="main-header">
+      <div class="main-header-inner">
+	      <!--
+		    <div class="text-sizer">
+		      <span class="text-size-label">Text Size:</span>
+		      <span class="font-sizes">
+						<span id="" class="normal btn btn-sm">N</span>
+						<span id="" class="sizeUp btn btn-sm">L</span>
+						<span id="" class="sizeUpXL btn btn-sm">XL</span>
+	        </span>
+	    	</div>
+	    	-->
+          <h1>MTA Performance Improvement</h1>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+	    <div class="row main-content">
+	      	      	      	        <div class="content has-sidebar col-sm-9 col-lg-10">
+	          <div class='content-inner'>
+	            
+	<div class='content-body'>
+		<div class="alert alert-warning">MTA has a new Customer Experience dashboard for on-time performance, ridership, service delivered, real-time information availability, and operator hiring efforts. <a href="https://mta.maryland.gov/customer-experience-dashboard">Click here to view</a>.</div>
+		
+		<p>MTA's mission is to provide safe, efficient, and reliable transit service across Maryland with world-class customer service. One way we are driving toward this goal is by tracking performance indicators that directly relate to the customer experience. With this in mind, two key metrics in determining our success are ridership and on-time performance (OTP).</p>               
+
+		<p>Prior to the launch of BaltimoreLink, OTP for MTA's core bus service was struggling at 59.5%. With the <a href="/baltimorelink-basics">implementation of BaltimoreLink</a>, including associated <a href="/infrastructure-improvements">infrastructure improvements</a> such as <a href="https://s3.amazonaws.com/mta-website-staging/mta-website-staging/files/System%20Information/DBL_Report_022019.pdf">dedicated bus lanes</a> and transit signal priority installation, OTP has risen to a high of 79.4% in February 2020.</p>        
+
+		<p>Internally, MTA is leveraging a data-driven approach and utilizing real-time GPS information to build better schedules that help deliver top quality service for our riders. Rather than relying on anecdotes, we're using accurate performance data to become more reliable than ever before.</p>
+		
+		<p>This performance website is an important step in MTA creating more transparency for our riders. The public now has access to the same data that MTA utilizes when developing schedules, planning routes, and monitoring service.</p>
+		
+		<p>It is important to note that bus route performance can vary greatly depending on traffic, time of day, weather, and a host of other factors. An individual route's performance on a single day is not indicative of the route's overall OTP.</p>
+
+		<!--p><a href="http://gopi.maryland.gov/" target="_blank" title="Governor's Office of Performance Improvement Link"><img alt="Changing Maryland for the Better" src="https://s3.amazonaws.com/mta-website-staging/mta-website-staging/files/change_md_for_better.jpg" style="font-size:0.8em; height:82px; line-height:1.2em; margin-left:10px; margin-right:10px; vertical-align:middle; width:80px" title="Changing Maryland for the Better" /></a>Click on logo to find more information on the Governor's Office of Performance Improvement.</p-->
+		
+		<div id="accordion">
+			<h3>On Time Performance by Mode</h3>
+			<div>
+				<p>On-Time Performance (OTP) is a key measurement tool for MTA that tracks how often the various transit modes are running on schedule, which reflects the reliability of our service. Meeting our OTP goals is essential for maintaining customer satisfaction and increasing ridership.</p>
+
+				<p>CityLink, LocalLink and Express BusLink by month, measured against scheduled timepoints. <a href="/mta-performance-improvement-archive">Click here</a> for archived bus OTP using schedule and headway adherence.</a></p>
+
+				<h6>Bus (CityLink, LocalLink, Express BusLink) On-Time Performance</h6>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-localbus-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-localbus-otp"></canvas></div-->
+				
+				<h6>MobilityLink On-Time Performance</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-mobility-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-mobility-otp"></canvas></div-->
+
+				<p>Metro SubwayLink on-time performance usually fluctuates between 93% and 97%. Light Rail on-time performance tends to fluctuate between 93% and 97%. MARC Train on-time performance typically falls between 87% and 93%.</p>
+
+				<h6>Metro SubwayLink On-Time Performance</h6>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-metro-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-metro-otp"></canvas></div-->
+				
+				<h6>Light RailLink On-Time Performance</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-lightrail-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-lightrail-otp"></canvas></div-->
+				
+				<h6>MARC On-Time Performance</h6>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-marc-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-marc-otp"></canvas></div-->
+
+				<!--p><strong>Commuter Bus</strong></p-->
+				<h6>Commuter Bus On-Time Performance</h6>
+
+				<p>MTA started using GPS trackers in March 2018 to calculate Commuter Bus on-time performance. Prior to that, on-time performance was calculated using contractor self reporting. This graph omits the contractor self reported data to avoid appearances of equivalency.</p>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-commuterbus-otp"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-commuterbus-otp"></canvas></div-->
+
+				<p><strong>OTP Goals:</strong><br />
+				Core Bus - 80%<br />
+				Light Rail - 95%<br />
+				Metro Subway - 95%<br />
+				MARC Train - 93%<br />
+				Mobility - 92%</p>
+
+				<p><strong>OTP Improvement Plan:</strong> Improving Local Bus OTP will be the main focus to better serve the largest number of riders. Data driven analysis guides the decision making process when it comes to improving OTP.</p>
+			</div>
+			
+			<h3>On Time Performance by Route</h3>						
+			<div>
+				<p>Look up on-time performance by route. Select the route and date range then hit submit for results. Note that large data ranges may result in slow queries.</p>				
+				
+				<form>
+					<input type="hidden" name="_token" value="BUhu5kshvPbiLcM4XSnKE8vxOjQg6OkIU36QgIFj">					<div class="row">
+						<div class="col-md-4 col-xs-12">
+							<div class="form-group">
+								<label for="routedropdown">Route</label> 
+								<select class="form-control" id="routedropdown" name="routedropdown">
+									<option value="All Bus Routes">All Bus Routes</option>
+																														<option value="21">21 -- Woodberry - Canton Crossing</option>
+																																								<option value="22">22 -- Mondawmin - Bayview</option>
+																																								<option value="26">26 -- Patapsco Station - Mondawmin</option>
+																																								<option value="28">28 -- Moravia - Rogers Ave Station</option>
+																																								<option value="29">29 -- Mondawmin - Brooklyn</option>
+																																								<option value="30">30 -- Rogers Ave - Hollander Ridge</option>
+																																								<option value="31">31 -- Sinai Hospital - Security Square</option>
+																																								<option value="33">33 -- Mt Washington Station - White Marsh</option>
+																																								<option value="34">34 -- Falls Rd/Greenspring - Catonsville</option>
+																																								<option value="36">36 -- Towson Town Center - Fox Ridge</option>
+																																								<option value="37">37 -- Old Court - UMBC/Catonsville</option>
+																																								<option value="38">38 -- Westgate - Medfield</option>
+																																								<option value="51">51 -- Towson - Downtown</option>
+																																								<option value="52">52 -- Greenmount North - Stella Maris</option>
+																																								<option value="53">53 -- State Center - Towson</option>
+																																								<option value="54">54 -- State Center - Carney/Hillendale</option>
+																																								<option value="56">56 -- Downtown - White Marsh</option>
+																																								<option value="57">57 -- Belair - Edison Circulator</option>
+																																								<option value="59">59 -- Moravia - Whispering Woods</option>
+																																								<option value="62">62 -- CCBC Essex - Turner Station</option>
+																																								<option value="63">63 -- Gardenville - Tradepoint Atlantic</option>
+																																								<option value="65">65 -- Downtown - Dundalk</option>
+																																								<option value="67">67 -- Downtown - Marley Neck</option>
+																																								<option value="69">69 -- Patapsco Station - Jumpers Hole</option>
+																																								<option value="70">70 -- Patapsco Station - Annapolis</option>
+																																								<option value="71">71 -- Downtown - Patapsco Station</option>
+																																								<option value="73">73 -- State Center - Patapsco Station</option>
+																																								<option value="75">75 -- Patapsco Station - Arundel Mills</option>
+																																								<option value="76">76 -- CCBC - Downtown</option>
+																																								<option value="77">77 -- West Baltimore MARC - Catonsville</option>
+																																								<option value="78">78 -- Downtown - CMS</option>
+																																								<option value="79">79 -- Mondawmin - CMS</option>
+																																								<option value="80">80 -- Downtown - Rogers Ave Station</option>
+																																								<option value="81">81 -- Deer Park - Milford Mill Station</option>
+																																								<option value="82">82 -- Park Circle - Reisterstown Plaza</option>
+																																								<option value="83">83 -- Mondawmin - Old Court Station</option>
+																																								<option value="85">85 -- North Ave LR - Milford Mill</option>
+																																								<option value="87">87 -- Glyndon - Owings Mills</option>
+																																								<option value="89">89 -- Rogers Ave - Owings Mills</option>
+																																								<option value="91">91 -- Mondawmin - Sinai Hospital</option>
+																																								<option value="92">92 -- Glen - Baas &amp; Talmudical</option>
+																																								<option value="93">93 -- Towson - Hunt Valley</option>
+																																								<option value="94">94 -- Fort McHenry - Sinai Hospital</option>
+																																								<option value="95">95 -- Downtown - Roland Park</option>
+																																								<option value="103">103 -- Downtown - Cromwell Bridge</option>
+																																								<option value="105">105 -- Cedonia - Downtown</option>
+																																								<option value="115">115 -- Downtown - Perry Hall</option>
+																																								<option value="120">120 -- White Marsh - Downtown/Hopkins</option>
+																																								<option value="150">150 -- Columbia - Downtown/Harbor East</option>
+																																								<option value="154">154 -- State Center - Carney/Hillendale</option>
+																																								<option value="160">160 -- Downtown/Hopkins - Essex</option>
+																																								<option value="CityLink BLUE">CityLink BLUE -- CMS - Johns Hopkins Bayview</option>
+																																								<option value="CityLink BROWN">CityLink BROWN -- Overlea - Downtown</option>
+																																								<option value="CityLink GOLD">CityLink GOLD -- Walbrook Junction - Canton</option>
+																																								<option value="CityLink GREEN">CityLink GREEN -- Downtown - Towson</option>
+																																								<option value="CityLink LIME">CityLink LIME -- NW Hospital - Harbor East</option>
+																																								<option value="CityLink NAVY">CityLink NAVY -- Mondawmin - Dundalk</option>
+																																								<option value="CityLink ORANGE">CityLink ORANGE -- Essex - West Baltimore MARC</option>
+																																								<option value="CityLink PINK">CityLink PINK -- Cedonia - West Baltimore MARC</option>
+																																								<option value="CityLink PURPLE">CityLink PURPLE -- City Hall - Paradise/Catonsville</option>
+																																								<option value="CityLink RED">CityLink RED -- Downtown - Towson/Lutherville</option>
+																																								<option value="CityLink SILVER">CityLink SILVER -- Curtis Bay - Hopkins/Morgan State</option>
+																																								<option value="CityLink YELLOW">CityLink YELLOW -- Mt Vernon - Patapsco</option>
+																																								<option value="163">163 -- West Baltimore MARC - Tradepoint</option>
+																																								<option value="32">32 -- Catonsville - Patapsco Station</option>
+																																								<option value="40">40 -- CMS - Essex</option>
+																											</select>
+							</div>
+						</div>
+						<div class='col-md-3 col-xs-12'>
+							<div class="form-group">
+								<label for="startTimePicker">Start Date</label> 
+							   <div class="input-group date" id="startTimePicker" data-target-input="nearest">
+									<input type="text" class="form-control datetimepicker-input" data-target="#startTimePicker"/>
+									<div class="input-group-append" data-target="#startTimePicker" data-toggle="datetimepicker">
+										<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-3 col-xs-12'>
+							<div class="form-group">
+								<label for="endTimePicker">End Date</label> 
+							   <div class="input-group date" id="endTimePicker" data-target-input="nearest">
+									<input type="text" class="form-control datetimepicker-input" data-target="#endTimePicker"/>
+									<div class="input-group-append" data-target="#endTimePicker" data-toggle="datetimepicker">
+										<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-2 col-xs-12'>
+							<div class="form-group">
+								<label for="submit" style="width:100%;">&nbsp;</label> 
+							    <button class="btn btn-default btn-submit btn-otp" type="submit" name="submit">Submit</button>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+				
+				<div class="alert alert-danger alert-dismissible">
+					&nbsp;
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-xs-12">
+						<div class="chart-container" id="container-total"><canvas id="chartjs-route-total"></canvas></div>
+					</div>
+					<div class="col-md-6 col-xs-12">
+						<table class="table table-striped table-bordered otp-table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Status</th>
+									<th scope="col">Timepoints</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><strong>On-Time</strong></td>
+									<td><span id="ontime">12,977</span> <span id="ontimepercent">(62.9%)</span></td>
+								</tr>
+								<tr>
+									<td><strong>Early</strong></td>
+									<td><span id="early">1,101</span> <span id="earlypercent">(5.3%)</span></td>
+								</tr>
+								<tr>
+									<td><strong>Late</strong></td>
+									<td><span id="late">6,549</span> <span id="latepercent">(31.7%)</span></td>
+								</tr>
+								<tr>
+									<td><strong>Total</strong></td>
+									<td><span id="total">20,627</span> (100%)</td>
+								</tr>
+							  </tbody>
+							</table>
+					</div>
+				</div>
+				
+				<div class="chart-container" id="container-day">
+					<img src="https://www.mta.maryland.gov/img/site/loading.gif" id="loading-indicator" style="display: none;" />
+					<!--canvas id="chartjs-route-day"></canvas-->
+				</div>
+				<div id="container-day-table">
+					<table class="table table-striped table-bordered otp-table-day">
+						<thead class="thead-dark">
+							<tr>
+							<th scope="col">Date</th>
+							<th scope="col">On-Time</th>
+							<th scope="col">Early</th>
+							<th scope="col">Late</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<h3>Ridership</h3>
+			<div>
+				<p>MTA measures the number of rides it provides in a metric called "Ridership." This metric is important because it allows the agency to understand how decisions and actions impact ridership levels. This data enables MTA to effectively make changes based on demand for our service, such as connecting riders to a new job center.</p>
+
+				<p>The local bus ridership ranges from 5 million to 6 million rides per month. June 2016 stands as a high watermark with roughly 6.8 million rides. Ridership saw growth in spring 2019 with decreases in the summer months when schools were on break.</p>
+
+				<h6>Bus (CityLink, LocalLink, Express BusLink) Ridership</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-localbus-ridership"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-localbus-ridership"></canvas></div-->
+				
+				<p class="ridership-anchor">Bus ridership by route by month is available from the following form. Select the route(s) along with the month and year to see results.</p>
+				
+				<div class="alert alert-danger alert-dismissible alert-ridership">
+					&nbsp;
+				</div>				
+				<form>
+					<input type="hidden" name="_token" value="BUhu5kshvPbiLcM4XSnKE8vxOjQg6OkIU36QgIFj">					<div class="row">
+						<div class="col-md-4 col-xs-12">
+							<div class="form-group">
+								<label for="routedropdown">Route</label> 
+								<select class="form-control" id="ridership-select-route" name="ridership-select-route">
+									<option value="All Bus Routes">All Bus Routes</option>
+																			<option value="21">21 -- Woodberry - Canton Crossing</option>
+																			<option value="22">22 -- Mondawmin - Bayview</option>
+																			<option value="26">26 -- Patapsco Station - Mondawmin</option>
+																			<option value="28">28 -- Moravia - Rogers Ave Station</option>
+																			<option value="29">29 -- Mondawmin - Brooklyn</option>
+																			<option value="30">30 -- Rogers Ave - Hollander Ridge</option>
+																			<option value="31">31 -- Sinai Hospital - Security Square</option>
+																			<option value="33">33 -- Mt Washington Station - White Marsh</option>
+																			<option value="34">34 -- Falls Rd/Greenspring - Catonsville</option>
+																			<option value="36">36 -- Towson Town Center - Fox Ridge</option>
+																			<option value="37">37 -- Old Court - UMBC/Catonsville</option>
+																			<option value="38">38 -- Westgate - Medfield</option>
+																			<option value="51">51 -- Towson - Downtown</option>
+																			<option value="52">52 -- Greenmount North - Stella Maris</option>
+																			<option value="53">53 -- State Center - Towson</option>
+																			<option value="54">54 -- State Center - Carney/Hillendale</option>
+																			<option value="56">56 -- Downtown - White Marsh</option>
+																			<option value="57">57 -- Belair - Edison Circulator</option>
+																			<option value="59">59 -- Moravia - Whispering Woods</option>
+																			<option value="62">62 -- CCBC Essex - Turner Station</option>
+																			<option value="63">63 -- Gardenville - Tradepoint Atlantic</option>
+																			<option value="65">65 -- Downtown - Dundalk</option>
+																			<option value="67">67 -- Downtown - Marley Neck</option>
+																			<option value="69">69 -- Patapsco Station - Jumpers Hole</option>
+																			<option value="70">70 -- Patapsco Station - Annapolis</option>
+																			<option value="71">71 -- Downtown - Patapsco Station</option>
+																			<option value="73">73 -- State Center - Patapsco Station</option>
+																			<option value="75">75 -- Patapsco Station - Arundel Mills</option>
+																			<option value="76">76 -- CCBC - Downtown</option>
+																			<option value="77">77 -- West Baltimore MARC - Catonsville</option>
+																			<option value="78">78 -- Downtown - CMS</option>
+																			<option value="79">79 -- Mondawmin - CMS</option>
+																			<option value="80">80 -- Downtown - Rogers Ave Station</option>
+																			<option value="81">81 -- Deer Park - Milford Mill Station</option>
+																			<option value="82">82 -- Park Circle - Reisterstown Plaza</option>
+																			<option value="83">83 -- Mondawmin - Old Court Station</option>
+																			<option value="85">85 -- North Ave LR - Milford Mill</option>
+																			<option value="87">87 -- Glyndon - Owings Mills</option>
+																			<option value="89">89 -- Rogers Ave - Owings Mills</option>
+																			<option value="91">91 -- Mondawmin - Sinai Hospital</option>
+																			<option value="92">92 -- Glen - Baas &amp; Talmudical</option>
+																			<option value="93">93 -- Towson - Hunt Valley</option>
+																			<option value="94">94 -- Fort McHenry - Sinai Hospital</option>
+																			<option value="95">95 -- Downtown - Roland Park</option>
+																			<option value="103">103 -- Downtown - Cromwell Bridge</option>
+																			<option value="105">105 -- Cedonia - Downtown</option>
+																			<option value="115">115 -- Downtown - Perry Hall</option>
+																			<option value="120">120 -- White Marsh - Downtown/Hopkins</option>
+																			<option value="150">150 -- Columbia - Downtown/Harbor East</option>
+																			<option value="154">154 -- State Center - Carney/Hillendale</option>
+																			<option value="160">160 -- Downtown/Hopkins - Essex</option>
+																			<option value="CityLink BLUE">CityLink BLUE -- CMS - Johns Hopkins Bayview</option>
+																			<option value="CityLink BROWN">CityLink BROWN -- Overlea - Downtown</option>
+																			<option value="CityLink GOLD">CityLink GOLD -- Walbrook Junction - Canton</option>
+																			<option value="CityLink GREEN">CityLink GREEN -- Downtown - Towson</option>
+																			<option value="CityLink LIME">CityLink LIME -- NW Hospital - Harbor East</option>
+																			<option value="CityLink NAVY">CityLink NAVY -- Mondawmin - Dundalk</option>
+																			<option value="CityLink ORANGE">CityLink ORANGE -- Essex - West Baltimore MARC</option>
+																			<option value="CityLink PINK">CityLink PINK -- Cedonia - West Baltimore MARC</option>
+																			<option value="CityLink PURPLE">CityLink PURPLE -- City Hall - Paradise/Catonsville</option>
+																			<option value="CityLink RED">CityLink RED -- Downtown - Towson/Lutherville</option>
+																			<option value="CityLink SILVER">CityLink SILVER -- Curtis Bay - Hopkins/Morgan State</option>
+																			<option value="CityLink YELLOW">CityLink YELLOW -- Mt Vernon - Patapsco</option>
+																			<option value="163">163 -- West Baltimore MARC - Tradepoint</option>
+																			<option value="32">32 -- Catonsville - Patapsco Station</option>
+																			<option value="40">40 -- CMS - Essex</option>
+																	</select>
+							</div>
+						</div>
+						<div class='col-md-3 col-xs-12'>
+							<div class="form-group">
+								<label for="ridership-select-month">Month</label> 
+								<select class="form-control" id="ridership-select-month" name="ridership-select-month">
+									<option value="january">January</option>
+									<option value="february">February</option>
+									<option value="march">March</option>
+									<option value="april">April</option>
+									<option value="may">May</option>
+									<option value="june">June</option>
+									<option value="july">July</option>
+									<option value="august">August</option>
+									<option value="september">September</option>
+									<option value="october">October</option>
+									<option value="november">November</option>
+									<option value="december">December</option>									
+								</select>
+							</div>
+						</div>
+						<div class='col-md-3 col-xs-12'>
+							<div class="form-group">
+								<label for="ridership-select-year">Year</label> 
+								<select class="form-control" id="ridership-select-year" name="ridership-select-year">
+									<option value="2025">2025</option>
+									<option value="2024">2024</option>
+									<option value="2023">2023</option>
+									<option value="2022">2022</option>	
+									<option value="2021">2021</option>	
+									<option value="2020">2020</option>	
+									<option value="2019">2019</option>	
+									<option value="2018">2018</option>					
+								</select>							
+							</div>
+						</div>
+						<div class='col-md-2 col-xs-12'>
+							<div class="form-group">
+								<label for="submit" style="width:100%;">&nbsp;</label> 
+							    <button class="btn btn-default btn-submit btn-ridership" type="submit" name="submit">Submit</button>
+							</div>
+						</div>
+					</div>
+					
+				</form>				
+				
+				<div id="container-ridership-table" style="display: none;">
+					<table class="table table-striped table-bordered otp-table-ridership">
+						<thead class="thead-dark">
+							<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Route</th>
+							<th scope="col">Ridership</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				
+				<hr/>
+
+				<p>The following graphs describe ridership for Metro SubwayLink, Light RailLink, MARC Train, and Commuter Bus. While Local Bus accounts for roughly 2/3 of all MTA ridership, the rail systems are the second most used modes averaging over 2 million rides per month.</p>
+
+				<h6>Metro SubwayLink Ridership</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-metro-ridership"></canvas></div>
+					</div>
+				</div>
+				
+				<p>As of November 2023, Metro ridership is counted manually at station entrances using a sampling plan. Prior to November 2023, Metro ridership was counted by faregate usage.</p>
+
+				<!--div class="chart-container"><canvas id="chartjs-metro-ridership"></canvas></div-->
+				
+				<h6>Light RailLink Ridership</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-lightrail-ridership"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-lightrail-ridership"></canvas></div-->
+				
+				<h6>MARC Ridership</h6>
+				
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-marc-ridership"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-marc-ridership"></canvas></div-->
+				
+				<h6>Commuter Bus Ridership</h6>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-commuterbus-ridership"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-commuterbus-ridership"></canvas></div-->
+
+				<h6>MobilityLink Ridership</h6>
+
+				<p>MobilityLink ridership remains steady over the last couple years with a high point of 184,368 riders in April 2018. Call-A-Ride volume has increased slightly since January 2016.</p>
+
+				<div class="chartWrapper vehicle-loc-feed-chart">
+					<div class="chartAreaWrapper vehicle-loc-feed-chart">
+						<div class="chart-container" style="width: 1800px"><canvas id="chartjs-mobility-ridership"></canvas></div>
+					</div>
+				</div>
+
+				<!--div class="chart-container"><canvas id="chartjs-mobility-ridership"></canvas></div-->
+
+				<p><strong>Ridership Goal:</strong> Improve existing service to help increase ridership on all MTA modes.</p>
+
+				<p><strong>Ridership Improvement Plan:</strong> Continually improve the customer experience by increasing on-time performance, and the overall level of MTA customer service. Additionally, focus on connecting more people with jobs and opportunities in the region by meeting the changing needs of new and current job centers and residential developments.</p>
+			</div>
+
+			<h3>Abbreviations, Terminology &amp; Notes</h3>
+
+			<div>
+				<p>The following list describes abbreviations and terms, and provides notes to clarify language used on this web page.</p>
+
+				<ol>
+					<li>Mode - A type of transit service. MTA has six modes (Local Bus, Metro SubwayLink, Light RailLink, MARC Train, Commuter Bus, and MobilityLink).</li>
+					<li>Ridership - A measure of passenger trips on a mode. The industry term is "unlinked-passenger-trips." It should not be confused with the number of people who ride MTA's service because a single person tends to ride the system multiple times a day. Likewise, because MTA does not track people as they move through the system, a person who transfers from one bus to another is counted as two distinct rides. This is in line with how transit systems report ridership across the nation.</li>
+					<li>OTP (On-Time Performance) - A measure of how often service arrives on time. MTA uses the measure of two minutes early to seven minutes late when determining whether a local bus is on-time. For Commuter Bus and Express BusLink, early arrivals to drop-off zones are viewed as on-time.</li>
+					<li>Timepoint - A stop that with an explicitly scheduled arrival time.</li>
+				</ol>
+			</div>
+		</div>
+
+		<script>
+			$(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+				if(e.keyCode == 13) {
+					e.preventDefault();
+					return false;
+				}
+			});
+			$(document).ready(function() {
+				$(".alert-danger").hide();
+				
+				$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+							
+				var earlyOtp = 1101;
+				var onTimeOtp = 12977;
+				var lateOtp = 6549;
+				var totalOtp = 20627;
+				
+				// Tempus Dominus Bootstrap 4 DateTimePicker initialize
+				$(function () {
+					$('#startTimePicker').datetimepicker({
+						date: moment().subtract(14, 'days').calendar(),
+						format: 'MM/DD/YYYY',
+						widgetPositioning: {
+							vertical: "bottom",
+							horizontal: "auto"
+						},
+						minDate: '04/01/2018',
+						//maxDate: moment().subtract(14, 'days').calendar()
+						maxDate: '08/23/2025'
+					});
+					$('#endTimePicker').datetimepicker({
+						date: moment().subtract(14, 'days').calendar(),
+						format: 'MM/DD/YYYY',
+						widgetPositioning: {
+							vertical: "bottom",
+							horizontal: "auto"
+						},
+						minDate: '04/01/2018',
+						//maxDate: moment().subtract(14, 'days').calendar()						
+						maxDate: '08/23/2025'
+					});
+					$('#startTimePicker').on("change.datetimepicker", function (e) {
+						// get around tempus dominus input field bug by re-setting the 'date' based on input field change
+						$(this).datetimepicker({format: 'MM/DD/YYYY', date: null});
+						$(this).datetimepicker('date', moment($("#startTimePicker").find('input').val(), 'MM/DD/YYYY').toDate());
+						$('#endTimePicker').datetimepicker('minDate', e.date);
+					});
+					$('#endTimePicker').on("change.datetimepicker", function (e) {
+						// get around tempus dominus input field bug by re-setting the 'date' based on input field change
+						$(this).datetimepicker({format: 'MM/DD/YYYY', date: null});
+						$(this).datetimepicker('date', moment($("#endTimePicker").find('input').val(), 'MM/DD/YYYY').toDate());
+						$('#startTimePicker').datetimepicker('maxDate', e.date);
+					});
+				});		
+
+				$(".btn-otp").click(function(e){
+					e.preventDefault();			
+					$(".btn-submit").attr("disabled",true);					
+					$('#loading-indicator').show();										
+					$('#container-day').css('display','block');
+					
+					//alert($("#startTimePicker").find('input').val());
+					//alert($("#endTimePicker").find('input').val());
+					
+					var start_date = $('#startTimePicker').data("datetimepicker").date().unix();
+					var end_date = $('#endTimePicker').data("datetimepicker").date().unix();
+					var route_name = $("#routedropdown").val();
+					// Total OTP
+					$.ajax({
+						type:'POST',
+						url:'/performance-improvement',
+						data:{start_date: start_date, end_date: end_date, route_name: route_name, time: 'total'},
+						success:function(data){
+							if (typeof data.error === "undefined") {								
+								$(".alert-danger").hide();					
+								updateOTPTotal(data);
+								// process response
+							}
+							else {							
+								$(".alert-danger").show();
+								var errorMsg = "";
+								$.each(data.error, function(index, element){ // (index,element) = (key,value)
+									if (element != "")
+										errorMsg += "<li>"+element+"</li>";
+								});
+								$(".alert-danger").html("<ul>"+errorMsg+"</ul>");
+							}
+						},
+						error:function(data){
+							$(".alert-danger").show();
+							var errorMsg = "";
+							$.each(data.error, function(index, element){ // (index,element) = (key,value)
+								if (element != "")
+									errorMsg += "<li>"+element+"</li>";
+							});
+							$(".alert-danger").html("<ul>"+errorMsg+"</ul>");
+						},
+						complete:function() {
+							//$(".btn-submit").attr("disabled",false);
+						}
+					}); // ajax
+					// By Day OTP
+					$.ajax({
+						type:'POST',
+						url:'/performance-improvement',
+						data:{start_date: start_date, end_date: end_date, route_name: route_name, time: 'day'},
+						beforeSend:function(){		
+							$('#chartjs-route-day').hide();
+							$('#container-day-table').hide();
+						},
+						success:function(data){
+							if (typeof data.error === "undefined") {								
+								$(".alert-danger").hide();	
+								updateOTPDay(data);
+							}
+							else {							
+								$(".alert-danger").show();
+								var errorMsg = "";
+								$.each(data.error, function(index, element){ // (index,element) = (key,value)
+									if (element != "")
+										errorMsg += "<li>"+element+"</li>";
+								});
+								$(".alert-danger").html("<ul>"+errorMsg+"</ul>");
+							}
+						},
+						error:function(data){
+							$(".alert-danger").show();
+							var errorMsg = "";
+							$.each(data.error, function(index, element){ // (index,element) = (key,value)
+								if (element != "")
+									errorMsg += "<li>"+element+"</li>";
+							});
+							$(".alert-danger").html("<ul>"+errorMsg+"</ul>");
+						},
+						complete:function() {
+							$(".btn-submit").attr("disabled",false);							
+							$('#loading-indicator').hide();
+							$('#chart-js-route-day').show();
+							$('#contrainer-day-table').show();
+						}
+					}); // ajax
+				}); // btn-otp
+				
+				$(".btn-ridership").click(function(e){
+					e.preventDefault();			
+					$(".btn-ridership").attr("disabled",true);		
+					
+					//alert($("#startTimePicker").find('input').val());
+					//alert($("#endTimePicker").find('input').val());
+					
+					var month = $("#ridership-select-month").val();
+					var year = $("#ridership-select-year").val();
+					var route_name = $("#ridership-select-route").val();
+					// By Day OTP
+					$.ajax({
+						type:'POST',
+						url:'/performance-improvement/ridership',
+						data:{month: month, year: year, route_name: route_name},
+						beforeSend:function(){		
+							$('#container-ridership-table').hide();
+						},
+						success:function(data){
+							if (typeof data.error === "undefined") {								
+								$(".alert-ridership").hide();	
+								console.log(data.ridership);
+								
+								$('.otp-table-ridership > tbody').html(data.ridership);
+							}
+							else {							
+								$(".alert-ridership").show();
+								var errorMsg = "";
+								$.each(data.error, function(index, element){ // (index,element) = (key,value)
+									if (element != "")
+										errorMsg += "<li>"+element+"</li>";
+								});
+								$(".alert-ridership").html("<ul>"+errorMsg+"</ul>");
+							}
+						},
+						error:function(data){
+							$(".alert-ridership").show();
+							var errorMsg = "";
+							$.each(data.error, function(index, element){ // (index,element) = (key,value)
+								if (element != "")
+									errorMsg += "<li>"+element+"</li>";
+							});
+							$(".alert-ridership").html("<ul>"+errorMsg+"</ul>");
+						},
+						complete:function() {
+							$(".btn-ridership").attr("disabled",false);	
+							$('#container-ridership-table').show();
+							
+							// scroll back to top of table							
+							$('.ridership-anchor').get(0).scrollIntoView();
+						}
+					}); // ajax
+				}); // btn-ridership
+				/**** BY ROUTE ****/
+				
+				// TOTAL DOUGHNUT CHART
+				var ctx = document.getElementById("chartjs-route-total").getContext('2d');
+				var byRouteTotal = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: ['Early', 'On-Time', 'Late'],
+						datasets: [{
+							data: [earlyOtp / totalOtp * 100, onTimeOtp / totalOtp * 100, lateOtp / totalOtp * 100],
+							backgroundColor: ['rgba(255, 97, 130, 1)',
+											  'rgba(68, 193, 168, 1)',
+											  'rgba(255, 207, 73, 1)']							
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: true,
+							text: 'On-Time Performance - All Bus Routes',
+							fontSize: 18
+						},
+						legend: {
+							display: true
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									//get the concerned dataset
+									var dataset = data.datasets[tooltipItem.datasetIndex];
+									//calculate the total of this data set
+									var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+									return previousValue + currentValue;
+									});
+									//get the current items value
+									var currentValue = dataset.data[tooltipItem.index];
+									//calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+									var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+									return currentValue.toFixed(1) + "%";
+								}
+							}
+						}
+					}
+				});
+				
+				
+				/*********** BY MODE ***********/
+				
+				// LOCAL BUS OTP CHART
+				var ctx = document.getElementById("chartjs-localbus-otp").getContext('2d');
+				var busOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25','06/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['62.7','64.7','60.8','63.2','62.9','63.0','61.0','61.4','63.0','64.4','63.3','65.6','64.7','64.6','63.7','65.2','68.8','66.9','67.6','67.9','67.2','67.4','65.5','63.9','68.9','68.1','68.9','66.80','69.20','68.0','68.4','68.2','68.1','70.1','70.8','71.4','70.7','68.1','70.2','68.4','70.7','66.5','68.7','71.6','74.0','76.3','79.4','77.6','71.2','71.4','72.5','72.9','72.7','73.5','73.5','73.4','73.3','74.08','73.55','75.10','74.9','74.4','74.6','75.4','74.4','72.8','73.0','74.0','73.0','75.0','75.4','75.3','74.1','73.8','74.0','74.2','74.0','70.1','71.6','72.5','72.5','73.3','74.4','74.5','73.6','72.4','74.0','73.66','72.94','69.8','70.6','70.6','71.8','71.2','73.4','75.0','73.8','72.2','72.7','74.1','73.5','72.1','72.0','74.4','75.4','75.8','76.2','75.6','75.9','73.0','73.8'],
+							backgroundColor: 'rgba(163, 11, 51, 1)',
+							borderColor: [
+								'rgba(163, 11, 51, 1)'
+							],
+							fill: false
+						}/*,
+						{
+							label: 'Headway-based',
+							data: ['NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','74.2','73.9','76.4','75.4','76.2','75.5','75.4','74.8','76.3','72.9','72.0','70.8','71.8','72.40','68.60','67.30','70.7','69.2','69.9','69.7'],
+							backgroundColor: 'rgba(7, 178, 241, 1)',
+							borderColor: [
+								'rgba(7, 178, 241, 1)',
+							],
+							fill: false
+						}*/]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 50,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Bus (CityLink, LocalLink, Express BusLink) On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+				// MOBILITY OTP CHART
+				var ctx = document.getElementById("chartjs-mobility-otp").getContext('2d');
+				var mobilityOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['94.9','94.6','94.8','94.7','92.5','87.5','91.2','91.7','94.1','95.0','94.3','93.9','94.1','93.3','94.7','94.7','95.5','93.1','92.9','92.6','93.9','95.2','92.4','93.4','92.6','91.3','92.4','92.5','92.1','87.4','85.55','87.68','89.34','90.20','83.0','81.00','74.21','76.71','87.7','89.8','90.12','85.1','89.7','92.5','88.0','90.15','85.7','87.7','98.19','98.55','96.62','96.5','95.7','95.6','95.4','95.0','94.2','94.3','91.3','84.4','79.9','76.2','71.2','70.1','67.5','59.2','67.0','69.0','70.0','87.1','80.3','73.3','81.2','81.8','89.8','93.5','94.7','92.6','92.1','92.0','92.5','94.7','94.9','94.3','94.2','93.4','93.7','94.0','94.4','92.6','92.7','93.5','91.2','91.8','87.6','86.4','87.3','91.5','93.3','94.1','94.1','91.3','92.9','94.9','94.7','95.5','92.8','93.4','93.8','92.6'],
+							backgroundColor: 'rgba(60, 180, 75, 1.0)',
+							borderColor: [
+								'rgba(60, 180, 75, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 50,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'MobilityLink On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+
+				// METRO OTP CHART
+				var ctx = document.getElementById("chartjs-metro-otp").getContext('2d');
+				var metroOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['98.0','98.0','95.7','96.0','93.0','97.0','98.0','98.0','96.0','96.0','99.0','98.0','95.0','95.0','97.0','93.0','94.0','93.0','88.0','95.0','92.0','88.0','94.0','99.0','98.0','95.0','95.9','96.0','96.0','94.0','87.0','90.0','95.0','91.0','95.0','98.0','92.0','95.0','95.0','96.0','97.0','99.0','97.0','98.0','98.0','95.0','98.0','92.0','99.0','99.0','98.0','79.0','66.0','73.0','70.0','71.0','51.0','45.0','57.0','85.0','85.0','74.0','91.7','87.5','87.9','93.1','92.0','96.0','90.0','86.4','92.2','91.8','89.8','93.5','74.6','83.5','81.2','86.0','85.6','84.7','88.3','73.9','84.5','88.3','93.3','93.2','91.8','92.5','87.2','81.1','84.5','92.5','93.1','69.6','73.9','82.5','83.0','79.1','79.7','81.0','70.2','69.6','61.3','66.2','53.4','33.6','62.6','75.6','90.3','93.4'],
+							backgroundColor: 'rgba(145, 30, 180, 1.0)',
+							borderColor: [
+								'rgba(145, 30, 180, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 30,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Metro SubwayLink On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+				// LIGHT RAIL OTP CHART
+				var ctx = document.getElementById("chartjs-lightrail-otp").getContext('2d');
+				var lightrailOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['98.2','99.0','97.0','95.9','97.0','98.9','98.5','97.6','91.4','96.0','96.3','94.4','96.7','98.6','89.0','98.8','90.5','96.0','90.1','93.1','92.9','95.5','91.1','95.2','96.7','95.5','98.2','96.3','96.7','96.3','94.1','94.22','94.6','91.3','96','98.0','95.4','89.6','92.0','95.9','93.0','89.6','90.9','94.5','92.6','93.3','85.6','93.5','97.5','98.8','97.3','97.4','93.4','95.4','96.0','94.0','96.7','98.3','97.8','95.1','97.4','94.4','96.3','96.7','94.7','98.3','94.0','95.5','93.0','91.8','93.9','86.2','89.0','89.0','80.5','82.7','88.5','86.9','89.4','91.1','85.4','91.4','91.6','87.6','91.9','82.2','88.1','86.8','86.8','89.2','94.1','91.2','47.4','92.3','95.8','95.7','95.4','94.4','94.8','86.6','88.5','86.8','88.0','77.0','70.6','77.3','90.9','90.9','94.7','92.7'],
+							backgroundColor: 'rgba(70, 240, 240, 1.0)',
+							borderColor: [
+								'rgba(70, 240, 240, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 40,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Light RailLink On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+				// MARC OTP CHART
+				var ctx = document.getElementById("chartjs-marc-otp").getContext('2d');
+				var marcOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['96.0','92.0','94.0','93.0','91.0','91.0','92.0','90.0','94.0','94.0','87.0','93.0','94.0','88.0','90.0','94.7','88.5','90.6','91.8','91.2','94.9','91.6','93.2','90.8','88.8','85.4','86.5','74','83','85.0','90.0','86.7','92.8','90.7','93.0','89','89.25','87.3','88.4','81.3','91.2','91.7','91.7','92.7','91.3','94.8','92.76','94.8','97.5','97.5','92.7','88.6','89.8','86.2','90.5','90.0','93.3','96.7','92.8','95.7','96.5','93.0','97.3','96.6','93.0','94.6','93.0','92.0','96.0','91.3','94.8','93.4','93.8','91.9','92.3','90.5','88.6','91.8','91.1','93.3','92.1','90.3','92.7','91.6','87.9','93.0','88.0','84.5','90.3','85.8','89.8','90.2','91.2','91.0','92.4','93.6','89.5','86.6','84.5','81.9','84.7','88.5','90.8','91.3','90.1','90.0','89.2','91.4','92.5','85.7'],
+							backgroundColor: 'rgba(245, 130, 48, 1.0)',
+							borderColor: [
+								'rgba(245, 130, 48, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 50,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'MARC On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+				// COMMUTER BUS OTP CHART
+				var ctx = document.getElementById("chartjs-commuterbus-otp").getContext('2d');
+				var commuterbusOTPChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19', '02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'Schedule-based',
+							data: ['NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','NaN','88.3','75.8','78.0','78.6','82.6','86.7','83.5','83.8','83.5','84.7','87.0','86.0','84.0','80.58','80.3','79.98','75.87','79.9','81.4','79.7','79.3','78.1','82.6','84.8','91.1','95.4','97.1','97.4','97.8','97.8','97.9','97.6','97.4','94.0','97.5','97.2','96.9','97.1','98.0','98.0','94.3','97.3','92.8','94.0','93.0','95.0','95.4','94.5','91.8','92.9','91.9','92.7','94.9','95.3','92.3','92.7','93.3','90.8','92.6','92.1','81.9','82.4','81.2','81.8','87.6','89.3','80.6','81.1','82.6','85.6','84.1','85.0','80.9','81.5','78.6','80.2','87.2','88.8','80.2','81.4','85.2','83.5','86.0','82.6','76.3','72.5','73.7'],
+							backgroundColor: 'rgba(128, 128, 0, 1.0)',
+							borderColor: [
+								'rgba(128, 128, 0, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 50,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label+'%';
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Commuter Bus On-Time Performance',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel + ' %';
+								  }
+							}
+						}
+					}
+				});
+
+
+				// LOCAL BUS RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-localbus-ridership").getContext('2d');
+				var busRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							data: ['6299156','6422347','6734460','5806917','5892721','6324120','6121802','5723705','5759107','5548671','5292804','5695266','5391218','6074057','5957079','4847782','5312305','5816290','5758416','5362899','5030429','4636633','4914393','5175989','5452153','5884661','5538662','5139517','5494904','5518380','5518380','6122867','5245924','5044798','4454529','5315978','5393676','5821031','5553484','5322525','5373930','5781091','6002061','5275149','5092210','5271482','5065252','4369242','2487632','2524203','2874500','3229857','3302329','3184192','3420190','2942440','2743407','2670341','2302010','2844829','2906539','2879306','2944773','3067228','2853961','3597253','3691076','3454580','3542147','2929134','2973952','3513609','3408119','3684678','3446311','3244494','3448693','4090325','4236172','3837337','3744225','3860423','4298171','3957961','3653007','4271223','3942067','3642510','3962602','4253234','4494641','4018215','3885185','3910256','3492570','3887689','4204084','4469415','3817738','3807316','3911742','4431387','4879919','4204719','3969659','3947841','3616227','4307981','4104830','4363439'],
+							backgroundColor: 'rgba(163, 11, 51, 1)',
+							borderColor: [
+								'rgba(163, 11, 51, 1)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 2000000,
+									max: 7000000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Bus (CityLink, LocalLink, Express BusLink) Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+
+				// MOBILITY RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-mobility-ridership").getContext('2d');
+				var mobilityRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							label: 'MobilityLink',
+							data: ['169991','171191','173178','165927','177244','171202','174434','167419','164991','163499','160100','173528','169708','183018','177206','170762','185288','175042','185705','177645','167104','168009','164850','175164','184368','192651','182654','182725','193744','173391','198826','178363','172752','174189','157957','182824','180312','181933','174203','184710','186750','176315','192673','175399','172166','178137','175168','115210','43744','46182','59674','73894','76619','82951','88377','81908','82938','83108','75296','98121','100347','96937','100009','102525','104673','94774','100777','102040','99860','89483','100011','125667','124844','135429','142992','141529','146676','157014','161662','157904','153690','158221','154151','176568','161803','176286','168423','166310','182066','172624','183987','239033','238863','227876','248961','266381','277187','288336','270798','290543','295499','292114','322251','312079','302859','294727','298915','329990','342381','344359'], 
+							backgroundColor: 'rgba(60, 180, 75, 1.0)',
+							borderColor: [
+								'rgba(60, 180, 75, 1.0)'
+							],
+							fill: false
+						},
+						{
+							label: 'Call-A-Ride',
+							data: ['50548','51266','44611','51393','51012','56768','59638','52280','56498','53585','55401','68915','66742','63333','62082','73294','60634','71009','72741','64499','62034','60690','63032','66460','70957','73572','73468','64779','67495','62368','76482','71579','65642','61772','72550','79214','73965','75153','68858','77647','80433','76204','75323','75012','75147','72003','69525','69633','39679','40018','48953','52419','48306','47535','51242','49221','44548','40881','35392','43273','39754','37379','46398','43957','40861','41813','46471','43581','44792','43508','36260','49541','42670','37887','36241','37104','38650','39804','41985','43687','33597','40488','37367','41473','41623','47839','50916','56588','55878','62696','69018','63605','71423'],
+							backgroundColor: 'rgba(255, 225, 25, 1.0)',
+							borderColor: [
+								'rgba(255, 225, 25, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 20000,
+									max: 400000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'MobilityLink & Call-A-Ride Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: true
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+
+				// METRO RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-metro-ridership").getContext('2d');
+				var metroRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							data: ['964545','1009507','1015678','908282','871504','996233','968386','875358','836314','866137','870592','904330','895282','944782','1022871','914897','936602','909556','901908','778601','734355','694577','204377','447978','727687','767167','721058','703388','756291','650119','672035','579043','527215','519770','511670','557604','620719','605342','601490','710759','695095','711517','720369','630571','579668','610904','612593','403897','102385','107465','129654','163514','166089','161032','153824','123662','110395','97541','85130','129087','151631','140363','135729','190243','182457','196110','189094','279407','246697','180979','169665','181171','156707','154944','126891','96462','168586','227588','235609','165742','126565','127287','116193','132207','143963','120481','95442','58192','80019','86090','113375','378665','400122','380013','412103','429282','425712','431978','462761','505127','538095','483375','511645','397110','510247','504430','446861','503219','393938','391603'],
+							backgroundColor: 'rgba(145, 30, 180, 1.0)',
+							borderColor: [
+								'rgba(145, 30, 180, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 0,
+									max: 1200000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Metro SubwayLink Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+
+				// LIGHT RAIL RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-lightrail-ridership").getContext('2d');
+				var lightrailRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							data: ['647986','662804','654986','650423','661647','658055','675857','676745','582466','525856','454084','591136','634600','568433','620794','624860','667295','588925','641895','632311','626998','662704','526424','658669','612892','581097','577236','586313','617849','530276','613696','520810','512968','601126','533924','593761','596244','594223','533610','327648','400514','610254','628360','562875','536849','592653','537641','271313','46857','52787','81166','182120','213551','219963','227647','193349','185484','178117','156857','218663','252361','222564','202821','212497','230792','249607','305274','263608','225445','202205','188805','226433','268028','239194','298558','317249','367477','364208','311800','253571','225063','222588','179261','203533','309366','352425','327644','326541','378434','356431','300047','413622','176864','408861','403248','383576','405382','408241','509843','469642','475531','425542','513407','474086','391341','386213','370244','409312','420913','455767'],
+							backgroundColor: 'rgba(70, 240, 240, 1.0)',
+							borderColor: [
+								'rgba(70, 240, 240, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 0,
+									max: 700000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Light RailLink Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+
+				// MARC RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-marc-ridership").getContext('2d');
+				var marcRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							data: ['728099','750777','845341','763579','837985','778089','771480','752999','706714','700501','680674','783088','750220','821839','838214','751044','835373','750690','811309','741477','683732','749257','715861','806806','788330','854073','834458','754471','806413','708641','814564','751413','685685','657938','616024','713713','751250','824896','782190','814399','806608','760599','855182','709587','684541','786730','759503','405238','26178','27604','44077','73103','75440','77476','74813','54341','58429','52494','50250','55420','53853','94768','125342','152014','151189','176624','171074','187157','158631','123294','153521','229937','236388','250835','260557','250261','273365','265722','274797','258151','239733','258361','265107','330189','301409','338713','320843','298932','328867','313773','342045','322061','260780','292980','322051','355142','372932','375534','352382','360907','365400','340440','408460','329846','311478','305788','336841','493969','536555','491704'],
+							backgroundColor: 'rgba(245, 130, 48, 1.0)',
+							borderColor: [
+								'rgba(245, 130, 48, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 0,
+									max: 900000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'MARC Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+
+				// COMMUTER BUS RIDERSHIP CHART
+				var ctx = document.getElementById("chartjs-commuterbus-ridership").getContext('2d');
+				var commuterbusRidershipChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: ['04/16','05/16','06/16','07/16','08/16','09/16','10/16','11/16','12/16','01/17','02/17','03/17','04/17','05/17','06/17','07/17','08/17','09/17','10/17','11/17','12/17','01/18','02/18','03/18','04/18','05/18','06/18','07/18','08/18','09/18','10/18','11/18','12/18','01/19','02/19','03/19','04/19','05/19','06/19','07/19','08/19','09/19','10/19','11/19','12/19','01/20','02/20','03/20','04/20','05/20','06/20','07/20','08/20','09/20','10/20','11/20','12/20','01/21','02/21','03/21','04/21','05/21','06/21','07/21','08/21','09/21','10/21','11/21','12/21','01/22','02/22','03/22','04/22','05/22','06/22','07/22','08/22','09/22','10/22','11/22','12/22','01/23','02/23','03/23','04/23','05/23','06/23','07/23','08/23','09/23','10/23','11/23','12/23','01/24','02/24','03/24','04/24','05/24','06/24','07/24','08/24','09/24','10/24','11/24','12/24','01/25','02/25','03/25','04/25','05/25'],
+						datasets: [{
+							data: ['334987','336144','359091','310482','359689','334166','325032','305915','288460','290626','306957','347864','310371','344916','341576','301187','359892','317602','340147','303814','270814','314612','297397','316714','330881','345921','342648','315030','345566','297943','349323','284802','238776','246207','273243','317277','331464','325832','298124','317659','315629','303590','340239','263870','256038','308345','286434','168930','17326','16444','25531','34146','35695','41243','43059','30555','32325','22966','26718','39198','39097','38023','48157','53811','56928','61559','61800','61297','56981','44988','56603','83975','85024','92275','93495','90607','104492','99380','98601','91835','79287','97546','94911','114476','99458','112952','106308','98441','117759','104923','115052','97567','86822','102651','113106','109141','122504','120056','104098','99123','106128','106000','116763','88827','84295','82067','101048','163204','172416','157071'],
+							backgroundColor: 'rgba(128, 128, 0, 1.0)',
+							borderColor: [
+								'rgba(128, 128, 0, 1.0)'
+							],
+							fill: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:false,
+									min: 0,
+									max: 380000,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: false
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: false,
+							text: 'Commuter Bus Ridership',
+							fontSize: 18
+						},
+						legend: {
+							display: false
+						},
+						tooltips: {
+							callbacks: {
+								  label: function(tooltipItems, data) {
+									  return tooltipItems.yLabel.toLocaleString();
+								  }
+							}
+						}
+					}
+				});
+				
+			 });
+			 
+			function updateOTPTotal(data) {				
+				var onTimeOtp = data.onTime;
+				var earlyOtp = data.early;
+				var lateOtp = data.late;
+				var totalOtp = data.total;	
+				
+				// make sure values aren't zero
+				// they will be zero if service is looked up on a day it doesn't run
+				// eg, the 120 on a Saturday or Sunday
+				
+				if (totalOtp != 0) {				
+					// on-time
+					$("#ontime").html(onTimeOtp.toLocaleString() + "");
+					$("#ontimepercent").html('(' + (onTimeOtp / totalOtp * 100).toFixed(1) + '%)');
+					// early
+					$("#early").html(earlyOtp.toLocaleString() + "");
+					$("#earlypercent").html('(' + (earlyOtp / totalOtp * 100).toFixed(1) + '%)');
+					// late
+					$("#late").html(lateOtp.toLocaleString() + "");
+					$("#latepercent").html('(' + (lateOtp / totalOtp * 100).toFixed(1) + '%)');
+					// total
+					$("#total").html(totalOtp.toLocaleString() + "");
+					
+					$('#chartjs-route-total').remove(); // clear <canvas>
+					$('#container-total').append('<canvas id="chartjs-route-total"></canvas>'); // create new canvas					
+					$('#container-total').css('display','block');
+					
+					// TOTAL DOUGHNUT CHART
+					var ctx = document.getElementById("chartjs-route-total").getContext('2d');
+					var byRouteTotal = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ['Early', 'On-Time', 'Late'],
+							datasets: [{
+								data: [earlyOtp / totalOtp * 100, onTimeOtp / totalOtp * 100, lateOtp / totalOtp * 100],
+								backgroundColor: ['rgba(255, 97, 130, 1)',
+												  'rgba(68, 193, 168, 1)',
+												  'rgba(255, 207, 73, 1)']							
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							title: {
+								display: true,
+								text: 'On-Time Performance - ' + decodeURI($("#routedropdown").val()),
+								fontSize: 18
+							},
+							legend: {
+								display: true
+							},
+							tooltips: {
+								callbacks: {
+									label: function(tooltipItem, data) {
+										//get the concerned dataset
+										var dataset = data.datasets[tooltipItem.datasetIndex];
+										//calculate the total of this data set
+										var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+										return previousValue + currentValue;
+										});
+										//get the current items value
+										var currentValue = dataset.data[tooltipItem.index];
+										//calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+										var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+										return currentValue.toFixed(1) + "%";
+									}
+								}
+							}
+						} // options
+					}); // chart
+				
+				} // otp not zero
+				else {
+					// on-time
+					$("#ontime").html('No service recorded');
+					$("#ontimepercent").html('0%');
+					// early
+					$("#early").html('No service recorded');
+					$("#earlypercent").html('0%');
+					// late
+					$("#late").html('No service recorded');
+					$("#latepercent").html('0%');
+					// total
+					$("#total").html('No service recorded');
+					
+					$('#chartjs-route-total').remove(); // clear <canvas>
+					$('#container-total').css('display','none');
+					
+				}
+				 
+			}
+			
+			function updateOTPDay(data) {	
+				var onTimeArr = data.onTimeArr;
+				var earlyArr = data.earlyArr;
+				var lateArr = data.lateArr;
+				var totalArr = data.totalArr;	
+				var dateArr = data.dateArr;
+				
+				var otpType = dateArr.length != 1 ? 'line' : 'bar';
+				
+				// // make sure values aren't zero
+				// // they will be zero if service is looked up on a day it doesn't run
+				// // eg, the 120 on a Saturday or Sunday
+							
+				// // on-time
+				// $("#ontime").html(onTimeOtp.toLocaleString() + " Stops");
+				// $("#ontimepercent").html('(' + (onTimeOtp / totalOtp * 100).toFixed(1) + '%)');
+				// // early
+				// $("#early").html(earlyOtp.toLocaleString() + " Stops");
+				// $("#earlypercent").html('(' + (earlyOtp / totalOtp * 100).toFixed(1) + '%)');
+				// // late
+				// $("#late").html(lateOtp.toLocaleString() + " Stops");
+				// $("#latepercent").html('(' + (lateOtp / totalOtp * 100).toFixed(1) + '%)');
+				// // total
+				// $("#total").html(totalOtp.toLocaleString() + " Stops");
+				
+				$('#chartjs-route-day').remove(); // clear <canvas>
+				$('#container-day').append('<canvas id="chartjs-route-day"></canvas>'); // create new canvas					
+				$('#container-day').css('display','block');
+				$('#container-day-table').css('display','block');
+				
+				// BY DAY LINE CHART
+				var ctx = document.getElementById("chartjs-route-day").getContext('2d');
+				var byRouteDay = new Chart(ctx, {
+					type: otpType,
+					data: {
+						labels: dateArr,
+						datasets: [{
+							label: 'Early',
+							data: earlyArr,
+							backgroundColor: 'rgba(255, 97, 130, 1)',
+							borderColor: 'rgba(255, 97, 130, 1)',
+							fill: false,
+							spanGaps: false
+						},
+						{
+							label: 'On-Time',
+							data: onTimeArr,
+							backgroundColor: 'rgba(68, 193, 168, 1)',
+							borderColor: 'rgba(68, 193, 168, 1)',
+							fill: false,
+							spanGaps: false
+						},
+						{
+							label: 'Late',
+							data: lateArr,
+							backgroundColor: 'rgba(255, 207, 73, 1)',
+							borderColor: 'rgba(255, 207, 73, 1)',
+							fill: false,
+							spanGaps: false
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:true,
+									min: 0,
+									max: 100,
+									callback: function(label, index, labels) {
+											  return label.toLocaleString();
+									}
+								}
+							}],
+							xAxes: [{
+								ticks: {
+									autoSkip: true
+								}
+							}]
+						},
+						responsive: true,
+						maintainAspectRatio: false,
+						title: {
+							display: true,
+							text: 'On-Time Performance By Day - ' + decodeURI($("#routedropdown").val()),
+							fontSize: 18
+						},
+						legend: {
+							display: true
+						},
+						tooltips: {
+							callbacks: {
+								label: function(tooltipItem, data) {
+									//get the concerned dataset
+									var dataset = data.datasets[tooltipItem.datasetIndex];
+									//calculate the total of this data set
+									var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+									return previousValue + currentValue;
+									});
+									//get the current items value
+									var currentValue = dataset.data[tooltipItem.index];
+									//calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+									var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+									return currentValue.toFixed(1) + "%";
+								}
+							}
+						}
+					}
+				}); // chart
+				
+				// clear table
+				$('.otp-table-day tbody').html("");
+				// fill in table
+				for (i = 0; i < dateArr.length; i++) {
+					if (earlyArr[i] == 'NaN' && lateArr[i] == 'NaN') {
+						// no early, no late, didn't run
+						$('.otp-table-day tbody').append('<tr>'+
+															'<td>'+dateArr[i]+'</td>'+
+															'<td>No service recorded</td>'+
+															'<td>No service recorded</td>'+
+															'<td>No service recorded</td>'+
+														 '</tr>');
+					}
+					else {
+						$('.otp-table-day tbody').append('<tr>'+
+															'<td>'+dateArr[i]+'</td>'+
+															'<td>'+onTimeArr[i].toFixed(1)+'%</td>'+
+															'<td>'+earlyArr[i].toFixed(1)+'%</td>'+
+															'<td>'+lateArr[i].toFixed(1)+'%</td>'+
+														 '</tr>');
+					}
+				}
+				 
+			}
+		</script>
+	</div>
+ 
+	          </div>
+	        </div>
+	        <div class="sidebar col-sm-3 col-lg-2">
+	          <div class='sidebar-inner'>
+	            			<ul class="submenu">
+<li><a class='' href='/about'>Overview / Management Team</a></li>
+<li><a class='' href='/mta-performance-improvement'>MTA Performance Improvement</a></li>
+<li><a class='' href='/mta-offices'>MTA Departments</a></li>
+<li><a class='' href='/police'>MTA Police</a></li>
+<li><a class='' href='/employment-mta'>Employment at MTA</a></li>
+<li><a class='' href='/mta-policies'>MTA Policies</a></li>
+<li><a class='' href='/contact-mta'>Contact MTA</a></li>
+</ul>
+		          </div>
+	        </div>
+	           
+	    </div>
+	
+	    <div class="row main-footer">
+	      <div class="text-center">
+	        	      </div>
+    	</div>
+    	
+    </div>
+  </div>
+</div>    <div class='footer'>
+  <!--div class='footer-inner container'>
+    <div class='row'>
+	    <div class='col-sm-6 first'>
+	      <div class='footer-left '><div class="footer-menu-desktop">
+<ul>
+	<li><a href="/employment-mta">Careers</a></li>
+	<li><a href="/accessibility">Accessibility / ADA</a></li>
+	<li><a href="/title-vi-civil-rights-act-1964">Title VI</a></li>
+	<li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+	<li><a href="/contact-mta">Contact MTA</a></li>
+	<li><a class="translate-button" href="#" id="translate-footer">Translate</a></li>
+</ul>
+</div>
+
+<div class="mobile social-media-wrapper">
+<p>Connect with us</p>
+
+<ul>
+	<li><a href="https://www.facebook.com/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-facebook"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Facebook link</span></a></li>
+	<li><a href="https://twitter.com/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-twitter"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Twitter link</span></a></li>
+	<li><a href="https://www.instagram.com/mtamaryland/" target="_blank"><span aria-hidden="true" class="fa fa-instagram"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Instagram link</span></a></li>
+	<li><a href="https://www.youtube.com/user/TheMTAMaryland" target="_blank"><span aria-hidden="true" class="fa fa-youtube-play"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA YouTube link</span></a></li>
+	<li><a href="https://www.linkedin.com/company/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-linkedin"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA LinkedIn link</span></a></li>
+</ul>
+</div>
+
+<div class="footer-address">
+<p>Transit Information Contact Center: <strong>410.539.5000</strong><br />
+Toll Free: <strong>1.866.RIDE MTA (1.866.743.3682)</strong><br />
+MD Relay Users Dial <strong>7-1-1</strong></p>
+
+<p><strong>Monday through Friday 6:00am - 7:00pm</strong></p>
+
+<img alt="Report Waste, Fraud, or Abuse to the Office of Legislative Audits" src="https://s3.amazonaws.com/mta-website-staging/mta-website-staging/files/stopFraud.jpg" />
+<p style="font-size:15px; margin-top:20px">To report Waste, Fraud, or Abuse to the Office of Legislative Audits, <a href="https://www.ola.state.md.us/fraud/ola-fraud-hotline/" style="text-decoration: underline; color: #fff;" target="_blank">click here</a></p>
+
+<p style="font-size:15px"><strong><u style="text-decoration:underline">Human Trafficking GET HELP</u></strong><br />
+National Human Trafficking Hotline - 24/7 Confidential<br />
+<a href="tel:18883737888" style="color:#fff;">1-888-373-7888</a> | <a href="tel:233733" style="color:#fff;">233733</a></p>
+</div>
+
+<div class="footer-menus-mobile">
+<ul>
+	<li><a href="http://www.mdot.maryland.gov/" target="_blank">MDOT MTA</a></li>
+	<li><a href="/employment-mta">Careers</a></li>
+	<li><a href="/accessibility">Accessibility / ADA</a></li>
+	<li><a href="/title-vi-civil-rights-act-1964">Title VI</a></li>
+</ul>
+
+<ul>
+	<li><a href="http://www.maryland.gov/" target="_blank">Maryland.gov</a></li>
+	<li><a href="http://www.doit.state.md.us/phonebook/" target="_blank">Phone Directory</a></li>
+	<li><a href="http://www.maryland.gov/pages/agency_directory.aspx" target="_blank">State Agencies</a></li>
+	<li><a href="http://www.maryland.gov/pages/online_services.aspx" target="_blank">Online Services</a></li>
+</ul>
+</div></div>
+      </div>
+      <div class="col-sm-6 second">
+	      <div class='footer-right '>
+		      <div class="desktop social-media-wrapper">
+<p>Connect with us</p>
+
+<ul>
+	<li><a href="https://www.facebook.com/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-facebook"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Facebook link</span></a></li>
+	<li><a href="https://twitter.com/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-twitter"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Twitter link</span></a></li>
+	<li><a href="https://www.instagram.com/mtamaryland/" target="_blank"><span aria-hidden="true" class="fa fa-instagram"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA Instagram link</span></a></li>
+	<li><a href="https://www.youtube.com/user/TheMTAMaryland" target="_blank"><span aria-hidden="true" class="fa fa-youtube-play"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA YouTube link</span></a></li>
+	<li><a href="https://www.linkedin.com/company/mtamaryland" target="_blank"><span aria-hidden="true" class="fa fa-linkedin"><img src="https://s3.amazonaws.com/mta-website-staging/spacer.png" style="height:0px" /></span><span class="hide-text">MTA LinkedIn link</span></a></li>
+</ul>
+</div>
+
+<div class="footer-contact-mobile">
+<ul>
+	<li><a href="/contact-mta">Contact MTA</a></li>
+	<li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+	<li><a href="/terms-conditions">Privacy Policy</a></li>
+	<li><a class="translate-link translate-button" href="#">Translate</a></li>
+</ul>
+</div>
+		      <div class="governor-footer-image"><a href="https://governor.maryland.gov/" target="_blank"><img src="https://governor.maryland.gov/images/governor_agy.jpg" alt="Governor's Office"></a></div>
+		      <div class="md-gov-image"><a href="https://www.maryland.gov/" target="_blank"><img src="/img/brand/mdot-logo-white.png" alt="MDOT logo"></a></div>
+		    </div>
+	    </div>
+    </div>
+  </div-->
+  <div class="container footer-inner">
+<div class="row">
+<div class="col-sm-6 first">
+<div class="footer-left">
+<div class="footer-menu-desktop">
+<ul>
+	<li><a href="/employment-mta">Careers</a></li>
+	<li><a href="/accessibility">Accessibility / ADA</a></li>
+	<li><a href="/title-vi-civil-rights-act-1964">Title VI</a></li>
+	<li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+	<li><a href="https://es.mta.maryland.gov/" target="_blank">Espanol</a></li>
+	<li><a href="/contact-mta">Contact MTA</a></li>
+	<li><a class="translate-button" href="#" id="translate-footer">Translate</a></li>
+</ul>
+</div>
+
+<div class="mobile social-media-wrapper">
+<p>Connect with us</p>
+
+<ul>
+	<li><a href="https://www.facebook.com/mtamaryland" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i><span class="visually-hidden">MTA on Facebook</span></a></li>
+	<li><a href="https://twitter.com/mtamaryland" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i><span class="visually-hidden">MTA on X</span></a></li>
+	<li><a href="https://www.instagram.com/mtamaryland/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i><span class="visually-hidden">MTA on Instagram</span></a></li>
+	<li><a href="https://www.youtube.com/user/TheMTAMaryland" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><span class="visually-hidden">MTA on YouTube</span></a></li>
+	<li><a href="https://www.linkedin.com/company/mtamaryland" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i><span class="visually-hidden">MTA on LinkedIn</span></a></li>
+</ul>
+</div>
+
+<div class="footer-address">
+<p>Transit Information Contact Center: <strong>410.539.5000</strong><br />
+Toll Free: <strong>1.866.RIDE MTA (1.866.743.3682)</strong><br />
+TTY: <strong>410.539.3497</strong></p>
+
+<p><strong>Monday through Friday 6:00am - 7:00pm</strong></p>
+<!--img alt="Report Waste, Fraud, or Abuse to the Office of Legislative Audits" src="https://s3.amazonaws.com/mta-website-staging/mta-website-staging/files/stopFraud.jpg">
+					<p style="font-size:15px; margin-top:20px">To report Waste, Fraud, or Abuse to the Office of Legislative Audits, <a href="https://www.ola.state.md.us/fraud/ola-fraud-hotline/" style="text-decoration: underline; color: #fff;" target="_blank">click here</a></p>
+
+					<p style="font-size: 15px;"><strong><u style="text-decoration:underline">Human Trafficking GET HELP</u></strong><br>
+					National Human Trafficking Hotline - 24/7 Confidential<br>
+					<a href="tel:18883737888" style="color:#fff;">1-888-373-7888</a> | <a href="tel:233733" style="color:#fff;">233733</a></p--></div>
+
+<div class="footer-menus-mobile">
+<ul>
+	<li><a href="http://www.mdot.maryland.gov/" target="_blank">MDOT MTA</a></li>
+	<li><a href="/employment-mta">Careers</a></li>
+	<li><a href="/accessibility">Accessibility / ADA</a></li>
+	<li><a href="/title-vi-civil-rights-act-1964">Title VI</a></li>
+</ul>
+
+<ul>
+	<li><a href="http://www.maryland.gov/" target="_blank">Maryland.gov</a></li>
+	<li><a href="http://www.doit.state.md.us/phonebook/" target="_blank">Phone Directory</a></li>
+	<li><a href="http://www.maryland.gov/pages/agency_directory.aspx" target="_blank">State Agencies</a></li>
+	<li><a href="http://www.maryland.gov/pages/online_services.aspx" target="_blank">Online Services</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="col-sm-6 second">
+<div class="footer-right">
+<div class="desktop social-media-wrapper">
+<p>Connect with us</p>
+
+<ul>
+	<li><a href="https://www.facebook.com/mtamaryland" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i><span class="visually-hidden">MTA on Facebook</span></a></li>
+	<li><a href="https://twitter.com/mtamaryland" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i><span class="visually-hidden">MTA on X</span></a></li>
+	<li><a href="https://www.instagram.com/mtamaryland/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i><span class="visually-hidden">MTA on Instagram</span></a></li>
+	<li><a href="https://www.youtube.com/user/TheMTAMaryland" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i><span class="visually-hidden">MTA on YouTube</span></a></li>
+	<li><a href="https://www.linkedin.com/company/mtamaryland" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i><span class="visually-hidden">MTA on LinkedIn</span></a></li>
+</ul>
+</div>
+
+<div class="footer-contact-mobile">
+<ul>
+	<li><a href="/contact-mta">Contact MTA</a></li>
+	<li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+	<li><a class="translate-link translate-button" href="#">Translate</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<hr style="margin-top: 22px; margin-bottom: 22px;" />
+<div class="row">
+<div class="col-md-3">
+<div class="governor-footer-image"><a href="https://governor.maryland.gov/" target="_blank"><img alt="Governor's Office" src="https://governor.maryland.gov/images/governor_agy.jpg" /></a></div>
+
+<div class="md-gov-image"><a href="https://www.maryland.gov/" target="_blank"><img alt="MDOT logo" src="/img/brand/mdot-logo-white.png" /></a></div>
+</div>
+
+<div class="col-md-3">
+<h2 class="h3" style="margin-top:0px">Human Trafficking <strong>GET HELP</strong></h2>
+
+<p>National Human Trafficking Hotline - 24/7 Confidential</p>
+<a class="btn btn-block btn-primary" href="tel:1-888-373-7888">1-888-373-7888</a> <a class="btn btn-block btn-primary" href="tel:233733"> 233733</a> <a class="btn btn-block btn-link text-center" href="https://goccp.maryland.gov/victims/rights-resources/human-trafficking/" target="_blank"> More Information <span class="sr-only"> on human trafficking in Maryland</span></a></div>
+
+<div class="col-md-3">
+<div class="row">
+<div class="col-md-12">
+<h2 class="h3" style="margin-top:0px">Customer Service Promise</h2>
+
+<p>The State of Maryland pledges to provide constituents, businesses, customers, and stakeholders with friendly and courteous, timely and responsive, accurate and consistent, accessible and convenient, and truthful and transparent services.</p>
+<a class="btn btn-block btn-primary" href="http://www.maryland.gov/pages/customerservice.aspx" target="_blank">Take Our Survey</a></div>
+</div>
+</div>
+
+<div class="col-md-3">
+<h2 class="h3" style="margin-top:0px">Help Stop Fraud in State Government</h2>
+
+<p>The Maryland General Assembly&rsquo;s Office of Legislative Audits operates a toll-free fraud hotline to receive allegations of fraud and/or abuse of State government resources. Information reported to the hotline in the past has helped to eliminate certain fraudulent activities and protect State resources.</p>
+<a class="btn btn-block btn-primary" href="https://www.ola.state.md.us/fraud/ola-fraud-hotline/" target="_blank">More Information</a></div>
+</div>
+</div>
+</div>
+    <div class="mobile-sticky-footer">
+	<a class="btn routes" href="/schedule"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hide-text">Routes &amp; Schedules</span></a>
+	<a class="btn real-time" href="/realtime"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="hide-text">Real Time Information</span></a>
+	<a class="btn trip-planner" href="/trip-planner"><i class="fa fa-map-marker" aria-hidden="true"></i><span class="hide-text">Trip Planner</span></a>
+	<a class="btn alerts" href="/service-alerts"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span class="hide-text">Service Alerts</span></a>
+</div>    <div id="languages" class="g-languages-popup" style="display:none;">
+	<div class="container">
+		<a href="#" class="close-languages close-btn"><i class="fa fa-times-circle-o" aria-hidden="true"></i><span>Close</span></a>
+		<div class="row clearfix">
+			<div class="LangDesc col-sm-12" id="BeginLink" style="margin-top: 30px; padding-top: 0;">
+				<p>Using the translate feature with screen reading software requires having the synthesizer for the foreign language you request already installed on your screen reader.  NVDA users should use the e-Speak NG synthesizer. JAWS users should download and install Vocalizer Expressive voices. VoiceOver and Narrator users should download the appropriate voices directly from Apple and Microsoft.  To view the disclaimer, press down arrow until you hear the words “view disclaimer” and press enter.</p>
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-sm-4">
+				<ul>
+					<li><a href="#" class="disclaimer-button">View Disclaimer</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=es" class="translateLink">Spanish</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=zh-CN" class="translateLink">Chinese - Simplified</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=zh-TW" class="translateLink">Chinese - Traditional</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=af" class="mdgov_iaLink translateLink">Afrikaans </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sq" class="mdgov_iaLink translateLink">Albanian - shqiptar</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=am" class="mdgov_iaLink translateLink">Amharic - አማርኛ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ar" class="mdgov_iaLink translateLink">Arabic -  عربى </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=hy" class="mdgov_iaLink translateLink">Armenian -Հայերէն </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=az" class="mdgov_iaLink translateLink">Azerbaijani - Azərbaycan</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=eu" class="mdgov_iaLink translateLink">Basque - Euskal </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=be" class="mdgov_iaLink translateLink">Belarusian -беларускі</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=bn" class="mdgov_iaLink translateLink">Bengali - বাঙালি</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=bs" class="mdgov_iaLink translateLink">Bosnian -  bBosanski </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=bg" class="mdgov_iaLink translateLink">Bulgarian - български </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ca" class="mdgov_iaLink translateLink">Catalan - Català</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ceb" class="mdgov_iaLink translateLink">Cebuano</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ny" class="mdgov_iaLink translateLink">Chichewa</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=co" class="mdgov_iaLink translateLink">Corsican - Corsu</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=hr" class="mdgov_iaLink translateLink">Croatian - hrvatski</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=cs" class="mdgov_iaLink translateLink">Czech - čeština</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=da" class="mdgov_iaLink translateLink">Danish - dansk</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=nl" class="mdgov_iaLink translateLink">Dutch - Nederlands</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=eo" class="mdgov_iaLink translateLink">Esperanto</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=et" class="mdgov_iaLink translateLink">Estonian - Eesti keel</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=tl" class="mdgov_iaLink translateLink">Filipino</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=fi" class="mdgov_iaLink translateLink">Finnish - Suomalainen</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=fr" class="mdgov_iaLink translateLink">French - français</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=fy" class="mdgov_iaLink translateLink">Frisian - Frysk</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=gl" class="mdgov_iaLink translateLink">Galician - Galego</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ka" class="mdgov_iaLink translateLink">Georgian - ქართული</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=de" class="mdgov_iaLink translateLink">German - Deutsche</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=el" class="mdgov_iaLink translateLink">Greek - Ελληνικά</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=gu" class="mdgov_iaLink translateLink">Gujarati - ગુજરાતી</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-4">
+				<ul>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ht" class="mdgov_iaLink translateLink">Haitian Creole - Kreyòl Ayisyen</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ha" class="mdgov_iaLink translateLink">Hausa</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=haw" class="mdgov_iaLink translateLink">Hawaiian - ʻŌlelo Hawaiʻi</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=iw" class="mdgov_iaLink translateLink">Hebrew - עִברִית</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=hi" class="mdgov_iaLink translateLink">Hindi - हिंदी</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=hmn" class="mdgov_iaLink translateLink">Hmong - Hmoob</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=hu" class="mdgov_iaLink translateLink">Hungarian - Magyar</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=is" class="mdgov_iaLink translateLink">Icelandic - Íslensku</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ig" class="mdgov_iaLink translateLink">Igbo</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=id" class="mdgov_iaLink translateLink">Indonesian - bahasa Indonesia</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ga" class="mdgov_iaLink translateLink">Irish - Gaeilge</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=it" class="mdgov_iaLink translateLink">Italian - italiano</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ja" class="mdgov_iaLink translateLink">Japanese - 日本語</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=jw" class="mdgov_iaLink translateLink">Javanese - Wong Jawa</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=kn" class="mdgov_iaLink translateLink">Kannada - ಕನ್ನಡ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=kk" class="mdgov_iaLink translateLink">Kazakh - Қазақша</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=km" class="mdgov_iaLink translateLink">Khmer - ភាសាខ្មែរ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ko" class="mdgov_iaLink translateLink">Korean - 한국어</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ku" class="mdgov_iaLink translateLink">Kurdish (Kurmanji) - Kurdî</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ky" class="mdgov_iaLink translateLink">Kyrgyz - Кыргызча</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=lo" class="mdgov_iaLink translateLink">Lao - ລາວ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=la" class="mdgov_iaLink translateLink">Latin - Latine</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=lv" class="mdgov_iaLink translateLink">Latvian - Latviešu</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=lt" class="mdgov_iaLink translateLink">Lithuanian - Lietuviškai</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=lb" class="mdgov_iaLink translateLink">Luxembourgish - lëtzebuergesch</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mk" class="mdgov_iaLink translateLink">Macedonian - Македонски</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mg" class="mdgov_iaLink translateLink">Malagasy</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ms" class="mdgov_iaLink translateLink">Malay - Melayu</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ml" class="mdgov_iaLink translateLink">Malayalam - മലയാളം</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mt" class="mdgov_iaLink translateLink">Maltese - Malti</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mi" class="mdgov_iaLink translateLink">Maori</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mr" class="mdgov_iaLink translateLink">Marathi - मराठी</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=mn" class="mdgov_iaLink translateLink">Mongolian - Монгол хэл</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=my" class="mdgov_iaLink translateLink">Myanmar (Burmese) </a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ne" class="mdgov_iaLink translateLink">Nepali - नेपाली</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=no" class="mdgov_iaLink translateLink">Norwegian - norsk</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-4">
+				<ul>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ps" class="mdgov_iaLink translateLink">Pashto - پښتو</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=fa" class="mdgov_iaLink translateLink">Persian - فارسی</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=pl" class="mdgov_iaLink translateLink">Polish - Polskie</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=pt" class="mdgov_iaLink translateLink">Portuguese - Português</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=pa" class="mdgov_iaLink translateLink">Punjabi - ਪੰਜਾਬੀ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ro" class="mdgov_iaLink translateLink">Romanian - Română</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ru" class="mdgov_iaLink translateLink">Russian - русский</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sm" class="mdgov_iaLink translateLink">Samoan - Samoa</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=gd" class="mdgov_iaLink translateLink">Scots Gaelic - Gàidhlig na h-Alba</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sr" class="mdgov_iaLink translateLink">Serbian - Српски</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=st" class="mdgov_iaLink translateLink">Sesotho</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sn" class="mdgov_iaLink translateLink">Shona</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sd" class="mdgov_iaLink translateLink">Sindhi - سنڌي</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=si" class="mdgov_iaLink translateLink">Sinhala - සිංහල</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sk" class="mdgov_iaLink translateLink">Slovak - slovenský</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sl" class="mdgov_iaLink translateLink">Slovenian - Slovenščina</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=so" class="mdgov_iaLink translateLink">Somali</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=su" class="mdgov_iaLink translateLink">Sundanese - Sunda</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sw" class="mdgov_iaLink translateLink">Swahili - Kiswahili</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=sv" class="mdgov_iaLink translateLink">Swedish - svenska</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=tg" class="mdgov_iaLink translateLink">Tajik - Тоҷикӣ</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ta" class="mdgov_iaLink translateLink">Tamil - தமிழ்</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=te" class="mdgov_iaLink translateLink">Telugu - తెలుగు</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=th" class="mdgov_iaLink translateLink">Thai - ไทย</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=tr" class="mdgov_iaLink translateLink">Turkish - Türk</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=uk" class="mdgov_iaLink translateLink">Ukrainian - Українська</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=ur" class="mdgov_iaLink translateLink">Urdu - اردو</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=uz" class="mdgov_iaLink translateLink">Uzbek - O"zbek</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=vi" class="mdgov_iaLink translateLink">Vietnamese - Tiếng Việt</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=cy" class="mdgov_iaLink translateLink">Welsh - Cymraeg</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=xh" class="mdgov_iaLink translateLink">Xhosa - isiXhosa</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=yi" class="mdgov_iaLink translateLink">Yiddish - ייִדיש</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=yo" class="mdgov_iaLink translateLink">Yoruba - Yorùbá</a></li>
+					<li><a href="http://translate.google.com/translate?hl=en&amp;sl=en&amp;u=https://www.mta.maryland.gov/performance-improvement&amp;tl=zu" class="mdgov_iaLink translateLink">Zulu</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="gtranslate-message-block" id="translateMessage" style="display: none;">
+	<div class="container">
+		<a href="#" class="close-translate close-btn"><i class="fa fa-times-circle-o" aria-hidden="true"></i><span>Close</span></a>
+		<form id="translateForm" style="background: white;">
+			<label for="dislclaimerLanguageSelect">View Disclaimer in: </label>
+			<select id="dislclaimerLanguageSelect" class="dislclaimerLanguageSelect-button" name="dislclaimerLanguageSelect">
+				<option value="English">English</option>
+				<option value="Spanish">Spanish</option>
+				<option value="ChineseS">Chinese - Simplified</option>
+				<option value="ChineseT">Chinese - Traditional</option>
+			</select>
+			<div id="English" class="Disclaimer" style="display: inherit;">
+				<h5>Google Translate Disclaimer</h5>
+				<p>The Maryland Department of Information Technology (“DoIT”) offers translations of the content through Google Translate. Because Google Translate is an external website, DoIT does not control the quality or accuracy of translated content. All DoIT content is filtered through Google Translate which may result in unexpected and unpredictable degradation of portions of text, images and the general appearance on translated pages. Google Translate may maintain unique privacy and use policies. These policies are not controlled by DoIT and are not associated with DoIT’s privacy and use policies. After selecting a translation option, users will be notified that they are leaving DoIT’s website. Users should consult the original English content on DoIT’s website if there are any questions about the translated content.</p>
+				<p>DoIT uses Google Translate to provide language translations of its content. Google Translate is a free, automated service that relies on data and technology ​​​to provide its translations. The Google Translate feature is provided for informational purposes only. Translations cannot be guaranteed as exact or without the inclusion of incorrect or inappropriate language. Google Translate is a third-party service and site users will be leaving DoIT to utilize translated content. As such, DoIT does not guarantee and does not accept responsibility for, the accuracy, reliability, or performance of this service nor the limitations provided by this service, such as the inability to translate specific files like PDFs and graphics (e.g. .jpgs, .gifs, etc.).</p>
+				<p>DoIT provides Google Translate as an online tool for its users, but DoIT does not directly endorse the website or imply that it is the only solution available to users. All site visitors may choose to use alternate tools for their translation needs. Any individuals or parties that use DoIT content in translated form, whether by Google Translate or by any other translation services, do so at their own risk. DoIT is not liable for any loss or damages arising out of, or issues related to, the use of or reliance on translated content. DoIT assumes no liability for any site visitor’s activities in connection with use of the Google Translate functionality or content.</p>
+				<p>The Google Translate service is a means by which DoIT offers translations of content and is meant solely for the convenience of non-English speaking users of the website. The translated content is provided directly and dynamically by Google; DoIT has no direct control over the translated content as it appears using this tool. Therefore, in all contexts, the English content, as directly provided by DoIT is to be held authoritative.</p>
+			</div>
+			<div id="Spanish" class="Disclaimer" style="display: none;">
+				<h5>Exención de Responsabilidad del Traductor Google</h5>
+				<p>El Departamento de Tecnología de la Información de Maryland (DoIT, siglas en inglés) ofrece traducciones del contenido a través del Traductor Google (Google Translate). Debido a que el Traductor Google es un sitio web externo, el DoIT no controla la calidad o exactitud del contenido traducido. Todo el contenido del DoIT es filtrado a través del Traductor Google lo que puede resultar en una degradación inesperada o impredecible de porciones del texto, imágenes y la apariencia general de las páginas traducidas. El Traductor Google puede mantener una política de uso y privacidad únicas. Estas políticas no son controladas por el DoIT y no están asociadas con las políticas de privacidad y uso del DoIT. Después de seleccionar una opción de traducción, los usuarios serán notificados de que están abandonando el sitio web del DoIT. Los usuarios deben consultar el contenido original en inglés en el sitio web del DoIT si tienen alguna pregunta acerca del contenido traducido.</p>
+				<p>El DoIT usa el Traductor Google para proporcionar traducciones lingüísticas de su contenido. El Traductor Google es un servicio gratis y automatizado que se basa en datos y tecnología para proporcionar sus traducciones. La función del Traductor Google es proporcionada solamente para propósitos informativos. Las traducciones no pueden ser garantizadas como exactas o sin la inclusión de lenguaje incorrecto o inapropiado. El Traductor Google es un servicio de terceros y los usuarios del sitio dejarán al DoIT para utilizar el contenido traducido. Como tal, el DoIT no garantiza y no acepta responsabilidad por la exactitud, confiabilidad o desempeño de este servicio o de las limitaciones proporcionadas por este servicio, tales como la inhabilidad de traducir archivos específicos como PDF y gráficos (p.e. .jpgs, .gifs, etc.).</p>
+				<p>El DoIT proporciona el Traductor Google como una herramienta en línea para sus usuarios, pero el DoIT no endosa directamente el sitio web o implica que es la única solución disponible para los usuarios. Todos los visitantes al sitio pueden escoger usar herramientas alternativas para sus necesidades de traducción. Cualquier persona que utilice el contenido del DoIT en su forma traducida, ya sea por el Traductor Google o por cualquier otro servicio de traducción, lo hace bajo su propio riesgo. El DoIT no es responsable por ninguna pérdida o daño que surja de, o problemas relacionados con el uso o dependencia del contenido traducido. El DoIT no asume ninguna responsabilidad por las actividades de los visitantes del sitio en conexión con el uso de la funcionalidad o contenido del Traductor Google.</p>
+				<p>El servicio del Traductor Google es un medio por el cual el DoIT ofrece traducciones de contenido y está destinado solamente para la conveniencia de los usuarios del sitio web que no hablan inglés. El contenido traducido es proporcionado directa y dinámicamente por Google; el DoIT no tiene control directo sobre el contenido traducido tal y como aparece utilizando esta herramienta. Por lo tanto, en todos los contextos, el contenido en inglés, tal y como se proporciona por el DoIT será considerado como el autorizado.</p>
+			</div>
+			<div id="ChineseS" class="Disclaimer" style="display: none;">
+				<h5>Google翻译免责声明</h5>
+				<p>马里兰州信息技术部（DoIT）通过Google翻译（Google Translate）为其网站使用者提供网站内容翻译。由于Google翻译是一个外部网站，因此DoIT无法控制翻译内容的质量或准确性。所有经翻译的DoIT网站内容通过Google翻译过滤，因此有可能出现无法预期的某些文本内容、图像以及翻译页面被破坏的情况。Google翻译有可能保留独特的隐私权和使用政策。DoIT并不控制这些政策，且它们与DoIT本身的隐私权和使用政策无关。在做需要翻译的选择后，使用者将被告知其将离开DoIT网站。如果使用者对翻译后的内容有任何疑问，应以DoIT网站上的英文原文为准。</p>
+				<p>DoIT使用Google翻译为其网站内容提供语言翻译服务。Google翻译是一项免费的自动服务，其依靠相关数据和技术来提供翻译服务。提供Google翻译服务的目的仅为提供相关信息，因此DoIT无法保证翻译后的内容与原文完全相同或不包含任何不正确或不适宜的语言。Google翻译是一项第三方服务，而DoIT网站使用者将离开DoIT网站以便查阅翻译后的内容。因此，DoIT并不保证这项服务的准确性、可靠性、质量和局限性（如这项服务无法翻译PDF、图形（如jpgs、gifs等）格式的文件），也不对此负责。</p>
+				<p>Google翻译是DoIT为其网站使用者提供的一种网上工具。尽管如此，DoIT并不直接为该网站服务提供担保，也不表明使用者只能使用Google翻译提供的服务。所有DoIT网站访问者可以选择使用其它工具以满足其翻译需要。任何使用翻译后（无论是通过Google翻译还是通过其它翻译服务）的DoIT网站内容的个人或机构应自行承担风险。DoIT不对因使用或依赖翻译后的内容所造成的损失、损害或问题负责。DoIT不对任何网站访问者与使用Google翻译功能或内容相关的活动负责。</p>
+				<p>Google翻译服务是DoIT为其网站使用者提供的一种翻译工具，其唯一的目的是为英语非母语的网站使用者提供方便。Google直接提供动态的内容翻译服务，而DoIT不直接控制翻译后的内容，即使其使用该工具。因此，在各种情况下，使用者应以DoIT为其直接提供的英文内容为准。</p>
+			</div>
+			<div id="ChineseT" class="Disclaimer" style="display:none;">
+				<h5>Google翻譯免責聲明</h5>
+				<p>馬里蘭州信息技術部（DoIT）通過Google翻譯（Google Translate）為其網站使用者提供網站內容翻譯。由於Google翻譯是一個外部網站，因此DoIT無法控制翻譯內容的質量或準確性。所有經翻譯的DoIT網站內容通過Google翻譯過濾，因此有可能出現無法預期的某些文本內容、圖像以及翻譯頁面被破壞的情況。 Google翻譯有可能保留特定的隱私權和使用政策。這些政策不受DoIT控制，且與DoIT本身的隱私權和使用政策無關。在選擇需要翻譯的内容後，使用者將被告知其將離開DoIT網站。如果使用者對翻譯後的內容有任何疑問，應以DoIT網站上的英文原文為準。</p>
+				<p>DoIT使用Google翻譯為其網站內容提供語言翻譯服務。 Google翻譯依靠相關數據和技術提供免費的自動化翻譯服務。提供Google翻譯服務的目的僅為提供相關信息，因此DoIT無法保證翻譯後的內容與原文完全相同或不包含任何不正確或不適宜的語言。 Google翻譯是一項第三方服務，且DoIT網站使用者將離開DoIT網站才能查閱翻譯後的內容。因此，DoIT並不保證這項服務的準確性、可靠性、質量或局限性（比如，這項服務無法翻譯PDF、圖形（如jpgs、gifs等）等格式的文件），也不對此負責。</p>
+				<p>Google翻譯是DoIT為其網站使用者提供的一項網上工具。儘管如此，DoIT並不直接為該網站服務提供擔保，也不表明使用者只能使用Google翻譯提供的服務。所有DoIT網站訪問者可以選擇使用其它工具以滿足其翻譯需要。任何使用翻譯後（無論是通過Google翻譯還是通過其它翻譯服務）的DoIT網站內容的個人或機構應自行承擔風險。 DoIT不對因使用或依賴翻譯後的內容所造成的損失、損害或問題負責。 DoIT不對任何網站訪問者與使用Google翻譯功能或內容相關的活動負責。</p>
+				<p>Google翻譯服務是DoIT為其網站使用者提供的一項翻譯工具，其唯一的目的是為英語非母語的網站使用者提供方便。 Google直接提供動態的內容翻譯服務，而DoIT不直接控制翻譯後的內容，即使其使用該工具。因此，在各種情況下，使用者應以DoIT為其直接提供的英文內容為準。</p>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+    $( function() {
+        $(document).mouseup(function(e) {
+            var container = $('#languages');
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                container.hide();
+            }
+        });
+        $(document).mouseup(function(e) {
+            var container = $('#translateMessage');
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                container.hide();
+            }
+        });
+        $('.close-languages').click(function(){
+            var container = $('#languages');
+            container.hide();
+		});
+        $('.close-translate').click(function(){
+            var container = $('#translateMessage');
+            container.hide();
+        });
+        $('.translate-button').click(function() {
+            $('#languages').toggle();
+        });
+        $('.disclaimer-button').click(function() {
+            $('#translateMessage').toggle();
+        });
+        $('.dislclaimerLanguageSelect-button').change(function(){
+            var selLang = document.getElementById("dislclaimerLanguageSelect");
+
+            var disclaimerForm = document.getElementById("translateMessage");
+            if (disclaimerForm != null) {
+                var disclaimers = disclaimerForm.getElementsByClassName("Disclaimer");
+
+                for (var a = 0; a < disclaimers.length; a++) {
+                    var d = disclaimers[a];
+
+                    if (d.id == selLang.options[selLang.selectedIndex].value)
+
+                        d.style.display = 'inherit';
+                    else d.style.display = 'none';
+                }
+            }
+        });
+    } );
+</script>  </div>
+  
+  <script src="https://www.mta.maryland.gov/js/app.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!--script src="https://www.mta.maryland.gov/datetimepicker/moment.js"></script>
+<script src="https://www.mta.maryland.gov/datetimepicker/bootstrap-datetimepicker.min.js"></script-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+	
+	<!-- Font Awesome / Google Fonts -->
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+	<!-- Tempus Dominus & Moment Libraries -->
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
+
+
+<!-- Chart JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  
+</body>
+
+</html>

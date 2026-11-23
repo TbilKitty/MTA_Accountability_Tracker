@@ -5,7 +5,7 @@ Usage:  python build_ubalt_pages.py /path/to/MTA_Accountability_Tracker [output_
 Reads docs/index.html, docs/routes.html and docs/accountability.html and writes
   project_c.html                 (Findings & Map)
   project_c_routes.html          (Explore Routes & Stops)
-  project_c_accountability.html  (MTA Accountability)
+  project_c_accountability.html  (What Could Change)
 Each copy inlines the two stylesheets, links its sibling pages by relative name (so the
 three files must sit in the same UBalt folder), adds the author byline and the label "Course submission · data updates from the live tracker",
 and loads the live data from GitHub Pages, with raw.githubusercontent.com as a backup.
@@ -19,8 +19,9 @@ repo = Path(sys.argv[1])
 out = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).resolve().parent
 docs = repo / "docs"
 PAGES = "https://tbilkitty.github.io/MTA_Accountability_Tracker/"
-DATA = [PAGES + "data/school-commute/",
-        "https://raw.githubusercontent.com/TbilKitty/MTA_Accountability_Tracker/main/docs/data/school-commute/"]
+RAW = "https://raw.githubusercontent.com/TbilKitty/MTA_Accountability_Tracker/main/docs/data/"
+DATA = [PAGES + "data/school-commute/", RAW + "school-commute/"]
+ROOTS = [PAGES + "data/", RAW]          # the Findings & Map page reads school-commute/ and education/ files
 FILES = {"index.html": "project_c.html", "routes.html": "project_c_routes.html",
          "accountability.html": "project_c_accountability.html"}
 LIVE = {"index.html": PAGES, "routes.html": PAGES + "routes.html", "accountability.html": PAGES + "accountability.html"}
@@ -41,6 +42,7 @@ for source, target in FILES.items():
         path, rest = match.group(1), match.group(2) or ""
         return f'href="{FILES["index.html" if path in ("", "index.html") else path]}{rest}"'
     html = re.sub(r'href="\./((?:index|routes|accountability)\.html|)([#?][^"]*)?"', relink, html)
+    html = html.replace('href="./data/', f'href="{PAGES}data/')      # links to data files on the live site
     assert 'href="./' not in html, source
 
     # Author byline under the eyebrow, as on the earlier UBalt copy.
@@ -56,22 +58,8 @@ for source, target in FILES.items():
     # Live data with a backup address.
     sources = "const SOURCES = [" + ", ".join(f"'{u}'" for u in DATA) + "];"
     if source == "index.html":
-        old = re.search(r"  const BASE = './data/school-commute/';\n  const fresh = .*?\n  let data, svgText;\n  try \{\n"
-                        r"    \[data, svgText\] = await Promise.all\(\[\n.*?\n.*?\]\);\n", html, re.S)
-        assert old, "map loader not found"
-        html = html.replace(old.group(0), (
-            "  const fresh = '?v=' + Date.now();\n"
-            "  // Live data: GitHub Pages first, then the same files on raw.githubusercontent.com as a backup.\n"
-            f"  {sources}\n"
-            "  // Both files come from the same address, so the figures and the map shapes are always the same version.\n"
-            "  let data, svgText;\n  try {\n"
-            "    for (const base of SOURCES) {\n"
-            "      try {\n"
-            "        const [j, v] = await Promise.all([fetch(base + 'neighborhood_map.json' + fresh), fetch(base + 'neighborhood_map.svg' + fresh)]);\n"
-            "        if (j.ok && v.ok) { [data, svgText] = await Promise.all([j.json(), v.text()]); break; }\n"
-            "      } catch (e) {}\n"
-            "    }\n"
-            "    if (!data) throw new Error('load failed');\n"))
+        assert html.count("const DATA_ROOTS = ['./data/'];") == 1, "map loader not found"
+        html = html.replace("const DATA_ROOTS = ['./data/'];", "const DATA_ROOTS = [" + ", ".join(f"'{u}'" for u in ROOTS) + "];")
     else:
         assert html.count("const SOURCES = ['./data/school-commute/'];") == 1, source
         html = html.replace("const SOURCES = ['./data/school-commute/'];", sources)
