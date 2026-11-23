@@ -1,0 +1,492 @@
+{
+ "version": "bnia-csa-2022-23-v1",
+ "downloaded": "2026-11-23",
+ "geography": "Community Statistical Areas, 2020 boundaries (55 areas with indicator values); joined on the CSA2020 name",
+ "boundaries": "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Community_Statistical_Areas_2020/FeatureServer/0",
+ "publisher": "Baltimore Neighborhood Indicators Alliance\u2013Jacob France Institute (BNIA-JFI), Vital Signs; https://bniajfi.org/vital_signs/data_downloads/",
+ "unstable_rule": "Withdrawal rate marked Insufficient data if it differs by more than 20 points from the area's 2020-21/2021-22 average",
+ "measures": {
+  "withdrawal": {
+   "label": "High school withdrawal rate",
+   "bnia_field": "drop23",
+   "period": "2022-2023",
+   "period_type": "school year",
+   "source": "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Drop/FeatureServer/0",
+   "layer_name": "High School Dropout/Withdrawal Rate - Community Statistical Area",
+   "data_last_edited": "2025-05-29",
+   "citywide": 5.03
+  },
+  "completion": {
+   "label": "High school completion rate",
+   "bnia_field": "compl23",
+   "period": "2022-2023",
+   "period_type": "school year",
+   "source": "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Compl/FeatureServer/0",
+   "layer_name": "High School Completion Rate - Community Statistical Area",
+   "data_last_edited": "2025-05-29",
+   "citywide": 75.75
+  },
+  "poverty": {
+   "label": "Family households below the poverty line",
+   "bnia_field": "hhpov23",
+   "period": "2019-2023",
+   "period_type": "ACS 5-year estimate",
+   "source": "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Hhpov/FeatureServer/0",
+   "layer_name": "Percent of Family Households Living Below the Poverty Line - Community Statistical Area",
+   "data_last_edited": "2025-05-15",
+   "citywide": 15.29
+  },
+  "no_vehicle": {
+   "label": "Households without a vehicle",
+   "bnia_field": "novhcl23",
+   "period": "2019-2023",
+   "period_type": "ACS 5-year estimate",
+   "source": "https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Novhcl/FeatureServer/0",
+   "layer_name": "Percent of Households with No Vehicle Available - Community Statistical Area",
+   "data_last_edited": "2025-05-27",
+   "citywide": 26.55
+  }
+ },
+ "areas": {
+  "Allendale/Irvington/S. Hilton": {
+   "withdrawal": 4.17,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 4.45,
+   "completion": 72.79,
+   "poverty": 12.84,
+   "no_vehicle": 32.75
+  },
+  "Beechfield/Ten Hills/West Hills": {
+   "withdrawal": 2.16,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.06,
+   "completion": 83.33,
+   "poverty": 6.38,
+   "no_vehicle": 12.84
+  },
+  "Belair-Edison": {
+   "withdrawal": 4.71,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.02,
+   "completion": 80.25,
+   "poverty": 19.7,
+   "no_vehicle": 23.86
+  },
+  "Brooklyn/Curtis Bay/Hawkins Point": {
+   "withdrawal": 5.51,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 4.25,
+   "completion": 68.83,
+   "poverty": 29.0,
+   "no_vehicle": 23.92
+  },
+  "Canton": {
+   "withdrawal": 4.76,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.67,
+   "completion": 65.0,
+   "poverty": 1.41,
+   "no_vehicle": 5.85
+  },
+  "Cedonia/Frankford": {
+   "withdrawal": 4.32,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.75,
+   "completion": 77.27,
+   "poverty": 11.43,
+   "no_vehicle": 19.17
+  },
+  "Cherry Hill": {
+   "withdrawal": 10.35,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 5.55,
+   "completion": 62.16,
+   "poverty": 42.3,
+   "no_vehicle": 47.22
+  },
+  "Chinquapin Park/Belvedere": {
+   "withdrawal": 3.06,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.46,
+   "completion": 73.24,
+   "poverty": 6.23,
+   "no_vehicle": 15.66
+  },
+  "Orchard Ridge/Armistead": {
+   "withdrawal": 6.17,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.86,
+   "completion": 80.9,
+   "poverty": 22.11,
+   "no_vehicle": 31.41
+  },
+  "Clifton-Berea": {
+   "withdrawal": 5.49,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.76,
+   "completion": 79.63,
+   "poverty": 21.92,
+   "no_vehicle": 36.63
+  },
+  "Cross-Country/Cheswolde": {
+   "withdrawal": 1.01,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.17,
+   "completion": 87.5,
+   "poverty": 5.83,
+   "no_vehicle": 8.23
+  },
+  "Dickeyville/Franklintown": {
+   "withdrawal": 1.75,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.57,
+   "completion": 74.07,
+   "poverty": 3.44,
+   "no_vehicle": 27.08
+  },
+  "Dorchester/Ashburton": {
+   "withdrawal": 3.08,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.58,
+   "completion": 84.04,
+   "poverty": 14.07,
+   "no_vehicle": 30.62
+  },
+  "Downtown/Seton Hill": {
+   "withdrawal": 7.56,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.78,
+   "completion": 75.68,
+   "poverty": 21.75,
+   "no_vehicle": 33.63
+  },
+  "Edmondson Village": {
+   "withdrawal": 4.51,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 4.26,
+   "completion": 66.18,
+   "poverty": 23.05,
+   "no_vehicle": 23.83
+  },
+  "Fells Point": {
+   "withdrawal": 4.35,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.96,
+   "completion": 72.73,
+   "poverty": 7.13,
+   "no_vehicle": 12.11
+  },
+  "Forest Park/Walbrook": {
+   "withdrawal": 4.04,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.19,
+   "completion": 75.82,
+   "poverty": 12.41,
+   "no_vehicle": 33.0
+  },
+  "Glen-Fallstaff": {
+   "withdrawal": 4.89,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.2,
+   "completion": 80.0,
+   "poverty": 10.72,
+   "no_vehicle": 21.51
+  },
+  "Greater Charles Village/Barclay": {
+   "withdrawal": 6.8,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.08,
+   "completion": 84.0,
+   "poverty": 14.56,
+   "no_vehicle": 42.47
+  },
+  "Greater Govans": {
+   "withdrawal": 4.35,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.71,
+   "completion": 77.14,
+   "poverty": 15.19,
+   "no_vehicle": 29.43
+  },
+  "Greater Mondawmin": {
+   "withdrawal": 7.33,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.16,
+   "completion": 78.95,
+   "poverty": 20.52,
+   "no_vehicle": 41.03
+  },
+  "Greater Roland Park/Poplar Hill": {
+   "withdrawal": 0.0,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 17.19,
+   "completion": 96.97,
+   "poverty": 1.02,
+   "no_vehicle": 7.17
+  },
+  "Greater Rosemont": {
+   "withdrawal": 6.67,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.29,
+   "completion": 69.5,
+   "poverty": 18.46,
+   "no_vehicle": 47.35
+  },
+  "Oliver/Johnston Square": {
+   "withdrawal": 5.62,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 4.31,
+   "completion": 70.0,
+   "poverty": 21.98,
+   "no_vehicle": 42.74
+  },
+  "Hamilton": {
+   "withdrawal": 2.21,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.0,
+   "completion": 84.15,
+   "poverty": 8.42,
+   "no_vehicle": 13.44
+  },
+  "Harbor East/Little Italy": {
+   "withdrawal": 5.88,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.39,
+   "completion": 30.0,
+   "poverty": 15.19,
+   "no_vehicle": 20.88
+  },
+  "Hamilton Hills": {
+   "withdrawal": 3.26,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.16,
+   "completion": 76.43,
+   "poverty": 3.25,
+   "no_vehicle": 9.52
+  },
+  "Highlandtown": {
+   "withdrawal": 6.97,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.53,
+   "completion": 69.23,
+   "poverty": 9.79,
+   "no_vehicle": 11.2
+  },
+  "Howard Park/West Arlington": {
+   "withdrawal": 3.18,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.75,
+   "completion": 79.49,
+   "poverty": 18.96,
+   "no_vehicle": 13.21
+  },
+  "Inner Harbor/Federal Hill": {
+   "withdrawal": 1.9,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.22,
+   "completion": 84.85,
+   "poverty": 4.6,
+   "no_vehicle": 13.43
+  },
+  "Greater Lauraville": {
+   "withdrawal": 3.23,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.37,
+   "completion": 81.11,
+   "poverty": 13.91,
+   "no_vehicle": 10.14
+  },
+  "Loch Raven": {
+   "withdrawal": 2.6,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.3,
+   "completion": 77.05,
+   "poverty": 8.79,
+   "no_vehicle": 15.08
+  },
+  "Madison/East End": {
+   "withdrawal": 6.92,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 5.67,
+   "completion": 74.58,
+   "poverty": 29.04,
+   "no_vehicle": 47.4
+  },
+  "Hampden/Remington": {
+   "withdrawal": 1.57,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.0,
+   "completion": 82.93,
+   "poverty": 4.05,
+   "no_vehicle": 13.93
+  },
+  "Midtown": {
+   "withdrawal": 4.21,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.66,
+   "completion": 68.63,
+   "poverty": 2.22,
+   "no_vehicle": 38.47
+  },
+  "Midway/Coldstream": {
+   "withdrawal": 8.0,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.59,
+   "completion": 61.76,
+   "poverty": 23.46,
+   "no_vehicle": 38.77
+  },
+  "Morrell Park/Violetville": {
+   "withdrawal": 6.27,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.93,
+   "completion": 86.49,
+   "poverty": 9.55,
+   "no_vehicle": 31.92
+  },
+  "Mount Washington/Coldspring": {
+   "withdrawal": 0.81,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 0.93,
+   "completion": 93.33,
+   "poverty": 3.76,
+   "no_vehicle": 18.64
+  },
+  "North Baltimore/Guilford/Homeland": {
+   "withdrawal": 1.02,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.88,
+   "completion": 92.31,
+   "poverty": 4.6,
+   "no_vehicle": 16.06
+  },
+  "Northwood": {
+   "withdrawal": 2.43,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.26,
+   "completion": 74.56,
+   "poverty": 6.85,
+   "no_vehicle": 16.72
+  },
+  "Oldtown/Middle East": {
+   "withdrawal": 7.86,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.72,
+   "completion": 68.75,
+   "poverty": 39.89,
+   "no_vehicle": 62.98
+  },
+  "Greektown/Bayview": {
+   "withdrawal": 5.32,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.91,
+   "completion": 76.81,
+   "poverty": 24.3,
+   "no_vehicle": 13.94
+  },
+  "Patterson Park North & East": {
+   "withdrawal": 8.36,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.9,
+   "completion": 67.5,
+   "poverty": 9.17,
+   "no_vehicle": 14.99
+  },
+  "Penn North/Reservoir Hill": {
+   "withdrawal": 3.46,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.34,
+   "completion": 77.42,
+   "poverty": 21.99,
+   "no_vehicle": 35.72
+  },
+  "Pimlico/Arlington/Hilltop": {
+   "withdrawal": 6.21,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.17,
+   "completion": 68.18,
+   "poverty": 23.01,
+   "no_vehicle": 42.4
+  },
+  "Poppleton/The Terraces/Hollins Market": {
+   "withdrawal": 2.7,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.26,
+   "completion": 50.0,
+   "poverty": 53.2,
+   "no_vehicle": 55.28
+  },
+  "Sandtown-Winchester/Harlem Park": {
+   "withdrawal": 5.75,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 5.69,
+   "completion": 70.33,
+   "poverty": 21.84,
+   "no_vehicle": 58.47
+  },
+  "South Baltimore": {
+   "withdrawal": 50.77,
+   "withdrawal_unstable": true,
+   "withdrawal_prior_avg": 1.59,
+   "completion": 75.0,
+   "poverty": 2.04,
+   "no_vehicle": 4.46
+  },
+  "Southeastern": {
+   "withdrawal": 6.73,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 1.99,
+   "completion": 75.34,
+   "poverty": 25.96,
+   "no_vehicle": 19.55
+  },
+  "Southern Park Heights": {
+   "withdrawal": 4.33,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.39,
+   "completion": 77.14,
+   "poverty": 24.59,
+   "no_vehicle": 37.83
+  },
+  "Southwest Baltimore": {
+   "withdrawal": 7.39,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 5.8,
+   "completion": 70.09,
+   "poverty": 27.86,
+   "no_vehicle": 44.95
+  },
+  "The Waverlies": {
+   "withdrawal": 2.65,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 2.43,
+   "completion": 78.79,
+   "poverty": 25.08,
+   "no_vehicle": 28.89
+  },
+  "Upton/Druid Heights": {
+   "withdrawal": 6.79,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 4.95,
+   "completion": 71.6,
+   "poverty": 36.51,
+   "no_vehicle": 51.41
+  },
+  "Pigtown/Carroll Park": {
+   "withdrawal": 5.73,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 3.14,
+   "completion": 83.87,
+   "poverty": 18.93,
+   "no_vehicle": 29.09
+  },
+  "Westport/Mount Winans/Lakeland": {
+   "withdrawal": 8.29,
+   "withdrawal_unstable": false,
+   "withdrawal_prior_avg": 5.11,
+   "completion": 73.13,
+   "poverty": 33.19,
+   "no_vehicle": 32.32
+  }
+ }
+}

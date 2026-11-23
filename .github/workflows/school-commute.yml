@@ -95,7 +95,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/data/school-commute data/school-commute-raw
+          git add docs/data/school-commute docs/data/education data/school-commute-raw
           if git diff --cached --quiet; then echo "Nothing new to commit"; exit 0; fi
           git commit -m "School commute watch: $(date +%F) results"
           # You may have pushed edits while this ran for hours; rebase and retry.

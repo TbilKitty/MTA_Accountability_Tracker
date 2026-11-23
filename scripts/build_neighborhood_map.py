@@ -12,6 +12,10 @@ docs/index.html instead, so this script keeps two pieces of that page:
   docs/data/school-commute/neighborhood_map.svg   (the drawn neighborhood shapes)
 and the notebook's route and stop tables (Boxes 22-23) for docs/routes.html:
   docs/data/school-commute/routes_stops.json
+and the CSA overlap map (Boxes 24-31) for the follow-up question on docs/index.html:
+  docs/data/school-commute/csa_overlap.json   (bus figures by CSA; refreshes with the bus data)
+  docs/data/school-commute/csa_map.svg        (CSA shapes)
+  docs/data/education/bnia_csa_indicators_2022-23.json  (dated BNIA release; same every run)
 docs/baltimore-city-map.html is now only a redirect to the map section.
 """
 import json
@@ -48,8 +52,16 @@ svg = svg.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ', 1) if "xm
 out = repo / "docs/data/school-commute"
 routes = (work / "Baltimore_City_MTA_Routes_Stops.json").read_text()
 json.loads(routes)                        # must be valid JSON
-for name, text in [("neighborhood_map.json", data), ("neighborhood_map.svg", svg), ("routes_stops.json", routes)]:
-    tmp = out / (name + ".tmp")
+outputs = [(out, "neighborhood_map.json", data), (out, "neighborhood_map.svg", svg), (out, "routes_stops.json", routes)]
+for name in ("csa_overlap.json", "csa_map.svg"):
+    outputs.append((out, name, (work / name).read_text()))
+education = repo / "docs/data/education"
+education.mkdir(exist_ok=True)
+outputs.append((education, "bnia_csa_indicators_2022-23.json", (work / "bnia_csa_indicators_2022-23.json").read_text()))
+for folder, name, text in outputs:
+    if name.endswith(".json"):
+        json.loads(text)                  # must be valid JSON
+    tmp = folder / (name + ".tmp")
     tmp.write_text(text)
-    tmp.replace(out / name)
+    tmp.replace(folder / name)
 print(f"Updated the map data and shapes through {names['payload']['dates']['last']}")
