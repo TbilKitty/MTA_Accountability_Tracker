@@ -16,14 +16,12 @@
 #city-map #clear-selected{color:#fff;background:var(--brick);border-color:var(--brick)}
 #city-map .map-wrap{position:relative}
 #city-map svg.csa-map{display:block;width:100%;max-height:640px;background:#eef3f6;border-radius:10px;touch-action:manipulation}
-#city-map svg.csa-map .base path{stroke:#fff;stroke-width:.8;vector-effect:non-scaling-stroke;cursor:pointer}
+#city-map svg.csa-map .base path{stroke:#5f6b78;stroke-width:.9;vector-effect:non-scaling-stroke;cursor:pointer}
 #city-map svg.csa-map .base path:focus{outline:none}
 #city-map svg.csa-map .base path:focus-visible{stroke:var(--gold);stroke-width:3}
-#city-map svg.csa-map .ov path,#city-map svg.csa-map .bus path,#city-map svg.csa-map .veil path,#city-map svg.csa-map .sel path,#city-map svg.csa-map .hit path{pointer-events:none;vector-effect:non-scaling-stroke}
-#city-map svg.csa-map .bus path{fill:none;stroke:#e8590c;stroke-linejoin:round}
-#city-map svg.csa-map .bus path.nodata{stroke:#7a7f87;stroke-dasharray:3 4;stroke-width:2.4}
-#city-map svg.csa-map .veil path{fill:#fbfaf7;fill-opacity:.82;stroke:none}
-#city-map svg.csa-map .hit path{fill:none;stroke:#111;stroke-width:3.2}
+#city-map svg.csa-map .ov path,#city-map svg.csa-map .bus path,#city-map svg.csa-map .sel path,#city-map svg.csa-map .hit path{pointer-events:none;vector-effect:non-scaling-stroke}
+#city-map svg.csa-map .bus path{fill:none;stroke:#e8590c;stroke-width:7;stroke-linejoin:round}
+#city-map svg.csa-map .hit path{fill:none;stroke:#111;stroke-width:4}
 #city-map svg.csa-map .sel path{fill:none;stroke:#fff;stroke-width:6}
 #city-map svg.csa-map .sel path.inner{stroke:#00a3ad;stroke-width:3;stroke-dasharray:6 3}
 #city-map .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px 18px;font-size:.82rem;margin-top:10px}
@@ -111,7 +109,7 @@
     <p class="pc-note" id="periods">Periods shown: high school withdrawal, 2022–23 school year · households without a vehicle and family poverty, ACS 2019–2023 · bus disruptions, October 30 – November 20, 2026.</p>
 
     <div class="pc-controls" role="group" aria-label="Map layers"><span class="lbl">Layers</span>
-      <label class="chk"><input type="checkbox" data-layer="withdrawal" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#6a3d9a"/></svg>High school withdrawal</label>
+      <label class="chk"><input type="checkbox" data-layer="withdrawal" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#d7bdf0"/></svg>High school withdrawal</label>
       <label class="chk"><input type="checkbox" data-layer="no_vehicle"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><path d="M-2 10L6 -2M2 16L14 -2M10 16L22 -2" stroke="#1d3557" stroke-width="1.6"/></svg>No vehicle</label>
       <label class="chk"><input type="checkbox" data-layer="poverty"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><circle cx="4" cy="4" r="1.7" fill="#1b4332"/><circle cx="12" cy="4" r="1.7" fill="#1b4332"/><circle cx="8" cy="10" r="1.7" fill="#1b4332"/><circle cx="16" cy="10" r="1.7" fill="#1b4332"/></svg>Poverty</label>
       <label class="chk"><input type="checkbox" data-layer="bus" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect x="2" y="2" width="14" height="10" fill="none" stroke="#e8590c" stroke-width="3"/></svg>Bus disruptions</label>
@@ -128,7 +126,7 @@
         <label><input type="checkbox" data-match="poverty" checked/> Poverty</label>
         <label><input type="checkbox" data-match="bus" checked/> <span>Bus disruptions (<span class="win-word">morning</span>)</span></label>
       </fieldset>
-      <p class="pc-note">“Highest quarter” means among the highest 25% of Baltimore City CSAs with data for that measure in the period shown (at or above the cutoff in the legend). Areas marked Insufficient data for a measure are left out of that comparison.</p>
+      <p class="pc-note">“Highest quarter” means among the highest 25% of Baltimore City CSAs with data for that measure in the period shown (at or above the cutoff in the legend). Areas with No data for a chosen measure are left out of the count.</p>
     </div>
     <div class="map-wrap" id="maps"><p class="map-loading">Loading the map…</p></div>
     <div id="association-box" class="pc-support" style="border-left-color:#5b2a86;margin-top:12px">
@@ -136,7 +134,7 @@
       <p class="pc-note" id="association-pm">In the afternoon commute the relationship was weak and ran the other way (−0.22), and could easily be chance.</p>
     </div>
     <div class="legend" id="legend" aria-live="polite"></div>
-    <p class="pc-note">Purple fill, stripes, dots and the orange boundary can all be shown at once. A teal dashed outline marks the areas you selected. Thresholds are each measure’s quarters (25th, 50th and 75th percentiles) among CSAs with data.</p>
+    <p class="pc-note">Each layer marks only the areas at or above its cutoff (the highest quarter among CSAs with data); areas below the cutoff, or with No data, show no mark for that layer. Turn on any combination. A teal dashed outline marks the areas you selected.</p>
 
     <div class="pc-panels">
       <div class="pc-box" aria-live="polite"><h3 id="area-title">Citywide</h3><div id="area"></div></div>
@@ -146,15 +144,15 @@
     <details class="pc-how">
       <summary>How to read the map</summary>
       <dl class="pc-defs">
-        <dt>High school withdrawal rate <span class="pc-hint">(purple fill, darker = more common)</span></dt>
+        <dt>High school withdrawal rate <span class="pc-hint">(light purple fill at or above the cutoff)</span></dt>
         <dd>BNIA’s “High School Dropout/Withdrawal Rate”: of the Baltimore City public high school students (grades 9 to 12) who live in the area, the share who withdrew during the school year. BNIA uses withdrawal codes as a stand-in for dropping out. BNIA places students by their home address, not by the school they attend. Source: Baltimore City Public Schools via BNIA. BNIA does not publish the number of students behind each rate, and it warns that areas with few students can swing sharply from year to year.</dd>
-        <dt>Insufficient data</dt>
-        <dd>Shown in gray. For withdrawal, BNIA leaves no area blank, but one area’s 2022–23 rate (South Baltimore, 50.8%, against 0.0% and 3.2% in the two prior years) is too unstable to compare: the analysis marks a rate Insufficient data when it differs from the area’s average for the two prior years by more than 20 points. For bus disruptions, an area with fewer than 20 classified stop events in the window, or no timepoint stops, is marked Insufficient data (thin gray dotted boundary).</dd>
-        <dt>Households without a vehicle <span class="pc-hint">(diagonal stripes, denser = more common)</span></dt>
+        <dt>No data</dt>
+        <dd>An area with no usable value for a measure gets no mark for that layer, and the area panel says No data so it is not mistaken for a value below the cutoff. For withdrawal, BNIA leaves no area blank, but one area’s 2022–23 rate (South Baltimore, 50.8%, against 0.0% and 3.2% in the two prior years) is too unstable to compare: the analysis treats a rate as No data when it differs from the area’s average for the two prior years by more than 20 points. For bus disruptions, an area with fewer than 20 classified stop events in the window, or no timepoint stops, is treated as No data.</dd>
+        <dt>Households without a vehicle <span class="pc-hint">(diagonal stripes at or above the cutoff)</span></dt>
         <dd>BNIA’s share of households with no car, van or truck available, from the Census American Community Survey 2019–2023 five-year estimates.</dd>
-        <dt>Family poverty <span class="pc-hint">(dots, larger = more common)</span></dt>
+        <dt>Family poverty <span class="pc-hint">(dots at or above the cutoff)</span></dt>
         <dd>BNIA’s “Percent of Family Households Living Below the Poverty Line,” ACS 2019–2023. This counts family households; the claim above uses a different measure (residents below poverty, by census tract).</dd>
-        <dt>Bus disruptions <span class="pc-hint">(orange boundary, thicker = more common)</span></dt>
+        <dt>Bus disruptions <span class="pc-hint">(orange outline at or above the cutoff)</span></dt>
         <dd>Every Baltimore City bus stop in the sample is placed in the CSA its coordinates fall in. An area’s rate adds up the classified stop events at all its stops, and the ones canceled or more than 7 minutes late, then divides: it is not an average of stop percentages.</dd>
         <dt>High school completion <span class="pc-hint">(separate figure, not a map layer)</span></dt>
         <dd>BNIA’s share of 12th graders living in the area who completed high school (Maryland diploma or certificate of program completion) in 2022–23. This is a one-year rate for 12th graders, a different measure from the district’s four-year cohort graduation rate below. Where it appears, lower is worse, so the flag marks the lowest quarter.</dd>
@@ -334,7 +332,6 @@
   }
   let Q = {};
   const recompute = () => { Q = {}; for (const k of ['withdrawal', 'no_vehicle', 'poverty', 'bus', 'completion']) Q[k] = quarters(k); };
-  const bin = (key, v) => v == null ? 0 : 1 + Q[key].cuts.filter(c => v >= c).length;      // 1..4, 0 = insufficient data
   const meets = (key, name) => { const v = value(key, name); if (v == null) return null; return key === 'completion' ? v <= Q.completion.cuts[0] : v >= Q[key].cuts[2]; };
 
   const ns = 'http://www.w3.org/2000/svg';
@@ -348,19 +345,19 @@
   const shapeOf = Object.fromEntries(paths.map(p => [p.dataset.csa, p.getAttribute('d')]));
   const group = cls => { const g = document.createElementNS(ns, 'g'); g.setAttribute('class', cls); svg.append(g); return g; };
   const base = group('base'); allPaths.forEach(p => base.append(p));
-  const PURPLE = ['#c9c9c9', '#efe6f7', '#c7a6e2', '#8f5cc2', '#4b1d7a'];
-  const STRIPE_GAP = [0, 14, 10, 7, 4.6], DOT_R = [0, 1.1, 1.7, 2.3, 3.0], BUS_W = [0, 1.2, 2.4, 3.8, 5.6];
+  // One fixed mark per layer, drawn only where an area meets that layer's cutoff.
+  const PURPLE_ON = '#d7bdf0', PURPLE_OFF = '#f4f1ea';
   const defs = document.createElementNS(ns, 'defs');
-  defs.innerHTML = [1, 2, 3, 4].map(b =>
-    '<pattern id="st' + b + '" width="' + STRIPE_GAP[b] + '" height="' + STRIPE_GAP[b] + '" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
-      '<path d="M1 0V' + STRIPE_GAP[b] + '" stroke="#fff" stroke-width="2.6"/><path d="M1 0V' + STRIPE_GAP[b] + '" stroke="#1d3557" stroke-width="1.2"/></pattern>' +
-    '<pattern id="dt' + b + '" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="' + DOT_R[b] + '" fill="#1b4332" stroke="#fff" stroke-width=".8"/></pattern>').join('');
+  defs.innerHTML =
+    '<pattern id="st" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<path d="M1 0V8" stroke="#fff" stroke-width="2.6"/><path d="M1 0V8" stroke="#1d3557" stroke-width="1.3"/></pattern>' +
+    '<pattern id="dt" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2" fill="#1b4332" stroke="#fff" stroke-width=".8"/></pattern>';
   svg.prepend(defs);
   const patternDefs = defs.innerHTML;   // copied into the legend (without the clip paths added below)
   const layerG = {no_vehicle: group('ov'), poverty: group('ov'), bus: group('bus')};
-  const veil = group('veil'), hit = group('hit'), sel = group('sel');
+  const hit = group('hit'), sel = group('sel');
   // Each area's orange boundary is clipped to the inside of its own shape, so neighboring areas'
-  // boundaries do not overlap and each line's thickness belongs to one area.
+  // outlines do not overlap and each outline belongs to one area.
   names.forEach((n, i) => { defs.insertAdjacentHTML('beforeend', '<clipPath id="cp' + i + '"><path d="' + shapeOf[n] + '"/></clipPath>'); });
   const copies = {};
   for (const [key, g] of Object.entries(layerG)) {
@@ -379,22 +376,21 @@
   let showOverlap = false, focused = '';
   const selected = new Set();
 
-  function legendBlock(key, swatch) {
-    const {cuts, n} = Q[key];
-    const f = v => v.toFixed(1) + '%';
-    const ranges = ['Under ' + f(cuts[0]), f(cuts[0]) + ' to under ' + f(cuts[1]), f(cuts[1]) + ' to under ' + f(cuts[2]), f(cuts[2]) + ' or more · highest quarter'];
-    const period = key === 'bus' ? WINDOW[win] + ' commute, ' + dates : PERIOD[key];
-    return '<div><h4>' + LABEL[key] + '</h4><ul>' + ranges.map((t, i) => '<li>' + swatch(i + 1) + t + '</li>').join('') +
-      (n < names.length ? '<li>' + swatch(0) + 'Insufficient data (' + (names.length - n) + ' CSA' + (names.length - n > 1 ? 's' : '') + ')</li>' : '') + '</ul><small>Highest-quarter cutoff ' + f(cuts[2]) + ' among ' + n + ' CSAs with data · ' + period + '</small></div>';
-  }
   const sw = inner => '<svg width="30" height="16" viewBox="0 0 30 16" aria-hidden="true">' + inner + '</svg>';
+  const box = fill => sw('<rect x="1" y="1" width="28" height="14" fill="' + fill + '" stroke="#5f6b78"/>');
   const SWATCH = {
-    withdrawal: b => sw('<rect x="1" y="1" width="28" height="14" fill="' + PURPLE[b] + '" stroke="#8a8f96"/>'),
-    no_vehicle: b => sw(b ? '<rect x="1" y="1" width="28" height="14" fill="url(#lst' + b + ')" stroke="#8a8f96"/>' : '<rect x="1" y="1" width="28" height="14" fill="#fff" stroke="#8a8f96"/>'),
-    poverty: b => sw(b ? '<rect x="1" y="1" width="28" height="14" fill="url(#ldt' + b + ')" stroke="#8a8f96"/>' : '<rect x="1" y="1" width="28" height="14" fill="#fff" stroke="#8a8f96"/>'),
-    bus: b => sw(b ? '<rect x="4" y="3" width="22" height="10" fill="none" stroke="#e8590c" stroke-width="' + BUS_W[b] + '"/>' : '<rect x="4" y="3" width="22" height="10" fill="none" stroke="#7a7f87" stroke-width="1.2" stroke-dasharray="2 3"/>'),
+    withdrawal: box(PURPLE_ON),
+    no_vehicle: box('url(#lst)'),
+    poverty: box('url(#ldt)'),
+    bus: sw('<rect x="1" y="1" width="28" height="14" fill="' + PURPLE_OFF + '" stroke="#5f6b78"/><rect x="2.75" y="2.75" width="24.5" height="10.5" fill="none" stroke="#e8590c" stroke-width="3.5"/>'),
   };
-  const legendDefs = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + patternDefs.replace(/id="st/g, 'id="lst').replace(/id="dt/g, 'id="ldt') + '</defs></svg>';
+  function legendBlock(key) {
+    const {cuts, n} = Q[key], missing = names.length - n;
+    const period = key === 'bus' ? WINDOW[win] + ' commute, ' + dates : PERIOD[key];
+    return '<div><h4>' + LABEL[key] + '</h4><ul><li>' + SWATCH[key] + cuts[2].toFixed(1) + '% or more (highest quarter)</li></ul><small>Cutoff among ' + n +
+      ' CSAs with data' + (missing ? ' · ' + missing + ' with No data' : '') + ' · ' + period + '</small></div>';
+  }
+  const legendDefs = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + defs.innerHTML.replace('id="st"', 'id="lst"').replace('id="dt"', 'id="ldt"') + '</defs></svg>';
 
   function overlapList() {
     const keys = [...match];
@@ -403,38 +399,29 @@
   function redraw() {
     recompute();
     document.querySelectorAll('.win-word').forEach(e => e.textContent = WINDOW[win]);
-    for (const p of paths) {
-      const n = p.dataset.csa;
-      p.style.fill = active.has('withdrawal') ? PURPLE[bin('withdrawal', value('withdrawal', n))] : '#f4f1ea';
-    }
+    for (const p of paths) p.style.fill = active.has('withdrawal') && meets('withdrawal', p.dataset.csa) ? PURPLE_ON : PURPLE_OFF;
     for (const key of ['no_vehicle', 'poverty']) {
       layerG[key].style.display = active.has(key) ? '' : 'none';
-      for (const n of names) copies[key][n].style.fill = 'url(#' + (key === 'no_vehicle' ? 'st' : 'dt') + bin(key, value(key, n)) + ')';
+      for (const n of names) copies[key][n].style.fill = meets(key, n) ? 'url(#' + (key === 'no_vehicle' ? 'st' : 'dt') + ')' : 'none';
     }
     layerG.bus.style.display = active.has('bus') ? '' : 'none';
-    for (const n of names) {
-      const b = bin('bus', value('bus', n)), p = copies.bus[n];
-      p.classList.toggle('nodata', !b); p.style.strokeWidth = b ? 2 * BUS_W[b] : '';
-    }
-    // Overlap view: fade every area that does not meet all chosen cutoffs; outline the ones that do.
-    veil.replaceChildren(); hit.replaceChildren();
+    for (const n of names) copies.bus[n].style.display = meets('bus', n) ? '' : 'none';
+    // Overlap view: one black outline on every area that meets all chosen cutoffs.
+    hit.replaceChildren();
     const panel = $('overlap-panel'); panel.hidden = !showOverlap;
     if (showOverlap) {
       const list = overlapList(), keys = [...match];
-      for (const n of names) {
-        const p = document.createElementNS(ns, 'path'); p.setAttribute('d', shapeOf[n]);
-        (list.includes(n) ? hit : veil).append(p);
-      }
+      const withData = names.filter(n => keys.every(k => meets(k, n) != null)).length;
+      for (const n of list) { const p = document.createElementNS(ns, 'path'); p.setAttribute('d', shapeOf[n]); hit.append(p); }
       const what = keys.map(k => k === 'bus' ? WINDOW[win] + ' bus disruptions' : LABEL[k].toLowerCase()).join(', ');
+      const scope = keys.length === 4 ? 'all four measures' : 'every chosen measure';
       $('overlap-summary').innerHTML = !keys.length ? 'Choose at least one measure to match.'
-        : list.length ? '<strong>' + list.length + (list.length === 1 ? ' area is' : ' areas are') + '</strong> in the highest quarter on ' +
-            (keys.length === 4 ? 'all four measures' : 'every chosen measure') + ' (' + what + '): ' + list.join('; ') + '.'
-        : '<strong>No area</strong> is in the highest quarter on ' + (keys.length === 4 ? 'all four measures' : 'every chosen measure') + ' (' + what +
-            '). Untick a measure below to see the areas that meet the others.';
+        : '<strong>' + list.length + ' of ' + withData + ' areas</strong> with data for ' + scope + ' meet every cutoff (' + what + ')' +
+          (list.length ? ': ' + list.join('; ') + '.' : '. Untick a measure below to see the areas that meet the others.');
     }
-    const blocks = [...active].map(k => legendBlock(k, SWATCH[k]));
+    const blocks = ['withdrawal', 'no_vehicle', 'poverty', 'bus'].filter(k => active.has(k)).map(legendBlock);
     $('legend').innerHTML = legendDefs + blocks.join('') + (showOverlap ? '<div><h4>Overlap view</h4><ul><li>' + sw('<rect x="2" y="2" width="26" height="12" fill="none" stroke="#111" stroke-width="3"/>') +
-      'Meets every chosen cutoff</li><li>' + sw('<rect x="1" y="1" width="28" height="14" fill="#fbfaf7" stroke="#c9ccd0"/>') + 'Faded: does not, or Insufficient data</li></ul></div>' : '') +
+      'Meets every chosen cutoff</li></ul></div>' : '') +
       '<div><h4>Selected areas</h4><ul><li>' + sw('<rect x="3" y="3" width="24" height="10" fill="none" stroke="#00a3ad" stroke-width="3" stroke-dasharray="6 3"/>') + 'Teal dashed outline</li></ul></div>';
     renderSelection(); area(focused); comparison();
   }
@@ -447,9 +434,9 @@
   }
   const badge = (key, n) => {
     const m = meets(key, n);
-    if (m == null) return '<span class="meets na">Insufficient data</span>';
+    if (m == null) return '<span class="meets na">No data</span>';
     if (key === 'completion') return m ? '<span class="meets yes">Lowest quarter</span>' : '<span class="meets no">Not lowest quarter</span>';
-    return m ? '<span class="meets yes">Highest quarter</span>' : '<span class="meets no">Below cutoff</span>';
+    return m ? '<span class="meets yes">Meets cutoff</span>' : '<span class="meets no">Below cutoff</span>';
   };
   function metricsCards(m) {
     if (!m) return '<p>No scheduled stop events in this window.</p>';
@@ -472,14 +459,14 @@
     }
     title.textContent = n;
     const a = A[n], s = csa.service[win][n];
-    const row = (key, v, period, extra) => '<tr><th scope="row">' + LABEL[key] + (extra || '') + '</th><td class="num">' + pct(v) + '</td><td>' + period + '</td><td>' + badge(key, n) + '</td></tr>';
+    const row = (key, v, period, extra) => '<tr><th scope="row">' + LABEL[key] + (extra || '') + '</th><td class="num">' + (meets(key, n) == null ? 'No data' : pct(v)) + '</td><td>' + period + '</td><td>' + badge(key, n) + '</td></tr>';
     const busNote = s ? '<span class="pc-sub">' + number.format(s.cancel + s.late) + ' of ' + number.format(s.n) + ' classified stop events</span>' : '<span class="pc-sub">no timepoint stops</span>';
     const count = ['withdrawal', 'no_vehicle', 'poverty', 'bus'].filter(k => meets(k, n) === true).length;
-    panel.innerHTML = '<table class="area"><thead><tr><th scope="col">Measure</th><th scope="col">Rate</th><th scope="col">Period</th><th scope="col">Cutoff</th></tr></thead><tbody>' +
-      row('withdrawal', a.withdrawal, PERIOD.withdrawal, a.withdrawal_unstable ? '<span class="pc-sub">unstable: prior two years averaged ' + pct(a.withdrawal_prior_avg) + '</span>' : '') +
+    panel.innerHTML = '<table class="area"><thead><tr><th scope="col">Measure</th><th scope="col">Rate</th><th scope="col">Period</th><th scope="col">Meets cutoff?</th></tr></thead><tbody>' +
+      row('withdrawal', a.withdrawal, PERIOD.withdrawal, a.withdrawal_unstable ? '<span class="pc-sub">reported ' + pct(a.withdrawal) + ', treated as unstable: prior two years averaged ' + pct(a.withdrawal_prior_avg) + '</span>' : '') +
       row('no_vehicle', a.no_vehicle, PERIOD.no_vehicle) + row('poverty', a.poverty, PERIOD.poverty) +
       row('bus', s ? s.failed : null, WINDOW[win] + ' commute, ' + dates, busNote) +
-      '</tbody></table><p><strong>Meets ' + count + ' of 4 highest-quarter cutoffs</strong> (' + WINDOW[win] + ' bus layer).</p>' +
+      '</tbody></table><p><strong>Meets ' + count + ' of 4 cutoffs</strong> (' + WINDOW[win] + ' bus layer): withdrawal ' + Q.withdrawal.cuts[2].toFixed(1) + '%, no vehicle ' + Q.no_vehicle.cuts[2].toFixed(1) + '%, poverty ' + Q.poverty.cuts[2].toFixed(1) + '%, bus ' + Q.bus.cuts[2].toFixed(1) + '% or more.</p>' +
       '<table class="area"><tbody>' + row('completion', a.completion, PERIOD.completion, '<span class="pc-sub">separate figure; lower is worse</span>') + '</tbody></table>' +
       (s && s.n < csa.small_sample ? '<p class="pc-note">Fewer than ' + csa.small_sample + ' classified stop events: too few to rate.</p>' : '');
   }
@@ -495,8 +482,8 @@
     for (const n of selected) {
       const a = A[n], r = body.insertRow();
       const bus = csa.service[win][n];
-      const cells = [n, a.withdrawal_unstable ? 'Insufficient data' : pct(a.withdrawal), pct(a.no_vehicle), pct(a.poverty),
-        bus && bus.n >= csa.small_sample ? pct(bus.failed) : 'Insufficient data', pct(a.completion),
+      const cells = [n, a.withdrawal_unstable ? 'No data' : pct(a.withdrawal), pct(a.no_vehicle), pct(a.poverty),
+        bus && bus.n >= csa.small_sample ? pct(bus.failed) : 'No data', pct(a.completion),
         ['withdrawal', 'no_vehicle', 'poverty', 'bus'].filter(k => meets(k, n) === true).length + ' of 4'];
       for (const v of cells) r.insertCell().textContent = v;
       const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Remove'; b.setAttribute('aria-label', 'Remove ' + n);
