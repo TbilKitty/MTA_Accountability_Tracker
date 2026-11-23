@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#10223e" name="theme-color"/>
-<title>Findings &amp; Map: morning MTA bus disruptions, poverty and vehicle access in Baltimore City | Project C</title>
+<title>Do bus disruptions and high school withdrawals overlap in Baltimore? | Project C</title>
 <link href="./baltimore-theme.css" rel="stylesheet"/>
 <link href="./project-c.css" rel="stylesheet"/>
 <style>
@@ -78,9 +78,9 @@
 
 <header class="hero pc-hero"><div class="hero-inner">
   <div class="eyebrow">Project C · Data Science for Lawyers</div>
-  <h1>How reliable are MTA buses during Baltimore school commutes?</h1>
+  <h1>Do bus disruptions and high school withdrawals overlap in Baltimore?</h1>
   <div class="gold-line"></div>
-  <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data at stops inside Baltimore City during the morning and afternoon school commutes.</p>
+  <p>I compared Maryland Transit Administration (MTA) bus schedules with real-time service data at stops inside Baltimore City during school commutes, then mapped where unreliable service and high school withdrawals overlap.</p>
 </div></header>
 
 <main class="pc-wrap">
@@ -90,17 +90,81 @@
   <section class="pc-section" id="claim">
     <h2 id="claim-heading">Morning bus disruptions were more common in higher-poverty and lower-car-access areas</h2>
     <p class="pc-note" id="snapshot">Data coverage: October 30 – November 20, 2026 (14 school-day mornings, 13 afternoons)</p>
-    <p class="pc-claim" id="claim-text">In our Baltimore City sample, morning bus cancellations and delays of more than seven minutes were more common at stops in higher-poverty areas and areas where more households lacked a vehicle.</p>
+    <p class="pc-claim" id="claim-text">In our Baltimore City sample, morning bus cancellations and delays of more than seven minutes were more common at stops in higher-poverty areas and in areas where more households lacked a vehicle. That raises a second question: Do areas with less dependable bus service also have higher high school withdrawal rates?</p>
     <ul id="claim-figures">
       <li><strong>Poverty:</strong> 34.0% of classified morning stop events were disrupted in the highest-poverty quarter of census tracts, versus 28.0% in the lowest-poverty quarter (a difference of +6.0 percentage points; +3.1 on the same route and school date).</li>
       <li><strong>Vehicle access:</strong> 35.6% in the quarter of tracts with the most households without a vehicle, versus 27.9% in the quarter with the fewest (+7.6 points; +3.7 on the same route and school date).</li>
     </ul>
     <p class="pc-support" id="afternoon-text"><strong>The afternoon was different.</strong> By poverty, afternoon stops in the highest-poverty tracts were disrupted slightly <em>less</em> often (51.0% versus 53.7%). By vehicle access the two groups were about even (51.1% versus 50.1%, and 0.7 points lower on the same routes and dates). The morning pattern did not consistently hold in the afternoon.</p>
     <p><strong>What counts as a disruption.</strong> A scheduled bus at a timepoint stop that MTA’s real-time feed marked <em>canceled</em>, or that arrived <em>more than 7 minutes after</em> its scheduled time. Rates are out of <em>classified stop events</em>: scheduled stops whose outcome the tracker could determine. Morning means buses scheduled from 6:00 to 9:30 a.m. on school days; afternoon means 2:00 to 5:30 p.m. The comparison groups are Baltimore City census tracts, and the data count bus stop events, not student riders.</p>
+    <h3 id="why">Why this question matters</h3>
+    <p id="why-text">A student who cannot count on the bus has one more obstacle between home and a diploma. Districtwide, <a href="https://www.baltimorecityschools.org/article/2661885">71.7% of Baltimore City Public Schools’ Class of 2025</a> graduated within four years (the four-year adjusted cohort rate for students who started ninth grade in fall 2021, reported January 27, 2026). That is a district figure for one graduating class. The map below uses a separate, neighborhood-level measure: <a href="https://services1.arcgis.com/mVFRs7NF4iFitgbY/ArcGIS/rest/services/Drop/FeatureServer/0">BNIA’s high school withdrawal rate</a> for the <strong>2022–23 school year</strong>, the share of public high school students living in each area who withdrew during the year. The bus figures come from <strong><span class="bus-dates">October 30 – November 20, 2026</span></strong>. Setting them side by side shows where unreliable service and school withdrawals occur in the same places; it cannot show that one causes the other.</p>
     <p><a class="pc-colab" href="https://colab.research.google.com/drive/1O3dTTWmpzxq53g5wvCWuFN4wT2QTOQKO" target="_blank" rel="noopener">Open the analysis in Colab</a></p>
   </section>
 
-  <!-- 2. ONE EVIDENCE TABLE (census tracts, the claim's original geography). Rows, gap directions, the worked example and the
+  <!-- 2. THE OVERLAP MAP (the project's central question). Everything is filled in from csa_overlap.json (bus data, refreshes)
+       and education/bnia_csa_indicators_2022-23.json (BNIA release, fixed). -->
+  <section class="pc-section" id="city-map">
+    <h2>Where bus disruptions and high school withdrawals overlap</h2>
+    <p class="pc-claim" style="border-left-color:#5b2a86">Do areas with less dependable bus service also have higher high school withdrawal rates?</p>
+    <p>This is a question about <strong>areas</strong>, not riders. A bus stop’s location does not tell us where its student riders live or where they go to school, and the stop data cannot tell which riders are students. The map shows where four conditions overlap across Baltimore City’s 55 Community Statistical Areas (CSAs), clusters of neighborhoods used by the Baltimore Neighborhood Indicators Alliance. The four measures describe the same areas, but the students and households counted in each may be different people, and the measures cover different periods.</p>
+    <p class="pc-note" id="periods">Periods shown: high school withdrawal, 2022–23 school year · households without a vehicle and family poverty, ACS 2019–2023 · bus disruptions, October 30 – November 20, 2026.</p>
+
+    <div class="pc-controls" role="group" aria-label="Map layers"><span class="lbl">Layers</span>
+      <label class="chk"><input type="checkbox" data-layer="withdrawal" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#6a3d9a"/></svg>High school withdrawal</label>
+      <label class="chk"><input type="checkbox" data-layer="no_vehicle"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><path d="M-2 10L6 -2M2 16L14 -2M10 16L22 -2" stroke="#1d3557" stroke-width="1.6"/></svg>No vehicle</label>
+      <label class="chk"><input type="checkbox" data-layer="poverty"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><circle cx="4" cy="4" r="1.7" fill="#1b4332"/><circle cx="12" cy="4" r="1.7" fill="#1b4332"/><circle cx="8" cy="10" r="1.7" fill="#1b4332"/><circle cx="16" cy="10" r="1.7" fill="#1b4332"/></svg>Poverty</label>
+      <label class="chk"><input type="checkbox" data-layer="bus" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect x="2" y="2" width="14" height="10" fill="none" stroke="#e8590c" stroke-width="3"/></svg>Bus disruptions</label>
+    </div>
+    <div class="pc-controls" role="group" aria-label="Commute window for the bus layer"><span class="lbl">Bus layer</span><button type="button" data-window="am" aria-pressed="true">Morning</button><button type="button" data-window="pm" aria-pressed="false">Afternoon</button></div>
+    <div class="pc-controls"><button type="button" id="overlap-btn" aria-pressed="false">Show areas where all four overlap</button>
+      <label for="csa-select" class="lbl" style="min-width:0">Add an area</label><select id="csa-select"><option value="">Select a CSA</option></select>
+      <button type="button" id="clear-selected">Clear selected areas</button></div>
+    <div class="overlap-panel" id="overlap-panel" hidden>
+      <p id="overlap-summary"></p>
+      <fieldset><legend>Match on</legend>
+        <label><input type="checkbox" data-match="withdrawal" checked/> High school withdrawal</label>
+        <label><input type="checkbox" data-match="no_vehicle" checked/> No vehicle</label>
+        <label><input type="checkbox" data-match="poverty" checked/> Poverty</label>
+        <label><input type="checkbox" data-match="bus" checked/> <span>Bus disruptions (<span class="win-word">morning</span>)</span></label>
+      </fieldset>
+      <p class="pc-note">“Highest quarter” means among the highest 25% of Baltimore City CSAs with data for that measure in the period shown (at or above the cutoff in the legend). Areas marked Insufficient data for a measure are left out of that comparison.</p>
+    </div>
+    <div class="map-wrap" id="maps"><p class="map-loading">Loading the map…</p></div>
+    <div id="association-box" class="pc-support" style="border-left-color:#5b2a86;margin-top:12px">
+      <p id="association-text"><strong>What the map shows:</strong> across 51 Baltimore City areas, those with more frequent morning bus disruptions (October 30 – November 20, 2026) tended to have higher high school withdrawal rates in the 2022–23 school year, a moderate relationship (rank correlation +0.39); because the school data come from an earlier period, this is geographic overlap, and area-level data cannot tell us whether the students who withdrew experienced the disruptions.</p>
+      <p class="pc-note" id="association-pm">In the afternoon commute the relationship was weak and ran the other way (−0.22), and could easily be chance.</p>
+    </div>
+    <div class="legend" id="legend" aria-live="polite"></div>
+    <p class="pc-note">Purple fill, stripes, dots and the orange boundary can all be shown at once. A teal dashed outline marks the areas you selected. Thresholds are each measure’s quarters (25th, 50th and 75th percentiles) among CSAs with data.</p>
+
+    <div class="pc-panels">
+      <div class="pc-box" aria-live="polite"><h3 id="area-title">Citywide</h3><div id="area"></div></div>
+      <div class="pc-box"><h3>Selected areas</h3><div class="comparison-scroll" id="comparison">Select areas on the map, or from the list, to compare them.</div></div>
+    </div>
+
+    <details class="pc-how">
+      <summary>How to read the map</summary>
+      <dl class="pc-defs">
+        <dt>High school withdrawal rate <span class="pc-hint">(purple fill, darker = more common)</span></dt>
+        <dd>BNIA’s “High School Dropout/Withdrawal Rate”: of the Baltimore City public high school students (grades 9 to 12) who live in the area, the share who withdrew during the school year. BNIA uses withdrawal codes as a stand-in for dropping out. BNIA places students by their home address, not by the school they attend. Source: Baltimore City Public Schools via BNIA. BNIA does not publish the number of students behind each rate, and it warns that areas with few students can swing sharply from year to year.</dd>
+        <dt>Insufficient data</dt>
+        <dd>Shown in gray. For withdrawal, BNIA leaves no area blank, but one area’s 2022–23 rate (South Baltimore, 50.8%, against 0.0% and 3.2% in the two prior years) is too unstable to compare: the analysis marks a rate Insufficient data when it differs from the area’s average for the two prior years by more than 20 points. For bus disruptions, an area with fewer than 20 classified stop events in the window, or no timepoint stops, is marked Insufficient data (thin gray dotted boundary).</dd>
+        <dt>Households without a vehicle <span class="pc-hint">(diagonal stripes, denser = more common)</span></dt>
+        <dd>BNIA’s share of households with no car, van or truck available, from the Census American Community Survey 2019–2023 five-year estimates.</dd>
+        <dt>Family poverty <span class="pc-hint">(dots, larger = more common)</span></dt>
+        <dd>BNIA’s “Percent of Family Households Living Below the Poverty Line,” ACS 2019–2023. This counts family households; the claim above uses a different measure (residents below poverty, by census tract).</dd>
+        <dt>Bus disruptions <span class="pc-hint">(orange boundary, thicker = more common)</span></dt>
+        <dd>Every Baltimore City bus stop in the sample is placed in the CSA its coordinates fall in. An area’s rate adds up the classified stop events at all its stops, and the ones canceled or more than 7 minutes late, then divides: it is not an average of stop percentages.</dd>
+        <dt>High school completion <span class="pc-hint">(separate figure, not a map layer)</span></dt>
+        <dd>BNIA’s share of 12th graders living in the area who completed high school (Maryland diploma or certificate of program completion) in 2022–23. This is a one-year rate for 12th graders, a different measure from the district’s four-year cohort graduation rate below. Where it appears, lower is worse, so the flag marks the lowest quarter.</dd>
+        <dt>Different periods</dt>
+        <dd>The school outcomes are from 2022–23 and the Census figures from 2019–2023, before the bus sample (autumn 2026). The map compares <em>where</em> problems occur, not whether they happened at the same time.</dd>
+      </dl>
+    </details>
+  </section>
+
+  <!-- 3. ONE EVIDENCE TABLE (census tracts, the claim's original geography). Rows, gap directions, the worked example and the
        matched-comparison sentence are rewritten from neighborhood_map.json; the text here is the Oct 30 to Nov 20 snapshot. -->
   <section class="pc-section" id="evidence">
     <h2>Evidence: morning and afternoon, by census tract group</h2>
@@ -136,69 +200,6 @@
     </details>
   </section>
 
-  <!-- 3. FOLLOW-UP QUESTION AND THE CSA OVERLAP MAP. Everything is filled in from csa_overlap.json (bus data, refreshes)
-       and education/bnia_csa_indicators_2022-23.json (BNIA release, fixed). -->
-  <section class="pc-section" id="city-map">
-    <h2>A follow-up question: where do these conditions overlap?</h2>
-    <p class="pc-claim" style="border-left-color:#5b2a86">Do neighborhoods with less dependable bus service also have higher high school withdrawal rates?</p>
-    <p>This is a separate question about <strong>areas</strong>, not riders. A bus stop’s location does not tell us where its student riders live or where they go to school, and the stop data cannot tell which riders are students. The map shows where four conditions overlap across Baltimore City’s 55 Community Statistical Areas (CSAs), clusters of neighborhoods used by the Baltimore Neighborhood Indicators Alliance. The four measures describe the same areas, but the students and households counted in each may be different people, and the measures cover different periods.</p>
-    <p class="pc-note" id="periods">Periods shown: high school withdrawal, 2022–23 school year · households without a vehicle and family poverty, ACS 2019–2023 · bus disruptions, October 30 – November 20, 2026.</p>
-
-    <div class="pc-controls" role="group" aria-label="Map layers"><span class="lbl">Layers</span>
-      <label class="chk"><input type="checkbox" data-layer="withdrawal" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#6a3d9a"/></svg>High school withdrawal</label>
-      <label class="chk"><input type="checkbox" data-layer="no_vehicle"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><path d="M-2 10L6 -2M2 16L14 -2M10 16L22 -2" stroke="#1d3557" stroke-width="1.6"/></svg>No vehicle</label>
-      <label class="chk"><input type="checkbox" data-layer="poverty"/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect width="18" height="14" fill="#fff"/><circle cx="4" cy="4" r="1.7" fill="#1b4332"/><circle cx="12" cy="4" r="1.7" fill="#1b4332"/><circle cx="8" cy="10" r="1.7" fill="#1b4332"/><circle cx="16" cy="10" r="1.7" fill="#1b4332"/></svg>Poverty</label>
-      <label class="chk"><input type="checkbox" data-layer="bus" checked/><svg class="key" viewBox="0 0 18 14" aria-hidden="true"><rect x="2" y="2" width="14" height="10" fill="none" stroke="#e8590c" stroke-width="3"/></svg>Bus disruptions</label>
-    </div>
-    <div class="pc-controls" role="group" aria-label="Commute window for the bus layer"><span class="lbl">Bus layer</span><button type="button" data-window="am" aria-pressed="true">Morning</button><button type="button" data-window="pm" aria-pressed="false">Afternoon</button></div>
-    <div class="pc-controls"><button type="button" id="overlap-btn" aria-pressed="false">Show areas where all four overlap</button>
-      <label for="csa-select" class="lbl" style="min-width:0">Add an area</label><select id="csa-select"><option value="">Select a CSA</option></select>
-      <button type="button" id="clear-selected">Clear selected areas</button></div>
-    <div class="overlap-panel" id="overlap-panel" hidden>
-      <p id="overlap-summary"></p>
-      <fieldset><legend>Match on</legend>
-        <label><input type="checkbox" data-match="withdrawal" checked/> High school withdrawal</label>
-        <label><input type="checkbox" data-match="no_vehicle" checked/> No vehicle</label>
-        <label><input type="checkbox" data-match="poverty" checked/> Poverty</label>
-        <label><input type="checkbox" data-match="bus" checked/> <span>Bus disruptions (<span class="win-word">morning</span>)</span></label>
-      </fieldset>
-      <p class="pc-note">“Highest quarter” means among the highest 25% of Baltimore City CSAs with data for that measure in the period shown (at or above the cutoff in the legend). Areas marked Insufficient data for a measure are left out of that comparison.</p>
-    </div>
-    <div class="map-wrap" id="maps"><p class="map-loading">Loading the map…</p></div>
-    <div class="legend" id="legend" aria-live="polite"></div>
-    <p class="pc-note">Purple fill, stripes, dots and the orange boundary can all be shown at once. A teal dashed outline marks the areas you selected. Thresholds are each measure’s quarters (25th, 50th and 75th percentiles) among CSAs with data.</p>
-
-    <div class="pc-panels">
-      <div class="pc-box" aria-live="polite"><h3 id="area-title">Citywide</h3><div id="area"></div></div>
-      <div class="pc-box"><h3>Selected areas</h3><div class="comparison-scroll" id="comparison">Select areas on the map, or from the list, to compare them.</div></div>
-    </div>
-
-    <div id="association-box">
-      <h3>What the area comparison shows</h3>
-      <p id="association-text">Across 51 CSAs with both measures, areas with higher morning bus disruption rates tended to have higher 2022–23 high school withdrawal rates (Spearman rank correlation +0.39). In the afternoon the association was weaker and in the opposite direction (−0.22). This is an area-level association across different periods: it describes places, not students, and does not show that bus service affects withdrawal.</p>
-    </div>
-
-    <details class="pc-how">
-      <summary>How to read the map</summary>
-      <dl class="pc-defs">
-        <dt>High school withdrawal rate <span class="pc-hint">(purple fill, darker = more common)</span></dt>
-        <dd>BNIA’s “High School Dropout/Withdrawal Rate”: of the Baltimore City public high school students (grades 9 to 12) who live in the area, the share who withdrew during the school year. BNIA uses withdrawal codes as a stand-in for dropping out. BNIA places students by their home address, not by the school they attend. Source: Baltimore City Public Schools via BNIA. BNIA does not publish the number of students behind each rate, and it warns that areas with few students can swing sharply from year to year.</dd>
-        <dt>Insufficient data</dt>
-        <dd>Shown in gray. For withdrawal, BNIA leaves no area blank, but one area’s 2022–23 rate (South Baltimore, 50.8%, against 0.0% and 3.2% in the two prior years) is too unstable to compare: the analysis marks a rate Insufficient data when it differs from the area’s average for the two prior years by more than 20 points. For bus disruptions, an area with fewer than 20 classified stop events in the window, or no timepoint stops, is marked Insufficient data (thin gray dotted boundary).</dd>
-        <dt>Households without a vehicle <span class="pc-hint">(diagonal stripes, denser = more common)</span></dt>
-        <dd>BNIA’s share of households with no car, van or truck available, from the Census American Community Survey 2019–2023 five-year estimates.</dd>
-        <dt>Family poverty <span class="pc-hint">(dots, larger = more common)</span></dt>
-        <dd>BNIA’s “Percent of Family Households Living Below the Poverty Line,” ACS 2019–2023. This counts family households; the claim above uses a different measure (residents below poverty, by census tract).</dd>
-        <dt>Bus disruptions <span class="pc-hint">(orange boundary, thicker = more common)</span></dt>
-        <dd>Every Baltimore City bus stop in the sample is placed in the CSA its coordinates fall in. An area’s rate adds up the classified stop events at all its stops, and the ones canceled or more than 7 minutes late, then divides: it is not an average of stop percentages.</dd>
-        <dt>High school completion <span class="pc-hint">(separate figure, not a map layer)</span></dt>
-        <dd>BNIA’s share of 12th graders living in the area who completed high school (Maryland diploma or certificate of program completion) in 2022–23. This is a one-year rate for 12th graders, a different measure from the district’s four-year cohort graduation rate below. Where it appears, lower is worse, so the flag marks the lowest quarter.</dd>
-        <dt>Different periods</dt>
-        <dd>The school outcomes are from 2022–23 and the Census figures from 2019–2023, before the bus sample (autumn 2026). The map compares <em>where</em> problems occur, not whether they happened at the same time.</dd>
-      </dl>
-    </details>
-  </section>
-
   <!-- 4. GRADUATION CONTEXT (district figures, kept separate from the BNIA neighborhood measures). -->
   <section class="pc-section" id="graduation">
     <h2>District context: the Class of 2025</h2>
@@ -223,7 +224,7 @@
       <li><strong>Classified events.</strong> Stop events with a usable timing estimate or a feed-flagged cancellation. A bus counts as on time from 2 minutes early to 7 minutes late, MTA’s own on-time window for local buses. Missing vehicle records, skipped stops and unclassified timings are left out of the rates.</li>
       <li><strong>Tract groups (the claim).</strong> Census tracts are split at the 25th and 75th percentiles of the poverty rate and of the share of households without a vehicle (ACS 2020–2024). Each stop takes its tract’s group. These comparisons stay on census tracts.</li>
       <li><strong>Same route and school date.</strong> Highest- and lowest-quarter stops are compared within each route, date and commute window, and the differences are averaged, weighting each by the smaller group’s event count.</li>
-      <li><strong>CSA overlap map (the follow-up question).</strong> Stops are placed in BNIA’s 2020 Community Statistical Areas by coordinate, and each area’s disruption rate is computed from summed counts. BNIA’s withdrawal, completion, family poverty and no-vehicle values are used as published for each CSA, joined on the CSA name (one name is spelled two ways by BNIA and is matched by its 2010 name). The BNIA values are a dated download (November 23, 2026; BNIA data last edited May 2025) that does not change when the bus data refresh. The area-level association is a Spearman rank correlation with a 10,000-shuffle permutation check.</li>
+      <li><strong>CSA overlap map (the withdrawal question).</strong> Stops are placed in BNIA’s 2020 Community Statistical Areas by coordinate, and each area’s disruption rate is computed from summed counts. BNIA’s withdrawal, completion, family poverty and no-vehicle values are used as published for each CSA, joined on the CSA name (one name is spelled two ways by BNIA and is matched by its 2010 name). The BNIA values are a dated download (November 23, 2026; BNIA data last edited May 2025) that does not change when the bus data refresh. The area-level association is a Spearman rank correlation with a 10,000-shuffle permutation check.</li>
       <li><strong>Limits.</strong> The results describe one autumn sample of stop events, not students: the records cannot show who rode or whether anyone reached school late. Census sampling error is not carried into the comparisons, and BNIA publishes no student counts for its school measures.</li>
     </ul>
     <h3 id="sources">Sources</h3>
@@ -274,10 +275,10 @@
   const amPov = pov.am.high - pov.am.low, amVeh = veh.am.high - veh.am.low;
   if (amPov > 0 && amVeh > 0) {
     $('claim-heading').textContent = 'Morning bus disruptions were more common in higher-poverty and lower-car-access areas';
-    $('claim-text').textContent = 'In our Baltimore City sample, morning bus cancellations and delays of more than seven minutes were more common at stops in higher-poverty areas and areas where more households lacked a vehicle.';
+    $('claim-text').textContent = 'In our Baltimore City sample, morning bus cancellations and delays of more than seven minutes were more common at stops in higher-poverty areas and in areas where more households lacked a vehicle. That raises a second question: Do areas with less dependable bus service also have higher high school withdrawal rates?';
   } else {
     $('claim-heading').textContent = 'Morning bus disruptions by poverty and vehicle access';
-    $('claim-text').textContent = 'With the latest data, morning cancellations and delays of more than seven minutes were not consistently more common at stops in both higher-poverty areas and areas where more households lacked a vehicle; see the figures below.';
+    $('claim-text').textContent = 'With the latest data, morning cancellations and delays of more than seven minutes were not consistently more common at stops in both higher-poverty areas and areas where more households lacked a vehicle; see the figures below. The map asks a second question: Do areas with less dependable bus service also have higher high school withdrawal rates?';
   }
   $('claim-figures').innerHTML =
     '<li><strong>Poverty:</strong> ' + pct(pov.am.high) + ' of classified morning stop events were disrupted in the highest-poverty quarter of census tracts, versus ' + pct(pov.am.low) +
@@ -532,16 +533,24 @@
   $('clear-selected').addEventListener('click', () => { selected.clear(); focused = ''; renderSelection(); comparison(); area(''); });
   redraw();
 
-  // The area-level association (computed in the Colab, Box 29).
-  const as = csa.association;
-  if (as && as.am) {
-    const word = r => Math.abs(r) < 0.1 ? 'no consistent' : Math.abs(r) < 0.3 ? 'a weak' : Math.abs(r) < 0.5 ? 'a moderate' : 'a strong';
-    const chance = s => s < 0.05 ? 'only ' + (100 * s).toFixed(1) + '% of 10,000 random shufflings of the areas produced an association that strong' : (100 * s).toFixed(0) + '% of 10,000 random shufflings produced one at least that strong, so it could easily be chance';
-    $('association-text').textContent = 'Across ' + as.am.n + ' CSAs with both a usable withdrawal rate (' + PERIOD.withdrawal + ') and a morning bus disruption rate (' + dates + '), there was ' +
-      word(as.am.rho) + ' ' + (as.am.rho >= 0 ? 'positive' : 'negative') + ' association: areas with more morning disruptions tended to have ' + (as.am.rho >= 0 ? 'higher' : 'lower') +
-      ' withdrawal rates (Spearman rank correlation ' + (as.am.rho >= 0 ? '+' : '−') + Math.abs(as.am.rho).toFixed(2) + '; ' + chance(as.am.permutation_share) + '). In the afternoon (' + as.pm.n +
-      ' CSAs) the association was ' + word(as.pm.rho).replace(/^a /, '') + ' and ' + (as.pm.rho >= 0 ? 'positive' : 'negative') + ' (' + (as.pm.rho >= 0 ? '+' : '−') + Math.abs(as.pm.rho).toFixed(2) + '; ' + chance(as.pm.permutation_share) +
-      '). This is an area-level association across different periods: it describes places, not students, and does not show that bus service affects withdrawal.';
+  // The area-level association (computed in the Colab, Box 29), in one plain sentence under the map.
+  document.querySelectorAll('.bus-dates').forEach(e => e.textContent = dates);
+  const as = csa.association, MIN_AREAS = 30;
+  const strength = r => Math.abs(r) < 0.1 ? 'no' : Math.abs(r) < 0.3 ? 'a weak' : Math.abs(r) < 0.5 ? 'a moderate' : 'a strong';
+  const rhoText = r => (r >= 0 ? '+' : '−') + Math.abs(r).toFixed(2);
+  if (!as || !as.am || as.am.n < MIN_AREAS) {
+    $('association-text').innerHTML = '<strong>What the map shows:</strong> too few areas have both a usable withdrawal rate and a bus disruption rate to compare yet, so whether areas with less dependable bus service also have higher withdrawal rates remains an open research question.';
+    $('association-pm').textContent = '';
+  } else {
+    const am = as.am, clear = am.permutation_share < 0.05 && Math.abs(am.rho) >= 0.1;
+    $('association-text').innerHTML = '<strong>What the map shows:</strong> across ' + am.n + ' Baltimore City areas, ' + (clear
+      ? 'those with more frequent morning bus disruptions (' + dates + ') tended to have ' + (am.rho > 0 ? 'higher' : 'lower') + ' high school withdrawal rates in the ' + PERIOD.withdrawal +
+        ', ' + strength(am.rho) + ' relationship (rank correlation ' + rhoText(am.rho) + ')'
+      : 'there was no clear relationship between morning bus disruptions (' + dates + ') and high school withdrawal rates in the ' + PERIOD.withdrawal + ' (rank correlation ' + rhoText(am.rho) + ', which could easily be chance)') +
+      '; because the school data come from an earlier period, this is geographic overlap, and area-level data cannot tell us whether the students who withdrew experienced the disruptions.';
+    const pm = as.pm;
+    $('association-pm').textContent = pm ? 'In the afternoon commute (' + pm.n + ' areas) the relationship was ' + strength(pm.rho).replace(/^a /, '') + (Math.abs(pm.rho) >= 0.1 ? ' and ' + (Math.sign(pm.rho) === Math.sign(am.rho) ? 'ran the same way' : 'ran the other way') : '') +
+      ' (' + rhoText(pm.rho) + ')' + (pm.permutation_share >= 0.05 ? ', and could easily be chance.' : '.') : '';
   }
   const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (target) target.scrollIntoView();
