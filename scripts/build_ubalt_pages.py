@@ -31,8 +31,6 @@ css = re.sub(r"url\('\./([^']+)'\)", lambda m: f"url('{PAGES}{m.group(1)}')", cs
 
 for source, target in FILES.items():
     html = (docs / source).read_text()
-    # Home-screen app tags (manifest, icon, service worker) only work on the GitHub Pages site.
-    html = re.sub(r"<!--app-->.*?<!--/app-->", "", html, flags=re.S)
     links = re.findall(r'<link href="\./(?:baltimore-theme|project-c)\.css" rel="stylesheet"/>\n', html)
     assert len(links) == 2, source
     html = html.replace(links[0], "<!-- Standalone copy for home.ubalt.edu: the site stylesheets are inlined below, and the data load live "
