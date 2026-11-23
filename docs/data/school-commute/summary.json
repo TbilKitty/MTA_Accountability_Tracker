@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-20T22:50:15+00:00",
+ "generated_utc": "2026-11-23T13:49:03+00:00",
  "definitions": {
   "on_time": "2 min early to 7 min late at a scheduled timepoint (MTA definition)",
   "late_over_15_min": "arrived more than 15 minutes after the scheduled time",
