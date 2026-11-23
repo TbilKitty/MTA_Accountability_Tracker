@@ -137,7 +137,7 @@
   const SMALL = data.small_sample;
   document.querySelectorAll('.small-n').forEach(el => el.textContent = SMALL);
   const dateLabel = (iso, year) => new Intl.DateTimeFormat('en-US', {month:'long', day:'numeric', ...(year ? {year:'numeric'} : {}), timeZone:'UTC'}).format(new Date(iso + 'T00:00:00Z'));
-  $('rs-dates').textContent = 'Baltimore City timepoint stops, school days ' + dateLabel(data.dates.first, false) + ' – ' + dateLabel(data.dates.last, true) + '.';
+  $('rs-dates').textContent = 'Data coverage: Baltimore City timepoint stops, school days ' + dateLabel(data.dates.first, false) + ' – ' + dateLabel(data.dates.last, true) + '.';
   $('dp-start').textContent = dateLabel(data.drive_past_dates.first, true);
   const esc = v => String(v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const names = Object.fromEntries(Object.entries(data.stop_names).map(([k, v]) => [k, esc(v)]));

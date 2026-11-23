@@ -58,10 +58,11 @@
 
 <main class="pc-wrap">
 
-  <!-- 1. THE CLAIM. Figures and dates are filled in from the map data; the text here is the October 30 to November 20, 2026 snapshot. -->
+  <!-- 1. THE CLAIM. Figures and dates are filled in from the loaded map data (neighborhood_map.json); the text written here is the
+       October 30 to November 20, 2026 data, shown only if the file cannot be loaded. -->
   <section class="pc-section" id="claim">
     <h2 id="claim-heading">Morning bus disruptions were more common in higher-poverty areas</h2>
-    <p class="pc-note" id="snapshot">Snapshot: October 30 – November 20, 2026</p>
+    <p class="pc-note" id="snapshot">Data coverage: October 30 – November 20, 2026</p>
     <p class="pc-claim" id="claim-text">During the morning school commute, 34.0% of classified MTA bus stop events in Baltimore City’s highest-poverty census tracts were canceled or more than seven minutes late, compared with 28.0% in the lowest-poverty tracts. The morning gap was 3.1 percentage points when comparing stops on the same route and school date.</p>
     <p class="pc-support" id="vehicle-text"><strong>Supporting evidence, vehicle access:</strong> in the morning, 35.6% of classified stop events were canceled or more than seven minutes late in the tracts with the highest share of households without a vehicle, versus 27.9% in those with the lowest share.</p>
     <p>The claim compares census tracts (the highest and lowest quarters of city tracts by poverty rate, and by share of households without a vehicle), while the map below lets you explore named neighborhoods. The data count bus stop events and cannot identify student riders.</p>
@@ -187,7 +188,7 @@
 
   // ---- 1. Claim: figures, dates, and a heading that follows the direction of the gap.
   const pov = data.equity.poverty, veh = data.equity.no_vehicle;
-  $('snapshot').textContent = 'Snapshot: ' + dates;
+  $('snapshot').textContent = 'Data coverage: ' + dates;
   $('evidence-dates').textContent = dates;
   const hi = pov.am.high, lo = pov.am.low;
   if (hi != null && lo != null) {
@@ -426,7 +427,10 @@
   select.addEventListener('change', () => { if (selected.has(select.value)) preview(select.value); else choose(select.value); select.value = ''; });
   $('clear-selected').addEventListener('click', () => { selected.clear(); preview(''); comparison(); });
   buildMaps(); redraw();
-  if (location.hash === '#city-map') $('city-map').scrollIntoView();
+  // The map and table fill in after the page opens and move the sections below them, so land on the linked section again
+  // (for example #evidence from the MTA Accountability page).
+  const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) target.scrollIntoView();
 })();
 </script>
 </body></html>
