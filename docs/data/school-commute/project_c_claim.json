@@ -1090,7 +1090,7 @@
           "odds_ratio": 0.97,
           "lo": 0.89,
           "hi": 1.05,
-          "p_value": 0.4776953940407187,
+          "p_value": 0.40827612686646075,
           "display": "0.97 (95% CI 0.89 to 1.05)"
         },
         "no_car": {
@@ -1098,15 +1098,15 @@
           "odds_ratio": 1.02,
           "lo": 0.93,
           "hi": 1.11,
-          "p_value": 0.7404069605132608,
-          "display": "1.02 (95% CI 0.93 to 1.11)"
+          "p_value": 0.7715240787202271,
+          "display": "1.01 (95% CI 0.93 to 1.11)"
         },
         "kids": {
           "label": "More school-age children (above the city median, 15% of residents)",
           "odds_ratio": 0.98,
           "lo": 0.91,
           "hi": 1.06,
-          "p_value": 0.6073587936851393,
+          "p_value": 0.5969517127475243,
           "display": "0.98 (95% CI 0.91 to 1.06)"
         },
         "all_three": {
@@ -1114,7 +1114,7 @@
           "odds_ratio": 0.95,
           "lo": 0.87,
           "hi": 1.03,
-          "p_value": 0.22100278255407968,
+          "p_value": 0.20346206061339278,
           "display": "0.95 (95% CI 0.87 to 1.03)"
         }
       }
